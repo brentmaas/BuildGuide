@@ -4,6 +4,7 @@ import brentmaas.buildguide.State;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 //TODO Odd sphere + even sphere?
 public class ShapeCircle extends Shape {
@@ -18,20 +19,20 @@ public class ShapeCircle extends Shape {
 	private direction dir = direction.Y;
 	private int radius = 3;
 	
-	private Button directionButton = new Button(0, 80, 100, 20, new StringTextComponent("Direction: " + directionNames[dir.ordinal()]), button -> {
+	private Button directionButton = new Button(0, 80, 100, 20, new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]), button -> {
 		dir = direction.values()[(dir.ordinal() + 1) % direction.values().length];
 		update();
-		button.setMessage(new StringTextComponent("Direction: " + directionNames[dir.ordinal()]));
+		button.setMessage(new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]));
 	});
-	private Button radiusDisplayButton = new Button(20, 100, 60, 20, new StringTextComponent("Radius: " + this.radius), null);
+	private Button radiusDisplayButton = new Button(20, 100, 60, 20, new TranslationTextComponent("property.buildguide.radius", this.radius), null);
 	private Button radiusDecreaseButton = new Button(0, 100, 20, 20, new StringTextComponent("-"), button -> {
 		if(radius > 1) --radius;
-		this.radiusDisplayButton.setMessage(new StringTextComponent("Radius: " + this.radius));
+		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
 		update();
 	});
 	private Button radiusIncreaseButton = new Button(80, 100, 20, 20, new StringTextComponent("+"), button -> {
 		++radius;
-		this.radiusDisplayButton.setMessage(new StringTextComponent("Radius: " + this.radius));
+		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
 		update();
 	});
 	
@@ -79,7 +80,7 @@ public class ShapeCircle extends Shape {
 		}
 	}
 	
-	public String getName() {
-		return "Circle";
+	public String getTranslationKey() {
+		return "shape.buildguide.circle";
 	}
 }

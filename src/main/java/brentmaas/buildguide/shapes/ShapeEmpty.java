@@ -29,8 +29,8 @@ public class ShapeEmpty extends Shape{
 		
 	}
 	
-	public String getName() {
-		return "None";
+	public String getTranslationKey() {
+		return "shape.buildguide.none";
 	}
 	
 }

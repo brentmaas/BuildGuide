@@ -4,5 +4,18 @@
 	"key.buildguide.openbuildguide": "Open Build Guide",
 	
 	"_comment": "Screens",
-	"screen.buildguide.buildguide": "Build Guide",
+	"screen.buildguide.title": "Build Guide",
+	"screen.buildguide.depthtest": "Depth test: %s",
+	"screen.buildguide.setbasepos": "Set base position",
+	
+	"_comment": "Shapes",
+	"shape.buildguide.none": "None",
+	"shape.buildguide.line": "Line",
+	"shape.buildguide.circle": "Circle",
+	"shape.buildguide.sphere": "Sphere",
+	
+	"_comment": "Shape properties",
+	"property.buildguide.direction": "Direction: %s",
+	"property.buildguide.length": "Length: %s",
+	"property.buildguide.radius": "Radius: %s"
 }

@@ -13,6 +13,8 @@ import net.minecraft.util.math.vector.Vector3d;
 
 public abstract class Shape {
 	protected ArrayList<Vector3d> posList;
+	//TODO: Property<T> for shapes and basepos and stuff
+	@Deprecated
 	public ArrayList<Button> buttonList;
 	
 	public Shape() {
@@ -21,7 +23,7 @@ public abstract class Shape {
 	}
 	
 	public abstract void update();
-	public abstract String getName();
+	public abstract String getTranslationKey();
 	
 	public void render(BufferBuilder buffer, Tessellator tessellator) {
 		//Base position

@@ -12,24 +12,24 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class BuildGuideGui extends Screen{
 	private Button closeButton;
-	private Button shapeButton = new Button(0, 0, 100, 20, new StringTextComponent(State.getCurrentShape().getName()), button -> updateShape());
-	private Button basePosButton = new Button(0, 20, 100, 20, new StringTextComponent("Set base position"), button -> setBasePos());
-	private Button depthTestButton = new Button(0, 40, 100, 20, new StringTextComponent("Depth test: " + State.depthTest), button -> {
+	private Button shapeButton = new Button(0, 20, 100, 20, new TranslationTextComponent(State.getCurrentShape().getTranslationKey()), button -> updateShape());
+	private Button basePosButton = new Button(0, 40, 100, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
+	private Button depthTestButton = new Button(0, 60, 100, 20, new TranslationTextComponent("screen.buildguide.depthtest", State.depthTest), button -> {
 		State.depthTest = !State.depthTest;
-		button.setMessage(new StringTextComponent("Depth test: " + State.depthTest));
+		button.setMessage(new TranslationTextComponent("screen.buildguide.depthtest", State.depthTest));
 	});
-	private Button basePosXDisplayButton = new Button(120, 0, 60, 20, new StringTextComponent("X: " + (State.basePos == null ? "" : (int) State.basePos.x)), null);
-	private Button basePosXDecreaseButton = new Button(100, 0, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
-	private Button basePosXIncreaseButton = new Button(180, 0, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
-	private Button basePosYDisplayButton = new Button(120, 20, 60, 20, new StringTextComponent("Y: " + (State.basePos == null ? "" : (int) State.basePos.y)), null);
-	private Button basePosYDecreaseButton = new Button(100, 20, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
-	private Button basePosYIncreaseButton = new Button(180, 20, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
-	private Button basePosZDisplayButton = new Button(120, 40, 60, 20, new StringTextComponent("Z: " + (State.basePos == null ? "" : (int) State.basePos.z)), null);
-	private Button basePosZDecreaseButton = new Button(100, 40, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
-	private Button basePosZIncreaseButton = new Button(180, 40, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
+	private Button basePosXDisplayButton = new Button(120, 20, 60, 20, new StringTextComponent("X: " + (State.basePos == null ? "" : (int) State.basePos.x)), null);
+	private Button basePosXDecreaseButton = new Button(100, 20, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
+	private Button basePosXIncreaseButton = new Button(180, 20, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
+	private Button basePosYDisplayButton = new Button(120, 40, 60, 20, new StringTextComponent("Y: " + (State.basePos == null ? "" : (int) State.basePos.y)), null);
+	private Button basePosYDecreaseButton = new Button(100, 40, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
+	private Button basePosYIncreaseButton = new Button(180, 40, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
+	private Button basePosZDisplayButton = new Button(120, 60, 60, 20, new StringTextComponent("Z: " + (State.basePos == null ? "" : (int) State.basePos.z)), null);
+	private Button basePosZDecreaseButton = new Button(100, 60, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
+	private Button basePosZIncreaseButton = new Button(180, 60, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
 	
 	public BuildGuideGui() {
-		super(new TranslationTextComponent("screen.buildguide.buildguide"));
+		super(new TranslationTextComponent("screen.buildguide.title"));
 	}
 	
 	@Override
@@ -69,6 +69,7 @@ public class BuildGuideGui extends Screen{
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 	}
 	
 	private void updateShape() {
@@ -77,7 +78,7 @@ public class BuildGuideGui extends Screen{
 		if(State.basePos == null) setBasePos();
 		
 		State.i_shape = (State.i_shape + 1) % State.shapeStore.length;
-		shapeButton.setMessage(new StringTextComponent(State.getCurrentShape().getName()));
+		shapeButton.setMessage(new TranslationTextComponent(State.getCurrentShape().getTranslationKey()));
 		
 		State.getCurrentShape().onSelectedInGUI();
 	}

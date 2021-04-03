@@ -4,20 +4,21 @@ import brentmaas.buildguide.State;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 //TODO Odd sphere + even sphere
 public class ShapeSphere extends Shape{
 	private int radius = 3;
 	
-	private Button radiusDisplayButton = new Button(20, 80, 60, 20, new StringTextComponent("Radius: " + this.radius), null);
+	private Button radiusDisplayButton = new Button(20, 80, 60, 20, new TranslationTextComponent("property.buildguide.radius", this.radius), null);
 	private Button radiusDecreaseButton = new Button(0, 80, 20, 20, new StringTextComponent("-"), button -> {
 		if(radius > 1) --radius;
-		this.radiusDisplayButton.setMessage(new StringTextComponent("Radius: " + this.radius));
+		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
 		update();
 	});
 	private Button radiusIncreaseButton = new Button(80, 80, 20, 20, new StringTextComponent("+"), button -> {
 		++radius;
-		this.radiusDisplayButton.setMessage(new StringTextComponent("Radius: " + this.radius));
+		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
 		update();
 	});
 	
@@ -51,7 +52,7 @@ public class ShapeSphere extends Shape{
 		}
 	}
 	
-	public String getName() {
-		return "Sphere";
+	public String getTranslationKey() {
+		return "shape.buildguide.sphere";
 	}
 }
