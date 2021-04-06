@@ -13,6 +13,7 @@
 	"shape.buildguide.line": "Line",
 	"shape.buildguide.circle": "Circle",
 	"shape.buildguide.sphere": "Sphere",
+	"shape.buildguide.cuboid": "Cuboid",
 	
 	"_comment": "Shape properties",
 	"property.buildguide.direction": "Direction: %s",
