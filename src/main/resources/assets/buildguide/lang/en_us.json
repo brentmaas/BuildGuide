@@ -5,8 +5,14 @@
 	
 	"_comment": "Screens",
 	"screen.buildguide.title": "Build Guide",
+	"screen.buildguide.globalproperties": "Global properties",
+	"screen.buildguide.shapeproperties": "Shape properties",
+	"screen.buildguide.basepos": "Base position",
+	"screen.buildguide.numberofblocks": "Number of blocks",
 	"screen.buildguide.depthtest": "Depth test: %s",
 	"screen.buildguide.setbasepos": "Set base position",
+	"screen.buildguide.colours": "Colors",
+	"screen.buildguide.toggle": "Toggle",
 	
 	"_comment": "Shapes",
 	"shape.buildguide.none": "None",
@@ -16,7 +22,7 @@
 	"shape.buildguide.cuboid": "Cuboid",
 	
 	"_comment": "Shape properties",
-	"property.buildguide.direction": "Direction: %s",
-	"property.buildguide.length": "Length: %s",
-	"property.buildguide.radius": "Radius: %s"
+	"property.buildguide.direction": "Direction",
+	"property.buildguide.length": "Length",
+	"property.buildguide.radius": "Radius"
 }

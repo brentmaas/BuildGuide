@@ -1,9 +1,9 @@
 package brentmaas.buildguide.shapes;
 
 import brentmaas.buildguide.State;
-import net.minecraft.client.gui.widget.button.Button;
+import brentmaas.buildguide.property.PropertyEnum;
+import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 //TODO Odd sphere + even sphere?
@@ -16,36 +16,16 @@ public class ShapeCircle extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private direction dir = direction.Y;
-	private int radius = 3;
-	
-	private Button directionButton = new Button(0, 80, 100, 20, new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]), button -> {
-		dir = direction.values()[(dir.ordinal() + 1) % direction.values().length];
-		update();
-		button.setMessage(new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]));
-	});
-	private Button radiusDisplayButton = new Button(20, 100, 60, 20, new TranslationTextComponent("property.buildguide.radius", this.radius), null);
-	private Button radiusDecreaseButton = new Button(0, 100, 20, 20, new StringTextComponent("-"), button -> {
-		if(radius > 1) --radius;
-		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
-		update();
-	});
-	private Button radiusIncreaseButton = new Button(80, 100, 20, 20, new StringTextComponent("+"), button -> {
-		++radius;
-		this.radiusDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.radius", this.radius));
-		update();
-	});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslationTextComponent("property.buildguide.direction").getString(), this, directionNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.radius").getString(), this);
 	
 	public ShapeCircle() {
 		super();
 		
 		update();
 		
-		this.buttonList.add(directionButton);
-		radiusDisplayButton.active = false;
-		this.buttonList.add(radiusDisplayButton);
-		this.buttonList.add(radiusDecreaseButton);
-		this.buttonList.add(radiusIncreaseButton);
+		properties.add(propertyDir);
+		properties.add(propertyRadius);
 		
 		onDeselectedInGUI();
 	}
@@ -55,8 +35,8 @@ public class ShapeCircle extends Shape {
 		
 		this.posList.clear();
 		
-		int dx = this.radius, dy = this.radius, dz = this.radius;
-		switch(this.dir) {
+		int dx = propertyRadius.value, dy = propertyRadius.value, dz = propertyRadius.value;
+		switch(propertyDir.value) {
 		case X:
 			dx = 0;
 			break;
@@ -72,7 +52,7 @@ public class ShapeCircle extends Shape {
 			for(int y = -dy; y <= dy;++y) {
 				for(int z = -dz; z <= dz;++z) {
 					int r2 = x * x + y * y + z * z;
-					if(r2 >= (radius - 0.5) * (radius - 0.5) && r2 <= (radius + 0.5) * (radius + 0.5)) {
+					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
 						this.posList.add(new Vector3d(State.basePos.x + x, State.basePos.y + y, State.basePos.z + z));
 					}
 				}

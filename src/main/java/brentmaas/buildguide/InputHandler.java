@@ -8,7 +8,7 @@ public class InputHandler {
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
 		if(Keybindings.openBuildGuide.isPressed()) {
-			Minecraft.getInstance().displayGuiScreen(new BuildGuideGui());
+			Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());
 		}
 	}
 }

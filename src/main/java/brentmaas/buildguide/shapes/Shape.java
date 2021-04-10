@@ -5,21 +5,20 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
 import brentmaas.buildguide.State;
-import net.minecraft.client.gui.widget.button.Button;
+import brentmaas.buildguide.property.Property;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class Shape {
-	protected ArrayList<Vector3d> posList;
+	protected ArrayList<Vector3d> posList = new ArrayList<Vector3d>();
 	//TODO: Property<T> for shapes and basepos and stuff
-	@Deprecated
-	public ArrayList<Button> buttonList;
+	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	
 	public Shape() {
-		this.posList = new ArrayList<Vector3d>();
-		this.buttonList = new ArrayList<Button>();
+		
 	}
 	
 	public abstract void update();
@@ -78,14 +77,22 @@ public abstract class Shape {
 	}
 	
 	public void onSelectedInGUI() {
-		for(Button b: buttonList) {
-			b.visible = true;
+		for(Property<?> p: properties) {
+			p.onSelectedInGUI();
 		}
 	}
 	
 	public void onDeselectedInGUI() {
-		for(Button b: buttonList) {
-			b.visible = false;
+		for(Property<?> p: properties) {
+			p.onDeselectedInGUI();
 		}
+	}
+	
+	public String getTranslatedName() {
+		return new TranslationTextComponent(getTranslationKey()).getString();
+	}
+	
+	public int getNumberOfBlocks() {
+		return posList.size();
 	}
 }

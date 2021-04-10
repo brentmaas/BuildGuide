@@ -1,9 +1,9 @@
 package brentmaas.buildguide.shapes;
 
 import brentmaas.buildguide.State;
-import net.minecraft.client.gui.widget.button.Button;
+import brentmaas.buildguide.property.PropertyEnum;
+import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ShapeLine extends Shape{
@@ -18,36 +18,16 @@ public class ShapeLine extends Shape{
 	
 	private final String[] directionNames = {"-X", "-Y", "-Z", "+X", "+Y", "+Z"};
 	
-	private direction dir = direction.NEGATIVE_X;
-	private int length = 5;
-	
-	private Button directionButton = new Button(0, 80, 100, 20, new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]), button -> {
-		dir = direction.values()[(dir.ordinal() + 1) % direction.values().length];
-		update();
-		button.setMessage(new TranslationTextComponent("property.buildguide.direction", directionNames[dir.ordinal()]));
-	});
-	private Button lengthDisplayButton = new Button(20, 100, 60, 20, new TranslationTextComponent("property.buildguide.length", this.length), null);
-	private Button lengthDecreaseButton = new Button(0, 100, 20, 20, new StringTextComponent("-"), button -> {
-		if(length > 1) --length;
-		this.lengthDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.length", this.length));
-		update();
-	});
-	private Button lengthIncreaseButton = new Button(80, 100, 20, 20, new StringTextComponent("+"), button -> {
-		++length;
-		this.lengthDisplayButton.setMessage(new TranslationTextComponent("property.buildguide.length", this.length));
-		update();
-	});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.NEGATIVE_X, new TranslationTextComponent("property.buildguide.direction").getString(), this, directionNames);
+	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslationTextComponent("property.buildguide.length").getString(), this);
 	
 	public ShapeLine() {
 		super();
 		
 		update();
 		
-		this.buttonList.add(directionButton);
-		lengthDisplayButton.active = false;
-		this.buttonList.add(lengthDisplayButton);
-		this.buttonList.add(lengthDecreaseButton);
-		this.buttonList.add(lengthIncreaseButton);
+		properties.add(propertyDir);
+		properties.add(propertyLength);
 		
 		onDeselectedInGUI();
 	}
@@ -58,7 +38,7 @@ public class ShapeLine extends Shape{
 		this.posList.clear();
 		
 		int dx = 0, dy = 0, dz = 0;
-		switch(this.dir) {
+		switch(propertyDir.value) {
 		case NEGATIVE_X:
 			dx = -1;
 			break;
@@ -79,7 +59,7 @@ public class ShapeLine extends Shape{
 			break;
 		}
 		
-		for(int i = 0;i < this.length;++i) {
+		for(int i = 0;i < propertyLength.value;++i) {
 			posList.add(new Vector3d(State.basePos.x + dx * i, State.basePos.y + dy * i, State.basePos.z + dz * i));
 		}
 	}
