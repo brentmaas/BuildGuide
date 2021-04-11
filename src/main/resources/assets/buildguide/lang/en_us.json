@@ -10,10 +10,11 @@
 	"screen.buildguide.shape": "Shape",
 	"screen.buildguide.basepos": "Base position",
 	"screen.buildguide.numberofblocks": "Number of blocks",
-	"screen.buildguide.depthtest": "Depth test: %s",
+	"screen.buildguide.depthtest": "Depth test",
 	"screen.buildguide.setbasepos": "Set base position",
 	"screen.buildguide.colours": "Colors",
 	"screen.buildguide.toggle": "Toggle",
+	"screen.buildguide.default": "Default",
 	
 	"_comment": "Shapes",
 	"shape.buildguide.none": "None",

@@ -35,7 +35,7 @@ public class RenderHandler {
 		RenderSystem.multMatrix(stack.getLast().getMatrix());
 		
 		RenderSystem.disableTexture();
-		if(!State.depthTest) RenderSystem.disableDepthTest();
+		if(!State.propertyDepthTest.value) RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);
 		RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -44,7 +44,7 @@ public class RenderHandler {
 		State.getCurrentShape().render(buffer, tessellator);
 		
 		RenderSystem.disableBlend();
-		if(!State.depthTest) RenderSystem.enableDepthTest();
+		if(!State.propertyDepthTest.value) RenderSystem.enableDepthTest();
 		RenderSystem.depthMask(true);
 		RenderSystem.enableTexture();
 		
