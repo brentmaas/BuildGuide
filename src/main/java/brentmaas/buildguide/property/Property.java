@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import brentmaas.buildguide.BuildGuideScreen;
+import brentmaas.buildguide.screen.BuildGuideScreen;
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;

@@ -1,5 +1,6 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.input;
 
+import brentmaas.buildguide.screen.BuildGuideScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

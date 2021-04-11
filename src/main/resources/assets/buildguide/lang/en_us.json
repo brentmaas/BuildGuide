@@ -24,5 +24,6 @@
 	"_comment": "Shape properties",
 	"property.buildguide.direction": "Direction",
 	"property.buildguide.length": "Length",
-	"property.buildguide.radius": "Radius"
+	"property.buildguide.radius": "Radius",
+	"property.buildguide.dome": "Dome"
 }

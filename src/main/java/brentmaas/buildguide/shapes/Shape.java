@@ -26,11 +26,11 @@ public abstract class Shape {
 	
 	public void render(BufferBuilder buffer, Tessellator tessellator) {
 		//Base position
-		renderCube(buffer, tessellator, State.basePos.x + 0.4, State.basePos.y + 0.4, State.basePos.z + 0.4, 0.2, 1.0f, 0.0f, 0.0f, 0.5f);
+		renderCube(buffer, tessellator, State.basePos.x + 0.4, State.basePos.y + 0.4, State.basePos.z + 0.4, 0.2, State.colourBaseposR, State.colourBaseposG, State.colourBaseposB, State.colourBaseposA);
 		
 		//Shape
 		for(Vector3d p: this.posList) {
-			renderCube(buffer, tessellator, p.x + 0.2, p.y + 0.2, p.z + 0.2, 0.6, 1.0f, 1.0f, 1.0f, 0.5f);
+			renderCube(buffer, tessellator, p.x + 0.2, p.y + 0.2, p.z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
 		}
 	}
 	

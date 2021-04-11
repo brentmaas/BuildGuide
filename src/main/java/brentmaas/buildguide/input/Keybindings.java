@@ -1,4 +1,4 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.input;
 
 import org.lwjgl.glfw.GLFW;
 

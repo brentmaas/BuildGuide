@@ -12,6 +12,7 @@ public class PropertyBoolean extends Property<Boolean>{
 	
 	public PropertyBoolean(int x, int y, Boolean value, String name, Shape parentShape) {
 		super(x, y, value, name, parentShape);
+		//TODO Look at CheckboxButton
 		buttonList.add(new Button(x + 80, y, 40, 20, new TranslationTextComponent("screen.buildguide.toggle"), button -> {
 			this.value = !this.value;
 			if(parentShape != null) parentShape.update();
