@@ -7,6 +7,7 @@
 	"screen.buildguide.title": "Build Guide",
 	"screen.buildguide.globalproperties": "Global properties",
 	"screen.buildguide.shapeproperties": "Shape properties",
+	"screen.buildguide.shape": "Shape",
 	"screen.buildguide.basepos": "Base position",
 	"screen.buildguide.numberofblocks": "Number of blocks",
 	"screen.buildguide.depthtest": "Depth test: %s",

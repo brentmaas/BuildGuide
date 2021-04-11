@@ -11,6 +11,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.widget.Slider;
 
 public class ColoursScreen extends Screen{
+	private String titleShape;
+	private String titleBasepos;
+	
 	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
 	private Slider sliderShapeR;
 	private Slider sliderShapeG;
@@ -27,6 +30,9 @@ public class ColoursScreen extends Screen{
 	
 	@Override
 	protected void init() {
+		titleShape = new TranslationTextComponent("screen.buildguide.shape").getString();
+		titleBasepos = new TranslationTextComponent("screen.buildguide.basepos").getString();
+		
 		sliderShapeR = new Slider(0, 40, 100, 20, new StringTextComponent("R: "), new StringTextComponent(""), 0.0, 1.0, State.colourShapeR, true, true, null);
 		sliderShapeG = new Slider(0, 60, 100, 20, new StringTextComponent("G: "), new StringTextComponent(""), 0.0, 1.0, State.colourShapeG, true, true, null);
 		sliderShapeB = new Slider(0, 80, 100, 20, new StringTextComponent("B: "), new StringTextComponent(""), 0.0, 1.0, State.colourShapeB, true, true, null);
@@ -51,6 +57,8 @@ public class ColoursScreen extends Screen{
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShape, (100 - font.getStringWidth(titleShape)) / 2, 25, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleBasepos, 120 + (100 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 		
 		State.colourShapeR = (float) sliderShapeR.getValue();
 		State.colourShapeG = (float) sliderShapeG.getValue();
