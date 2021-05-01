@@ -23,6 +23,8 @@ public class RenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderWorldLastEvent event) {
+		Minecraft.getInstance().getProfiler().startSection("buildguide");
+		
 		//https://www.programcreek.com/java-api-examples/?code=MichaelHillcox%2FXRay-Mod%2FXRay-Mod-master%2Fsrc%2Fmain%2Fjava%2Fcom%2Fxray%2Fxray%2FRender.java
 		MatrixStack stack = event.getMatrixStack();
 		stack.push();
@@ -51,5 +53,7 @@ public class RenderHandler {
 		RenderSystem.popMatrix();
 		
 		stack.pop();
+		
+		Minecraft.getInstance().getProfiler().endSection();
 	}
 }

@@ -10,6 +10,11 @@ public class ShapeEmpty extends Shape{
 		super();
 	}
 	
+	protected void updateShape() {
+		
+	}
+	
+	@Override
 	public void update() {
 		
 	}

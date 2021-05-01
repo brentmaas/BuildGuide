@@ -124,7 +124,6 @@ public class BuildGuideScreen extends Screen{
 		
 		if(State.basePos == null) setBasePos();
 		
-		//State.i_shape = (State.i_shape + di) % State.shapeStore.length;
 		State.i_shape = Math.floorMod(State.i_shape + di, State.shapeStore.length);
 		
 		State.getCurrentShape().onSelectedInGUI();

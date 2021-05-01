@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
+import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.Property;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -21,8 +22,15 @@ public abstract class Shape {
 		
 	}
 	
-	public abstract void update();
+	protected abstract void updateShape();
 	public abstract String getTranslationKey();
+	
+	//TODO: It's a bit spammy, probably want a config option at some point
+	public void update() {
+		long t = System.currentTimeMillis();
+		this.updateShape();
+		BuildGuide.logger.debug("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+	}
 	
 	public void render(BufferBuilder buffer, Tessellator tessellator) {
 		//Base position

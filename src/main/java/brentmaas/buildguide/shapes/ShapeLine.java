@@ -32,7 +32,7 @@ public class ShapeLine extends Shape{
 		onDeselectedInGUI();
 	}
 	
-	public void update() {
+	protected void updateShape() {
 		if(State.basePos == null) return;
 		
 		this.posList.clear();
