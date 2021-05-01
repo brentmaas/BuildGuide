@@ -8,43 +8,52 @@ import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.Property;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class Shape {
-	protected ArrayList<Vector3d> posList = new ArrayList<Vector3d>();
 	//TODO: Property<T> for shapes and basepos and stuff
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
+	private VertexBuffer buffer;
+	private int nBlocks = 0;
 	
 	public Shape() {
+		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
 		
+		update();
 	}
 	
-	protected abstract void updateShape();
+	protected abstract void updateShape(BufferBuilder builder);
 	public abstract String getTranslationKey();
 	
 	//TODO: It's a bit spammy, probably want a config option at some point
 	public void update() {
+		if(State.basePos == null) return;
+		nBlocks = -1; //Counteract the add from the base position
 		long t = System.currentTimeMillis();
-		this.updateShape();
+		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
+		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+		addCube(builder, State.basePos.x + 0.4, State.basePos.y + 0.4, State.basePos.z + 0.4, 0.2, State.colourBaseposR, State.colourBaseposG, State.colourBaseposB, State.colourBaseposA); //Base position
+		this.updateShape(builder);
+		builder.finishDrawing();
+		buffer.close();
+		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
+		buffer.upload(builder);
 		BuildGuide.logger.debug("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 	}
 	
-	public void render(BufferBuilder buffer, Tessellator tessellator) {
-		//Base position
-		renderCube(buffer, tessellator, State.basePos.x + 0.4, State.basePos.y + 0.4, State.basePos.z + 0.4, 0.2, State.colourBaseposR, State.colourBaseposG, State.colourBaseposB, State.colourBaseposA);
-		
-		//Shape
-		for(Vector3d p: this.posList) {
-			renderCube(buffer, tessellator, p.x + 0.2, p.y + 0.2, p.z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
-		}
+	public void render(Matrix4f matrix) {
+		//https://gist.github.com/gigaherz/87939db73d8adf4aace6ec7cf611bd2d
+		this.buffer.bindBuffer();
+		DefaultVertexFormats.POSITION_COLOR.setupBufferState(0);
+		this.buffer.draw(matrix, GL11.GL_QUADS);
+		VertexBuffer.unbindBuffer();
+		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
 	}
 	
-	private void renderCube(BufferBuilder buffer, Tessellator tessellator, double x, double y, double z, double s, float r, float g, float b, float a) {
-		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-		
+	protected void addCube(BufferBuilder buffer, double x, double y, double z, double s, float r, float g, float b, float a) {
 		//-X
 		buffer.pos(x, y, z).color(r, g, b, a).endVertex();
 		buffer.pos(x, y, z+s).color(r, g, b, a).endVertex();
@@ -81,7 +90,7 @@ public abstract class Shape {
 		buffer.pos(x+s, y+s, z+s).color(r, g, b, a).endVertex();
 		buffer.pos(x, y+s, z+s).color(r, g, b, a).endVertex();
 		
-		tessellator.draw();
+		nBlocks++;
 	}
 	
 	public void onSelectedInGUI() {
@@ -101,6 +110,6 @@ public abstract class Shape {
 	}
 	
 	public int getNumberOfBlocks() {
-		return posList.size();
+		return nBlocks;
 	}
 }

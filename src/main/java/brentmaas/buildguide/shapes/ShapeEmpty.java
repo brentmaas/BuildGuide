@@ -1,7 +1,7 @@
 package brentmaas.buildguide.shapes;
 
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.math.vector.Matrix4f;
 
 public class ShapeEmpty extends Shape{
 	
@@ -10,7 +10,7 @@ public class ShapeEmpty extends Shape{
 		super();
 	}
 	
-	protected void updateShape() {
+	protected void updateShape(BufferBuilder builder) {
 		
 	}
 	
@@ -20,7 +20,7 @@ public class ShapeEmpty extends Shape{
 	}
 	
 	@Override
-	public void render(BufferBuilder buffer, Tessellator tessellator) {
+	public void render(Matrix4f matrix) {
 		
 	}
 	

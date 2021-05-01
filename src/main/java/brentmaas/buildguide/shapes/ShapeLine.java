@@ -3,7 +3,7 @@ package brentmaas.buildguide.shapes;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ShapeLine extends Shape{
@@ -24,18 +24,14 @@ public class ShapeLine extends Shape{
 	public ShapeLine() {
 		super();
 		
-		update();
-		
 		properties.add(propertyDir);
 		properties.add(propertyLength);
 		
 		onDeselectedInGUI();
 	}
 	
-	protected void updateShape() {
+	protected void updateShape(BufferBuilder builder) {
 		if(State.basePos == null) return;
-		
-		this.posList.clear();
 		
 		int dx = 0, dy = 0, dz = 0;
 		switch(propertyDir.value) {
@@ -60,7 +56,7 @@ public class ShapeLine extends Shape{
 		}
 		
 		for(int i = 0;i < propertyLength.value;++i) {
-			posList.add(new Vector3d(State.basePos.x + dx * i, State.basePos.y + dy * i, State.basePos.z + dz * i));
+			addCube(builder, State.basePos.x + dx * i + 0.2, State.basePos.y + dy * i + 0.2, State.basePos.z + dz * i + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
 		}
 	}
 	

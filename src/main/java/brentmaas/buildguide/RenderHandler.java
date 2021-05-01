@@ -7,8 +7,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,8 +28,6 @@ public class RenderHandler {
 		stack.push();
 		Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
 		stack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder buffer = tessellator.getBuffer();
 		
 		RenderSystem.pushMatrix();
 		RenderSystem.multMatrix(stack.getLast().getMatrix());
@@ -43,7 +39,7 @@ public class RenderHandler {
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		RenderSystem.enableBlend();
 		
-		State.getCurrentShape().render(buffer, tessellator);
+		State.getCurrentShape().render(stack.getLast().getMatrix());
 		
 		RenderSystem.disableBlend();
 		if(!State.propertyDepthTest.value) RenderSystem.enableDepthTest();

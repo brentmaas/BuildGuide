@@ -3,7 +3,7 @@ package brentmaas.buildguide.shapes;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 
 //TODO Odd sphere + even sphere
@@ -26,18 +26,14 @@ public class ShapeSphere extends Shape{
 	public ShapeSphere() {
 		super();
 		
-		update();
-		
 		properties.add(propertyRadius);
 		properties.add(propertyDome);
 		
 		onDeselectedInGUI();
 	}
 	
-	protected void updateShape() {
+	protected void updateShape(BufferBuilder builder) {
 		if(State.basePos == null) return;
-		
-		this.posList.clear();
 		
 		int radius = propertyRadius.value;
 		
@@ -46,7 +42,7 @@ public class ShapeSphere extends Shape{
 				for(int z = propertyDome.value == dome.POSITIVE_Z ? 0 : -radius; z <= (propertyDome.value == dome.NEGATIVE_Z ? 0 : radius);++z) {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (radius - 0.5) * (radius - 0.5) && r2 <= (radius + 0.5) * (radius + 0.5)) {
-						this.posList.add(new Vector3d(State.basePos.x + x, State.basePos.y + y, State.basePos.z + z));
+						addCube(builder, State.basePos.x + x + 0.2, State.basePos.y + y + 0.2, State.basePos.z + z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
 					}
 				}
 			}

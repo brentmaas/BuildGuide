@@ -23,6 +23,8 @@ public class ColoursScreen extends Screen{
 	private Slider sliderBaseposG;
 	private Slider sliderBaseposB;
 	private Slider sliderBaseposA;
+	private Button buttonSetShape;
+	private Button buttonSetBasepos;
 	private Button buttonDefaultShape;
 	private Button buttonDefaultBasepos;
 	
@@ -44,7 +46,10 @@ public class ColoursScreen extends Screen{
 		sliderBaseposB = new Slider(120, 80, 100, 20, new StringTextComponent("B: "), new StringTextComponent(""), 0.0, 1.0, State.colourBaseposB, true, true, null);
 		sliderBaseposA = new Slider(120, 100, 100, 20, new StringTextComponent("A: "), new StringTextComponent(""), 0.0, 1.0, State.colourBaseposA, true, true, null);
 		
-		buttonDefaultShape = new Button(0, 120, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
+		buttonSetShape = new Button(0, 120, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> State.updateCurrentShape());
+		buttonSetBasepos = new Button(120, 120, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> State.updateCurrentShape());
+		
+		buttonDefaultShape = new Button(0, 140, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
 			sliderShapeR.setValue(1.0);
 			sliderShapeG.setValue(1.0);
 			sliderShapeB.setValue(1.0);
@@ -57,8 +62,9 @@ public class ColoursScreen extends Screen{
 			State.colourShapeG = 1.0f;
 			State.colourShapeB = 1.0f;
 			State.colourShapeA = 0.5f;
+			State.updateCurrentShape();
 		});
-		buttonDefaultBasepos = new Button(120, 120, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
+		buttonDefaultBasepos = new Button(120, 140, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
 			sliderBaseposR.setValue(1.0);
 			sliderBaseposG.setValue(0.0);
 			sliderBaseposB.setValue(0.0);
@@ -71,6 +77,7 @@ public class ColoursScreen extends Screen{
 			State.colourBaseposG = 0.0f;
 			State.colourBaseposB = 0.0f;
 			State.colourBaseposA = 0.5f;
+			State.updateCurrentShape();
 		});
 		
 		addButton(buttonBack);
@@ -82,6 +89,8 @@ public class ColoursScreen extends Screen{
 		addButton(sliderBaseposG);
 		addButton(sliderBaseposB);
 		addButton(sliderBaseposA);
+		addButton(buttonSetShape);
+		addButton(buttonSetBasepos);
 		addButton(buttonDefaultShape);
 		addButton(buttonDefaultBasepos);
 	}

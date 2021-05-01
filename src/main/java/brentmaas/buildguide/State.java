@@ -29,4 +29,8 @@ public class State {
 	public static Shape getCurrentShape() {
 		return shapeStore[i_shape];
 	}
+	
+	public static void updateCurrentShape() {
+		shapeStore[i_shape].update();
+	}
 }
