@@ -6,11 +6,12 @@ import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 
 public class PropertyNonzeroInt extends Property<Integer>{
 	
 	
-	public PropertyNonzeroInt(int x, int y, int value, String name, Shape parentShape) {
+	public PropertyNonzeroInt(int x, int y, int value, TextComponent name, Shape parentShape) {
 		super(x, y, value, name, parentShape);
 		buttonList.add(new Button(x + 100, y, 20, 20, new StringTextComponent("-"), button -> {
 			--this.value;
@@ -25,7 +26,7 @@ public class PropertyNonzeroInt extends Property<Integer>{
 	}
 	
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		font.drawStringWithShadow(matrixStack, name, x + 5, y + 5, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, value.toString(), x + 120 + (20 - font.getStringWidth(value.toString())) / 2, y + 5, 0xFFFFFF);
 	}
 }

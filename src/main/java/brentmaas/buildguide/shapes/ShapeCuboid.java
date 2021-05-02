@@ -3,11 +3,12 @@ package brentmaas.buildguide.shapes;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.util.text.StringTextComponent;
 
 public class ShapeCuboid extends Shape{
-	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(0, 145, 3, "X", this);
-	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(0, 165, 3, "Y", this);
-	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(0, 185, 3, "Z", this);
+	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(0, 145, 3, new StringTextComponent("X"), this);
+	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(0, 165, 3, new StringTextComponent("Y"), this);
+	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(0, 185, 3, new StringTextComponent("Z"), this);
 	
 	public ShapeCuboid() {
 		super();

@@ -3,6 +3,9 @@
 	"key.buildguide.category": "Build Guide",
 	"key.buildguide.openbuildguide": "Open Build Guide",
 	
+	"_comment": "Config",
+	"config.buildguide.debugGenerationTimingsEnabled": "Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.",
+	
 	"_comment": "Screens",
 	"screen.buildguide.title": "Build Guide",
 	"screen.buildguide.globalproperties": "Global properties",

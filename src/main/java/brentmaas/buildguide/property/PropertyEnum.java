@@ -6,11 +6,12 @@ import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 
 public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	private String[] names;
 	
-	public PropertyEnum(int x, int y, T value, String name, Shape parentShape, String[] names) {
+	public PropertyEnum(int x, int y, T value, TextComponent name, Shape parentShape, String[] names) {
 		super(x, y, value, name, parentShape);
 		this.names = names;
 		buttonList.add(new Button(x + 100, y, 20, 20, new StringTextComponent("<-"), button -> {
@@ -24,7 +25,7 @@ public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	}
 	
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		font.drawStringWithShadow(matrixStack, name, x + 5, y + 5, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, names[value.ordinal()], x + 120 + (20 - font.getStringWidth(names[value.ordinal()])) / 2, y + 5, 0xFFFFFF);
 	}
 }

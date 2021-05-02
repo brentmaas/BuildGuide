@@ -8,14 +8,15 @@ import brentmaas.buildguide.screen.BuildGuideScreen;
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.AbstractButton;
+import net.minecraft.util.text.TextComponent;
 
 public abstract class Property<T> {
 	protected int x, y;
 	public T value;
-	protected String name;
+	protected TextComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
 	
-	public Property(int x, int y, T value, String name, Shape parentShape){
+	public Property(int x, int y, T value, TextComponent name, Shape parentShape){
 		this.x = x;
 		this.y = y;
 		this.value = value;
