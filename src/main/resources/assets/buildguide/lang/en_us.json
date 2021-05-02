@@ -23,14 +23,21 @@
 	"_comment": "Shapes",
 	"shape.buildguide.none": "None",
 	"shape.buildguide.line": "Line",
+	"shape.buildguide.cuboid": "Cuboid",
+	"shape.buildguide.triangle": "Triangle",
+	"shape.buildguide.rectangle": "Rectangle",
+	"shape.buildguide.pentagon": "Pentagon",
+	"shape.buildguide.hexagon": "Hexagon",
+	"shape.buildguide.octagon": "Octagon",
 	"shape.buildguide.circle": "Circle",
 	"shape.buildguide.sphere": "Sphere",
-	"shape.buildguide.cuboid": "Cuboid",
 	
 	"_comment": "Shape properties",
 	"property.buildguide.direction": "Direction",
+	"property.buildguide.rotation": "Rotation",
 	"property.buildguide.length": "Length",
 	"property.buildguide.radius": "Radius",
+	"property.buildguide.width": "Width",
 	"property.buildguide.height": "Height",
 	"property.buildguide.dome": "Dome"
 }

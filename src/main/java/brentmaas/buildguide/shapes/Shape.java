@@ -14,7 +14,6 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class Shape {
-	//TODO: Property<T> for shapes and basepos and stuff
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	private VertexBuffer buffer;
 	private int nBlocks = 0;
@@ -26,7 +25,6 @@ public abstract class Shape {
 	protected abstract void updateShape(BufferBuilder builder);
 	public abstract String getTranslationKey();
 	
-	//TODO: It's a bit spammy, probably want a config option at some point
 	public void update() {
 		nBlocks = -1; //Counteract the add from the base position
 		long t = System.currentTimeMillis();

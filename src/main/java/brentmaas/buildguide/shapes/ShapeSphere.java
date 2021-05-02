@@ -6,7 +6,7 @@ import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 
-//TODO Odd sphere + even sphere
+//TODO Odd sphere + even sphere?
 public class ShapeSphere extends Shape{
 	private enum dome {
 		NO,
