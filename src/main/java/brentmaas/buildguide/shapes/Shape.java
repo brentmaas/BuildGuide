@@ -36,7 +36,7 @@ public abstract class Shape {
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 		this.updateShape(builder);
-		addCube(builder, State.basePos.x + 0.4, State.basePos.y + 0.4, State.basePos.z + 0.4, 0.2, State.colourBaseposR, State.colourBaseposG, State.colourBaseposB, State.colourBaseposA); //Base position
+		addCube(builder, 0.4, 0.4, 0.4, 0.2, State.colourBaseposR, State.colourBaseposG, State.colourBaseposB, State.colourBaseposA); //Base position
 		builder.finishDrawing();
 		buffer.close();
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);

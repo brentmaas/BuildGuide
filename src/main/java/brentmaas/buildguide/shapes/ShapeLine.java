@@ -56,7 +56,7 @@ public class ShapeLine extends Shape{
 		}
 		
 		for(int i = 0;i < propertyLength.value;++i) {
-			addCube(builder, State.basePos.x + dx * i + 0.2, State.basePos.y + dy * i + 0.2, State.basePos.z + dz * i + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
 		}
 	}
 	

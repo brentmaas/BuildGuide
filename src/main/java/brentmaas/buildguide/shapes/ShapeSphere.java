@@ -42,7 +42,7 @@ public class ShapeSphere extends Shape{
 				for(int z = propertyDome.value == dome.POSITIVE_Z ? 0 : -radius; z <= (propertyDome.value == dome.NEGATIVE_Z ? 0 : radius);++z) {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (radius - 0.5) * (radius - 0.5) && r2 <= (radius + 0.5) * (radius + 0.5)) {
-						addCube(builder, State.basePos.x + x + 0.2, State.basePos.y + y + 0.2, State.basePos.z + z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+						addCube(builder, x + 0.2, y + 0.2, z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
 					}
 				}
 			}

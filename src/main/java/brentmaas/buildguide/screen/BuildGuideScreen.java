@@ -137,7 +137,6 @@ public class BuildGuideScreen extends Screen{
 	
 	private void shiftBasePos(int dx, int dy, int dz) {
 		State.basePos = new Vector3d(State.basePos.x + dx, State.basePos.y + dy, State.basePos.z + dz);
-		for(Shape shape: State.shapeStore) shape.update();
 	}
 	
 	public void addButtonExternal(AbstractButton button) {
