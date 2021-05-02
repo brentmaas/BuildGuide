@@ -7,7 +7,6 @@ import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 
-//TODO Odd sphere + even circle?
 public class ShapeCircle extends Shape {
 	private enum direction{
 		X,
