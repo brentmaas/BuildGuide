@@ -25,14 +25,14 @@ public class BuildGuideScreen extends Screen{
 	private ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	
 	private Button buttonClose;
-	//Too much effort to use PropertyEnum, so still normal buttons and drawing strings in render()
+	//It's better off as custom buttons instead of PropertyEnum
 	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
 	private Button buttonBasepos = new Button(0, 60, 160, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
 	private Button buttonColours = new Button(0, 100, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
 	});
-	//Too much effort to use PropertyInt, so still normal buttons and drawing strings in render()
+	//It's better off as custom buttons instead of PropertyInt
 	private Button buttonBaseposXDecrease = new Button(200, 40, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
 	private Button buttonBaseposXIncrease = new Button(280, 40, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
 	private Button buttonBaseposYDecrease = new Button(200, 60, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
@@ -52,7 +52,10 @@ public class BuildGuideScreen extends Screen{
 		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		
-		if(State.basePos == null) setBasePos();
+		if(State.basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
+			setBasePos();
+			for(Shape shape: State.shapeStore) shape.update();
+		}
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
@@ -132,7 +135,6 @@ public class BuildGuideScreen extends Screen{
 	private void setBasePos() {
 		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
 		State.basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
-		for(Shape shape: State.shapeStore) shape.update();
 	}
 	
 	private void shiftBasePos(int dx, int dy, int dz) {

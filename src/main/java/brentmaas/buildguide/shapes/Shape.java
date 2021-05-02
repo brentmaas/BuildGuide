@@ -21,8 +21,6 @@ public abstract class Shape {
 	
 	public Shape() {
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
-		
-		update();
 	}
 	
 	protected abstract void updateShape(BufferBuilder builder);
@@ -30,7 +28,6 @@ public abstract class Shape {
 	
 	//TODO: It's a bit spammy, probably want a config option at some point
 	public void update() {
-		if(State.basePos == null) return;
 		nBlocks = -1; //Counteract the add from the base position
 		long t = System.currentTimeMillis();
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own

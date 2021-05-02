@@ -6,9 +6,9 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.StringTextComponent;
 
 public class ShapeCuboid extends Shape{
-	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(0, 145, 3, new StringTextComponent("X"), this);
-	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(0, 165, 3, new StringTextComponent("Y"), this);
-	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(0, 185, 3, new StringTextComponent("Z"), this);
+	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(0, 145, 3, new StringTextComponent("X"), () -> {this.update();});
+	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(0, 165, 3, new StringTextComponent("Y"), () -> {this.update();});
+	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(0, 185, 3, new StringTextComponent("Z"), () -> {this.update();});
 	
 	public ShapeCuboid() {
 		super();
@@ -21,8 +21,6 @@ public class ShapeCuboid extends Shape{
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
-		if(State.basePos == null) return;
-		
 		int dx = propertyX.value;
 		int dy = propertyY.value;
 		int dz = propertyZ.value;

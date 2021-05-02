@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import brentmaas.buildguide.screen.BuildGuideScreen;
-import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.util.text.TextComponent;
@@ -16,7 +15,7 @@ public abstract class Property<T> {
 	protected TextComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
 	
-	public Property(int x, int y, T value, TextComponent name, Shape parentShape){
+	public Property(int x, int y, T value, TextComponent name, Runnable onUpdate){
 		this.x = x;
 		this.y = y;
 		this.value = value;
