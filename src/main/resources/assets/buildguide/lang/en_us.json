@@ -31,5 +31,6 @@
 	"property.buildguide.direction": "Direction",
 	"property.buildguide.length": "Length",
 	"property.buildguide.radius": "Radius",
+	"property.buildguide.height": "Height",
 	"property.buildguide.dome": "Dome"
 }

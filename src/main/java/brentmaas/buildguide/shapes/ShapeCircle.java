@@ -2,6 +2,7 @@ package brentmaas.buildguide.shapes;
 
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.PropertyEnum;
+import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -18,12 +19,14 @@ public class ShapeCircle extends Shape {
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslationTextComponent("property.buildguide.direction"), this, directionNames);
 	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.radius"), this);
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 185, 1, new TranslationTextComponent("property.buildguide.height"), this);
 	
 	public ShapeCircle() {
 		super();
 		
 		properties.add(propertyDir);
 		properties.add(propertyRadius);
+		properties.add(propertyHeight);
 		
 		onDeselectedInGUI();
 	}
@@ -49,7 +52,9 @@ public class ShapeCircle extends Shape {
 				for(int z = -dz; z <= dz;++z) {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
-						addCube(builder, x + 0.2, y + 0.2, z + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+						for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
+							addCube(builder, x + (propertyDir.value == direction.X ? s : 0) + 0.2, y + (propertyDir.value == direction.Y ? s : 0) + 0.2, z + (propertyDir.value == direction.Z ? s : 0) + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+						}
 					}
 				}
 			}
