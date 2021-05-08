@@ -33,11 +33,8 @@
 	"_comment": "Shapes",
 	"shape.buildguide.circle": "Circle",
 	"shape.buildguide.cuboid": "Cuboid",
-	"shape.buildguide.hexagon": "Hexagon",
 	"shape.buildguide.line": "Line",
 	"shape.buildguide.none": "None",
-	"shape.buildguide.octagon": "Octagon",
-	"shape.buildguide.pentagon": "Pentagon",
-	"shape.buildguide.sphere": "Sphere",
-	"shape.buildguide.triangle": "Triangle"
+	"shape.buildguide.polygon": "Polygon",
+	"shape.buildguide.sphere": "Sphere"
 }
