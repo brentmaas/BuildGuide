@@ -27,8 +27,6 @@ public class ShapeSphere extends Shape{
 		
 		properties.add(propertyRadius);
 		properties.add(propertyDome);
-		
-		onDeselectedInGUI();
 	}
 	
 	protected void updateShape(BufferBuilder builder) {

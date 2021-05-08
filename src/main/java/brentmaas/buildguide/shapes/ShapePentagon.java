@@ -34,8 +34,6 @@ public class ShapePentagon extends Shape{
 		properties.add(propertyRot);
 		properties.add(propertyRadius);
 		properties.add(propertyHeight);
-		
-		onDeselectedInGUI();
 	}
 	
 	protected void updateShape(BufferBuilder builder) {

@@ -8,17 +8,17 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class ShapeLine extends Shape{
 	private enum direction{
-		NEGATIVE_X,
-		NEGATIVE_Y,
-		NEGATIVE_Z,
 		POSITIVE_X,
 		POSITIVE_Y,
-		POSITIVE_Z
+		POSITIVE_Z,
+		NEGATIVE_X,
+		NEGATIVE_Y,
+		NEGATIVE_Z
 	}
 	
-	private final String[] directionNames = {"-X", "-Y", "-Z", "+X", "+Y", "+Z"};
+	private final String[] directionNames = {"+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.NEGATIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.POSITIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
 	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
 	
 	public ShapeLine() {
@@ -26,8 +26,6 @@ public class ShapeLine extends Shape{
 		
 		properties.add(propertyDir);
 		properties.add(propertyLength);
-		
-		onDeselectedInGUI();
 	}
 	
 	protected void updateShape(BufferBuilder builder) {

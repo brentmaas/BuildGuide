@@ -26,8 +26,6 @@ public class ShapeCircle extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyRadius);
 		properties.add(propertyHeight);
-		
-		onDeselectedInGUI();
 	}
 	
 	protected void updateShape(BufferBuilder builder) {

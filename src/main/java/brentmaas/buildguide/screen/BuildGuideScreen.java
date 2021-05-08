@@ -77,6 +77,7 @@ public class BuildGuideScreen extends Screen{
 			p.addToBuildGuideScreen(this);
 		}
 		for(Shape s: State.shapeStore) {
+			s.onDeselectedInGUI();
 			for(Property<?> p: s.properties) {
 				p.addToBuildGuideScreen(this);
 			}

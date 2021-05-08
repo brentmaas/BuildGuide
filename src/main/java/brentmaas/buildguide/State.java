@@ -12,7 +12,6 @@ import brentmaas.buildguide.shapes.ShapeLine;
 import brentmaas.buildguide.shapes.ShapeOctagon;
 import brentmaas.buildguide.shapes.ShapePentagon;
 import brentmaas.buildguide.shapes.ShapeSphere;
-import brentmaas.buildguide.shapes.ShapeRectangle;
 import brentmaas.buildguide.shapes.ShapeTriangle;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -35,7 +34,7 @@ public class State {
 	}
 	public static boolean debugGenerationTimingsEnabled;
 	
-	public static Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapeTriangle(), new ShapeRectangle(), new ShapePentagon(), new ShapeHexagon(), new ShapeOctagon(), new ShapeCircle(), new ShapeSphere()};
+	public static Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapeTriangle(), new ShapePentagon(), new ShapeHexagon(), new ShapeOctagon(), new ShapeCircle(), new ShapeSphere()};
 	public static int i_shape = 0;
 	public static Vector3d basePos = null;
 	public static PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
