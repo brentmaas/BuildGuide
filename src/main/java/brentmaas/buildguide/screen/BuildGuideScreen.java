@@ -100,7 +100,9 @@ public class BuildGuideScreen extends Screen{
 		font.drawStringWithShadow(matrixStack, titleBasepos, 160 + (160 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 320 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 25, 0xFFFFFF);
 		String numberOfBlocks = "" + State.getCurrentShape().getNumberOfBlocks();
+		String numberOfStacks = "(" + (State.getCurrentShape().getNumberOfBlocks() / 64) + " x 64 + " + (State.getCurrentShape().getNumberOfBlocks() % 64) + ")";
 		font.drawStringWithShadow(matrixStack, numberOfBlocks, 320 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 45, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, numberOfStacks, 320 + (100 - font.getStringWidth(numberOfStacks)) / 2, 65, 0xFFFFFF);
 		
 		font.drawStringWithShadow(matrixStack, textShape, 5, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, State.getCurrentShape().getTranslatedName(), 80 + (60 - font.getStringWidth(State.getCurrentShape().getTranslatedName())) / 2, 45, 0xFFFFFF);

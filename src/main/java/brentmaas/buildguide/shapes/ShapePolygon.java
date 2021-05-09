@@ -30,18 +30,18 @@ public class ShapePolygon extends Shape{
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
 	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 145, 3, new TranslationTextComponent("property.buildguide.sides"), () -> {this.update();}, 3);
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 165, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(0, 185, rotation.ROT0, new TranslationTextComponent("property.buildguide.rotation"), () -> {this.update();}, rotationNames);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 205, 3, new TranslationTextComponent("property.buildguide.radius"), () -> {this.update();});
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.radius"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 185, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(0, 205, rotation.ROT0, new TranslationTextComponent("property.buildguide.rotation"), () -> {this.update();}, rotationNames);
 	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 225, 1, new TranslationTextComponent("property.buildguide.height"), () -> {this.update();});
 	
 	public ShapePolygon() {
 		super();
 		
 		properties.add(propertySides);
+		properties.add(propertyRadius);
 		properties.add(propertyDir);
 		properties.add(propertyRot);
-		properties.add(propertyRadius);
 		properties.add(propertyHeight);
 	}
 	
