@@ -7,7 +7,7 @@ public class ShapeEmpty extends Shape{
 	
 	
 	public ShapeEmpty() {
-		super();
+		
 	}
 	
 	protected void updateShape(BufferBuilder builder) {

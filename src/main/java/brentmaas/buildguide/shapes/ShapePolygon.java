@@ -1,6 +1,6 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.State;
+import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyMinimumInt;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
@@ -64,13 +64,13 @@ public class ShapePolygon extends Shape{
 						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
-								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
 								break;
 							case Y:
-								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
 								break;
 							case Z:
-								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
 								break;
 							}
 						}

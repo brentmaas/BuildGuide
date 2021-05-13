@@ -1,6 +1,6 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.State;
+import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
@@ -48,7 +48,7 @@ public class ShapeCircle extends Shape {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
 						for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
-							addCube(builder, x + (propertyDir.value == direction.X ? s : 0) + 0.2, y + (propertyDir.value == direction.Y ? s : 0) + 0.2, z + (propertyDir.value == direction.Z ? s : 0) + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+							addCube(builder, x + (propertyDir.value == direction.X ? s : 0) + 0.2, y + (propertyDir.value == direction.Y ? s : 0) + 0.2, z + (propertyDir.value == direction.Z ? s : 0) + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
 						}
 					}
 				}

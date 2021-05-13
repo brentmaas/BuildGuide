@@ -8,8 +8,8 @@ import brentmaas.buildguide.shapes.ShapeCircle;
 import brentmaas.buildguide.shapes.ShapeCuboid;
 import brentmaas.buildguide.shapes.ShapeEmpty;
 import brentmaas.buildguide.shapes.ShapeLine;
-import brentmaas.buildguide.shapes.ShapeSphere;
 import brentmaas.buildguide.shapes.ShapePolygon;
+import brentmaas.buildguide.shapes.ShapeSphere;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -29,25 +29,25 @@ public class State {
 		clientConfig = specPair.getLeft();
 		clientConfigSpec = specPair.getRight();
 	}
-	public static boolean debugGenerationTimingsEnabled;
+	public boolean debugGenerationTimingsEnabled;
 	
-	public static Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapePolygon(), new ShapeCircle(), new ShapeSphere()};
-	public static int i_shape = 0;
-	public static Vector3d basePos = null;
-	public static PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
+	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapePolygon(), new ShapeCircle(), new ShapeSphere()};
+	public int i_shape = 0;
+	public Vector3d basePos = null;
+	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
 	
-	public static float colourShapeR = 1.0f;
-	public static float colourShapeG = 1.0f;
-	public static float colourShapeB = 1.0f;
-	public static float colourShapeA = 0.5f;
+	public float colourShapeR = 1.0f;
+	public float colourShapeG = 1.0f;
+	public float colourShapeB = 1.0f;
+	public float colourShapeA = 0.5f;
 	
-	public static float colourBaseposR = 1.0f;
-	public static float colourBaseposG = 0.0f;
-	public static float colourBaseposB = 0.0f;
-	public static float colourBaseposA = 0.5f;
+	public float colourBaseposR = 1.0f;
+	public float colourBaseposG = 0.0f;
+	public float colourBaseposB = 0.0f;
+	public float colourBaseposA = 0.5f;
 	
 	public static void bakeConfig() {
-		debugGenerationTimingsEnabled = clientConfig.debugGenerationTimingsEnabled.get();
+		BuildGuide.state.debugGenerationTimingsEnabled = clientConfig.debugGenerationTimingsEnabled.get();
 	}
 	
 	@SubscribeEvent
@@ -58,11 +58,11 @@ public class State {
 	}
 	
 	public static Shape getCurrentShape() {
-		return shapeStore[i_shape];
+		return BuildGuide.state.shapeStore[BuildGuide.state.i_shape];
 	}
 	
 	public static void updateCurrentShape() {
-		shapeStore[i_shape].update();
+		BuildGuide.state.shapeStore[BuildGuide.state.i_shape].update();
 	}
 	
 	public static class ClientConfig{

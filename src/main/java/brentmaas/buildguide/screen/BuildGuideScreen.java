@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.State;
 import brentmaas.buildguide.property.Property;
 import brentmaas.buildguide.shapes.Shape;
@@ -11,8 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class BuildGuideScreen extends Screen{
@@ -52,9 +53,9 @@ public class BuildGuideScreen extends Screen{
 		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		
-		if(State.basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
+		if(BuildGuide.state.basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
 			setBasePos();
-			for(Shape shape: State.shapeStore) shape.update();
+			for(Shape shape: BuildGuide.state.shapeStore) shape.update();
 		}
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
@@ -71,12 +72,12 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonBaseposZDecrease);
 		addButton(buttonBaseposZIncrease);
 		
-		properties.add(State.propertyDepthTest);
+		properties.add(BuildGuide.state.propertyDepthTest);
 		
 		for(Property<?> p: properties) {
 			p.addToBuildGuideScreen(this);
 		}
-		for(Shape s: State.shapeStore) {
+		for(Shape s: BuildGuide.state.shapeStore) {
 			s.onDeselectedInGUI();
 			for(Property<?> p: s.properties) {
 				p.addToBuildGuideScreen(this);
@@ -110,9 +111,9 @@ public class BuildGuideScreen extends Screen{
 		font.drawStringWithShadow(matrixStack, "X", 185, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Y", 185, 65, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Z", 185, 85, 0xFFFFFF);
-		String x = "" + (int) State.basePos.x;
-		String y = "" + (int) State.basePos.y;
-		String z = "" + (int) State.basePos.z;
+		String x = "" + (int) BuildGuide.state.basePos.x;
+		String y = "" + (int) BuildGuide.state.basePos.y;
+		String z = "" + (int) BuildGuide.state.basePos.z;
 		font.drawStringWithShadow(matrixStack, x, 220 + (60 - font.getStringWidth(x)) / 2, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, y, 220 + (60 - font.getStringWidth(y)) / 2, 65, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, z, 220 + (60 - font.getStringWidth(z)) / 2, 85, 0xFFFFFF);
@@ -128,20 +129,20 @@ public class BuildGuideScreen extends Screen{
 	private void updateShape(int di) {
 		State.getCurrentShape().onDeselectedInGUI();
 		
-		if(State.basePos == null) setBasePos();
+		if(BuildGuide.state.basePos == null) setBasePos();
 		
-		State.i_shape = Math.floorMod(State.i_shape + di, State.shapeStore.length);
+		BuildGuide.state.i_shape = Math.floorMod(BuildGuide.state.i_shape + di, BuildGuide.state.shapeStore.length);
 		
 		State.getCurrentShape().onSelectedInGUI();
 	}
 	
 	private void setBasePos() {
 		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
-		State.basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
+		BuildGuide.state.basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
 	}
 	
 	private void shiftBasePos(int dx, int dy, int dz) {
-		State.basePos = new Vector3d(State.basePos.x + dx, State.basePos.y + dy, State.basePos.z + dz);
+		BuildGuide.state.basePos = new Vector3d(BuildGuide.state.basePos.x + dx, BuildGuide.state.basePos.y + dy, BuildGuide.state.basePos.z + dz);
 	}
 	
 	public void addButtonExternal(AbstractButton button) {

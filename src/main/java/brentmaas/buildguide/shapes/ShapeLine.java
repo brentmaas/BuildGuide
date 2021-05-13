@@ -1,6 +1,6 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.State;
+import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -52,7 +52,7 @@ public class ShapeLine extends Shape{
 		}
 		
 		for(int i = 0;i < propertyLength.value;++i) {
-			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6, State.colourShapeR, State.colourShapeG, State.colourShapeB, State.colourShapeA);
+			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
 		}
 	}
 	
