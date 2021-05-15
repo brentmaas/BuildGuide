@@ -17,22 +17,22 @@ public class ShapeEllipse extends Shape {
 	private String[] directionNames = {"X", "Y", "Z"};
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertySemimajor1 = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.semimajoraxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemimajor2 = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.semimajoraxis", "Z"), () -> {this.update();});
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
 	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 205, 1, new TranslationTextComponent("property.buildguide.height"), () -> {this.update();});
 	
 	public ShapeEllipse() {
 		super();
 		
 		properties.add(propertyDir);
-		properties.add(propertySemimajor1);
-		properties.add(propertySemimajor2);
+		properties.add(propertySemi1);
+		properties.add(propertySemi2);
 		properties.add(propertyHeight);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
-		int da = propertySemimajor1.value;
-		int db = propertySemimajor2.value;
+		int da = propertySemi1.value;
+		int db = propertySemi2.value;
 		
 		for(int a = -da; a <= da;++a) {
 			for(int b = -db; b <= db;++b) {
@@ -62,16 +62,16 @@ public class ShapeEllipse extends Shape {
 		
 		switch(propertyDir.value) {
 		case X:
-			propertySemimajor1.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "Y"));
-			propertySemimajor2.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "Z"));
+			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Y"));
+			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Z"));
 			break;
 		case Y:
-			propertySemimajor1.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "X"));
-			propertySemimajor2.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "Z"));
+			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Z"));
 			break;
 		case Z:
-			propertySemimajor1.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "X"));
-			propertySemimajor2.setName(new TranslationTextComponent("property.buildguide.semimajoraxis", "Y"));
+			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Y"));
 			break;
 		}
 	}

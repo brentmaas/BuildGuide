@@ -13,7 +13,7 @@
 	"property.buildguide.length": "Length",
 	"property.buildguide.radius": "Radius",
 	"property.buildguide.rotation": "Rotation",
-	"property.buildguide.semimajoraxis": "%s semi-major axis",
+	"property.buildguide.semiaxis": "%s semi-axis",
 	"property.buildguide.sides": "Sides",
 	"property.buildguide.walls": "Walls",
 	"property.buildguide.width": "Width",

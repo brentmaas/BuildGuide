@@ -19,24 +19,24 @@ public class ShapeEllipsoid extends Shape{
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertySemimajorX = new PropertyPositiveInt(0, 145, 3, new TranslationTextComponent("property.buildguide.semimajoraxis", "X"), () -> {this.update();});
-	private PropertyPositiveInt propertySemimajorY = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.semimajoraxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemimajorZ = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.semimajoraxis", "Z"), () -> {this.update();});
+	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 145, 3, new TranslationTextComponent("property.buildguide.semiaxis", "X"), () -> {this.update();});
+	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
+	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
 	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(0, 205, dome.NO, new TranslationTextComponent("property.buildguide.dome"), () -> {this.update();}, domeNames);
 	
 	public ShapeEllipsoid() {
 		super();
 		
-		properties.add(propertySemimajorX);
-		properties.add(propertySemimajorY);
-		properties.add(propertySemimajorZ);
+		properties.add(propertySemiX);
+		properties.add(propertySemiY);
+		properties.add(propertySemiZ);
 		properties.add(propertyDome);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
-		int dx = propertySemimajorX.value;
-		int dy = propertySemimajorY.value;
-		int dz = propertySemimajorZ.value;
+		int dx = propertySemiX.value;
+		int dy = propertySemiY.value;
+		int dz = propertySemiZ.value;
 		
 		for(int x = propertyDome.value == dome.POSITIVE_X ? 0 : -dx; x <= (propertyDome.value == dome.NEGATIVE_X ? 0 : dx);++x) {
 			for(int y = propertyDome.value == dome.POSITIVE_Y ? 0 : -dy; y <= (propertyDome.value == dome.NEGATIVE_Y ? 0 : dy);++y) {
