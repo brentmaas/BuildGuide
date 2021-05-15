@@ -6,6 +6,8 @@ import brentmaas.buildguide.property.PropertyBoolean;
 import brentmaas.buildguide.shapes.Shape;
 import brentmaas.buildguide.shapes.ShapeCircle;
 import brentmaas.buildguide.shapes.ShapeCuboid;
+import brentmaas.buildguide.shapes.ShapeEllipse;
+import brentmaas.buildguide.shapes.ShapeEllipsoid;
 import brentmaas.buildguide.shapes.ShapeEmpty;
 import brentmaas.buildguide.shapes.ShapeLine;
 import brentmaas.buildguide.shapes.ShapePolygon;
@@ -31,7 +33,7 @@ public class State {
 	}
 	public boolean debugGenerationTimingsEnabled;
 	
-	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapePolygon(), new ShapeCircle(), new ShapeSphere()};
+	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapePolygon(), new ShapeCircle(), new ShapeSphere(), new ShapeEllipse(), new ShapeEllipsoid()};
 	public int i_shape = 0;
 	public Vector3d basePos = null;
 	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);

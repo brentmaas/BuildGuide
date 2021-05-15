@@ -40,5 +40,9 @@ public abstract class Property<T> {
 		}
 	}
 	
+	public void setName(TextComponent name) {
+		this.name = name;
+	}
+	
 	public abstract void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font);
 }
