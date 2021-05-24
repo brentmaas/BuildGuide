@@ -33,8 +33,13 @@ public class RenderHandler {
 			RenderSystem.pushMatrix();
 			RenderSystem.multMatrix(stack.getLast().getMatrix());
 			
+			boolean wantDepthTest = BuildGuide.state.propertyDepthTest.value;
+			boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+			boolean toggle = wantDepthTest ^ hasDepthTest;
+			
 			RenderSystem.disableTexture();
-			if(!BuildGuide.state.propertyDepthTest.value) RenderSystem.disableDepthTest();
+			if(toggle && hasDepthTest) RenderSystem.disableDepthTest();
+			else if(toggle) RenderSystem.enableDepthTest();
 			RenderSystem.depthMask(false);
 			RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -43,7 +48,8 @@ public class RenderHandler {
 			State.getCurrentShape().render(stack.getLast().getMatrix());
 			
 			RenderSystem.disableBlend();
-			if(!BuildGuide.state.propertyDepthTest.value) RenderSystem.enableDepthTest();
+			if(toggle && hasDepthTest) RenderSystem.enableDepthTest();
+			else if(toggle) RenderSystem.disableDepthTest();
 			RenderSystem.depthMask(true);
 			RenderSystem.enableTexture();
 			
