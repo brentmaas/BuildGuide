@@ -10,7 +10,9 @@
 	"property.buildguide.direction": "Direction",
 	"property.buildguide.dome": "Dome",
 	"property.buildguide.height": "Height",
+	"property.buildguide.innerradius": "Inner radius",
 	"property.buildguide.length": "Length",
+	"property.buildguide.outerradius": "Outer radius",
 	"property.buildguide.radius": "Radius",
 	"property.buildguide.rotation": "Rotation",
 	"property.buildguide.semiaxis": "%s semi-axis",
@@ -40,5 +42,6 @@
 	"shape.buildguide.line": "Line",
 	"shape.buildguide.none": "None",
 	"shape.buildguide.polygon": "Polygon",
-	"shape.buildguide.sphere": "Sphere"
+	"shape.buildguide.sphere": "Sphere",
+	"shape.buildguide.torus": "Torus"
 }

@@ -12,6 +12,7 @@ import brentmaas.buildguide.shapes.ShapeEmpty;
 import brentmaas.buildguide.shapes.ShapeLine;
 import brentmaas.buildguide.shapes.ShapePolygon;
 import brentmaas.buildguide.shapes.ShapeSphere;
+import brentmaas.buildguide.shapes.ShapeTorus;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -33,7 +34,7 @@ public class State {
 	}
 	public boolean debugGenerationTimingsEnabled;
 	
-	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeLine(), new ShapeCuboid(), new ShapePolygon(), new ShapeCircle(), new ShapeSphere(), new ShapeEllipse(), new ShapeEllipsoid()};
+	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeCircle(), new ShapeCuboid(), new ShapeEllipse(), new ShapeEllipsoid(), new ShapeLine(), new ShapePolygon(), new ShapeSphere(), new ShapeTorus()};
 	public int i_shape = 0;
 	public Vector3d basePos = null;
 	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
