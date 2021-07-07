@@ -42,19 +42,39 @@ public class ShapeEllipse extends Shape {
 				double drb = 0.5 * Math.sin(theta) * da / db / corr;
 				double r2_inner = (a - dra) * (a - dra) / da / da + (b - drb) * (b - drb) / db / db;
 				double r2_outer = (a + dra) * (a + dra) / da / da + (b + drb) * (b + drb) / db / db;
-				if(r2_outer >= 1 && r2_inner <= 1) {
-					for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
-						switch(propertyDir.value) {
-						case X:
-							addCube(builder, s + 0.2, a + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
-							break;
-						case Y:
-							addCube(builder, a + 0.2, s + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
-							break;
-						case Z:
-							addCube(builder, a + 0.2, b + 0.2, s + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
-							break;
-						}
+				if(!(r2_outer >= 1 && r2_inner <= 1) && a != 0 && b != 0) continue; //a != 0 and b != 0 for edge cases
+				
+				//Edge cases
+				if(a == 0 && Math.abs(b) != db) {
+					double theta2 = Math.atan2((double) da / db * b, 1);
+					double corr2 = Math.sqrt(1 + ((double) da * da / db / db - 1) * Math.sin(theta2) * Math.sin(theta2));
+					double dra2 = 0.5 * Math.cos(theta2) / corr2;
+					double drb2 = 0.5 * Math.sin(theta2) * da / db / corr2;
+					double r2_inner2 = (1 - dra2) * (1 - dra2) / da / da + (b - drb2) * (b - drb2) / db / db;
+					double r2_outer2 = (1 + dra2) * (1 + dra2) / da / da + (b + drb2) * (b + drb2) / db / db;
+					if((r2_outer2 >= 1 && r2_inner2 <= 1) || 1.0 / da / da + (double) b * b / db / db < 1) continue;
+				}
+				if(b == 0 && Math.abs(a) != da) {
+					double theta2 = Math.atan2((double) da / db, a);
+					double corr2 = Math.sqrt(1 + ((double) da * da / db / db - 1) * Math.sin(theta2) * Math.sin(theta2));
+					double dra2 = 0.5 * Math.cos(theta2) / corr2;
+					double drb2 = 0.5 * Math.sin(theta2) * da / db / corr2;
+					double r2_inner2 = (a - dra2) * (a - dra2) / da / da + (1 - drb2) * (1 - drb2) / db / db;
+					double r2_outer2 = (a + dra2) * (a + dra2) / da / da + (1 + drb2) * (1 + drb2) / db / db;
+					if((r2_outer2 >= 1 && r2_inner2 <= 1) || (double) a * a / da / da + 1.0 / db / db < 1) continue;
+				}
+				
+				for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
+					switch(propertyDir.value) {
+					case X:
+						addCube(builder, s + 0.2, a + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						break;
+					case Y:
+						addCube(builder, a + 0.2, s + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						break;
+					case Z:
+						addCube(builder, a + 0.2, b + 0.2, s + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						break;
 					}
 				}
 			}
