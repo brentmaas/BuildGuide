@@ -49,9 +49,8 @@ public class ShapeEllipsoid extends Shape{
 					double drz = 0.5 * Math.cos(theta) * dx / dz / corr;
 					double r2_inner = (x - drx) * (x - drx) / dx / dx + (y - dry) * (y - dry) / dy / dy + (z - drz) * (z - drz) / dz / dz;
 					double r2_outer = (x + drx) * (x + drx) / dx / dx + (y + dry) * (y + dry) / dy / dy + (z + drz) * (z + drz) / dz / dz;
-					if(!(r2_outer >= 1 && r2_inner <= 1) && x != 0 && y != 0 && z != 0) continue; //x != 0, y != 0 and z != 0 for edge cases
+					if(!(r2_outer >= 1 && r2_inner <= 1) && ((x != 0 && y != 0 && z != 0) || r2_inner > 1)) continue; //x != 0, y != 0 and z != 0 for edge cases
 					
-					//Edge cases
 					if(x == 0 && Math.abs(y) != dy && Math.abs(z) != dz) {
 						double phi2 = Math.atan2((double) dx / dy * y, 1);
 						double theta2 = Math.atan2(Math.sqrt(1 + (double) dx * dx / dy / dy * y * y), (double) dx / dz * z);
