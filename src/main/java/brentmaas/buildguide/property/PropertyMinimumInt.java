@@ -19,11 +19,13 @@ public class PropertyMinimumInt extends Property<Integer>{
 		buttonList.add(new Button(x + 90, y, 20, 20, new StringTextComponent("-"), button -> {
 			if(this.value > this.minInt) --this.value;
 			valueWidget.setText("" + this.value);
+			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
 		buttonList.add(new Button(x + 190, y, 20, 20, new StringTextComponent("+"), button -> {
 			++this.value;
 			valueWidget.setText("" + this.value);
+			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
 		buttonList.add(new Button(x + 160, y, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
@@ -50,6 +52,7 @@ public class PropertyMinimumInt extends Property<Integer>{
 	public void setValue(Integer value) {
 		super.setValue(value);
 		valueWidget.setText("" + value);
+		valueWidget.setTextColor(0xFFFFFF);
 	}
 	
 	public void addTextFields(FontRenderer fr) {
