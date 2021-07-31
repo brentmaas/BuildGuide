@@ -1,11 +1,12 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeEllipse extends Shape {
 	private enum direction{
@@ -16,10 +17,10 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 205, 1, new TranslationTextComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(0, 185, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 205, 1, new TranslatableComponent("property.buildguide.height"), () -> {this.update();});
 	
 	public ShapeEllipse() {
 		super();
@@ -82,16 +83,16 @@ public class ShapeEllipse extends Shape {
 		
 		switch(propertyDir.value) {
 		case X:
-			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Y"));
-			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Z"));
+			propertySemi1.setName(new TranslatableComponent("property.buildguide.semiaxis", "Y"));
+			propertySemi2.setName(new TranslatableComponent("property.buildguide.semiaxis", "Z"));
 			break;
 		case Y:
-			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "X"));
-			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Z"));
+			propertySemi1.setName(new TranslatableComponent("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new TranslatableComponent("property.buildguide.semiaxis", "Z"));
 			break;
 		case Z:
-			propertySemi1.setName(new TranslationTextComponent("property.buildguide.semiaxis", "X"));
-			propertySemi2.setName(new TranslationTextComponent("property.buildguide.semiaxis", "Y"));
+			propertySemi1.setName(new TranslatableComponent("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new TranslatableComponent("property.buildguide.semiaxis", "Y"));
 			break;
 		}
 	}

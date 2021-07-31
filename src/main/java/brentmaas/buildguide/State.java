@@ -2,6 +2,8 @@ package brentmaas.buildguide;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.mojang.math.Vector3d;
+
 import brentmaas.buildguide.property.PropertyBoolean;
 import brentmaas.buildguide.shapes.Shape;
 import brentmaas.buildguide.shapes.ShapeCircle;
@@ -13,13 +15,12 @@ import brentmaas.buildguide.shapes.ShapeLine;
 import brentmaas.buildguide.shapes.ShapePolygon;
 import brentmaas.buildguide.shapes.ShapeSphere;
 import brentmaas.buildguide.shapes.ShapeTorus;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @EventBusSubscriber(modid=BuildGuide.modid, bus=EventBusSubscriber.Bus.MOD)
 public class State {
@@ -37,7 +38,7 @@ public class State {
 	public Shape[] shapeStore = {new ShapeEmpty(), new ShapeCircle(), new ShapeCuboid(), new ShapeEllipse(), new ShapeEllipsoid(), new ShapeLine(), new ShapePolygon(), new ShapeSphere(), new ShapeTorus()};
 	public int i_shape = 0;
 	public Vector3d basePos = null;
-	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
+	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 80, true, new TranslatableComponent("screen.buildguide.depthtest"), null);
 	
 	public float colourShapeR = 1.0f;
 	public float colourShapeG = 1.0f;
@@ -54,7 +55,7 @@ public class State {
 	}
 	
 	@SubscribeEvent
-	public static void onModConfigEvent(final ModConfig.ModConfigEvent event) {
+	public static void onModConfigEvent(final ModConfigEvent event) {
 		if(event.getConfig().getSpec() == State.clientConfigSpec) {
 			State.bakeConfig();
 		}

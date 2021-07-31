@@ -2,22 +2,22 @@ package brentmaas.buildguide.property;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.screen.BuildGuideScreen;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.BaseComponent;
 
 public abstract class Property<T> {
 	protected int x, y;
 	public T value;
-	protected TextComponent name;
+	protected BaseComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
-	public ArrayList<TextFieldWidget> textFieldList = new ArrayList<TextFieldWidget>();
+	public ArrayList<EditBox> editBoxList = new ArrayList<EditBox>();
 	
-	public Property(int x, int y, T value, TextComponent name, Runnable onUpdate){
+	public Property(int x, int y, T value, BaseComponent name, Runnable onUpdate){
 		this.x = x;
 		this.y = y;
 		this.value = value;
@@ -28,8 +28,8 @@ public abstract class Property<T> {
 		for(AbstractButton b: buttonList) {
 			b.visible = true;
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.visible = true;
+		for(EditBox eb: editBoxList) {
+			eb.visible = true;
 		}
 	}
 	
@@ -37,8 +37,8 @@ public abstract class Property<T> {
 		for(AbstractButton b: buttonList) {
 			b.visible = false;
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.visible = false;
+		for(EditBox eb: editBoxList) {
+			eb.visible = false;
 		}
 	}
 	
@@ -46,8 +46,8 @@ public abstract class Property<T> {
 		for(AbstractButton b: buttonList) {
 			screen.addButtonExternal(b);
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			screen.addTextFieldExternal(tfw);
+		for(EditBox eb: editBoxList) {
+			screen.addEditBoxExternal(eb);
 		}
 	}
 	
@@ -55,19 +55,19 @@ public abstract class Property<T> {
 		this.value = value;
 	}
 	
-	public void setName(TextComponent name) {
+	public void setName(BaseComponent name) {
 		this.name = name;
 	}
 	
 	public boolean mightNeedTextFields() {
-		return textFieldList.size() == 0;
+		return editBoxList.size() == 0;
 	}
 	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.render(matrixStack, mouseX, mouseY, partialTicks);
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks, Font font) {
+		for(EditBox eb: editBoxList) {
+			eb.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 	}
 	
-	public abstract void addTextFields(FontRenderer fr);
+	public abstract void addTextFields(Font fr);
 }

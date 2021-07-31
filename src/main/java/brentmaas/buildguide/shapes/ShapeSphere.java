@@ -1,10 +1,11 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeSphere extends Shape{
 	private enum dome {
@@ -19,8 +20,8 @@ public class ShapeSphere extends Shape{
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 145, 3, new TranslationTextComponent("property.buildguide.radius"), () -> {this.update();});
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(0, 165, dome.NO, new TranslationTextComponent("property.buildguide.dome"), () -> {this.update();}, domeNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 145, 3, new TranslatableComponent("property.buildguide.radius"), () -> {this.update();});
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(0, 165, dome.NO, new TranslatableComponent("property.buildguide.dome"), () -> {this.update();}, domeNames);
 	
 	public ShapeSphere() {
 		super();

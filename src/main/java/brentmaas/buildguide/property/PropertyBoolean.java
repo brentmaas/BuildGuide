@@ -1,28 +1,28 @@
 package brentmaas.buildguide.property;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.button.CheckboxButton;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.TextComponent;
 
 public class PropertyBoolean extends Property<Boolean>{
-	private CheckboxButton button;
+	private Checkbox button;
 	
-	public PropertyBoolean(int x, int y, Boolean value, TextComponent name, Runnable onUpdate) {
+	public PropertyBoolean(int x, int y, Boolean value, BaseComponent name, Runnable onUpdate) {
 		super(x, y, value, name, onUpdate);
-		button = new CheckboxButton(x + 140, y, 20, 20, new StringTextComponent(""), value, false); //Definitely not this value so the UI lines up nicely
+		button = new Checkbox(x + 140, y, 20, 20, new TextComponent(""), value, false); //Definitely not this value so the UI lines up nicely
 		buttonList.add(button);
 	}
 	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks, Font font) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		value = button.isChecked();
-		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
+		value = button.selected();
+		font.drawShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 	}
 	
-	public void addTextFields(FontRenderer fr) {
+	public void addTextFields(Font fr) {
 		
 	}
 }

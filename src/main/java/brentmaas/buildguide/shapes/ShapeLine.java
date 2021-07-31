@@ -1,10 +1,11 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeLine extends Shape{
 	private enum direction{
@@ -18,8 +19,8 @@ public class ShapeLine extends Shape{
 	
 	private final String[] directionNames = {"+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.POSITIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.POSITIVE_X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslatableComponent("property.buildguide.length"), () -> {this.update();});
 	
 	public ShapeLine() {
 		super();

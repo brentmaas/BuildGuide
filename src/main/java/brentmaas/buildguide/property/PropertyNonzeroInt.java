@@ -1,41 +1,41 @@
 package brentmaas.buildguide.property;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.BaseComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class PropertyNonzeroInt extends Property<Integer>{
-	private TextFieldWidget valueWidget;
+	private EditBox valueWidget;
 	
-	public PropertyNonzeroInt(int x, int y, int value, TextComponent name, Runnable onUpdate) {
+	public PropertyNonzeroInt(int x, int y, int value, BaseComponent name, Runnable onUpdate) {
 		super(x, y, value, name, onUpdate);
-		buttonList.add(new Button(x + 90, y, 20, 20, new StringTextComponent("-"), button -> {
+		buttonList.add(new Button(x + 90, y, 20, 20, new TextComponent("-"), button -> {
 			--this.value;
 			if(this.value == 0) --this.value;
-			valueWidget.setText("" + this.value);
+			valueWidget.setValue("" + this.value);
 			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
-		buttonList.add(new Button(x + 190, y, 20, 20, new StringTextComponent("+"), button -> {
+		buttonList.add(new Button(x + 190, y, 20, 20, new TextComponent("+"), button -> {
 			++this.value;
 			if(this.value == 0) ++this.value;
-			valueWidget.setText("" + this.value);
+			valueWidget.setValue("" + this.value);
 			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
-		buttonList.add(new Button(x + 160, y, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+		buttonList.add(new Button(x + 160, y, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 			try {
-				int newval = Integer.parseInt(valueWidget.getText());
+				int newval = Integer.parseInt(valueWidget.getValue());
 				this.value = newval;
 				if(this.value == 0) {
 					this.value = 1;
 				}
-				valueWidget.setText("" + this.value);
+				valueWidget.setValue("" + this.value);
 				valueWidget.setTextColor(0xFFFFFF);
 				if(onUpdate != null) onUpdate.run();
 			}catch(NumberFormatException e) {
@@ -44,21 +44,21 @@ public class PropertyNonzeroInt extends Property<Integer>{
 		}));
 	}
 	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
+	public void render(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks, Font font) {
+		super.render(PoseStack, mouseX, mouseY, partialTicks, font);
+		font.drawShadow(PoseStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 	}
 	
 	public void setValue(Integer value) {
 		super.setValue(value);
-		valueWidget.setText("" + value);
+		valueWidget.setValue("" + value);
 		valueWidget.setTextColor(0xFFFFFF);
 	}
 	
-	public void addTextFields(FontRenderer fr) {
-		valueWidget = new TextFieldWidget(fr, x + 110, y, 50, 20, new StringTextComponent(""));
-		valueWidget.setText("" + value);
+	public void addTextFields(Font fr) {
+		valueWidget = new EditBox(fr, x + 110, y, 50, 20, new TextComponent(""));
+		valueWidget.setValue("" + value);
 		valueWidget.setTextColor(0xFFFFFF);
-		textFieldList.add(valueWidget);
+		editBoxList.add(valueWidget);
 	}
 }

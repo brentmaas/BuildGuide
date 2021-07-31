@@ -8,8 +8,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class InputHandler {
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
-		if(Keybindings.openBuildGuide.isPressed()) {
-			Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());
+		if(Keybindings.openBuildGuide.isDown()) {
+			Minecraft.getInstance().setScreen(new BuildGuideScreen());
 		}
 	}
 }

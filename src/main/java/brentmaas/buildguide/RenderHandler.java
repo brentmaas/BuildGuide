@@ -2,13 +2,14 @@ package brentmaas.buildguide;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.shapes.ShapeEmpty;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,16 +23,15 @@ public class RenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderWorldLastEvent event) {
-		Minecraft.getInstance().getProfiler().startSection("buildguide");
+		Minecraft.getInstance().getProfiler().push("buildguide");
 		
 		if(BuildGuide.state.basePos != null && !(State.getCurrentShape() instanceof ShapeEmpty)) {
-			MatrixStack stack = event.getMatrixStack();
-			stack.push();
-			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
-			stack.translate(-projectedView.x + BuildGuide.state.basePos.x, -projectedView.y + BuildGuide.state.basePos.y, -projectedView.z + BuildGuide.state.basePos.z);
+			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			
-			RenderSystem.pushMatrix();
-			RenderSystem.multMatrix(stack.getLast().getMatrix());
+			PoseStack stack = event.getMatrixStack();
+			stack.pushPose();
+			Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+			stack.translate(-projectedView.x + BuildGuide.state.basePos.x, -projectedView.y + BuildGuide.state.basePos.y, -projectedView.z + BuildGuide.state.basePos.z);
 			
 			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
 			
@@ -50,7 +50,7 @@ public class RenderHandler {
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			if(toggleBlend) RenderSystem.enableBlend();
 			
-			State.getCurrentShape().render(stack.getLast().getMatrix());
+			State.getCurrentShape().render(stack.last().pose(), event.getProjectionMatrix());
 			
 			if(toggleBlend) RenderSystem.disableBlend();
 			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
@@ -58,11 +58,9 @@ public class RenderHandler {
 			if(toggleDepthMask) RenderSystem.depthMask(true);
 			if(toggleTexture) RenderSystem.enableTexture();
 			
-			RenderSystem.popMatrix();
-			
-			stack.pop();
+			stack.popPose();
 		}
 		
-		Minecraft.getInstance().getProfiler().endSection();
+		Minecraft.getInstance().getProfiler().pop();
 	}
 }

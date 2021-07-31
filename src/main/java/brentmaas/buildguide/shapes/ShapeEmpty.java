@@ -1,7 +1,7 @@
 package brentmaas.buildguide.shapes;
 
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.math.vector.Matrix4f;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.math.Matrix4f;
 
 public class ShapeEmpty extends Shape{
 	
@@ -20,7 +20,7 @@ public class ShapeEmpty extends Shape{
 	}
 	
 	@Override
-	public void render(Matrix4f matrix) {
+	public void render(Matrix4f model, Matrix4f projection) {
 		
 	}
 	

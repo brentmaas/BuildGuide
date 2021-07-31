@@ -1,12 +1,13 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyMinimumInt;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapePolygon extends Shape{
 	private enum direction{
@@ -29,11 +30,11 @@ public class ShapePolygon extends Shape{
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 145, 3, new TranslationTextComponent("property.buildguide.sides"), () -> {this.update();}, 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslationTextComponent("property.buildguide.radius"), () -> {this.update();});
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 185, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(0, 205, rotation.ROT0, new TranslationTextComponent("property.buildguide.rotation"), () -> {this.update();}, rotationNames);
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 225, 1, new TranslationTextComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 145, 3, new TranslatableComponent("property.buildguide.sides"), () -> {this.update();}, 3);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.radius"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 185, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(0, 205, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> {this.update();}, rotationNames);
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 225, 1, new TranslatableComponent("property.buildguide.height"), () -> {this.update();});
 	
 	public ShapePolygon() {
 		super();
