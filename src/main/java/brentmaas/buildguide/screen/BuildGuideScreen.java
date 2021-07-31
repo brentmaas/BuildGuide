@@ -126,11 +126,11 @@ public class BuildGuideScreen extends Screen{
 			p.addToBuildGuideScreen(this);
 		}
 		for(Shape s: BuildGuide.state.shapeStore) {
-			s.onDeselectedInGUI();
 			for(Property<?> p: s.properties) {
 				if(p.mightNeedTextFields()) p.addTextFields(font);
 				p.addToBuildGuideScreen(this);
 			}
+			s.onDeselectedInGUI(); //TODO: Test?
 		}
 		
 		State.getCurrentShape().onSelectedInGUI();
