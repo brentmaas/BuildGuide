@@ -1,6 +1,6 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.BuildGuide;
+import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -50,7 +50,7 @@ public class ShapeEllipsoid extends Shape{
 					double r2_inner = (x - drx) * (x - drx) / dx / dx + (y - dry) * (y - dry) / dy / dy + (z - drz) * (z - drz) / dz / dz;
 					double r2_outer = (x + drx) * (x + drx) / dx / dx + (y + dry) * (y + dry) / dy / dy + (z + drz) * (z + drz) / dz / dz;
 					if(r2_outer >= 1 && r2_inner <= 1) {
-						addCube(builder, x + 0.2, y + 0.2, z + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						addCube(builder, x + 0.2, y + 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
 					}
 				}
 			}

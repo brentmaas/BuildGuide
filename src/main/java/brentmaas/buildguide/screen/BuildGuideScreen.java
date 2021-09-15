@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import brentmaas.buildguide.BuildGuide;
-import brentmaas.buildguide.State;
+import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.Property;
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.Minecraft;
@@ -47,7 +47,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetX = new Button(270, 40, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getText());
-			BuildGuide.state.basePos = new Vector3d(newval, BuildGuide.state.basePos.y, BuildGuide.state.basePos.z);
+			StateManager.getState().basePos = new Vector3d(newval, StateManager.getState().basePos.y, StateManager.getState().basePos.z);
 			textFieldX.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldX.setTextColor(0xFF0000);
@@ -56,7 +56,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetY = new Button(270, 60, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getText());
-			BuildGuide.state.basePos = new Vector3d(BuildGuide.state.basePos.x, newval, BuildGuide.state.basePos.z);
+			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, newval, StateManager.getState().basePos.z);
 			textFieldY.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldY.setTextColor(0xFF0000);
@@ -65,7 +65,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetZ = new Button(270, 80, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getText());
-			BuildGuide.state.basePos = new Vector3d(BuildGuide.state.basePos.x, BuildGuide.state.basePos.y, newval);
+			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, StateManager.getState().basePos.y, newval);
 			textFieldZ.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldZ.setTextColor(0xFF0000);
@@ -84,9 +84,9 @@ public class BuildGuideScreen extends Screen{
 		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		
-		if(BuildGuide.state.basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
+		if(StateManager.getState().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
 			setBasePos();
-			for(Shape shape: BuildGuide.state.shapeStore) shape.update();
+			for(Shape shape: StateManager.getState().shapeStore) shape.update();
 		}
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
@@ -104,15 +104,15 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonBaseposZIncrease);
 		
 		textFieldX = new TextFieldWidget(font, 220, 40, 50, 20, new StringTextComponent(""));
-		textFieldX.setText("" + (int) BuildGuide.state.basePos.x);
+		textFieldX.setText("" + (int) StateManager.getState().basePos.x);
 		textFieldX.setTextColor(0xFFFFFF);
 		children.add(textFieldX);
 		textFieldY = new TextFieldWidget(font, 220, 60, 50, 20, new StringTextComponent(""));
-		textFieldY.setText("" + (int) BuildGuide.state.basePos.y);
+		textFieldY.setText("" + (int) StateManager.getState().basePos.y);
 		textFieldY.setTextColor(0xFFFFFF);
 		children.add(textFieldY);
 		textFieldZ = new TextFieldWidget(font, 220, 80, 50, 20, new StringTextComponent(""));
-		textFieldZ.setText("" + (int) BuildGuide.state.basePos.z);
+		textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
@@ -120,12 +120,12 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
 		
-		properties.add(BuildGuide.state.propertyDepthTest);
+		properties.add(StateManager.getState().propertyDepthTest);
 		
 		for(Property<?> p: properties) {
 			p.addToBuildGuideScreen(this);
 		}
-		for(Shape s: BuildGuide.state.shapeStore) {
+		for(Shape s: StateManager.getState().shapeStore) {
 			for(Property<?> p: s.properties) {
 				if(p.mightNeedTextFields()) p.addTextFields(font);
 				p.addToBuildGuideScreen(this);
@@ -133,7 +133,7 @@ public class BuildGuideScreen extends Screen{
 			s.onDeselectedInGUI(); //TODO: Test?
 		}
 		
-		State.getCurrentShape().onSelectedInGUI();
+		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
 	@Override
@@ -149,13 +149,13 @@ public class BuildGuideScreen extends Screen{
 		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 130, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleBasepos, 160 + (160 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 340 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 25, 0xFFFFFF);
-		String numberOfBlocks = "" + State.getCurrentShape().getNumberOfBlocks();
-		String numberOfStacks = "(" + (State.getCurrentShape().getNumberOfBlocks() / 64) + " x 64 + " + (State.getCurrentShape().getNumberOfBlocks() % 64) + ")";
+		String numberOfBlocks = "" + StateManager.getState().getCurrentShape().getNumberOfBlocks();
+		String numberOfStacks = "(" + (StateManager.getState().getCurrentShape().getNumberOfBlocks() / 64) + " x 64 + " + (StateManager.getState().getCurrentShape().getNumberOfBlocks() % 64) + ")";
 		font.drawStringWithShadow(matrixStack, numberOfBlocks, 340 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, numberOfStacks, 340 + (100 - font.getStringWidth(numberOfStacks)) / 2, 65, 0xFFFFFF);
 		
 		font.drawStringWithShadow(matrixStack, textShape, 5, 45, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, State.getCurrentShape().getTranslatedName(), 80 + (60 - font.getStringWidth(State.getCurrentShape().getTranslatedName())) / 2, 45, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, StateManager.getState().getCurrentShape().getTranslatedName(), 80 + (60 - font.getStringWidth(StateManager.getState().getCurrentShape().getTranslatedName())) / 2, 45, 0xFFFFFF);
 		
 		font.drawStringWithShadow(matrixStack, "X", 185, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Y", 185, 65, 0xFFFFFF);
@@ -167,43 +167,43 @@ public class BuildGuideScreen extends Screen{
 		for(Property<?> p: properties) {
 			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
 		}
-		for(Property<?> p: State.getCurrentShape().properties) {
+		for(Property<?> p: StateManager.getState().getCurrentShape().properties) {
 			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
 		}
 	}
 	
 	private void updateShape(int di) {
-		State.getCurrentShape().onDeselectedInGUI();
+		StateManager.getState().getCurrentShape().onDeselectedInGUI();
 		
-		if(BuildGuide.state.basePos == null) setBasePos();
+		if(StateManager.getState().basePos == null) setBasePos();
 		
-		BuildGuide.state.i_shape = Math.floorMod(BuildGuide.state.i_shape + di, BuildGuide.state.shapeStore.length);
+		StateManager.getState().i_shape = Math.floorMod(StateManager.getState().i_shape + di, StateManager.getState().shapeStore.length);
 		
-		State.getCurrentShape().onSelectedInGUI();
+		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
 	private void setBasePos() {
 		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
-		BuildGuide.state.basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
+		StateManager.getState().basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
 		if(textFieldX != null) {
-			textFieldX.setText("" + (int) BuildGuide.state.basePos.x);
+			textFieldX.setText("" + (int) StateManager.getState().basePos.x);
 			textFieldX.setTextColor(0xFFFFFF);
 		}
 		if(textFieldY != null) {
-			textFieldY.setText("" + (int) BuildGuide.state.basePos.y);
+			textFieldY.setText("" + (int) StateManager.getState().basePos.y);
 			textFieldY.setTextColor(0xFFFFFF);
 		}
 		if(textFieldZ != null) {
-			textFieldZ.setText("" + (int) BuildGuide.state.basePos.z);
+			textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
 			textFieldZ.setTextColor(0xFFFFFF);
 		}
 	}
 	
 	private void shiftBasePos(int dx, int dy, int dz) {
-		BuildGuide.state.basePos = new Vector3d(BuildGuide.state.basePos.x + dx, BuildGuide.state.basePos.y + dy, BuildGuide.state.basePos.z + dz);
-		textFieldX.setText("" + (int) BuildGuide.state.basePos.x);
-		textFieldY.setText("" + (int) BuildGuide.state.basePos.y);
-		textFieldZ.setText("" + (int) BuildGuide.state.basePos.z);
+		StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x + dx, StateManager.getState().basePos.y + dy, StateManager.getState().basePos.z + dz);
+		textFieldX.setText("" + (int) StateManager.getState().basePos.x);
+		textFieldY.setText("" + (int) StateManager.getState().basePos.y);
+		textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
 		textFieldZ.setTextColor(0xFFFFFF);

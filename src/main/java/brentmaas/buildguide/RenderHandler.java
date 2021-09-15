@@ -24,11 +24,11 @@ public class RenderHandler {
 	public void onRenderBlock(RenderWorldLastEvent event) {
 		Minecraft.getInstance().getProfiler().startSection("buildguide");
 		
-		if(BuildGuide.state.basePos != null && !(State.getCurrentShape() instanceof ShapeEmpty)) {
+		if(StateManager.getState().basePos != null && !(StateManager.getState().getCurrentShape() instanceof ShapeEmpty)) {
 			MatrixStack stack = event.getMatrixStack();
 			stack.push();
 			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
-			stack.translate(-projectedView.x + BuildGuide.state.basePos.x, -projectedView.y + BuildGuide.state.basePos.y, -projectedView.z + BuildGuide.state.basePos.z);
+			stack.translate(-projectedView.x + StateManager.getState().basePos.x, -projectedView.y + StateManager.getState().basePos.y, -projectedView.z + StateManager.getState().basePos.z);
 			
 			RenderSystem.pushMatrix();
 			RenderSystem.multMatrix(stack.getLast().getMatrix());
@@ -36,7 +36,7 @@ public class RenderHandler {
 			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
 			
 			boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-			boolean toggleDepthTest = BuildGuide.state.propertyDepthTest.value ^ hasDepthTest;
+			boolean toggleDepthTest = StateManager.getState().propertyDepthTest.value ^ hasDepthTest;
 			
 			boolean toggleDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
 			
@@ -50,7 +50,7 @@ public class RenderHandler {
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			if(toggleBlend) RenderSystem.enableBlend();
 			
-			State.getCurrentShape().render(stack.getLast().getMatrix());
+			StateManager.getState().getCurrentShape().render(stack.getLast().getMatrix());
 			
 			if(toggleBlend) RenderSystem.disableBlend();
 			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();

@@ -1,6 +1,6 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.BuildGuide;
+import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -38,13 +38,13 @@ public class ShapeTorus extends Shape{
 					if(r2 >= (propertyInnerRadius.value - 0.5) * (propertyInnerRadius.value - 0.5) && r2 < (propertyInnerRadius.value + 0.5) * (propertyInnerRadius.value + 0.5)) {
 						switch(propertyDir.value) {
 						case X:
-							addCube(builder, a + 0.2, b + 0.2, c + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+							addCube(builder, a + 0.2, b + 0.2, c + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
 							break;
 						case Y:
-							addCube(builder, b + 0.2, c + 0.2, a + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+							addCube(builder, b + 0.2, c + 0.2, a + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
 							break;
 						case Z:
-							addCube(builder, c + 0.2, a + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+							addCube(builder, c + 0.2, a + 0.2, b + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
 							break;
 						}
 					}

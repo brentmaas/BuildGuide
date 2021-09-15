@@ -21,14 +21,13 @@ import net.minecraftforge.fml.network.FMLNetworkConstants;
 public class BuildGuide {
 	public static final String modid = "buildguide";
 	public static final Logger logger = LogManager.getLogger();
-	public static State state;
 	
 	public BuildGuide() {
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			state = new State();
+			StateManager.init();
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, State.clientConfigSpec);
+			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.clientConfigSpec);
 		});
 	}
 	
