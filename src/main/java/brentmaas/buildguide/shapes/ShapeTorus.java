@@ -15,9 +15,9 @@ public class ShapeTorus extends Shape{
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(0, 165, 5, new TranslationTextComponent("property.buildguide.outerradius"), () -> {this.updateOuter();});
-	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(0, 185, 3, new TranslationTextComponent("property.buildguide.innerradius"), () -> {this.updateInner();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 165, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(0, 185, 5, new TranslationTextComponent("property.buildguide.outerradius"), () -> {this.updateOuter();});
+	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(0, 205, 3, new TranslationTextComponent("property.buildguide.innerradius"), () -> {this.updateInner();});
 	
 	public ShapeTorus() {
 		super();

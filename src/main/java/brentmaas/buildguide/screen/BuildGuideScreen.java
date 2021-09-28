@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.Property;
 import brentmaas.buildguide.shapes.Shape;
@@ -30,8 +29,9 @@ public class BuildGuideScreen extends Screen{
 	//It's better off as custom buttons instead of PropertyEnum
 	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
+	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), butotn -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
 	private Button buttonBasepos = new Button(0, 60, 160, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
-	private Button buttonColours = new Button(0, 100, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
+	private Button buttonColours = new Button(0, 80, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
 	});
 	//It's better off as custom buttons instead of PropertyInt
@@ -92,8 +92,13 @@ public class BuildGuideScreen extends Screen{
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
 		addButton(buttonClose);
-		addButton(buttonShapePrevious);
-		addButton(buttonShapeNext);
+		System.out.println(StateManager.getState().propertyAdvancedMode.value);
+		if(!StateManager.getState().propertyAdvancedMode.value) {
+			addButton(buttonShapePrevious);
+			addButton(buttonShapeNext);
+		}else {
+			addButton(buttonShapelist);
+		}
 		addButton(buttonBasepos);
 		addButton(buttonColours);
 		addButton(buttonBaseposXDecrease);
@@ -121,6 +126,7 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonSetZ);
 		
 		properties.add(StateManager.getState().propertyDepthTest);
+		properties.add(StateManager.getState().propertyAdvancedMode);
 		
 		for(Property<?> p: properties) {
 			p.addToBuildGuideScreen(this);
@@ -146,7 +152,7 @@ public class BuildGuideScreen extends Screen{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleGlobalProperties, (160 - font.getStringWidth(titleGlobalProperties)) / 2, 25, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 130, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 150, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleBasepos, 160 + (160 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 340 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 25, 0xFFFFFF);
 		String numberOfBlocks = "" + StateManager.getState().getCurrentShape().getNumberOfBlocks();

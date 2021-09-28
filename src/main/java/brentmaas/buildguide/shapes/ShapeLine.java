@@ -18,8 +18,8 @@ public class ShapeLine extends Shape{
 	
 	private final String[] directionNames = {"+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.POSITIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 165, direction.POSITIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 185, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
 	
 	public ShapeLine() {
 		super();

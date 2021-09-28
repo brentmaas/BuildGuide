@@ -21,6 +21,7 @@
 	"property.buildguide.width": "Width",
 	
 	"_comment": "Screens",
+	"screen.buildguide.advancedmode": "Advanced mode",
 	"screen.buildguide.basepos": "Base position",
 	"screen.buildguide.colours": "Colors",
 	"screen.buildguide.default": "Default",
@@ -30,6 +31,7 @@
 	"screen.buildguide.set": "Set",
 	"screen.buildguide.setbasepos": "Set base position",
 	"screen.buildguide.shape": "Shape",
+	"screen.buildguide.shapelist": "Shape list",
 	"screen.buildguide.shapeproperties": "Shape properties",
 	"screen.buildguide.title": "Build Guide",
 	"screen.buildguide.toggle": "Toggle",
