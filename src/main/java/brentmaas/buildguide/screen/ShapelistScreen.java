@@ -10,6 +10,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class ShapelistScreen extends Screen{
 	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
+	//TODO: World manager button
 	
 	protected ShapelistScreen() {
 		super(new TranslationTextComponent("screen.buildguide.shapelist"));

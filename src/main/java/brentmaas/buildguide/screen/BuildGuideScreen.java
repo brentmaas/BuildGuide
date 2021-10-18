@@ -29,7 +29,7 @@ public class BuildGuideScreen extends Screen{
 	//It's better off as custom buttons instead of PropertyEnum
 	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
-	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), butotn -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
+	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
 	private Button buttonBasepos = new Button(200, 40, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
 	private Button buttonColours = new Button(0, 80, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
@@ -86,7 +86,8 @@ public class BuildGuideScreen extends Screen{
 		
 		if(StateManager.getState().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
 			setBasePos();
-			for(Shape shape: StateManager.getState().shapeStore) shape.update();
+			for(Shape shape: StateManager.getState().basicModeShapes) shape.update();
+			//Advanced mode shapes should be empty
 		}
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
@@ -131,15 +132,25 @@ public class BuildGuideScreen extends Screen{
 		for(Property<?> p: properties) {
 			p.addToBuildGuideScreen(this);
 		}
-		for(Shape s: StateManager.getState().shapeStore) {
-			for(Property<?> p: s.properties) {
-				if(p.mightNeedTextFields()) p.addTextFields(font);
-				p.addToBuildGuideScreen(this);
+		if(StateManager.getState().propertyAdvancedMode.value) {
+			for(Shape s: StateManager.getState().advancedModeShapes) {
+				for(Property<?> p: s.properties) {
+					if(p.mightNeedTextFields()) p.addTextFields(font);
+					p.addToBuildGuideScreen(this);
+				}
+				s.onDeselectedInGUI();
 			}
-			s.onDeselectedInGUI(); //TODO: Test?
+		}else {
+			for(Shape s: StateManager.getState().basicModeShapes) {
+				for(Property<?> p: s.properties) {
+					if(p.mightNeedTextFields()) p.addTextFields(font);
+					p.addToBuildGuideScreen(this);
+				}
+				s.onDeselectedInGUI();
+			}
 		}
 		
-		StateManager.getState().getCurrentShape().onSelectedInGUI();
+		if(StateManager.getState().isShapeAvailable()) StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
 	@Override
@@ -155,13 +166,15 @@ public class BuildGuideScreen extends Screen{
 		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 150, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleBasepos, 160 + (160 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 340 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 25, 0xFFFFFF);
-		String numberOfBlocks = "" + StateManager.getState().getCurrentShape().getNumberOfBlocks();
-		String numberOfStacks = "(" + (StateManager.getState().getCurrentShape().getNumberOfBlocks() / 64) + " x 64 + " + (StateManager.getState().getCurrentShape().getNumberOfBlocks() % 64) + ")";
+		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
+		String numberOfBlocks = "" + n;
+		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
 		font.drawStringWithShadow(matrixStack, numberOfBlocks, 340 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, numberOfStacks, 340 + (100 - font.getStringWidth(numberOfStacks)) / 2, 65, 0xFFFFFF);
 		
 		font.drawStringWithShadow(matrixStack, textShape, 5, 45, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, StateManager.getState().getCurrentShape().getTranslatedName(), 80 + (60 - font.getStringWidth(StateManager.getState().getCurrentShape().getTranslatedName())) / 2, 45, 0xFFFFFF);
+		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslationTextComponent("shape.buildguide.none").getString();
+		font.drawStringWithShadow(matrixStack, shapeName, 80 + (60 - font.getStringWidth(shapeName)) / 2, 45, 0xFFFFFF);
 		
 		font.drawStringWithShadow(matrixStack, "X", 185, 65, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Y", 185, 85, 0xFFFFFF);
@@ -173,8 +186,10 @@ public class BuildGuideScreen extends Screen{
 		for(Property<?> p: properties) {
 			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
 		}
-		for(Property<?> p: StateManager.getState().getCurrentShape().properties) {
-			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
+		if(StateManager.getState().isShapeAvailable()) {
+			for(Property<?> p: StateManager.getState().getCurrentShape().properties) {
+				p.render(matrixStack, mouseX, mouseY, partialTicks, font);
+			}
 		}
 	}
 	
@@ -183,7 +198,7 @@ public class BuildGuideScreen extends Screen{
 		
 		if(StateManager.getState().basePos == null) setBasePos();
 		
-		StateManager.getState().i_shape = Math.floorMod(StateManager.getState().i_shape + di, StateManager.getState().shapeStore.length);
+		StateManager.getState().iBasic = Math.floorMod(StateManager.getState().iBasic + di, StateManager.getState().basicModeShapes.length);
 		
 		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}

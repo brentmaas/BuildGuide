@@ -23,7 +23,7 @@ public class RenderHandler {
 	public void onRenderBlock(RenderWorldLastEvent event) {
 		Minecraft.getInstance().getProfiler().startSection("buildguide");
 		
-		if(StateManager.getState().basePos != null && StateManager.getState().propertyRender.value) {
+		if(StateManager.getState().basePos != null && StateManager.getState().propertyRender.value && StateManager.getState().isShapeAvailable()) {
 			MatrixStack stack = event.getMatrixStack();
 			stack.push();
 			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
