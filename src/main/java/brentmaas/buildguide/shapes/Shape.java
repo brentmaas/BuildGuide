@@ -31,8 +31,10 @@ public abstract class Shape {
 		long t = System.currentTimeMillis();
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+		builder.setDefaultColor((int) (255 * StateManager.getState().colourShapeR), (int) (255 * StateManager.getState().colourShapeG), (int) (255 * StateManager.getState().colourShapeB), (int) (255 * StateManager.getState().colourShapeA));
 		this.updateShape(builder);
-		addCube(builder, 0.4, 0.4, 0.4, 0.2, StateManager.getState().colourBaseposR, StateManager.getState().colourBaseposG, StateManager.getState().colourBaseposB, StateManager.getState().colourBaseposA); //Base position
+		builder.setDefaultColor((int) (255 * StateManager.getState().colourBaseposR), (int) (255 * StateManager.getState().colourBaseposG), (int) (255 * StateManager.getState().colourBaseposB), (int) (255 * StateManager.getState().colourBaseposA));
+		addCube(builder, 0.4, 0.4, 0.4, 0.2); //Base position
 		builder.finishDrawing();
 		buffer.close();
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
@@ -51,42 +53,42 @@ public abstract class Shape {
 		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
 	}
 	
-	protected void addCube(BufferBuilder buffer, double x, double y, double z, double s, float r, float g, float b, float a) {
+	protected void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
 		//-X
-		buffer.pos(x, y, z).color(r, g, b, a).endVertex();
-		buffer.pos(x, y, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x, y+s, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x, y+s, z).color(r, g, b, a).endVertex();
+		buffer.pos(x, y, z).endVertex();
+		buffer.pos(x, y, z+s).endVertex();
+		buffer.pos(x, y+s, z+s).endVertex();
+		buffer.pos(x, y+s, z).endVertex();
 		
 		//-Y
-		buffer.pos(x, y, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x, y, z+s).color(r, g, b, a).endVertex();
+		buffer.pos(x, y, z).endVertex();
+		buffer.pos(x+s, y, z).endVertex();
+		buffer.pos(x+s, y, z+s).endVertex();
+		buffer.pos(x, y, z+s).endVertex();
 		
 		//-Z
-		buffer.pos(x, y, z).color(r, g, b, a).endVertex();
-		buffer.pos(x, y+s, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y, z).color(r, g, b, a).endVertex();
+		buffer.pos(x, y, z).endVertex();
+		buffer.pos(x, y+s, z).endVertex();
+		buffer.pos(x+s, y+s, z).endVertex();
+		buffer.pos(x+s, y, z).endVertex();
 		
 		//+X
-		buffer.pos(x+s, y, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y, z+s).color(r, g, b, a).endVertex();
+		buffer.pos(x+s, y, z).endVertex();
+		buffer.pos(x+s, y+s, z).endVertex();
+		buffer.pos(x+s, y+s, z+s).endVertex();
+		buffer.pos(x+s, y, z+s).endVertex();
 		
 		//+Y
-		buffer.pos(x, y+s, z).color(r, g, b, a).endVertex();
-		buffer.pos(x, y+s, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z).color(r, g, b, a).endVertex();
+		buffer.pos(x, y+s, z).endVertex();
+		buffer.pos(x, y+s, z+s).endVertex();
+		buffer.pos(x+s, y+s, z+s).endVertex();
+		buffer.pos(x+s, y+s, z).endVertex();
 		
 		//+Z
-		buffer.pos(x, y, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x+s, y+s, z+s).color(r, g, b, a).endVertex();
-		buffer.pos(x, y+s, z+s).color(r, g, b, a).endVertex();
+		buffer.pos(x, y, z+s).endVertex();
+		buffer.pos(x+s, y, z+s).endVertex();
+		buffer.pos(x+s, y+s, z+s).endVertex();
+		buffer.pos(x, y+s, z+s).endVertex();
 		
 		nBlocks++;
 	}

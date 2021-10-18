@@ -38,13 +38,13 @@ public class ShapeTorus extends Shape{
 					if(r2 >= (propertyInnerRadius.value - 0.5) * (propertyInnerRadius.value - 0.5) && r2 < (propertyInnerRadius.value + 0.5) * (propertyInnerRadius.value + 0.5)) {
 						switch(propertyDir.value) {
 						case X:
-							addCube(builder, a + 0.2, b + 0.2, c + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+							addCube(builder, a + 0.2, b + 0.2, c + 0.2, 0.6);
 							break;
 						case Y:
-							addCube(builder, b + 0.2, c + 0.2, a + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+							addCube(builder, b + 0.2, c + 0.2, a + 0.2, 0.6);
 							break;
 						case Z:
-							addCube(builder, c + 0.2, a + 0.2, b + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+							addCube(builder, c + 0.2, a + 0.2, b + 0.2, 0.6);
 							break;
 						}
 					}

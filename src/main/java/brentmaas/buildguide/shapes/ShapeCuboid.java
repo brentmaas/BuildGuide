@@ -44,39 +44,39 @@ public class ShapeCuboid extends Shape{
 		
 		//Wireframe
 		for(int x = (dx > 0 ? 0 : dx + 1);x < (dx > 0 ? dx : 1);++x) {
-			addCube(builder, x + 0.2, 0.2, 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+			addCube(builder, x + 0.2, 0.2, 0.2, 0.6);
 			if(!(dy == 1 || dy == -1)) {
-				addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), 0.2, 0.6);
 			}
 			if(!(dz == 1 || dz == -1)) {
-				addCube(builder, x + 0.2, 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, x + 0.2, 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6);
 			}
 			if(!(dy == 1 || dy == -1 || dz == 1 || dz == -1)) {
-				addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6);
 			}
 		}
 		for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
-			addCube(builder, 0.2, y + 0.2, 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+			addCube(builder, 0.2, y + 0.2, 0.2, 0.6);
 			if(!(dx == 1 || dx == -1)) {
-				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, 0.2, 0.6);
 			}
 			if(!(dz == 1 || dz == -1)) {
-				addCube(builder, 0.2, y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, 0.2, y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6);
 			}
 			if(!(dx == 1 || dx == -1 || dz == 1 || dz == -1)) {
-				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6);
 			}
 		}
 		for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-			addCube(builder, 0.2, 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+			addCube(builder, 0.2, 0.2, z + 0.2, 0.6);
 			if(!(dx == 1 || dx == -1)) {
-				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), 0.2, z + 0.2, 0.6);
 			}
 			if(!(dy == 1 || dy == -1)) {
-				addCube(builder, 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6);
 			}
 			if(!(dx == 1 || dx == -1 || dy == 1 || dy == -1)) {
-				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+				addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6);
 			}
 		}
 		
@@ -84,9 +84,9 @@ public class ShapeCuboid extends Shape{
 		if(w == walls.ALL || w == walls.X || w == walls.XY || w == walls.XZ) {
 			for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
 				for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-					addCube(builder, 0.2, y + 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+					addCube(builder, 0.2, y + 0.2, z + 0.2, 0.6);
 					if(!(dx == 1 || dx == -1)) {
-						addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, (dx > 0 ? dx - 0.8 : dx + 1.2), y + 0.2, z + 0.2, 0.6);
 					}
 				}
 			}
@@ -96,9 +96,9 @@ public class ShapeCuboid extends Shape{
 		if(w == walls.ALL || w == walls.Y || w == walls.XY || w == walls.YZ) {
 			for(int x = (dx > 0 ? 1 : dx + 2);x < (dx > 0 ? dx - 1 : 0);++x) {
 				for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-					addCube(builder, x + 0.2, 0.2, z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+					addCube(builder, x + 0.2, 0.2, z + 0.2, 0.6);
 					if(!(dy == 1 || dy == -1)) {
-						addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, x + 0.2, (dy > 0 ? dy - 0.8 : dy + 1.2), z + 0.2, 0.6);
 					}
 				}
 			}
@@ -108,9 +108,9 @@ public class ShapeCuboid extends Shape{
 		if(w == walls.ALL || w == walls.Z || w == walls.XZ || w == walls.YZ) {
 			for(int x = (dx > 0 ? 1 : dx + 2);x < (dx > 0 ? dx - 1 : 0);++x) {
 				for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
-					addCube(builder, x + 0.2, y + 0.2, 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+					addCube(builder, x + 0.2, y + 0.2, 0.2, 0.6);
 					if(!(dz == 1 || dz == -1)) {
-						addCube(builder, x + 0.2, y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, x + 0.2, y + 0.2, (dz > 0 ? dz - 0.8 : dz + 1.2), 0.6);
 					}
 				}
 			}

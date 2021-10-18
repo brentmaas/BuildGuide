@@ -64,13 +64,13 @@ public class ShapePolygon extends Shape{
 						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
-								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6);
 								break;
 							case Y:
-								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6);
 								break;
 							case Z:
-								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6);
 								break;
 							}
 						}

@@ -67,13 +67,13 @@ public class ShapeEllipse extends Shape {
 				for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
 					switch(propertyDir.value) {
 					case X:
-						addCube(builder, s + 0.2, a + 0.2, b + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, s + 0.2, a + 0.2, b + 0.2, 0.6);
 						break;
 					case Y:
-						addCube(builder, a + 0.2, s + 0.2, b + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, a + 0.2, s + 0.2, b + 0.2, 0.6);
 						break;
 					case Z:
-						addCube(builder, a + 0.2, b + 0.2, s + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+						addCube(builder, a + 0.2, b + 0.2, s + 0.2, 0.6);
 						break;
 					}
 				}

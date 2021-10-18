@@ -52,7 +52,7 @@ public class ShapeLine extends Shape{
 		}
 		
 		for(int i = 0;i < propertyLength.value;++i) {
-			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6, StateManager.getState().colourShapeR, StateManager.getState().colourShapeG, StateManager.getState().colourShapeB, StateManager.getState().colourShapeA);
+			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6);
 		}
 	}
 	
