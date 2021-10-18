@@ -28,6 +28,7 @@
 	"screen.buildguide.depthtest": "Depth test",
 	"screen.buildguide.globalproperties": "Global properties",
 	"screen.buildguide.numberofblocks": "Number of blocks",
+	"screen.buildguide.render": "Render",
 	"screen.buildguide.set": "Set",
 	"screen.buildguide.setbasepos": "Set base position",
 	"screen.buildguide.shape": "Shape",

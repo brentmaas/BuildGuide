@@ -6,7 +6,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import brentmaas.buildguide.shapes.ShapeEmpty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -24,7 +23,7 @@ public class RenderHandler {
 	public void onRenderBlock(RenderWorldLastEvent event) {
 		Minecraft.getInstance().getProfiler().startSection("buildguide");
 		
-		if(StateManager.getState().basePos != null && !(StateManager.getState().getCurrentShape() instanceof ShapeEmpty)) {
+		if(StateManager.getState().basePos != null && StateManager.getState().propertyRender.value) {
 			MatrixStack stack = event.getMatrixStack();
 			stack.push();
 			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();

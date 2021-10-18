@@ -30,21 +30,21 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
 	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), butotn -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
-	private Button buttonBasepos = new Button(0, 60, 160, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
+	private Button buttonBasepos = new Button(200, 40, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
 	private Button buttonColours = new Button(0, 80, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
 	});
 	//It's better off as custom buttons instead of PropertyInt
-	private Button buttonBaseposXDecrease = new Button(200, 40, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
-	private Button buttonBaseposXIncrease = new Button(300, 40, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
-	private Button buttonBaseposYDecrease = new Button(200, 60, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
-	private Button buttonBaseposYIncrease = new Button(300, 60, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
-	private Button buttonBaseposZDecrease = new Button(200, 80, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
-	private Button buttonBaseposZIncrease = new Button(300, 80, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
+	private Button buttonBaseposXDecrease = new Button(200, 60, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
+	private Button buttonBaseposXIncrease = new Button(300, 60, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
+	private Button buttonBaseposYDecrease = new Button(200, 80, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
+	private Button buttonBaseposYIncrease = new Button(300, 80, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
+	private Button buttonBaseposZDecrease = new Button(200, 100, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
+	private Button buttonBaseposZIncrease = new Button(300, 100, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
 	private TextFieldWidget textFieldX;
 	private TextFieldWidget textFieldY;
 	private TextFieldWidget textFieldZ;
-	private Button buttonSetX = new Button(270, 40, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetX = new Button(270, 60, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getText());
 			StateManager.getState().basePos = new Vector3d(newval, StateManager.getState().basePos.y, StateManager.getState().basePos.z);
@@ -53,7 +53,7 @@ public class BuildGuideScreen extends Screen{
 			textFieldX.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetY = new Button(270, 60, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetY = new Button(270, 80, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getText());
 			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, newval, StateManager.getState().basePos.z);
@@ -62,7 +62,7 @@ public class BuildGuideScreen extends Screen{
 			textFieldY.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetZ = new Button(270, 80, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetZ = new Button(270, 100, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getText());
 			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, StateManager.getState().basePos.y, newval);
@@ -92,7 +92,6 @@ public class BuildGuideScreen extends Screen{
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
 		addButton(buttonClose);
-		System.out.println(StateManager.getState().propertyAdvancedMode.value);
 		if(!StateManager.getState().propertyAdvancedMode.value) {
 			addButton(buttonShapePrevious);
 			addButton(buttonShapeNext);
@@ -108,15 +107,15 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonBaseposZDecrease);
 		addButton(buttonBaseposZIncrease);
 		
-		textFieldX = new TextFieldWidget(font, 220, 40, 50, 20, new StringTextComponent(""));
+		textFieldX = new TextFieldWidget(font, 220, 60, 50, 20, new StringTextComponent(""));
 		textFieldX.setText("" + (int) StateManager.getState().basePos.x);
 		textFieldX.setTextColor(0xFFFFFF);
 		children.add(textFieldX);
-		textFieldY = new TextFieldWidget(font, 220, 60, 50, 20, new StringTextComponent(""));
+		textFieldY = new TextFieldWidget(font, 220, 80, 50, 20, new StringTextComponent(""));
 		textFieldY.setText("" + (int) StateManager.getState().basePos.y);
 		textFieldY.setTextColor(0xFFFFFF);
 		children.add(textFieldY);
-		textFieldZ = new TextFieldWidget(font, 220, 80, 50, 20, new StringTextComponent(""));
+		textFieldZ = new TextFieldWidget(font, 220, 100, 50, 20, new StringTextComponent(""));
 		textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
@@ -125,6 +124,7 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
 		
+		properties.add(StateManager.getState().propertyRender);
 		properties.add(StateManager.getState().propertyDepthTest);
 		properties.add(StateManager.getState().propertyAdvancedMode);
 		
@@ -163,9 +163,9 @@ public class BuildGuideScreen extends Screen{
 		font.drawStringWithShadow(matrixStack, textShape, 5, 45, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, StateManager.getState().getCurrentShape().getTranslatedName(), 80 + (60 - font.getStringWidth(StateManager.getState().getCurrentShape().getTranslatedName())) / 2, 45, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, "X", 185, 45, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Y", 185, 65, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Z", 185, 85, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "X", 185, 65, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "Y", 185, 85, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "Z", 185, 105, 0xFFFFFF);
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);
