@@ -1,25 +1,21 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.PropertyEnum;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.property.PropertyNonzeroInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ShapeLine extends Shape{
 	private enum direction{
-		POSITIVE_X,
-		POSITIVE_Y,
-		POSITIVE_Z,
-		NEGATIVE_X,
-		NEGATIVE_Y,
-		NEGATIVE_Z
+		X,
+		Y,
+		Z
 	}
 	
-	private final String[] directionNames = {"+X", "+Y", "+Z", "-X", "-Y", "-Z"};
+	private final String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 165, direction.POSITIVE_X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 185, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 165, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
+	private PropertyNonzeroInt propertyLength = new PropertyNonzeroInt(0, 185, 5, new TranslationTextComponent("property.buildguide.length"), () -> {this.update();});
 	
 	public ShapeLine() {
 		super();
@@ -31,27 +27,18 @@ public class ShapeLine extends Shape{
 	protected void updateShape(BufferBuilder builder) {
 		int dx = 0, dy = 0, dz = 0;
 		switch(propertyDir.value) {
-		case NEGATIVE_X:
-			dx = -1;
+		case X:
+			dx = (int) Math.signum(propertyLength.value);
 			break;
-		case NEGATIVE_Y:
-			dy = -1;
+		case Y:
+			dy = (int) Math.signum(propertyLength.value);
 			break;
-		case NEGATIVE_Z:
-			dz = -1;
-			break;
-		case POSITIVE_X:
-			dx = 1;
-			break;
-		case POSITIVE_Y:
-			dy = 1;
-			break;
-		case POSITIVE_Z:
-			dz = 1;
+		case Z:
+			dz = (int) Math.signum(propertyLength.value);
 			break;
 		}
 		
-		for(int i = 0;i < propertyLength.value;++i) {
+		for(int i = 0;i < Math.abs(propertyLength.value);++i) {
 			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6);
 		}
 	}
