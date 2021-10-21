@@ -9,12 +9,12 @@ import brentmaas.buildguide.BuildGuide;
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();
 	private static ArrayList<String> classIdentifiers = new ArrayList<String>();
-	private static ArrayList<String> translatedNames = new ArrayList<String>();
+	private static ArrayList<String> translationKeys = new ArrayList<String>();
 	
 	public static void registerShape(Class<? extends Shape> shapeClass) {
 		shapeRegistry.put(shapeClass.getName(), shapeClass);
 		classIdentifiers.add(shapeClass.getName());
-		translatedNames.add(getNewInstance(shapeClass.getName()).getTranslatedName());
+		translationKeys.add(getNewInstance(shapeClass.getName()).getTranslationKey());
 	}
 	
 	public static Shape getNewInstance(String classIdentifier) {
@@ -34,7 +34,7 @@ public class ShapeRegistry {
 	}
 	
 	public static ArrayList<String> getTranslationKeys(){
-		return translatedNames;
+		return translationKeys;
 	}
 	
 	public static int getNumberOfShapes() {

@@ -1,6 +1,5 @@
 package brentmaas.buildguide.shapes;
 
-import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;

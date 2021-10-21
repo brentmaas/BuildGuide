@@ -6,18 +6,32 @@ import org.lwjgl.opengl.GL11;
 
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.Config;
-import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.Property;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public abstract class Shape {
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	private VertexBuffer buffer;
 	private int nBlocks = 0;
+	public boolean visible = true;
+	
+	public Vector3d basePos = null;
+	
+	public float colourShapeR = 1.0f;
+	public float colourShapeG = 1.0f;
+	public float colourShapeB = 1.0f;
+	public float colourShapeA = 0.5f;
+	
+	public float colourBaseposR = 1.0f;
+	public float colourBaseposG = 0.0f;
+	public float colourBaseposB = 0.0f;
+	public float colourBaseposA = 0.5f;
 	
 	public Shape() {
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
@@ -31,9 +45,9 @@ public abstract class Shape {
 		long t = System.currentTimeMillis();
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-		builder.setDefaultColor((int) (255 * StateManager.getState().colourShapeR), (int) (255 * StateManager.getState().colourShapeG), (int) (255 * StateManager.getState().colourShapeB), (int) (255 * StateManager.getState().colourShapeA));
+		builder.setDefaultColor((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
 		this.updateShape(builder);
-		builder.setDefaultColor((int) (255 * StateManager.getState().colourBaseposR), (int) (255 * StateManager.getState().colourBaseposG), (int) (255 * StateManager.getState().colourBaseposB), (int) (255 * StateManager.getState().colourBaseposA));
+		builder.setDefaultColor((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
 		addCube(builder, 0.4, 0.4, 0.4, 0.2); //Base position
 		builder.finishDrawing();
 		buffer.close();
@@ -111,5 +125,18 @@ public abstract class Shape {
 	
 	public int getNumberOfBlocks() {
 		return nBlocks;
+	}
+	
+	public void resetBasepos() {
+		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
+		basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
+	}
+	
+	public void setBasepos(int x, int y, int z) {
+		basePos = new Vector3d(x, y, z);
+	}
+	
+	public void shiftBasepos(int dx, int dy, int dz) {
+		basePos = new Vector3d(basePos.x + dx, basePos.y + dy, basePos.z + dz);
 	}
 }

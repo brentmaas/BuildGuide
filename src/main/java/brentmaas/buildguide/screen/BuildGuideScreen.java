@@ -30,7 +30,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
 	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
-	private Button buttonBasepos = new Button(200, 40, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> setBasePos());
+	private Button buttonBasepos = new Button(200, 40, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
 	private Button buttonColours = new Button(0, 80, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
 	});
@@ -47,7 +47,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetX = new Button(270, 60, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getText());
-			StateManager.getState().basePos = new Vector3d(newval, StateManager.getState().basePos.y, StateManager.getState().basePos.z);
+			StateManager.getState().setBaseposX(newval);
 			textFieldX.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldX.setTextColor(0xFF0000);
@@ -56,7 +56,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetY = new Button(270, 80, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getText());
-			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, newval, StateManager.getState().basePos.z);
+			StateManager.getState().setBaseposY(newval);
 			textFieldY.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldY.setTextColor(0xFF0000);
@@ -65,7 +65,7 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonSetZ = new Button(270, 100, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getText());
-			StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x, StateManager.getState().basePos.y, newval);
+			StateManager.getState().setBaseposZ(newval);
 			textFieldZ.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldZ.setTextColor(0xFF0000);
@@ -84,9 +84,11 @@ public class BuildGuideScreen extends Screen{
 		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		
-		if(StateManager.getState().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
-			setBasePos();
-			for(Shape shape: StateManager.getState().basicModeShapes) shape.update();
+		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
+			StateManager.getState().resetBasepos();
+			for(Shape shape: StateManager.getState().basicModeShapes) {
+				shape.update();
+			}
 			//Advanced mode shapes should be empty
 		}
 		
@@ -109,15 +111,15 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonBaseposZIncrease);
 		
 		textFieldX = new TextFieldWidget(font, 220, 60, 50, 20, new StringTextComponent(""));
-		textFieldX.setText("" + (int) StateManager.getState().basePos.x);
+		textFieldX.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
 		textFieldX.setTextColor(0xFFFFFF);
 		children.add(textFieldX);
 		textFieldY = new TextFieldWidget(font, 220, 80, 50, 20, new StringTextComponent(""));
-		textFieldY.setText("" + (int) StateManager.getState().basePos.y);
+		textFieldY.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
 		textFieldY.setTextColor(0xFFFFFF);
 		children.add(textFieldY);
 		textFieldZ = new TextFieldWidget(font, 220, 100, 50, 20, new StringTextComponent(""));
-		textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
+		textFieldZ.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
@@ -196,35 +198,16 @@ public class BuildGuideScreen extends Screen{
 	private void updateShape(int di) {
 		StateManager.getState().getCurrentShape().onDeselectedInGUI();
 		
-		if(StateManager.getState().basePos == null) setBasePos();
-		
 		StateManager.getState().iBasic = Math.floorMod(StateManager.getState().iBasic + di, StateManager.getState().basicModeShapes.length);
 		
 		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
-	private void setBasePos() {
-		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
-		StateManager.getState().basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
-		if(textFieldX != null) {
-			textFieldX.setText("" + (int) StateManager.getState().basePos.x);
-			textFieldX.setTextColor(0xFFFFFF);
-		}
-		if(textFieldY != null) {
-			textFieldY.setText("" + (int) StateManager.getState().basePos.y);
-			textFieldY.setTextColor(0xFFFFFF);
-		}
-		if(textFieldZ != null) {
-			textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
-			textFieldZ.setTextColor(0xFFFFFF);
-		}
-	}
-	
 	private void shiftBasePos(int dx, int dy, int dz) {
-		StateManager.getState().basePos = new Vector3d(StateManager.getState().basePos.x + dx, StateManager.getState().basePos.y + dy, StateManager.getState().basePos.z + dz);
-		textFieldX.setText("" + (int) StateManager.getState().basePos.x);
-		textFieldY.setText("" + (int) StateManager.getState().basePos.y);
-		textFieldZ.setText("" + (int) StateManager.getState().basePos.z);
+		StateManager.getState().shiftBasepos(dx, dy, dz);
+		textFieldX.setText("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+		textFieldY.setText("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+		textFieldZ.setText("" + (int) StateManager.getState().getCurrentShape().basePos.z);
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
 		textFieldZ.setTextColor(0xFFFFFF);
