@@ -18,7 +18,8 @@ public class ShapelistScreen extends Screen{
 	private ShapeList shapeList;
 	
 	private int newShapeId = 0;
-	
+
+	private Button buttonClose;
 	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
 	private Button buttonNewShapePrevious = new Button(0, 50, 20, 20, new StringTextComponent("<-"), button -> updateNewShape(-1));
 	private Button buttonNewShapeNext = new Button(120, 50, 20, 20, new StringTextComponent("->"), button -> updateNewShape(1));
@@ -38,7 +39,7 @@ public class ShapelistScreen extends Screen{
 	});
 	//TODO: World manager button
 	
-	protected ShapelistScreen() {
+	public ShapelistScreen() {
 		super(new TranslationTextComponent("screen.buildguide.shapelist"));
 		
 		titleNewShape = new TranslationTextComponent("screen.buildguide.newshape").getString();
@@ -47,6 +48,9 @@ public class ShapelistScreen extends Screen{
 	
 	@Override
 	protected void init() {
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
+	
+		addButton(buttonClose);
 		addButton(buttonBack);
 		addButton(buttonNewShapePrevious);
 		addButton(buttonNewShapeNext);
@@ -67,7 +71,7 @@ public class ShapelistScreen extends Screen{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNewShape, (140 - font.getStringWidth(titleNewShape)) / 2, 25, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapes, (width - font.getStringWidth(titleShapes)) / 2, 5, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapes, (width - font.getStringWidth(titleShapes)) / 2, 25, 0xFFFFFF);
 		
 		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
 		font.drawStringWithShadow(matrixStack, newShapeName, 20 + (100 - font.getStringWidth(newShapeName)) / 2, 55, 0xFFFFFF);

@@ -34,7 +34,8 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 				e.setShapeId(e.getShapeId() - 1);
 			}
 		}
-		if(this.getEventListeners().size() > 0) this.setSelected(this.getEventListeners().get(0));
+		if(this.getEventListeners().size() > 0 && entry.getShapeId() != 0) this.setSelected(this.getEventListeners().get(0));
+		else if(this.getEventListeners().size() > 1) this.setSelected(this.getEventListeners().get(1));
 		return super.removeEntry(entry);
 	}
 	

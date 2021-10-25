@@ -5,6 +5,7 @@
 	"_comment": "Keybindings",
 	"key.buildguide.category": "Build Guide",
 	"key.buildguide.openbuildguide": "Open Build Guide",
+	"key.buildguide.openshapelist": "Open shape list (advanced mode)",
 	
 	"_comment": "Shape properties",
 	"property.buildguide.direction": "Direction",
