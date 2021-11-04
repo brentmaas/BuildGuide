@@ -37,40 +37,42 @@ public class RenderHandler {
 	}
 	
 	private void renderShape(MatrixStack stack, Shape s) {
-		stack.push();
-		Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
-		stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
-		
-		RenderSystem.pushMatrix();
-		RenderSystem.multMatrix(stack.getLast().getMatrix());
-		
-		boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
-		
-		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-		boolean toggleDepthTest = StateManager.getState().propertyDepthTest.value ^ hasDepthTest;
-		
-		boolean toggleDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-		
-		boolean toggleBlend = !GL11.glIsEnabled(GL11.GL_BLEND);
-		
-		if(toggleTexture) RenderSystem.disableTexture();
-		if(toggleDepthTest && hasDepthTest) RenderSystem.disableDepthTest();
-		else if(toggleDepthTest) RenderSystem.enableDepthTest();
-		if(toggleDepthMask) RenderSystem.depthMask(false);
-		RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		if(toggleBlend) RenderSystem.enableBlend();
-		
-		s.render(stack.getLast().getMatrix());
-		
-		if(toggleBlend) RenderSystem.disableBlend();
-		if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
-		else if(toggleDepthTest) RenderSystem.disableDepthTest();
-		if(toggleDepthMask) RenderSystem.depthMask(true);
-		if(toggleTexture) RenderSystem.enableTexture();
-		
-		RenderSystem.popMatrix();
-		
-		stack.pop();
+		if(s.visible) {
+			stack.push();
+			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+			stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
+			
+			RenderSystem.pushMatrix();
+			RenderSystem.multMatrix(stack.getLast().getMatrix());
+			
+			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+			
+			boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+			boolean toggleDepthTest = StateManager.getState().propertyDepthTest.value ^ hasDepthTest;
+			
+			boolean toggleDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
+			
+			boolean toggleBlend = !GL11.glIsEnabled(GL11.GL_BLEND);
+			
+			if(toggleTexture) RenderSystem.disableTexture();
+			if(toggleDepthTest && hasDepthTest) RenderSystem.disableDepthTest();
+			else if(toggleDepthTest) RenderSystem.enableDepthTest();
+			if(toggleDepthMask) RenderSystem.depthMask(false);
+			RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+			if(toggleBlend) RenderSystem.enableBlend();
+			
+			s.render(stack.getLast().getMatrix());
+			
+			if(toggleBlend) RenderSystem.disableBlend();
+			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
+			else if(toggleDepthTest) RenderSystem.disableDepthTest();
+			if(toggleDepthMask) RenderSystem.depthMask(true);
+			if(toggleTexture) RenderSystem.enableTexture();
+			
+			RenderSystem.popMatrix();
+			
+			stack.pop();
+		}
 	}
 }

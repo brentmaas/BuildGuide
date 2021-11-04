@@ -16,7 +16,13 @@ public class CheckboxRunnableButton extends CheckboxButton {
 	
 	public void onPress() {
 		super.onPress();
-		this.onPress.onPress(this);
+		onPress.onPress(this);
+	}
+	
+	public void setChecked(boolean checked) {
+		//Why did checked have to be private ffs... At least I didn't have to do reflection using this hack in order to get basic functionality
+		if(isChecked() != checked) onPress();
+		//this.checked = checked;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
