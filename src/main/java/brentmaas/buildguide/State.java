@@ -15,9 +15,9 @@ public class State {
 	public Shape basicModeShape = ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(0));
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
 	public int iAdvanced = 0;
-	public PropertyBoolean propertyRender = new PropertyBoolean(0, 60, false, new TranslationTextComponent("screen.buildguide.render"), null);
-	public PropertyBoolean propertyDepthTest = new PropertyBoolean(0, 100, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
-	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(0, 120, false, new TranslationTextComponent("screen.buildguide.advancedmode"), () -> {Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());});
+	public PropertyBoolean propertyRender = new PropertyBoolean(-5, false, new TranslationTextComponent("screen.buildguide.render"), null);
+	public PropertyBoolean propertyDepthTest = new PropertyBoolean(-3, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
+	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, new TranslationTextComponent("screen.buildguide.advancedmode"), () -> {Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());});
 	
 	public State() {
 		ArrayList<String> classIdentifiers = ShapeRegistry.getClassIdentifiers();

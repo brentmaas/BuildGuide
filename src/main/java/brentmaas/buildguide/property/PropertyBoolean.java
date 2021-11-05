@@ -10,8 +10,8 @@ import net.minecraft.util.text.TextComponent;
 public class PropertyBoolean extends Property<Boolean>{
 	private CheckboxRunnableButton button;
 	
-	public PropertyBoolean(int x, int y, Boolean value, TextComponent name, Runnable onUpdate) {
-		super(x, y, value, name, onUpdate);
+	public PropertyBoolean(int slot, Boolean value, TextComponent name, Runnable onUpdate) {
+		super(slot, value, name, onUpdate);
 		button = new CheckboxRunnableButton(x + 140, y, 20, 20, new StringTextComponent(""), value, false, button -> {
 			this.value = button.isChecked();
 			if(onUpdate != null) onUpdate.run();

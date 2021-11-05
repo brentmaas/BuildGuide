@@ -11,6 +11,9 @@ import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.util.text.TextComponent;
 
 public abstract class Property<T> {
+	protected final static int baseY = 145;
+	protected final static int height = 20;
+	
 	protected int x, y;
 	public T value;
 	protected TextComponent name;
@@ -22,6 +25,10 @@ public abstract class Property<T> {
 		this.y = y;
 		this.value = value;
 		this.name = name;
+	}
+	
+	public Property(int slot, T value, TextComponent name, Runnable onUpdate) {
+		this(0, baseY + slot * height, value, name, onUpdate);
 	}
 	
 	public void onSelectedInGUI() {

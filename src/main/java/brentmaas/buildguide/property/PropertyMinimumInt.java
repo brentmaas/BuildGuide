@@ -13,8 +13,8 @@ public class PropertyMinimumInt extends Property<Integer>{
 	private TextFieldWidget valueWidget;
 	private int minInt;
 	
-	public PropertyMinimumInt(int x, int y, int value, TextComponent name, Runnable onUpdate, int minInt) {
-		super(x, y, value, name, onUpdate);
+	public PropertyMinimumInt(int slot, int value, TextComponent name, Runnable onUpdate, int minInt) {
+		super(slot, value, name, onUpdate);
 		this.minInt = minInt;
 		buttonList.add(new Button(x + 90, y, 20, 20, new StringTextComponent("-"), button -> {
 			if(this.value > this.minInt) --this.value;

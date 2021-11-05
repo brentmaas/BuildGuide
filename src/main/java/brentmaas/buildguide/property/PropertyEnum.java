@@ -10,8 +10,8 @@ import net.minecraft.util.text.TextComponent;
 public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	private String[] names;
 	
-	public PropertyEnum(int x, int y, T value, TextComponent name, Runnable onUpdate, String[] names) {
-		super(x, y, value, name, onUpdate);
+	public PropertyEnum(int slot, T value, TextComponent name, Runnable onUpdate, String[] names) {
+		super(slot, value, name, onUpdate);
 		this.names = names;
 		buttonList.add(new Button(x + 90, y, 20, 20, new StringTextComponent("<-"), button -> {
 			this.value = this.value.getDeclaringClass().getEnumConstants()[Math.floorMod(this.value.ordinal() - 1, this.value.getDeclaringClass().getEnumConstants().length)];

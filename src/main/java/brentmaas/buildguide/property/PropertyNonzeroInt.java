@@ -12,8 +12,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class PropertyNonzeroInt extends Property<Integer>{
 	private TextFieldWidget valueWidget;
 	
-	public PropertyNonzeroInt(int x, int y, int value, TextComponent name, Runnable onUpdate) {
-		super(x, y, value, name, onUpdate);
+	public PropertyNonzeroInt(int slot, int value, TextComponent name, Runnable onUpdate) {
+		super(slot, value, name, onUpdate);
 		buttonList.add(new Button(x + 90, y, 20, 20, new StringTextComponent("-"), button -> {
 			--this.value;
 			if(this.value == 0) --this.value;

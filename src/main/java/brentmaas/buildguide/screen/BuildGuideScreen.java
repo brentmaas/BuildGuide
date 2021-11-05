@@ -26,24 +26,24 @@ public class BuildGuideScreen extends Screen{
 	
 	private Button buttonClose;
 	//It's better off as custom buttons instead of PropertyEnum
-	private Button buttonShapePrevious = new Button(60, 40, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
-	private Button buttonShapeNext = new Button(140, 40, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
-	private Button buttonShapelist = new Button(140, 40, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
-	private Button buttonBasepos = new Button(200, 40, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
-	private Button buttonColours = new Button(0, 80, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
+	private Button buttonShapePrevious = new Button(60, 25, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
+	private Button buttonShapeNext = new Button(140, 25, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
+	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
+	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
+	private Button buttonColours = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
 		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
 	});
 	//It's better off as custom buttons instead of PropertyInt
-	private Button buttonBaseposXDecrease = new Button(200, 60, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
-	private Button buttonBaseposXIncrease = new Button(300, 60, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
-	private Button buttonBaseposYDecrease = new Button(200, 80, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
-	private Button buttonBaseposYIncrease = new Button(300, 80, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
-	private Button buttonBaseposZDecrease = new Button(200, 100, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
-	private Button buttonBaseposZIncrease = new Button(300, 100, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
+	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
+	private Button buttonBaseposXIncrease = new Button(285, 45, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
+	private Button buttonBaseposYDecrease = new Button(185, 65, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
+	private Button buttonBaseposYIncrease = new Button(285, 65, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
+	private Button buttonBaseposZDecrease = new Button(185, 85, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
+	private Button buttonBaseposZIncrease = new Button(285, 85, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
 	private TextFieldWidget textFieldX;
 	private TextFieldWidget textFieldY;
 	private TextFieldWidget textFieldZ;
-	private Button buttonSetX = new Button(270, 60, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetX = new Button(255, 45, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getText());
 			StateManager.getState().setBaseposX(newval);
@@ -52,7 +52,7 @@ public class BuildGuideScreen extends Screen{
 			textFieldX.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetY = new Button(270, 80, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetY = new Button(255, 65, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getText());
 			StateManager.getState().setBaseposY(newval);
@@ -61,7 +61,7 @@ public class BuildGuideScreen extends Screen{
 			textFieldY.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetZ = new Button(270, 100, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetZ = new Button(255, 85, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getText());
 			StateManager.getState().setBaseposZ(newval);
@@ -93,6 +93,20 @@ public class BuildGuideScreen extends Screen{
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
+		if(!StateManager.getState().isShapeAvailable()) {
+			buttonBasepos.active = false;
+			buttonColours.active = false;
+			buttonBaseposXDecrease.active = false;
+			buttonBaseposXIncrease.active = false;
+			buttonBaseposYDecrease.active = false;
+			buttonBaseposYIncrease.active = false;
+			buttonBaseposZDecrease.active = false;
+			buttonBaseposZIncrease.active = false;
+			buttonSetX.active = false;
+			buttonSetY.active = false;
+			buttonSetZ.active = false;
+		}
+		
 		addButton(buttonClose);
 		if(!StateManager.getState().propertyAdvancedMode.value) {
 			addButton(buttonShapePrevious);
@@ -108,23 +122,22 @@ public class BuildGuideScreen extends Screen{
 		addButton(buttonBaseposYIncrease);
 		addButton(buttonBaseposZDecrease);
 		addButton(buttonBaseposZIncrease);
-		
-		textFieldX = new TextFieldWidget(font, 220, 60, 50, 20, new StringTextComponent(""));
-		textFieldX.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
-		textFieldX.setTextColor(0xFFFFFF);
-		children.add(textFieldX);
-		textFieldY = new TextFieldWidget(font, 220, 80, 50, 20, new StringTextComponent(""));
-		textFieldY.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
-		textFieldY.setTextColor(0xFFFFFF);
-		children.add(textFieldY);
-		textFieldZ = new TextFieldWidget(font, 220, 100, 50, 20, new StringTextComponent(""));
-		textFieldZ.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
-		textFieldZ.setTextColor(0xFFFFFF);
-		children.add(textFieldZ);
-		
 		addButton(buttonSetX);
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
+		
+		textFieldX = new TextFieldWidget(font, 205, 45, 50, 20, new StringTextComponent(""));
+		textFieldX.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
+		textFieldX.setTextColor(0xFFFFFF);
+		children.add(textFieldX);
+		textFieldY = new TextFieldWidget(font, 205, 65, 50, 20, new StringTextComponent(""));
+		textFieldY.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
+		textFieldY.setTextColor(0xFFFFFF);
+		children.add(textFieldY);
+		textFieldZ = new TextFieldWidget(font, 205, 85, 50, 20, new StringTextComponent(""));
+		textFieldZ.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
+		textFieldZ.setTextColor(0xFFFFFF);
+		children.add(textFieldZ);
 		
 		properties.add(StateManager.getState().propertyRender);
 		properties.add(StateManager.getState().propertyDepthTest);
@@ -163,23 +176,23 @@ public class BuildGuideScreen extends Screen{
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleGlobalProperties, (160 - font.getStringWidth(titleGlobalProperties)) / 2, 25, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 150, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleBasepos, 160 + (160 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 340 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 25, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleGlobalProperties, (160 - font.getStringWidth(titleGlobalProperties)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 135, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleBasepos, 185 + (120 - font.getStringWidth(titleBasepos)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
 		String numberOfBlocks = "" + n;
 		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
-		font.drawStringWithShadow(matrixStack, numberOfBlocks, 340 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 45, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, numberOfStacks, 340 + (100 - font.getStringWidth(numberOfStacks)) / 2, 65, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, numberOfBlocks, 305 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 35, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, numberOfStacks, 305 + (100 - font.getStringWidth(numberOfStacks)) / 2, 55, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, textShape, 5, 45, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
 		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslationTextComponent("shape.buildguide.none").getString();
-		font.drawStringWithShadow(matrixStack, shapeName, 80 + (60 - font.getStringWidth(shapeName)) / 2, 45, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, shapeName, 80 + (60 - font.getStringWidth(shapeName)) / 2, 30, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, "X", 185, 65, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Y", 185, 85, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Z", 185, 105, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "Y", 170, 70, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, "Z", 170, 90, 0xFFFFFF);
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);
