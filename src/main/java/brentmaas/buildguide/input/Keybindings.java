@@ -14,7 +14,7 @@ public class Keybindings {
 	
 	public static void register() {
 		openBuildGuide = new KeyBinding("key.buildguide.openbuildguide", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, "key.buildguide.category");
-		openShapeList = new KeyBinding("key.buildguide.openshapelist", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_N, "key.buildguide.category");
+		openShapeList = new KeyBinding("key.buildguide.openshapelist", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_H, "key.buildguide.category");
 		
 		ClientRegistry.registerKeyBinding(openBuildGuide);
 		ClientRegistry.registerKeyBinding(openShapeList);
