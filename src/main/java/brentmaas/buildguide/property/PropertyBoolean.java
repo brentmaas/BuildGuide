@@ -1,7 +1,5 @@
 package brentmaas.buildguide.property;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import brentmaas.buildguide.screen.widget.CheckboxRunnableButton;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.StringTextComponent;
@@ -17,11 +15,6 @@ public class PropertyBoolean extends Property<Boolean>{
 			if(onUpdate != null) onUpdate.run();
 		});
 		buttonList.add(button);
-	}
-	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 	}
 	
 	public void addTextFields(FontRenderer fr) {

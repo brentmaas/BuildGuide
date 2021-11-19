@@ -14,8 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	private Runnable update;
 	
-	public ShapeList(Minecraft mcIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn, Runnable updateOnSelected) {
-		super(mcIn, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
+	public ShapeList(Minecraft minecraft, int width, int height, int top, int bottom, int slotHeight, Runnable updateOnSelected) {
+		super(minecraft, width, height, top, bottom, slotHeight);
 		func_244605_b(false); //Disable background part 1
 		func_244606_c(false); //Disable background part 2
 		
@@ -57,9 +57,9 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 			this.shapeId = shapeId;
 		}
 		
-		public void render(MatrixStack matrixStack, int p_230432_2_, int topIn, int leftIn, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
+		public void render(MatrixStack matrixStack, int p_230432_2_, int top, int left, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
 			//Found strikethrough code at https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/1437428-guide-1-7-2-how-to-make-button-tooltips?comment=3
-			Minecraft.getInstance().fontRenderer.drawStringWithShadow(matrixStack, (StateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + StateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), leftIn + 35, topIn + 5, 0xFFFFFF);
+			Minecraft.getInstance().fontRenderer.drawStringWithShadow(matrixStack, (StateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + StateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), left + 35, top + 5, 0xFFFFFF);
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {

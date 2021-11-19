@@ -1,28 +1,22 @@
 package brentmaas.buildguide.screen;
 
-import java.util.ArrayList;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.Property;
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class BuildGuideScreen extends Screen{
+public class BuildGuideScreen extends PropertyScreen{
 	private String titleGlobalProperties;
 	private String titleShapeProperties;
 	private String titleBasepos;
 	private String titleNumberOfBlocks;
 	private String textShape;
-	
-	private ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	
 	private Button buttonClose;
 	//It's better off as custom buttons instead of PropertyEnum
@@ -30,8 +24,8 @@ public class BuildGuideScreen extends Screen{
 	private Button buttonShapeNext = new Button(140, 25, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
 	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
 	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
-	private Button buttonColours = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.colours"), button -> {
-		Minecraft.getInstance().displayGuiScreen(new ColoursScreen());
+	private Button buttonColours = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> {
+		Minecraft.getInstance().displayGuiScreen(new VisualisationScreen());
 	});
 	//It's better off as custom buttons instead of PropertyInt
 	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
@@ -139,26 +133,20 @@ public class BuildGuideScreen extends Screen{
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
-		properties.add(StateManager.getState().propertyRender);
-		properties.add(StateManager.getState().propertyDepthTest);
-		properties.add(StateManager.getState().propertyAdvancedMode);
+		addProperty(StateManager.getState().propertyEnable);
+		addProperty(StateManager.getState().propertyAdvancedMode);
 		
-		for(Property<?> p: properties) {
-			p.addToBuildGuideScreen(this);
-		}
 		if(StateManager.getState().propertyAdvancedMode.value) {
 			for(Shape s: StateManager.getState().advancedModeShapes) {
 				for(Property<?> p: s.properties) {
-					if(p.mightNeedTextFields()) p.addTextFields(font);
-					p.addToBuildGuideScreen(this);
+					addProperty(p);
 				}
 				s.onDeselectedInGUI();
 			}
 		}else {
 			for(Shape s: StateManager.getState().basicModeShapes) {
 				for(Property<?> p: s.properties) {
-					if(p.mightNeedTextFields()) p.addTextFields(font);
-					p.addToBuildGuideScreen(this);
+					addProperty(p);
 				}
 				s.onDeselectedInGUI();
 			}
@@ -168,16 +156,11 @@ public class BuildGuideScreen extends Screen{
 	}
 	
 	@Override
-	public boolean isPauseScreen() {
-		return false;
-	}
-	
-	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleGlobalProperties, (160 - font.getStringWidth(titleGlobalProperties)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 135, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 115, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleBasepos, 185 + (120 - font.getStringWidth(titleBasepos)) / 2, 15, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
@@ -196,15 +179,6 @@ public class BuildGuideScreen extends Screen{
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);
-		
-		for(Property<?> p: properties) {
-			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		}
-		if(StateManager.getState().isShapeAvailable()) {
-			for(Property<?> p: StateManager.getState().getCurrentShape().properties) {
-				p.render(matrixStack, mouseX, mouseY, partialTicks, font);
-			}
-		}
 	}
 	
 	private void updateShape(int di) {
@@ -223,13 +197,5 @@ public class BuildGuideScreen extends Screen{
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
 		textFieldZ.setTextColor(0xFFFFFF);
-	}
-	
-	public void addButtonExternal(AbstractButton button) {
-		addButton(button);
-	}
-	
-	public void addTextFieldExternal(TextFieldWidget tfw) {
-		children.add(tfw);
 	}
 }

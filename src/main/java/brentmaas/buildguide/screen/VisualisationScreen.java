@@ -5,12 +5,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.screen.widget.Slider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class ColoursScreen extends Screen{
+public class VisualisationScreen extends PropertyScreen{
+	private String titleColours;
 	private String titleShape;
 	private String titleBasepos;
 	
@@ -28,25 +28,26 @@ public class ColoursScreen extends Screen{
 	private Button buttonDefaultShape;
 	private Button buttonDefaultBasepos;
 	
-	public ColoursScreen() {
-		super(new TranslationTextComponent("screen.buildguide.colours"));
+	public VisualisationScreen() {
+		super(new TranslationTextComponent("screen.buildguide.visualisation"));
 	}
 	
 	@Override
 	protected void init() {
+		titleColours = new TranslationTextComponent("screen.buildguide.colours").getString();
 		titleShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		titleBasepos = new TranslationTextComponent("screen.buildguide.basepos").getString();
 		
-		sliderShapeR = new Slider(0, 25, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeR : 1.0);
-		sliderShapeG = new Slider(0, 45, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeG : 1.0);
-		sliderShapeB = new Slider(0, 65, 100, 20, new StringTextComponent("B: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeB : 1.0);
-		sliderShapeA = new Slider(0, 85, 100, 20, new StringTextComponent("A: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeA : 0.5);
-		sliderBaseposR = new Slider(110, 25, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposR : 1.0);
-		sliderBaseposG = new Slider(110, 45, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposG : 0.0);
-		sliderBaseposB = new Slider(110, 65, 100, 20, new StringTextComponent("B: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposB : 0.0);
-		sliderBaseposA = new Slider(110, 85, 100, 20, new StringTextComponent("A: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposA : 0.5);
+		sliderShapeR = new Slider(0, 35, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeR : 1.0);
+		sliderShapeG = new Slider(0, 55, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeG : 1.0);
+		sliderShapeB = new Slider(0, 75, 100, 20, new StringTextComponent("B: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeB : 1.0);
+		sliderShapeA = new Slider(0, 95, 100, 20, new StringTextComponent("A: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeA : 0.5);
+		sliderBaseposR = new Slider(110, 35, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposR : 1.0);
+		sliderBaseposG = new Slider(110, 55, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposG : 0.0);
+		sliderBaseposB = new Slider(110, 75, 100, 20, new StringTextComponent("B: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposB : 0.0);
+		sliderBaseposA = new Slider(110, 95, 100, 20, new StringTextComponent("A: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourBaseposA : 0.5);
 		
-		buttonSetShape = new Button(0, 105, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+		buttonSetShape = new Button(0, 115, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 			if(StateManager.getState().isShapeAvailable()) {
 				StateManager.getState().getCurrentShape().colourShapeR = (float) sliderShapeR.getValue();
 				StateManager.getState().getCurrentShape().colourShapeG = (float) sliderShapeG.getValue();
@@ -56,7 +57,7 @@ public class ColoursScreen extends Screen{
 				StateManager.getState().updateCurrentShape();
 			}
 		});
-		buttonSetBasepos = new Button(110, 105, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+		buttonSetBasepos = new Button(110, 115, 100, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 			if(StateManager.getState().isShapeAvailable()) {
 				StateManager.getState().getCurrentShape().colourBaseposR = (float) sliderBaseposR.getValue();
 				StateManager.getState().getCurrentShape().colourBaseposG = (float) sliderBaseposG.getValue();
@@ -67,7 +68,7 @@ public class ColoursScreen extends Screen{
 			}
 		});
 		
-		buttonDefaultShape = new Button(0, 125, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
+		buttonDefaultShape = new Button(0, 135, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
 			sliderShapeR.setManualValue(1.0);
 			sliderShapeG.setManualValue(1.0);
 			sliderShapeB.setManualValue(1.0);
@@ -84,7 +85,7 @@ public class ColoursScreen extends Screen{
 				StateManager.getState().updateCurrentShape();
 			}
 		});
-		buttonDefaultBasepos = new Button(110, 125, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
+		buttonDefaultBasepos = new Button(110, 135, 100, 20, new TranslationTextComponent("screen.buildguide.default"), button -> {
 			sliderBaseposR.setManualValue(1.0);
 			sliderBaseposG.setManualValue(0.0);
 			sliderBaseposB.setManualValue(0.0);
@@ -130,6 +131,8 @@ public class ColoursScreen extends Screen{
 		addButton(buttonSetBasepos);
 		addButton(buttonDefaultShape);
 		addButton(buttonDefaultBasepos);
+		
+		addProperty(StateManager.getState().propertyDepthTest);
 	}
 	
 	@Override
@@ -141,7 +144,8 @@ public class ColoursScreen extends Screen{
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShape, (100 - font.getStringWidth(titleShape)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleBasepos, 110 + (100 - font.getStringWidth(titleBasepos)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleColours, (210 - font.getStringWidth(titleColours)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShape, (100 - font.getStringWidth(titleShape)) / 2, 25, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleBasepos, 110 + (100 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
 	}
 }

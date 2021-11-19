@@ -1,7 +1,5 @@
 package brentmaas.buildguide.property;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
@@ -35,11 +33,6 @@ public class PropertyInt extends Property<Integer>{
 				valueWidget.setTextColor(0xFF0000);
 			}
 		}));
-	}
-	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		font.drawStringWithShadow(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF);
 	}
 	
 	public void setValue(Integer value) {

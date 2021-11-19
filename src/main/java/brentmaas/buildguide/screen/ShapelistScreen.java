@@ -144,7 +144,7 @@ public class ShapelistScreen extends Screen{
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
-		shapeList = new ShapeList(minecraft, width, height - 60, 60, height, 20, () -> {
+		shapeList = new ShapeList(minecraft, width, height - 25, 60, height, 20, () -> {
 			updateGlobalBasepos();
 			if(StateManager.getState().isShapeAvailable()) buttonVisible.setChecked(StateManager.getState().getCurrentShape().visible);
 		});
