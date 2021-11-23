@@ -33,7 +33,7 @@ public class BuildGuide {
 	
 	public BuildGuide() {
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			ShapeRegistry.registerShape(ShapeCircle.class);
 			ShapeRegistry.registerShape(ShapeCuboid.class);
 			ShapeRegistry.registerShape(ShapeEllipse.class);

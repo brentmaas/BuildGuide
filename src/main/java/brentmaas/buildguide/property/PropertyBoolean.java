@@ -10,7 +10,7 @@ public class PropertyBoolean extends Property<Boolean>{
 	
 	public PropertyBoolean(int slot, Boolean value, TextComponent name, Runnable onUpdate) {
 		super(slot, value, name, onUpdate);
-		button = new CheckboxRunnableButton(x + 140, y, 20, 20, new StringTextComponent(""), value, false, button -> {
+		button = new CheckboxRunnableButton(140, y, 20, 20, new StringTextComponent(""), value, false, button -> {
 			this.value = button.isChecked();
 			if(onUpdate != null) onUpdate.run();
 		});

@@ -14,24 +14,21 @@ public abstract class Property<T> {
 	protected final static int baseY = 125;
 	protected final static int height = 20;
 	
-	protected int x, y;
+	protected int y;
 	public T value;
 	protected TextComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
 	public ArrayList<TextFieldWidget> textFieldList = new ArrayList<TextFieldWidget>();
 	protected boolean visible;
 	
-	public Property(int x, int y, T value, TextComponent name, Runnable onUpdate){
-		this.x = x;
-		this.y = y;
+	public Property(int slot, T value, TextComponent name, Runnable onUpdate) {
+		y = baseY + slot * height;
 		this.value = value;
 		this.name = name;
 		visible = true;
 	}
 	
-	public Property(int slot, T value, TextComponent name, Runnable onUpdate) {
-		this(0, baseY + slot * height, value, name, onUpdate);
-	}
+	public abstract void addTextFields(FontRenderer fr);
 	
 	public void onSelectedInGUI() {
 		for(AbstractButton b: buttonList) {
@@ -78,7 +75,7 @@ public abstract class Property<T> {
 		for(TextFieldWidget tfw: textFieldList) {
 			tfw.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
-		drawString(matrixStack, name.getString(), x + 5, y + 5, 0xFFFFFF, font);
+		drawString(matrixStack, name.getString(), 5, y + 5, 0xFFFFFF, font);
 	}
 	
 	protected void drawString(MatrixStack matrixStack, String text, float x, float y, int colour, FontRenderer font) {
@@ -86,6 +83,4 @@ public abstract class Property<T> {
 			font.drawStringWithShadow(matrixStack, text, x, y, colour);
 		}
 	}
-	
-	public abstract void addTextFields(FontRenderer fr);
 }

@@ -63,13 +63,13 @@ public class ShapePolygon extends Shape{
 						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
-								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6);
+								addShapeCube(builder, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Y:
-								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6);
+								addShapeCube(builder, b * rotXX[rot] + a * rotYX[rot], h, a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Z:
-								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6);
+								addShapeCube(builder, a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] + a * rotYX[rot], h);
 								break;
 							}
 						}

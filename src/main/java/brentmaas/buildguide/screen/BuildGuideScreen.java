@@ -163,6 +163,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 115, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleBasepos, 185 + (120 - font.getStringWidth(titleBasepos)) / 2, 15, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
+		
 		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
 		String numberOfBlocks = "" + n;
 		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
@@ -176,6 +177,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		font.drawStringWithShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Y", 170, 70, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Z", 170, 90, 0xFFFFFF);
+		
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);

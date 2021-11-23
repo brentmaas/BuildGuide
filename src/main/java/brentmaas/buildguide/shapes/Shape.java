@@ -67,7 +67,7 @@ public abstract class Shape {
 		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
 	}
 	
-	protected void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
+	private void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
 		//-X
 		buffer.pos(x, y, z).endVertex();
 		buffer.pos(x, y, z+s).endVertex();
@@ -105,6 +105,10 @@ public abstract class Shape {
 		buffer.pos(x, y+s, z+s).endVertex();
 		
 		nBlocks++;
+	}
+	
+	protected void addShapeCube(BufferBuilder buffer, int x, int y, int z) {
+		addCube(buffer, x + 0.2, y + 0.2, z + 0.2, 0.6);
 	}
 	
 	public void onSelectedInGUI() {

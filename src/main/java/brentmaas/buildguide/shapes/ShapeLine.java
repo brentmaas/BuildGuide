@@ -39,7 +39,7 @@ public class ShapeLine extends Shape{
 		}
 		
 		for(int i = 0;i < Math.abs(propertyLength.value);++i) {
-			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6);
+			addShapeCube(builder, dx * i, dy * i, dz * i);
 		}
 	}
 	

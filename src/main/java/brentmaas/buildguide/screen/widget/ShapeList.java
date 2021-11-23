@@ -29,7 +29,7 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	
 	public void addEntryExternal(int shapeId) {
 		addEntry(new Entry(shapeId));
-		if(getEventListeners().size() == 1) setSelected(getEventListeners().get(0));
+		setSelected(getEventListeners().get(shapeId));
 	}
 	
 	public boolean removeEntry(Entry entry) {
@@ -38,8 +38,8 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 				e.setShapeId(e.getShapeId() - 1);
 			}
 		}
-		if(getEventListeners().size() > 0 && entry.getShapeId() != 0) setSelected(getEventListeners().get(0));
-		else if(getEventListeners().size() > 1) setSelected(getEventListeners().get(1));
+		if(getEventListeners().size() > entry.getShapeId() + 1) setSelected(getEventListeners().get(entry.getShapeId() + 1));
+		else if(getEventListeners().size() > 1) setSelected(getEventListeners().get(entry.getShapeId() - 1));
 		return super.removeEntry(entry);
 	}
 	
@@ -59,7 +59,7 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 		
 		public void render(MatrixStack matrixStack, int p_230432_2_, int top, int left, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
 			//Found strikethrough code at https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/1437428-guide-1-7-2-how-to-make-button-tooltips?comment=3
-			Minecraft.getInstance().fontRenderer.drawStringWithShadow(matrixStack, (StateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + StateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), left + 35, top + 5, 0xFFFFFF);
+			Minecraft.getInstance().fontRenderer.drawStringWithShadow(matrixStack, (StateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + StateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), left + 5, top + 4, 0xFFFFFF);
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {

@@ -47,7 +47,7 @@ public class ShapeCircle extends Shape {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
 						for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
-							addCube(builder, x + (propertyDir.value == direction.X ? s : 0) + 0.2, y + (propertyDir.value == direction.Y ? s : 0) + 0.2, z + (propertyDir.value == direction.Z ? s : 0) + 0.2, 0.6);
+							addShapeCube(builder, x + (propertyDir.value == direction.X ? s : 0), y + (propertyDir.value == direction.Y ? s : 0), z + (propertyDir.value == direction.Z ? s : 0));
 						}
 					}
 				}
