@@ -43,7 +43,6 @@ public class ShapelistScreen extends Screen{
 		if(shapeList.getSelected() != null) {
 			StateManager.getState().advancedModeShapes.remove(shapeList.getSelected().getShapeId());
 			shapeList.removeEntry(shapeList.getSelected());
-			StateManager.getState().iAdvanced = 0;
 		}
 		
 		checkActive();
