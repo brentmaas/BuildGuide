@@ -12,12 +12,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class State {
 	public Shape[] basicModeShapes;
 	public int iBasic = 0;
-	public Shape basicModeShape = ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(0));
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
 	public int iAdvanced = 0;
 	public PropertyBoolean propertyEnable = new PropertyBoolean(-4, false, new TranslationTextComponent("screen.buildguide.enable"), null);
 	public PropertyBoolean propertyDepthTest = new PropertyBoolean(2, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
-	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, new TranslationTextComponent("screen.buildguide.advancedmode"), () -> {Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());});
+	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, new TranslationTextComponent("screen.buildguide.advancedmode"), () -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
 	
 	public State() {
 		ArrayList<String> classIdentifiers = ShapeRegistry.getClassIdentifiers();

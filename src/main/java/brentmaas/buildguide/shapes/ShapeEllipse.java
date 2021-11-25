@@ -15,10 +15,10 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 1, new TranslationTextComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 1, new TranslationTextComponent("property.buildguide.height"), () -> this.update());
 	
 	public ShapeEllipse() {
 		super();
