@@ -14,6 +14,7 @@ public class VisualisationScreen extends PropertyScreen{
 	private String titleShape;
 	private String titleBasepos;
 	
+	private Button buttonClose;
 	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
 	private Slider sliderShapeR;
 	private Slider sliderShapeG;
@@ -37,6 +38,8 @@ public class VisualisationScreen extends PropertyScreen{
 		titleColours = new TranslationTextComponent("screen.buildguide.colours").getString();
 		titleShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		titleBasepos = new TranslationTextComponent("screen.buildguide.basepos").getString();
+		
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
 		sliderShapeR = new Slider(0, 35, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeR : 1.0);
 		sliderShapeG = new Slider(0, 55, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeG : 1.0);
@@ -118,6 +121,7 @@ public class VisualisationScreen extends PropertyScreen{
 			buttonDefaultBasepos.active = false;
 		}
 		
+		addButton(buttonClose);
 		addButton(buttonBack);
 		addButton(sliderShapeR);
 		addButton(sliderShapeG);
