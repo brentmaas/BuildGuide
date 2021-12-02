@@ -79,7 +79,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		
 		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
 			StateManager.getState().resetBasepos();
-			for(Shape shape: StateManager.getState().basicModeShapes) {
+			for(Shape shape: StateManager.getState().simpleModeShapes) {
 				shape.update();
 			}
 			//Advanced mode shapes should be empty
@@ -144,7 +144,7 @@ public class BuildGuideScreen extends PropertyScreen{
 				s.onDeselectedInGUI();
 			}
 		}else {
-			for(Shape s: StateManager.getState().basicModeShapes) {
+			for(Shape s: StateManager.getState().simpleModeShapes) {
 				for(Property<?> p: s.properties) {
 					addProperty(p);
 				}
@@ -186,7 +186,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private void updateShape(int di) {
 		StateManager.getState().getCurrentShape().onDeselectedInGUI();
 		
-		StateManager.getState().iBasic = Math.floorMod(StateManager.getState().iBasic + di, StateManager.getState().basicModeShapes.length);
+		StateManager.getState().iSimple = Math.floorMod(StateManager.getState().iSimple + di, StateManager.getState().simpleModeShapes.length);
 		
 		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}

@@ -10,8 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class State {
-	public Shape[] basicModeShapes;
-	public int iBasic = 0;
+	public Shape[] simpleModeShapes;
+	public int iSimple = 0;
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
 	public int iAdvanced = 0;
 	public PropertyBoolean propertyEnable = new PropertyBoolean(-4, false, new TranslationTextComponent("screen.buildguide.enable"), null);
@@ -20,9 +20,9 @@ public class State {
 	
 	public State() {
 		ArrayList<String> classIdentifiers = ShapeRegistry.getClassIdentifiers();
-		basicModeShapes = new Shape[classIdentifiers.size()];
+		simpleModeShapes = new Shape[classIdentifiers.size()];
 		for(int i = 0;i < classIdentifiers.size();++i) {
-			basicModeShapes[i] = ShapeRegistry.getNewInstance(classIdentifiers.get(i));
+			simpleModeShapes[i] = ShapeRegistry.getNewInstance(classIdentifiers.get(i));
 		}
 	}
 	
@@ -30,7 +30,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			return advancedModeShapes.size() > 0 ? advancedModeShapes.get(iAdvanced) : null;
 		}
-		return basicModeShapes[iBasic];
+		return simpleModeShapes[iSimple];
 	}
 	
 	public void updateCurrentShape() {
@@ -39,7 +39,7 @@ public class State {
 				advancedModeShapes.get(i).update();
 			}
 		}else {
-			basicModeShapes[iBasic].update();
+			simpleModeShapes[iSimple].update();
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).resetBasepos();
 		} else {
-			for(Shape s: basicModeShapes) s.resetBasepos();
+			for(Shape s: simpleModeShapes) s.resetBasepos();
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).setBasepos(x, y, z);
 		} else {
-			for(Shape s: basicModeShapes) s.setBasepos(x, y, z);
+			for(Shape s: simpleModeShapes) s.setBasepos(x, y, z);
 		}
 	}
 	
@@ -71,7 +71,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).setBasepos(x, (int) advancedModeShapes.get(iAdvanced).basePos.y, (int) advancedModeShapes.get(iAdvanced).basePos.z);
 		} else {
-			for(Shape s: basicModeShapes) s.setBasepos(x, (int) s.basePos.y, (int) s.basePos.z);
+			for(Shape s: simpleModeShapes) s.setBasepos(x, (int) s.basePos.y, (int) s.basePos.z);
 		}
 	}
 	
@@ -79,7 +79,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).setBasepos((int) advancedModeShapes.get(iAdvanced).basePos.x, y, (int) advancedModeShapes.get(iAdvanced).basePos.z);
 		} else {
-			for(Shape s: basicModeShapes) s.setBasepos((int) s.basePos.x, y, (int) s.basePos.z);
+			for(Shape s: simpleModeShapes) s.setBasepos((int) s.basePos.x, y, (int) s.basePos.z);
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).setBasepos((int) advancedModeShapes.get(iAdvanced).basePos.x, (int) advancedModeShapes.get(iAdvanced).basePos.y, z);
 		} else {
-			for(Shape s: basicModeShapes) s.setBasepos((int) s.basePos.x, (int) s.basePos.y, z);
+			for(Shape s: simpleModeShapes) s.setBasepos((int) s.basePos.x, (int) s.basePos.y, z);
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class State {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).shiftBasepos(dx, dy, dz);
 		} else {
-			for(Shape s: basicModeShapes) s.shiftBasepos(dx, dy, dz);
+			for(Shape s: simpleModeShapes) s.shiftBasepos(dx, dy, dz);
 		}
 	}
 }
