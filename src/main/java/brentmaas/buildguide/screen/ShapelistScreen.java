@@ -143,7 +143,7 @@ public class ShapelistScreen extends Screen{
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
-		shapeList = new ShapeList(minecraft, width, height - 25, 60, height, 20, () -> {
+		shapeList = new ShapeList(minecraft, 150, width, 25, height, 20, () -> {
 			updateGlobalBasepos();
 			if(StateManager.getState().isShapeAvailable()) buttonVisible.setChecked(StateManager.getState().getCurrentShape().visible);
 		});
@@ -160,7 +160,7 @@ public class ShapelistScreen extends Screen{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNewShape, (140 - font.getStringWidth(titleNewShape)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapes, (width - font.getStringWidth(titleShapes)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapes, 150 + (width - 160 - font.getStringWidth(titleShapes)) / 2, 15, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleGlobalBasepos, (140 - font.getStringWidth(titleGlobalBasepos)) / 2, 115, 0xFFFFFF);
 		
 		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();

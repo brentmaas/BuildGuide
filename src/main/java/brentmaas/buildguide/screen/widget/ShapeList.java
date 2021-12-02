@@ -2,11 +2,17 @@ package brentmaas.buildguide.screen.widget;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.StateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.list.ExtendedList;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -14,8 +20,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	private Runnable update;
 	
-	public ShapeList(Minecraft minecraft, int width, int height, int top, int bottom, int slotHeight, Runnable updateOnSelected) {
-		super(minecraft, width, height, top, bottom, slotHeight);
+	public ShapeList(Minecraft minecraft, int left, int right, int top, int bottom, int slotHeight, Runnable updateOnSelected) {
+		super(minecraft, right - left, bottom - top, top, bottom, slotHeight);
+		x0 = left;
+		x1 = right;
 		func_244605_b(false); //Disable background part 1
 		func_244606_c(false); //Disable background part 2
 		
@@ -47,6 +55,67 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 		super.setSelected(entry);
 		if(entry != null) StateManager.getState().iAdvanced = entry.getShapeId();
 		update.run();
+	}
+	
+	@Override
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		if(!hasBlend) RenderSystem.enableBlend();
+		
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		RenderSystem.color4f(0, 0, 0, 0.2f);
+		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		bufferBuilder.pos(x0, y0, 0).endVertex();
+		bufferBuilder.pos(x0, y1, 0).endVertex();
+		bufferBuilder.pos(x1, y1, 0).endVertex();
+		bufferBuilder.pos(x1, y0, 0).endVertex();
+		tessellator.draw();
+		
+		if(!hasBlend) RenderSystem.disableBlend();
+		
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+	}
+	
+	//Incredibly ugly hack to fix entries clipping out of the list
+	@Override
+	protected void renderList(MatrixStack matrixStack, int p_238478_2_, int p_238478_3_, int p_238478_4_, int p_238478_5_, float p_238478_6_) {
+		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
+		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
+		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		
+		if(!hasDepthTest) RenderSystem.enableDepthTest();
+		if(!hasDepthMask) RenderSystem.depthMask(true);
+		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
+		if(!hasBlend) RenderSystem.enableBlend();
+		
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		RenderSystem.color4f(0, 0, 0, 0);
+		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		bufferBuilder.pos(x0, y0 - itemHeight - 4, 0.1).endVertex();
+		bufferBuilder.pos(x0, y0, 0.1).endVertex();
+		bufferBuilder.pos(x1, y0, 0.1).endVertex();
+		bufferBuilder.pos(x1, y0 - itemHeight - 4, 0.1).endVertex();
+		tessellator.draw();
+		
+		super.renderList(matrixStack, p_238478_2_, p_238478_3_, p_238478_4_, p_238478_5_, p_238478_6_);
+		
+		if(!hasBlend) RenderSystem.disableBlend();
+		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc); 
+		if(!hasDepthMask) RenderSystem.depthMask(false);
+		if(!hasDepthTest) RenderSystem.disableDepthTest();
+	}
+	
+	@Override
+	public int getRowWidth() {
+		return width - 12;
+	}
+	
+	@Override
+	protected int getScrollbarPosition() {
+		return x1 - 6;
 	}
 	
 	@OnlyIn(Dist.CLIENT)
