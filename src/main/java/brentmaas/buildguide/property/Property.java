@@ -4,25 +4,31 @@ import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import brentmaas.buildguide.screen.BuildGuideScreen;
+import brentmaas.buildguide.screen.PropertyScreen;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.BaseComponent;
 
 public abstract class Property<T> {
-	protected int x, y;
+	protected final static int baseY = 125;
+	protected final static int height = 20;
+	
+	protected int y;
 	public T value;
 	protected BaseComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
 	public ArrayList<EditBox> editBoxList = new ArrayList<EditBox>();
+	protected boolean visible;
 	
-	public Property(int x, int y, T value, BaseComponent name, Runnable onUpdate){
-		this.x = x;
-		this.y = y;
+	public Property(int slot, T value, BaseComponent name, Runnable onUpdate){
+		y = baseY + slot * height;
 		this.value = value;
 		this.name = name;
+		visible = true;
 	}
+	
+	public abstract void addTextFields(Font fr);
 	
 	public void onSelectedInGUI() {
 		for(AbstractButton b: buttonList) {
@@ -31,6 +37,7 @@ public abstract class Property<T> {
 		for(EditBox eb: editBoxList) {
 			eb.visible = true;
 		}
+		visible = true;
 	}
 	
 	public void onDeselectedInGUI() {
@@ -40,14 +47,15 @@ public abstract class Property<T> {
 		for(EditBox eb: editBoxList) {
 			eb.visible = false;
 		}
+		visible = false;
 	}
 	
-	public void addToBuildGuideScreen(BuildGuideScreen screen) {
+	public void addToPropertyScreen(PropertyScreen screen) {
 		for(AbstractButton b: buttonList) {
-			screen.addButtonExternal(b);
+			screen.addWidgetExternal(b);
 		}
 		for(EditBox eb: editBoxList) {
-			screen.addEditBoxExternal(eb);
+			screen.addWidgetExternal(eb);
 		}
 	}
 	
@@ -67,7 +75,12 @@ public abstract class Property<T> {
 		for(EditBox eb: editBoxList) {
 			eb.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
+		drawString(matrixStack, name.getString(), 5, y + 5, 0xFFFFFF, font);
 	}
 	
-	public abstract void addTextFields(Font fr);
+	protected void drawString(PoseStack matrixStack, String text, float x, float y, int colour, Font font) {
+		if(visible) {
+			font.drawShadow(matrixStack, text, x, y, colour);
+		}
+	}
 }

@@ -2,7 +2,6 @@ package brentmaas.buildguide.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
@@ -17,9 +16,9 @@ public class ShapeCircle extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.radius"), () -> {this.update();});
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 185, 1, new TranslatableComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> this.update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(2, 1, new TranslatableComponent("property.buildguide.height"), () -> this.update());
 	
 	public ShapeCircle() {
 		super();
@@ -49,7 +48,7 @@ public class ShapeCircle extends Shape {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
 						for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
-							addCube(builder, x + (propertyDir.value == direction.X ? s : 0) + 0.2, y + (propertyDir.value == direction.Y ? s : 0) + 0.2, z + (propertyDir.value == direction.Z ? s : 0) + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+							addShapeCube(builder, x + (propertyDir.value == direction.X ? s : 0), y + (propertyDir.value == direction.Y ? s : 0), z + (propertyDir.value == direction.Z ? s : 0));
 						}
 					}
 				}

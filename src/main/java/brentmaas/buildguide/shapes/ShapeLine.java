@@ -2,25 +2,21 @@ package brentmaas.buildguide.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.property.PropertyNonzeroInt;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeLine extends Shape{
 	private enum direction{
-		POSITIVE_X,
-		POSITIVE_Y,
-		POSITIVE_Z,
-		NEGATIVE_X,
-		NEGATIVE_Y,
-		NEGATIVE_Z
+		X,
+		Y,
+		Z
 	}
 	
-	private final String[] directionNames = {"+X", "+Y", "+Z", "-X", "-Y", "-Z"};
+	private final String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.POSITIVE_X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertyLength = new PropertyPositiveInt(0, 165, 5, new TranslatableComponent("property.buildguide.length"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyNonzeroInt propertyLength = new PropertyNonzeroInt(1, 5, new TranslatableComponent("property.buildguide.length"), () -> this.update());
 	
 	public ShapeLine() {
 		super();
@@ -32,28 +28,19 @@ public class ShapeLine extends Shape{
 	protected void updateShape(BufferBuilder builder) {
 		int dx = 0, dy = 0, dz = 0;
 		switch(propertyDir.value) {
-		case NEGATIVE_X:
-			dx = -1;
+		case X:
+			dx = (int) Math.signum(propertyLength.value);
 			break;
-		case NEGATIVE_Y:
-			dy = -1;
+		case Y:
+			dy = (int) Math.signum(propertyLength.value);
 			break;
-		case NEGATIVE_Z:
-			dz = -1;
-			break;
-		case POSITIVE_X:
-			dx = 1;
-			break;
-		case POSITIVE_Y:
-			dy = 1;
-			break;
-		case POSITIVE_Z:
-			dz = 1;
+		case Z:
+			dz = (int) Math.signum(propertyLength.value);
 			break;
 		}
 		
-		for(int i = 0;i < propertyLength.value;++i) {
-			addCube(builder, dx * i + 0.2, dy * i + 0.2, dz * i + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+		for(int i = 0;i < Math.abs(propertyLength.value);++i) {
+			addShapeCube(builder, dx * i, dy * i, dz * i);
 		}
 	}
 	

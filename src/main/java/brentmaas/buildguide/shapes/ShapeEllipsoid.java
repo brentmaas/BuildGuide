@@ -2,7 +2,6 @@ package brentmaas.buildguide.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,10 +19,10 @@ public class ShapeEllipsoid extends Shape{
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 145, 3, new TranslatableComponent("property.buildguide.semiaxis", "X"), () -> {this.update();});
-	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(0, 185, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(0, 205, dome.NO, new TranslatableComponent("property.buildguide.dome"), () -> {this.update();}, domeNames);
+	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 3, new TranslatableComponent("property.buildguide.semiaxis", "X"), () -> this.update());
+	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
+	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(3, dome.NO, new TranslatableComponent("property.buildguide.dome"), () -> this.update(), domeNames);
 	
 	public ShapeEllipsoid() {
 		super();
@@ -51,7 +50,7 @@ public class ShapeEllipsoid extends Shape{
 					double r2_inner = (x - drx) * (x - drx) / dx / dx + (y - dry) * (y - dry) / dy / dy + (z - drz) * (z - drz) / dz / dz;
 					double r2_outer = (x + drx) * (x + drx) / dx / dx + (y + dry) * (y + dry) / dy / dy + (z + drz) * (z + drz) / dz / dz;
 					if(r2_outer >= 1 && r2_inner <= 1) {
-						addCube(builder, x + 0.2, y + 0.2, z + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						addShapeCube(builder, x, y, z);
 					}
 				}
 			}

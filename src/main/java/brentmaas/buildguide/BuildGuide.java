@@ -4,6 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import brentmaas.buildguide.input.Keybindings;
+import brentmaas.buildguide.shapes.ShapeCircle;
+import brentmaas.buildguide.shapes.ShapeCuboid;
+import brentmaas.buildguide.shapes.ShapeEllipse;
+import brentmaas.buildguide.shapes.ShapeEllipsoid;
+import brentmaas.buildguide.shapes.ShapeLine;
+import brentmaas.buildguide.shapes.ShapePolygon;
+import brentmaas.buildguide.shapes.ShapeRegistry;
+import brentmaas.buildguide.shapes.ShapeSphere;
+import brentmaas.buildguide.shapes.ShapeTorus;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -20,14 +29,22 @@ import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
 public class BuildGuide {
 	public static final String modid = "buildguide";
 	public static final Logger logger = LogManager.getLogger();
-	public static State state;
 	
 	public BuildGuide() {
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-			state = new State();
+			ShapeRegistry.registerShape(ShapeCircle.class);
+			ShapeRegistry.registerShape(ShapeCuboid.class);
+			ShapeRegistry.registerShape(ShapeEllipse.class);
+			ShapeRegistry.registerShape(ShapeEllipsoid.class);
+			ShapeRegistry.registerShape(ShapeLine.class);
+			ShapeRegistry.registerShape(ShapePolygon.class);
+			ShapeRegistry.registerShape(ShapeSphere.class);
+			ShapeRegistry.registerShape(ShapeTorus.class);
+			
+			StateManager.init();
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, State.clientConfigSpec);
+			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.clientConfigSpec);
 		});
 	}
 	

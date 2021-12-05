@@ -2,7 +2,6 @@ package brentmaas.buildguide.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyMinimumInt;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
@@ -30,11 +29,11 @@ public class ShapePolygon extends Shape{
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 145, 3, new TranslatableComponent("property.buildguide.sides"), () -> {this.update();}, 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.radius"), () -> {this.update();});
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 185, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(0, 205, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> {this.update();}, rotationNames);
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 225, 1, new TranslatableComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, new TranslatableComponent("property.buildguide.sides"), () -> this.update(), 3);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> this.update(), rotationNames);
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.height"), () -> this.update());
 	
 	public ShapePolygon() {
 		super();
@@ -65,13 +64,13 @@ public class ShapePolygon extends Shape{
 						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
-								addCube(builder, h + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+								addShapeCube(builder, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Y:
-								addCube(builder, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, a * rotXX[rot] + b * rotXY[rot] + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+								addShapeCube(builder, b * rotXX[rot] + a * rotYX[rot], h, a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Z:
-								addCube(builder, a * rotXX[rot] + b * rotXY[rot] + 0.2, b * rotXX[rot] + a * rotYX[rot] + 0.2, h + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+								addShapeCube(builder, a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] + a * rotYX[rot], h);
 								break;
 							}
 						}

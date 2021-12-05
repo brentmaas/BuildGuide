@@ -2,7 +2,6 @@ package brentmaas.buildguide.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyNonzeroInt;
 import brentmaas.buildguide.property.PropertyPositiveInt;
@@ -17,10 +16,10 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, 145, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> {this.update();}, directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(0, 165, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> {this.update();});
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(0, 185, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> {this.update();});
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(0, 205, 1, new TranslatableComponent("property.buildguide.height"), () -> {this.update();});
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 1, new TranslatableComponent("property.buildguide.height"), () -> this.update());
 	
 	public ShapeEllipse() {
 		super();
@@ -68,13 +67,13 @@ public class ShapeEllipse extends Shape {
 				for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
 					switch(propertyDir.value) {
 					case X:
-						addCube(builder, s + 0.2, a + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						addShapeCube(builder, s, a, b);
 						break;
 					case Y:
-						addCube(builder, a + 0.2, s + 0.2, b + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						addShapeCube(builder, a, s, b);
 						break;
 					case Z:
-						addCube(builder, a + 0.2, b + 0.2, s + 0.2, 0.6, BuildGuide.state.colourShapeR, BuildGuide.state.colourShapeG, BuildGuide.state.colourShapeB, BuildGuide.state.colourShapeA);
+						addShapeCube(builder, a, b, s);
 						break;
 					}
 				}
