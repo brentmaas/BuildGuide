@@ -1,14 +1,20 @@
-package brentmaas.buildguide.input;
+package brentmaas.buildguide;
 
 import org.lwjgl.glfw.GLFW;
 
+import brentmaas.buildguide.screen.BuildGuideScreen;
+import brentmaas.buildguide.screen.VisualisationScreen;
+import brentmaas.buildguide.screen.ShapelistScreen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
+import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class Keybindings {
+public class InputHandler {
 	public static KeyBinding openBuildGuide;
 	public static KeyBinding openShapeList;
 	public static KeyBinding openVisualisation;
@@ -23,5 +29,20 @@ public class Keybindings {
 		ClientRegistry.registerKeyBinding(openVisualisation);
 		
 		MinecraftForge.EVENT_BUS.register(new InputHandler());
+	}
+	
+	@SubscribeEvent
+	public void onKeyInput(KeyInputEvent event) {
+		if(openBuildGuide.isPressed()) {
+			Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());
+		}
+		
+		if(openShapeList.isPressed() && StateManager.getState().propertyAdvancedMode.value) {
+			Minecraft.getInstance().displayGuiScreen(new ShapelistScreen());
+		}
+		
+		if(openVisualisation.isPressed()) {
+			Minecraft.getInstance().displayGuiScreen(new VisualisationScreen());
+		}
 	}
 }

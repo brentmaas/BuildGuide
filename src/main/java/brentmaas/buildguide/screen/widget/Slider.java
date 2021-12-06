@@ -28,7 +28,7 @@ public class Slider extends AbstractSlider{
 	}
 	
 	public void setManualValue(double value) {
-		this.sliderValue = (value - min) / (max - min);
+		sliderValue = (value - min) / (max - min);
 	}
 	
 	public double getValue() {

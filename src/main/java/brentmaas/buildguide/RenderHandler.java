@@ -24,7 +24,7 @@ public class RenderHandler {
 	public void onRenderBlock(RenderWorldLastEvent event) {
 		Minecraft.getInstance().getProfiler().startSection("buildguide");
 		
-		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos != null && StateManager.getState().propertyEnable.value) {
+		if(StateManager.getState().propertyEnable.value && StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos != null) {
 			MatrixStack stack = event.getMatrixStack();
 			if(StateManager.getState().propertyAdvancedMode.value) {
 				for(Shape shape: StateManager.getState().advancedModeShapes) renderShape(stack, shape);

@@ -19,13 +19,12 @@ public abstract class Property<T> {
 	protected TextComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
 	public ArrayList<TextFieldWidget> textFieldList = new ArrayList<TextFieldWidget>();
-	protected boolean visible;
+	protected boolean visible = true;
 	
 	public Property(int slot, T value, TextComponent name, Runnable onUpdate) {
 		y = baseY + slot * height;
 		this.value = value;
 		this.name = name;
-		visible = true;
 	}
 	
 	public abstract void addTextFields(FontRenderer fr);

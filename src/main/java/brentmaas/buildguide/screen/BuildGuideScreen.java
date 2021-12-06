@@ -24,9 +24,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private Button buttonShapeNext = new Button(140, 25, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
 	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
 	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
-	private Button buttonColours = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> {
-		Minecraft.getInstance().displayGuiScreen(new VisualisationScreen());
-	});
+	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().displayGuiScreen(new VisualisationScreen()));
 	//It's better off as custom buttons instead of PropertyInt
 	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
 	private Button buttonBaseposXIncrease = new Button(285, 45, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
@@ -89,7 +87,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		
 		if(!StateManager.getState().isShapeAvailable()) {
 			buttonBasepos.active = false;
-			buttonColours.active = false;
+			buttonVisualisation.active = false;
 			buttonBaseposXDecrease.active = false;
 			buttonBaseposXIncrease.active = false;
 			buttonBaseposYDecrease.active = false;
@@ -109,7 +107,7 @@ public class BuildGuideScreen extends PropertyScreen{
 			addButton(buttonShapelist);
 		}
 		addButton(buttonBasepos);
-		addButton(buttonColours);
+		addButton(buttonVisualisation);
 		addButton(buttonBaseposXDecrease);
 		addButton(buttonBaseposXIncrease);
 		addButton(buttonBaseposYDecrease);

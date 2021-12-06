@@ -4,7 +4,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import brentmaas.buildguide.input.Keybindings;
 import brentmaas.buildguide.shapes.ShapeCircle;
 import brentmaas.buildguide.shapes.ShapeCuboid;
 import brentmaas.buildguide.shapes.ShapeEllipse;
@@ -50,7 +49,7 @@ public class BuildGuide {
 	}
 	
 	private void setup(final FMLCommonSetupEvent event) {
-		Keybindings.register();
+		InputHandler.register();
 		RenderHandler.register();
 	}
 	
