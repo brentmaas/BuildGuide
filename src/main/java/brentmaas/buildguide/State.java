@@ -98,4 +98,40 @@ public class State {
 			for(Shape s: simpleModeShapes) s.shiftBasepos(dx, dy, dz);
 		}
 	}
+	
+	public void setShapeColour(float r, float g, float b, float a) {
+		if(propertyAdvancedMode.value) {
+			advancedModeShapes.get(iAdvanced).colourShapeR = r;
+			advancedModeShapes.get(iAdvanced).colourShapeG = g;
+			advancedModeShapes.get(iAdvanced).colourShapeB = b;
+			advancedModeShapes.get(iAdvanced).colourShapeA = a;
+			advancedModeShapes.get(iAdvanced).update();
+		}else {
+			for(Shape s: simpleModeShapes) {
+				s.colourShapeR = r;
+				s.colourShapeG = g;
+				s.colourShapeB = b;
+				s.colourShapeA = a;
+				s.update();
+			}
+		}
+	}
+	
+	public void setBaseposColour(float r, float g, float b, float a) {
+		if(propertyAdvancedMode.value) {
+			advancedModeShapes.get(iAdvanced).colourBaseposR = r;
+			advancedModeShapes.get(iAdvanced).colourBaseposG = g;
+			advancedModeShapes.get(iAdvanced).colourBaseposB = b;
+			advancedModeShapes.get(iAdvanced).colourBaseposA = a;
+			advancedModeShapes.get(iAdvanced).update();
+		}else {
+			for(Shape s: simpleModeShapes) {
+				s.colourBaseposR = r;
+				s.colourBaseposG = g;
+				s.colourBaseposB = b;
+				s.colourBaseposA = a;
+				s.update();
+			}
+		}
+	}
 }

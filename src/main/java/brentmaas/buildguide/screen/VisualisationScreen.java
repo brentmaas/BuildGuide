@@ -52,22 +52,12 @@ public class VisualisationScreen extends PropertyScreen{
 		
 		buttonSetShape = new Button(0, 115, 100, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 			if(StateManager.getState().isShapeAvailable()) {
-				StateManager.getState().getCurrentShape().colourShapeR = (float) sliderShapeR.getValue();
-				StateManager.getState().getCurrentShape().colourShapeG = (float) sliderShapeG.getValue();
-				StateManager.getState().getCurrentShape().colourShapeB = (float) sliderShapeB.getValue();
-				StateManager.getState().getCurrentShape().colourShapeA = (float) sliderShapeA.getValue();
-				
-				StateManager.getState().updateCurrentShape();
+				StateManager.getState().setShapeColour((float) sliderShapeR.getValue(), (float) sliderShapeG.getValue(), (float) sliderShapeB.getValue(), (float) sliderShapeA.getValue());
 			}
 		});
 		buttonSetBasepos = new Button(110, 115, 100, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 			if(StateManager.getState().isShapeAvailable()) {
-				StateManager.getState().getCurrentShape().colourBaseposR = (float) sliderBaseposR.getValue();
-				StateManager.getState().getCurrentShape().colourBaseposG = (float) sliderBaseposG.getValue();
-				StateManager.getState().getCurrentShape().colourBaseposB = (float) sliderBaseposB.getValue();
-				StateManager.getState().getCurrentShape().colourBaseposA = (float) sliderBaseposA.getValue();
-				
-				StateManager.getState().updateCurrentShape();
+				StateManager.getState().setBaseposColour((float) sliderBaseposR.getValue(), (float) sliderBaseposG.getValue(), (float) sliderBaseposB.getValue(), (float) sliderBaseposA.getValue());
 			}
 		});
 		
@@ -81,11 +71,7 @@ public class VisualisationScreen extends PropertyScreen{
 			sliderShapeB.updateMessage();
 			sliderShapeA.updateMessage();
 			if(StateManager.getState().isShapeAvailable()) {
-				StateManager.getState().getCurrentShape().colourShapeR = 1.0f;
-				StateManager.getState().getCurrentShape().colourShapeG = 1.0f;
-				StateManager.getState().getCurrentShape().colourShapeB = 1.0f;
-				StateManager.getState().getCurrentShape().colourShapeA = 0.5f;
-				StateManager.getState().updateCurrentShape();
+				StateManager.getState().setShapeColour(1.0f, 1.0f, 1.0f, 0.5f);
 			}
 		});
 		buttonDefaultBasepos = new Button(110, 135, 100, 20, new TranslatableComponent("screen.buildguide.default"), button -> {
@@ -98,11 +84,7 @@ public class VisualisationScreen extends PropertyScreen{
 			sliderBaseposB.updateMessage();
 			sliderBaseposA.updateMessage();
 			if(StateManager.getState().isShapeAvailable()) {
-				StateManager.getState().getCurrentShape().colourBaseposR = 1.0f;
-				StateManager.getState().getCurrentShape().colourBaseposG = 0.0f;
-				StateManager.getState().getCurrentShape().colourBaseposB = 0.0f;
-				StateManager.getState().getCurrentShape().colourBaseposA = 0.5f;
-				StateManager.getState().updateCurrentShape();
+				StateManager.getState().setBaseposColour(1.0f, 0.0f, 0.0f, 0.5f);
 			}
 		});
 		
@@ -148,7 +130,7 @@ public class VisualisationScreen extends PropertyScreen{
 	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawShadow(matrixStack, titleColours, (210 - font.width(titleShape)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleColours, (210 - font.width(titleColours)) / 2, 15, 0xFFFFFF);
 		font.drawShadow(matrixStack, titleShape, (100 - font.width(titleShape)) / 2, 25, 0xFFFFFF);
 		font.drawShadow(matrixStack, titleBasepos, 110 + (100 - font.width(titleBasepos)) / 2, 25, 0xFFFFFF);
 	}
