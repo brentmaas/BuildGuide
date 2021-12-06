@@ -11,7 +11,7 @@ public class CheckboxRunnableButton extends Checkbox{
 	
 	public CheckboxRunnableButton(int x, int y, int width, int height, TextComponent title, boolean checked, boolean drawTitle, CheckboxRunnableButton.IPressable pressedAction) {
 		super(x, y, width, height, title, checked, drawTitle);
-		this.onPress = pressedAction;
+		onPress = pressedAction;
 	}
 	
 	public void onPress() {
