@@ -21,6 +21,7 @@ public class ShapelistScreen extends Screen{
 	private String titleShapes;
 	private String titleGlobalBasepos;
 	private String titleVisible;
+	private String titleNumberOfBlocks;
 	
 	private ShapeList shapeList;
 	
@@ -99,15 +100,16 @@ public class ShapelistScreen extends Screen{
 	
 	public ShapelistScreen() {
 		super(new TranslationTextComponent("screen.buildguide.shapelist"));
-		
-		titleNewShape = new TranslationTextComponent("screen.buildguide.newshape").getString();
-		titleShapes = new TranslationTextComponent("screen.buildguide.shapes").getString();
-		titleGlobalBasepos = new TranslationTextComponent("screen.buildguide.globalbasepos").getString();
-		titleVisible = new TranslationTextComponent("screen.buildguide.visible").getString();
 	}
 	
 	@Override
 	protected void init() {
+		titleNewShape = new TranslationTextComponent("screen.buildguide.newshape").getString();
+		titleShapes = new TranslationTextComponent("screen.buildguide.shapes").getString();
+		titleGlobalBasepos = new TranslationTextComponent("screen.buildguide.globalbasepos").getString();
+		titleVisible = new TranslationTextComponent("screen.buildguide.visible").getString();
+		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
+		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
 		
 		checkActive();
@@ -143,7 +145,7 @@ public class ShapelistScreen extends Screen{
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
-		shapeList = new ShapeList(minecraft, 150, width, 25, height, 20, () -> {
+		shapeList = new ShapeList(minecraft, 150, 300, 25, height, 20, () -> {
 			updateGlobalBasepos();
 			if(StateManager.getState().isShapeAvailable()) buttonVisible.setChecked(StateManager.getState().getCurrentShape().visible);
 		});
@@ -160,8 +162,9 @@ public class ShapelistScreen extends Screen{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleNewShape, (140 - font.getStringWidth(titleNewShape)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapes, 150 + (width - 160 - font.getStringWidth(titleShapes)) / 2, 15, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleShapes, 150 + (150 - font.getStringWidth(titleShapes)) / 2, 15, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, titleGlobalBasepos, (140 - font.getStringWidth(titleGlobalBasepos)) / 2, 115, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		
 		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
 		font.drawStringWithShadow(matrixStack, newShapeName, 20 + (100 - font.getStringWidth(newShapeName)) / 2, 30, 0xFFFFFF);
@@ -174,6 +177,17 @@ public class ShapelistScreen extends Screen{
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);
+		
+		int n = 0;
+		for(Shape s: StateManager.getState().advancedModeShapes) {
+			if(s.visible) {
+				n += s.getNumberOfBlocks();
+			}
+		}
+		String numberOfBlocks = "" + n;
+		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
+		font.drawStringWithShadow(matrixStack, numberOfBlocks, 305 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 30, 0xFFFFFF);
+		font.drawStringWithShadow(matrixStack, numberOfStacks, 305 + (100 - font.getStringWidth(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		shapeList.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
