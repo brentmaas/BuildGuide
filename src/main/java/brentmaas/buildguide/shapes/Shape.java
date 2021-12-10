@@ -45,11 +45,11 @@ public abstract class Shape {
 		long t = System.currentTimeMillis();
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
 		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-		builder.setDefaultColor((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
+		builder.defaultColor((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
 		this.updateShape(builder);
-		builder.setDefaultColor((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
+		builder.defaultColor((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
 		addCube(builder, 0.4, 0.4, 0.4, 0.2); //Base position
-		builder.finishDrawing();
+		builder.end();
 		buffer.close();
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
 		buffer.upload(builder);
@@ -60,49 +60,49 @@ public abstract class Shape {
 	
 	public void render(Matrix4f matrix) {
 		//https://gist.github.com/gigaherz/87939db73d8adf4aace6ec7cf611bd2d
-		this.buffer.bindBuffer();
+		buffer.bind();
 		DefaultVertexFormats.POSITION_COLOR.setupBufferState(0);
-		this.buffer.draw(matrix, GL11.GL_QUADS);
-		VertexBuffer.unbindBuffer();
+		buffer.draw(matrix, GL11.GL_QUADS);
+		VertexBuffer.unbind();
 		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
 	}
 	
 	private void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
 		//-X
-		buffer.pos(x, y, z).endVertex();
-		buffer.pos(x, y, z+s).endVertex();
-		buffer.pos(x, y+s, z+s).endVertex();
-		buffer.pos(x, y+s, z).endVertex();
+		buffer.vertex(x, y, z).endVertex();
+		buffer.vertex(x, y, z+s).endVertex();
+		buffer.vertex(x, y+s, z+s).endVertex();
+		buffer.vertex(x, y+s, z).endVertex();
 		
 		//-Y
-		buffer.pos(x, y, z).endVertex();
-		buffer.pos(x+s, y, z).endVertex();
-		buffer.pos(x+s, y, z+s).endVertex();
-		buffer.pos(x, y, z+s).endVertex();
+		buffer.vertex(x, y, z).endVertex();
+		buffer.vertex(x+s, y, z).endVertex();
+		buffer.vertex(x+s, y, z+s).endVertex();
+		buffer.vertex(x, y, z+s).endVertex();
 		
 		//-Z
-		buffer.pos(x, y, z).endVertex();
-		buffer.pos(x, y+s, z).endVertex();
-		buffer.pos(x+s, y+s, z).endVertex();
-		buffer.pos(x+s, y, z).endVertex();
+		buffer.vertex(x, y, z).endVertex();
+		buffer.vertex(x, y+s, z).endVertex();
+		buffer.vertex(x+s, y+s, z).endVertex();
+		buffer.vertex(x+s, y, z).endVertex();
 		
 		//+X
-		buffer.pos(x+s, y, z).endVertex();
-		buffer.pos(x+s, y+s, z).endVertex();
-		buffer.pos(x+s, y+s, z+s).endVertex();
-		buffer.pos(x+s, y, z+s).endVertex();
+		buffer.vertex(x+s, y, z).endVertex();
+		buffer.vertex(x+s, y+s, z).endVertex();
+		buffer.vertex(x+s, y+s, z+s).endVertex();
+		buffer.vertex(x+s, y, z+s).endVertex();
 		
 		//+Y
-		buffer.pos(x, y+s, z).endVertex();
-		buffer.pos(x, y+s, z+s).endVertex();
-		buffer.pos(x+s, y+s, z+s).endVertex();
-		buffer.pos(x+s, y+s, z).endVertex();
+		buffer.vertex(x, y+s, z).endVertex();
+		buffer.vertex(x, y+s, z+s).endVertex();
+		buffer.vertex(x+s, y+s, z+s).endVertex();
+		buffer.vertex(x+s, y+s, z).endVertex();
 		
 		//+Z
-		buffer.pos(x, y, z+s).endVertex();
-		buffer.pos(x+s, y, z+s).endVertex();
-		buffer.pos(x+s, y+s, z+s).endVertex();
-		buffer.pos(x, y+s, z+s).endVertex();
+		buffer.vertex(x, y, z+s).endVertex();
+		buffer.vertex(x+s, y, z+s).endVertex();
+		buffer.vertex(x+s, y+s, z+s).endVertex();
+		buffer.vertex(x, y+s, z+s).endVertex();
 		
 		nBlocks++;
 	}
@@ -132,7 +132,7 @@ public abstract class Shape {
 	}
 	
 	public void resetBasepos() {
-		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
+		Vector3d pos = Minecraft.getInstance().player.position();
 		basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
 	}
 	

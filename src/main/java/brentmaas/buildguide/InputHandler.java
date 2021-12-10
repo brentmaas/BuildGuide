@@ -33,16 +33,16 @@ public class InputHandler {
 	
 	@SubscribeEvent
 	public void onKeyInput(KeyInputEvent event) {
-		if(openBuildGuide.isPressed()) {
-			Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen());
+		if(openBuildGuide.isDown()) {
+			Minecraft.getInstance().setScreen(new BuildGuideScreen());
 		}
 		
-		if(openShapeList.isPressed() && StateManager.getState().propertyAdvancedMode.value) {
-			Minecraft.getInstance().displayGuiScreen(new ShapelistScreen());
+		if(openShapeList.isDown() && StateManager.getState().propertyAdvancedMode.value) {
+			Minecraft.getInstance().setScreen(new ShapelistScreen());
 		}
 		
-		if(openVisualisation.isPressed()) {
-			Minecraft.getInstance().displayGuiScreen(new VisualisationScreen());
+		if(openVisualisation.isDown()) {
+			Minecraft.getInstance().setScreen(new VisualisationScreen());
 		}
 	}
 }

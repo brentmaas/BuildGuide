@@ -13,15 +13,15 @@ public class StateManager {
 	
 	private static String getKey() {
 		String host;
-		if(Minecraft.getInstance().getIntegratedServer() != null) {
-			host = Minecraft.getInstance().getIntegratedServer().getServerConfiguration().getWorldName();
-		}else if(Minecraft.getInstance().getCurrentServerData() != null) {
-			host = Minecraft.getInstance().getCurrentServerData().serverIP;
+		if(Minecraft.getInstance().getSingleplayerServer() != null) {
+			host = Minecraft.getInstance().getSingleplayerServer().getWorldData().getLevelName();
+		}else if(Minecraft.getInstance().getCurrentServer() != null) {
+			host = Minecraft.getInstance().getCurrentServer().ip;
 		}else {
 			host = "unknown";
 		}
 		
-		return host + "@" + Minecraft.getInstance().world.getDimensionKey().getLocation();
+		return host + "@" + Minecraft.getInstance().level.dimension().location();
 	}
 	
 	public static State getState() {

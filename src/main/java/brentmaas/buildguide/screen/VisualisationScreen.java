@@ -15,7 +15,7 @@ public class VisualisationScreen extends PropertyScreen{
 	private String titleBasepos;
 	
 	private Button buttonClose;
-	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
+	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
 	private Slider sliderShapeR;
 	private Slider sliderShapeG;
 	private Slider sliderShapeB;
@@ -39,7 +39,7 @@ public class VisualisationScreen extends PropertyScreen{
 		titleShape = new TranslationTextComponent("screen.buildguide.shape").getString();
 		titleBasepos = new TranslationTextComponent("screen.buildguide.basepos").getString();
 		
-		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		sliderShapeR = new Slider(0, 35, 100, 20, new StringTextComponent("R: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeR : 1.0);
 		sliderShapeG = new Slider(0, 55, 100, 20, new StringTextComponent("G: "), 0.0, 1.0, StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().colourShapeG : 1.0);
@@ -129,9 +129,9 @@ public class VisualisationScreen extends PropertyScreen{
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleColours, (210 - font.getStringWidth(titleColours)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShape, (100 - font.getStringWidth(titleShape)) / 2, 25, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleBasepos, 110 + (100 - font.getStringWidth(titleBasepos)) / 2, 25, 0xFFFFFF);
+		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleColours, (210 - font.width(titleColours)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleShape, (100 - font.width(titleShape)) / 2, 25, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleBasepos, 110 + (100 - font.width(titleBasepos)) / 2, 25, 0xFFFFFF);
 	}
 }

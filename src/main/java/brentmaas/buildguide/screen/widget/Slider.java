@@ -15,23 +15,23 @@ public class Slider extends AbstractSlider{
 		prefix = name.getString() + ": ";
 	}
 	
-	protected void func_230979_b_() { //updateMessage
+	protected void updateMessage() {
 		setMessage(new StringTextComponent(prefix + Math.round(10.0 * getValue()) / 10.0));
 	}
 	
-	protected void func_230972_a_() { //applyValue
+	protected void applyValue() {
 		
 	}
 	
 	public void updateSlider() {
-		func_230979_b_();
+		updateMessage();
 	}
 	
 	public void setManualValue(double value) {
-		sliderValue = (value - min) / (max - min);
+		this.value = (value - min) / (max - min);
 	}
 	
 	public double getValue() {
-		return sliderValue * (max - min) + min;
+		return value * (max - min) + min;
 	}
 }

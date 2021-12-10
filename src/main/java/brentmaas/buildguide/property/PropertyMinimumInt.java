@@ -16,24 +16,24 @@ public class PropertyMinimumInt extends Property<Integer>{
 		this.minInt = minInt;
 		buttonList.add(new Button(90, y, 20, 20, new StringTextComponent("-"), button -> {
 			if(this.value > this.minInt) --this.value;
-			valueWidget.setText("" + this.value);
+			valueWidget.setValue("" + this.value);
 			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
 		buttonList.add(new Button(190, y, 20, 20, new StringTextComponent("+"), button -> {
 			++this.value;
-			valueWidget.setText("" + this.value);
+			valueWidget.setValue("" + this.value);
 			valueWidget.setTextColor(0xFFFFFF);
 			if(onUpdate != null) onUpdate.run();
 		}));
 		buttonList.add(new Button(160, y, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 			try {
-				int newval = Integer.parseInt(valueWidget.getText());
+				int newval = Integer.parseInt(valueWidget.getValue());
 				this.value = newval;
 				if(this.value < minInt) {
 					this.value = minInt;
 				}
-				valueWidget.setText("" + this.value);
+				valueWidget.setValue("" + this.value);
 				valueWidget.setTextColor(0xFFFFFF);
 				if(onUpdate != null) onUpdate.run();
 			}catch(NumberFormatException e) {
@@ -44,13 +44,13 @@ public class PropertyMinimumInt extends Property<Integer>{
 	
 	public void setValue(Integer value) {
 		super.setValue(value);
-		valueWidget.setText("" + value);
+		valueWidget.setValue("" + value);
 		valueWidget.setTextColor(0xFFFFFF);
 	}
 	
 	public void addTextFields(FontRenderer fr) {
 		valueWidget = new TextFieldWidget(fr, 110, y, 50, 20, new StringTextComponent(""));
-		valueWidget.setText("" + value);
+		valueWidget.setValue("" + value);
 		valueWidget.setTextColor(0xFFFFFF);
 		textFieldList.add(valueWidget);
 	}

@@ -22,7 +22,7 @@ public class RenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderWorldLastEvent event) {
-		Minecraft.getInstance().getProfiler().startSection("buildguide");
+		Minecraft.getInstance().getProfiler().push("buildguide");
 		
 		if(StateManager.getState().propertyEnable.value && StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos != null) {
 			MatrixStack stack = event.getMatrixStack();
@@ -33,17 +33,17 @@ public class RenderHandler {
 			}
 		}
 		
-		Minecraft.getInstance().getProfiler().endSection();
+		Minecraft.getInstance().getProfiler().pop();
 	}
 	
 	private void renderShape(MatrixStack stack, Shape s) {
 		if(s.visible) {
-			stack.push();
-			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+			stack.pushPose();
+			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
 			stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
 			
 			RenderSystem.pushMatrix();
-			RenderSystem.multMatrix(stack.getLast().getMatrix());
+			RenderSystem.multMatrix(stack.last().pose());
 			
 			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
 			
@@ -62,7 +62,7 @@ public class RenderHandler {
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			if(toggleBlend) RenderSystem.enableBlend();
 			
-			s.render(stack.getLast().getMatrix());
+			s.render(stack.last().pose());
 			
 			if(toggleBlend) RenderSystem.disableBlend();
 			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
@@ -72,7 +72,7 @@ public class RenderHandler {
 			
 			RenderSystem.popMatrix();
 			
-			stack.pop();
+			stack.popPose();
 		}
 	}
 }

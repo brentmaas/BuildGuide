@@ -22,9 +22,9 @@ public class BuildGuideScreen extends PropertyScreen{
 	//It's better off as custom buttons instead of PropertyEnum
 	private Button buttonShapePrevious = new Button(60, 25, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 25, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
-	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().displayGuiScreen(new ShapelistScreen()));
+	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().setScreen(new ShapelistScreen()));
 	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
-	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().displayGuiScreen(new VisualisationScreen()));
+	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().setScreen(new VisualisationScreen()));
 	//It's better off as custom buttons instead of PropertyInt
 	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
 	private Button buttonBaseposXIncrease = new Button(285, 45, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
@@ -37,7 +37,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private TextFieldWidget textFieldZ;
 	private Button buttonSetX = new Button(255, 45, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldX.getText());
+			int newval = Integer.parseInt(textFieldX.getValue());
 			StateManager.getState().setBaseposX(newval);
 			textFieldX.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -46,7 +46,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	});
 	private Button buttonSetY = new Button(255, 65, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldY.getText());
+			int newval = Integer.parseInt(textFieldY.getValue());
 			StateManager.getState().setBaseposY(newval);
 			textFieldY.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -55,7 +55,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	});
 	private Button buttonSetZ = new Button(255, 85, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldZ.getText());
+			int newval = Integer.parseInt(textFieldZ.getValue());
 			StateManager.getState().setBaseposZ(newval);
 			textFieldZ.setTextColor(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -83,7 +83,7 @@ public class BuildGuideScreen extends PropertyScreen{
 			//Advanced mode shapes should be empty
 		}
 		
-		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		if(!StateManager.getState().isShapeAvailable()) {
 			buttonBasepos.active = false;
@@ -119,15 +119,15 @@ public class BuildGuideScreen extends PropertyScreen{
 		addButton(buttonSetZ);
 		
 		textFieldX = new TextFieldWidget(font, 205, 45, 50, 20, new StringTextComponent(""));
-		textFieldX.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
+		textFieldX.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
 		textFieldX.setTextColor(0xFFFFFF);
 		children.add(textFieldX);
 		textFieldY = new TextFieldWidget(font, 205, 65, 50, 20, new StringTextComponent(""));
-		textFieldY.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
+		textFieldY.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
 		textFieldY.setTextColor(0xFFFFFF);
 		children.add(textFieldY);
 		textFieldZ = new TextFieldWidget(font, 205, 85, 50, 20, new StringTextComponent(""));
-		textFieldZ.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
+		textFieldZ.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
@@ -156,25 +156,25 @@ public class BuildGuideScreen extends PropertyScreen{
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleGlobalProperties, (160 - font.getStringWidth(titleGlobalProperties)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapeProperties, (160 - font.getStringWidth(titleShapeProperties)) / 2, 115, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleBasepos, 185 + (120 - font.getStringWidth(titleBasepos)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleGlobalProperties, (160 - font.width(titleGlobalProperties)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleShapeProperties, (160 - font.width(titleShapeProperties)) / 2, 115, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleBasepos, 185 + (120 - font.width(titleBasepos)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.width(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		
 		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
 		String numberOfBlocks = "" + n;
 		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
-		font.drawStringWithShadow(matrixStack, numberOfBlocks, 305 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 30, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, numberOfStacks, 305 + (100 - font.getStringWidth(numberOfStacks)) / 2, 45, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfBlocks, 305 + (100 - font.width(numberOfBlocks)) / 2, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
 		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslationTextComponent("shape.buildguide.none").getString();
-		font.drawStringWithShadow(matrixStack, shapeName, 80 + (60 - font.getStringWidth(shapeName)) / 2, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, shapeName, 80 + (60 - font.width(shapeName)) / 2, 30, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Y", 170, 70, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Z", 170, 90, 0xFFFFFF);
+		font.drawShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
+		font.drawShadow(matrixStack, "Y", 170, 70, 0xFFFFFF);
+		font.drawShadow(matrixStack, "Z", 170, 90, 0xFFFFFF);
 		
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -191,9 +191,9 @@ public class BuildGuideScreen extends PropertyScreen{
 	
 	private void shiftBasePos(int dx, int dy, int dz) {
 		StateManager.getState().shiftBasepos(dx, dy, dz);
-		textFieldX.setText("" + (int) StateManager.getState().getCurrentShape().basePos.x);
-		textFieldY.setText("" + (int) StateManager.getState().getCurrentShape().basePos.y);
-		textFieldZ.setText("" + (int) StateManager.getState().getCurrentShape().basePos.z);
+		textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+		textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+		textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
 		textFieldZ.setTextColor(0xFFFFFF);

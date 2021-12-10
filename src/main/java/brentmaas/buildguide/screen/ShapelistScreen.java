@@ -28,7 +28,7 @@ public class ShapelistScreen extends Screen{
 	private int newShapeId = 0;
 	
 	private Button buttonClose;
-	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().displayGuiScreen(new BuildGuideScreen()));
+	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
 	private Button buttonNewShapePrevious = new Button(0, 25, 20, 20, new StringTextComponent("<-"), button -> updateNewShape(-1));
 	private Button buttonNewShapeNext = new Button(120, 25, 20, 20, new StringTextComponent("->"), button -> updateNewShape(1));
 	private Button buttonAdd = new Button(0, 45, 140, 20, new TranslationTextComponent("screen.buildguide.add"), button -> {
@@ -63,7 +63,7 @@ public class ShapelistScreen extends Screen{
 	private TextFieldWidget textFieldZ;
 	private Button buttonSetX = new Button(90, 145, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldX.getText());
+			int newval = Integer.parseInt(textFieldX.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.x;
 			for(Shape s: StateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(delta, 0, 0);
@@ -75,7 +75,7 @@ public class ShapelistScreen extends Screen{
 	});
 	private Button buttonSetY = new Button(90, 165, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldY.getText());
+			int newval = Integer.parseInt(textFieldY.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.y;
 			for(Shape s: StateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(0, delta, 0);
@@ -87,7 +87,7 @@ public class ShapelistScreen extends Screen{
 	});
 	private Button buttonSetZ = new Button(90, 185, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
 		try {
-			int newval = Integer.parseInt(textFieldZ.getText());
+			int newval = Integer.parseInt(textFieldZ.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.z;
 			for(Shape s: StateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(0, 0, delta);
@@ -110,7 +110,7 @@ public class ShapelistScreen extends Screen{
 		titleVisible = new TranslationTextComponent("screen.buildguide.visible").getString();
 		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
 		
-		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().displayGuiScreen(null));
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		checkActive();
 		
@@ -133,15 +133,15 @@ public class ShapelistScreen extends Screen{
 		addButton(buttonSetZ);
 		
 		textFieldX = new TextFieldWidget(font, 40, 145, 50, 20, new StringTextComponent(""));
-		textFieldX.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
+		textFieldX.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
 		textFieldX.setTextColor(0xFFFFFF);
 		children.add(textFieldX);
 		textFieldY = new TextFieldWidget(font, 40, 165, 50, 20, new StringTextComponent(""));
-		textFieldY.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
+		textFieldY.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
 		textFieldY.setTextColor(0xFFFFFF);
 		children.add(textFieldY);
 		textFieldZ = new TextFieldWidget(font, 40, 185, 50, 20, new StringTextComponent(""));
-		textFieldZ.setText(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
+		textFieldZ.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
 		textFieldZ.setTextColor(0xFFFFFF);
 		children.add(textFieldZ);
 		
@@ -160,20 +160,20 @@ public class ShapelistScreen extends Screen{
 	@Override
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		font.drawStringWithShadow(matrixStack, title.getString(), (width - font.getStringWidth(title.getString())) / 2, 5, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleNewShape, (140 - font.getStringWidth(titleNewShape)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleShapes, 150 + (150 - font.getStringWidth(titleShapes)) / 2, 15, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleGlobalBasepos, (140 - font.getStringWidth(titleGlobalBasepos)) / 2, 115, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.getStringWidth(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleNewShape, (140 - font.width(titleNewShape)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleShapes, 150 + (150 - font.width(titleShapes)) / 2, 15, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleGlobalBasepos, (140 - font.width(titleGlobalBasepos)) / 2, 115, 0xFFFFFF);
+		font.drawShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.width(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		
 		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
-		font.drawStringWithShadow(matrixStack, newShapeName, 20 + (100 - font.getStringWidth(newShapeName)) / 2, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, newShapeName, 20 + (100 - font.width(newShapeName)) / 2, 30, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, titleVisible, 5, 70, StateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		font.drawShadow(matrixStack, titleVisible, 5, 70, StateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
-		font.drawStringWithShadow(matrixStack, "X", 5, 150, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Y", 5, 170, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, "Z", 5, 190, 0xFFFFFF);
+		font.drawShadow(matrixStack, "X", 5, 150, 0xFFFFFF);
+		font.drawShadow(matrixStack, "Y", 5, 170, 0xFFFFFF);
+		font.drawShadow(matrixStack, "Z", 5, 190, 0xFFFFFF);
 		textFieldX.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldY.render(matrixStack, mouseX, mouseY, partialTicks);
 		textFieldZ.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -186,21 +186,21 @@ public class ShapelistScreen extends Screen{
 		}
 		String numberOfBlocks = "" + n;
 		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
-		font.drawStringWithShadow(matrixStack, numberOfBlocks, 305 + (100 - font.getStringWidth(numberOfBlocks)) / 2, 30, 0xFFFFFF);
-		font.drawStringWithShadow(matrixStack, numberOfStacks, 305 + (100 - font.getStringWidth(numberOfStacks)) / 2, 45, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfBlocks, 305 + (100 - font.width(numberOfBlocks)) / 2, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		shapeList.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 	
 	private void updateGlobalBasepos() {
 		if(StateManager.getState().isShapeAvailable()) {
-			textFieldX.setText("" + (int) StateManager.getState().getCurrentShape().basePos.x);
-			textFieldY.setText("" + (int) StateManager.getState().getCurrentShape().basePos.y);
-			textFieldZ.setText("" + (int) StateManager.getState().getCurrentShape().basePos.z);
+			textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+			textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+			textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
 		} else {
-			textFieldX.setText("-");
-			textFieldY.setText("-");
-			textFieldZ.setText("-");
+			textFieldX.setValue("-");
+			textFieldY.setValue("-");
+			textFieldZ.setValue("-");
 		}
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
@@ -219,7 +219,7 @@ public class ShapelistScreen extends Screen{
 	}
 	
 	private void setGlobalBasePos() {
-		Vector3d pos = Minecraft.getInstance().player.getPositionVec();
+		Vector3d pos = Minecraft.getInstance().player.position();
 		int deltaX = (int) (Math.floor(pos.x) - StateManager.getState().getCurrentShape().basePos.x);
 		int deltaY = (int) (Math.floor(pos.y) - StateManager.getState().getCurrentShape().basePos.y);
 		int deltaZ = (int) (Math.floor(pos.z) - StateManager.getState().getCurrentShape().basePos.z);
@@ -227,7 +227,7 @@ public class ShapelistScreen extends Screen{
 	}
 	
 	private void setShapeVisibility() {
-		if(StateManager.getState().isShapeAvailable()) StateManager.getState().getCurrentShape().visible = buttonVisible.isChecked();
+		if(StateManager.getState().isShapeAvailable()) StateManager.getState().getCurrentShape().visible = buttonVisible.selected();
 	}
 	
 	private void checkActive() {

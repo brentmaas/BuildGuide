@@ -25,7 +25,7 @@ public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks, font);
-		drawString(matrixStack, names[value.ordinal()], 110 + (80 - font.getStringWidth(names[value.ordinal()])) / 2, y + 5, 0xFFFFFF, font);
+		drawString(matrixStack, names[value.ordinal()], 110 + (80 - font.width(names[value.ordinal()])) / 2, y + 5, 0xFFFFFF, font);
 	}
 	
 	public void addTextFields(FontRenderer fr) {

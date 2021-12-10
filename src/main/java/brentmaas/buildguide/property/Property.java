@@ -79,7 +79,7 @@ public abstract class Property<T> {
 	
 	protected void drawString(MatrixStack matrixStack, String text, float x, float y, int colour, FontRenderer font) {
 		if(visible) {
-			font.drawStringWithShadow(matrixStack, text, x, y, colour);
+			font.drawShadow(matrixStack, text, x, y, colour);
 		}
 	}
 }
