@@ -166,8 +166,8 @@ public class BuildGuideScreen extends PropertyScreen{
 		int n = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
 		String numberOfBlocks = "" + n;
 		String numberOfStacks = "(" + (n / 64) + " x 64 + " + (n % 64) + ")";
-		font.drawShadow(matrixStack, numberOfBlocks, 305 + (100 - font.width(numberOfBlocks)) / 2, 35, 0xFFFFFF);
-		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 55, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfBlocks, 305 + (100 - font.width(numberOfBlocks)) / 2, 30, 0xFFFFFF);
+		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
 		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString();
