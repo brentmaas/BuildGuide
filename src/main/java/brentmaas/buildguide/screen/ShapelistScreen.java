@@ -169,7 +169,7 @@ public class ShapelistScreen extends Screen{
 		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
 		font.drawStringWithShadow(matrixStack, newShapeName, 20 + (100 - font.getStringWidth(newShapeName)) / 2, 30, 0xFFFFFF);
 		
-		font.drawStringWithShadow(matrixStack, titleVisible, (120 - font.getStringWidth(titleVisible)) / 2, 70, StateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		font.drawStringWithShadow(matrixStack, titleVisible, 5, 70, StateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
 		font.drawStringWithShadow(matrixStack, "X", 5, 150, 0xFFFFFF);
 		font.drawStringWithShadow(matrixStack, "Y", 5, 170, 0xFFFFFF);
