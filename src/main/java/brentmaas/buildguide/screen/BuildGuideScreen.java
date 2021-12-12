@@ -10,7 +10,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.phys.Vec3;
 
 public class BuildGuideScreen extends PropertyScreen{
 	private String titleGlobalProperties;
@@ -191,7 +190,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	}
 	
 	private void shiftBasePos(int dx, int dy, int dz) {
-		StateManager.getState().getCurrentShape().basePos = new Vec3(StateManager.getState().getCurrentShape().basePos.x + dx, StateManager.getState().getCurrentShape().basePos.y + dy, StateManager.getState().getCurrentShape().basePos.z + dz);
+		StateManager.getState().shiftBasepos(dx, dy, dz);
 		textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
 		textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
 		textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
