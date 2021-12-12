@@ -2,18 +2,19 @@ package brentmaas.buildguide.shapes;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.math.Matrix4f;
 
 import brentmaas.buildguide.BuildGuide;
 import brentmaas.buildguide.Config;
 import brentmaas.buildguide.property.Property;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.vertex.VertexBuffer;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.phys.Vec3;
 
 public abstract class Shape {
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
@@ -21,7 +22,7 @@ public abstract class Shape {
 	private int nBlocks = 0;
 	public boolean visible = true;
 	
-	public Vector3d basePos = null;
+	public Vec3 basePos = null;
 	
 	public float colourShapeR = 1.0f;
 	public float colourShapeG = 1.0f;
@@ -34,7 +35,7 @@ public abstract class Shape {
 	public float colourBaseposA = 0.5f;
 	
 	public Shape() {
-		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
+		buffer = new VertexBuffer();
 	}
 	
 	protected abstract void updateShape(BufferBuilder builder);
@@ -44,30 +45,25 @@ public abstract class Shape {
 		nBlocks = -1; //Counteract the add from the base position
 		long t = System.currentTimeMillis();
 		BufferBuilder builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
-		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 		builder.defaultColor((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
 		this.updateShape(builder);
 		builder.defaultColor((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
 		addCube(builder, 0.4, 0.4, 0.4, 0.2); //Base position
 		builder.end();
 		buffer.close();
-		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
+		buffer = new VertexBuffer();
 		buffer.upload(builder);
 		if(Config.debugGenerationTimingsEnabled) {
 			BuildGuide.logger.debug("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	
-	public void render(Matrix4f matrix) {
-		//https://gist.github.com/gigaherz/87939db73d8adf4aace6ec7cf611bd2d
-		buffer.bind();
-		DefaultVertexFormats.POSITION_COLOR.setupBufferState(0);
-		buffer.draw(matrix, GL11.GL_QUADS);
-		VertexBuffer.unbind();
-		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
+	public void render(Matrix4f model, Matrix4f projection) {
+		buffer.drawWithShader(model, projection, RenderSystem.getShader());
 	}
 	
-	private void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
+	protected void addCube(BufferBuilder buffer, double x, double y, double z, double s) {
 		//-X
 		buffer.vertex(x, y, z).endVertex();
 		buffer.vertex(x, y, z+s).endVertex();
@@ -124,7 +120,7 @@ public abstract class Shape {
 	}
 	
 	public String getTranslatedName() {
-		return new TranslationTextComponent(getTranslationKey()).getString();
+		return new TranslatableComponent(getTranslationKey()).getString();
 	}
 	
 	public int getNumberOfBlocks() {
@@ -132,15 +128,15 @@ public abstract class Shape {
 	}
 	
 	public void resetBasepos() {
-		Vector3d pos = Minecraft.getInstance().player.position();
-		basePos = new Vector3d(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
+		Vec3 pos = Minecraft.getInstance().player.position();
+		basePos = new Vec3(Math.floor(pos.x), Math.floor(pos.y), Math.floor(pos.z));
 	}
 	
 	public void setBasepos(int x, int y, int z) {
-		basePos = new Vector3d(x, y, z);
+		basePos = new Vec3(x, y, z);
 	}
 	
 	public void shiftBasepos(int dx, int dy, int dz) {
-		basePos = new Vector3d(basePos.x + dx, basePos.y + dy, basePos.z + dz);
+		basePos = new Vec3(basePos.x + dx, basePos.y + dy, basePos.z + dz);
 	}
 }

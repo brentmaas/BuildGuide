@@ -1,6 +1,5 @@
 package brentmaas.buildguide;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,16 +13,16 @@ import brentmaas.buildguide.shapes.ShapeRegistry;
 import brentmaas.buildguide.shapes.ShapeSphere;
 import brentmaas.buildguide.shapes.ShapeTorus;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.FMLNetworkConstants;
+import net.minecraftforge.network.NetworkConstants;
 
 @Mod(BuildGuide.modid)
 public class BuildGuide {
@@ -31,7 +30,7 @@ public class BuildGuide {
 	public static final Logger logger = LogManager.getLogger();
 	
 	public BuildGuide() {
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			ShapeRegistry.registerShape(ShapeCircle.class);
 			ShapeRegistry.registerShape(ShapeCuboid.class);
@@ -54,7 +53,7 @@ public class BuildGuide {
 	}
 	
 	@SubscribeEvent
-	public void onServerStarting(FMLServerStartingEvent event) {
+	public void onServerStarting(ServerStartingEvent event) {
 		logger.warn("Build Guide is a client-only mod! Running it on a server is discouraged!");
 	}
 }

@@ -4,20 +4,24 @@ import javax.annotation.Nullable;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
 import brentmaas.buildguide.StateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.list.ExtendedList;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ShapeList extends ExtendedList<ShapeList.Entry>{
+public class ShapeList extends ObjectSelectionList<ShapeList.Entry>{
 	private Runnable update;
 	
 	public ShapeList(Minecraft minecraft, int left, int right, int top, int bottom, int slotHeight, Runnable updateOnSelected) {
@@ -58,19 +62,20 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
-		RenderSystem.color4f(0, 0, 0, 0.2f);
-		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder bufferBuilder = tesselator.getBuilder();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
+		RenderSystem.setShaderColor(0, 0, 0, 0.2f);
+		bufferBuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION);
 		bufferBuilder.vertex(x0, y0, 0).endVertex();
 		bufferBuilder.vertex(x0, y1, 0).endVertex();
 		bufferBuilder.vertex(x1, y1, 0).endVertex();
 		bufferBuilder.vertex(x1, y0, 0).endVertex();
-		tessellator.end();
+		tesselator.end();
 		
 		if(!hasBlend) RenderSystem.disableBlend();
 		
@@ -79,7 +84,7 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	
 	//Incredibly ugly hack to fix entries clipping out of the list
 	@Override
-	protected void renderList(MatrixStack matrixStack, int p_238478_2_, int p_238478_3_, int p_238478_4_, int p_238478_5_, float p_238478_6_) {
+	protected void renderList(PoseStack matrixStack, int p_93453_, int p_93454_, int p_93455_, int p_93456_, float p_93457_) {
 		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
 		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
 		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
@@ -90,20 +95,21 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
-		RenderSystem.color4f(0, 0, 0, 0);
-		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder bufferBuilder = tesselator.getBuilder();
+		RenderSystem.setShader(GameRenderer::getPositionShader);
+		RenderSystem.setShaderColor(0, 0, 0, 0);
+		bufferBuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION);
 		bufferBuilder.vertex(x0, y0 - itemHeight - 4, 0.1).endVertex();
 		bufferBuilder.vertex(x0, y0, 0.1).endVertex();
 		bufferBuilder.vertex(x1, y0, 0.1).endVertex();
 		bufferBuilder.vertex(x1, y0 - itemHeight - 4, 0.1).endVertex();
-		tessellator.end();
+		tesselator.end();
 		
-		super.renderList(matrixStack, p_238478_2_, p_238478_3_, p_238478_4_, p_238478_5_, p_238478_6_);
+		super.renderList(matrixStack, p_93453_, p_93454_, p_93455_, p_93456_, p_93457_);
 		
 		if(!hasBlend) RenderSystem.disableBlend();
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc); 
+		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
 		if(!hasDepthMask) RenderSystem.depthMask(false);
 		if(!hasDepthTest) RenderSystem.disableDepthTest();
 	}
@@ -119,14 +125,14 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public final class Entry extends ExtendedList.AbstractListEntry<ShapeList.Entry> {
+	public final class Entry extends ObjectSelectionList.Entry<ShapeList.Entry>{
 		private int shapeId;
 		
 		public Entry(int shapeId) {
 			this.shapeId = shapeId;
 		}
 		
-		public void render(MatrixStack matrixStack, int p_230432_2_, int top, int left, int p_230432_5_, int p_230432_6_, int p_230432_7_, int p_230432_8_, boolean p_230432_9_, float p_230432_10_) {
+		public void render(PoseStack matrixStack, int p_93524_, int top, int left, int p_93527_, int p_93528_, int p_93529_, int p_93530_, boolean p_93531_, float p_93532_) {
 			//Found strikethrough code at https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/1437428-guide-1-7-2-how-to-make-button-tooltips?comment=3
 			Minecraft.getInstance().font.drawShadow(matrixStack, (StateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + StateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), left + 5, top + 4, 0xFFFFFF);
 		}
@@ -142,6 +148,10 @@ public class ShapeList extends ExtendedList<ShapeList.Entry>{
 		
 		public int getShapeId() {
 			return shapeId;
+		}
+		
+		public Component getNarration() {
+			return new TextComponent(""); //TODO Set translated name of shape as narration
 		}
 	}
 }

@@ -6,7 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @EventBusSubscriber(modid=BuildGuide.modid, bus=EventBusSubscriber.Bus.MOD)
 public class Config {
@@ -26,7 +26,7 @@ public class Config {
 	}
 	
 	@SubscribeEvent
-	public static void onModConfigEvent(final ModConfig.ModConfigEvent event) {
+	public static void onModConfigEvent(final ModConfigEvent event) {
 		if(event.getConfig().getSpec() == Config.clientConfigSpec) {
 			Config.bakeConfig();
 		}

@@ -2,14 +2,16 @@ package brentmaas.buildguide;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -21,29 +23,29 @@ public class RenderHandler {
 	}
 	
 	@SubscribeEvent
-	public void onRenderBlock(RenderWorldLastEvent event) {
+	public void onRenderBlock(RenderLevelLastEvent event) {
 		Minecraft.getInstance().getProfiler().push("buildguide");
 		
 		if(StateManager.getState().propertyEnable.value && StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos != null) {
-			MatrixStack stack = event.getMatrixStack();
+			PoseStack stack = event.getPoseStack();
+			Matrix4f projectionMatrix = event.getProjectionMatrix();
 			if(StateManager.getState().propertyAdvancedMode.value) {
-				for(Shape shape: StateManager.getState().advancedModeShapes) renderShape(stack, shape);
-			} else {
-				renderShape(stack, StateManager.getState().getCurrentShape());
+				for(Shape shape: StateManager.getState().advancedModeShapes) renderShape(stack, projectionMatrix, shape);
+			}else {
+				renderShape(stack, projectionMatrix, StateManager.getState().getCurrentShape());
 			}
 		}
 		
 		Minecraft.getInstance().getProfiler().pop();
 	}
 	
-	private void renderShape(MatrixStack stack, Shape s) {
+	private void renderShape(PoseStack stack, Matrix4f projectionMatrix, Shape s) {
 		if(s.visible) {
-			stack.pushPose();
-			Vector3d projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-			stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
+			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			
-			RenderSystem.pushMatrix();
-			RenderSystem.multMatrix(stack.last().pose());
+			stack.pushPose();
+			Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+			stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
 			
 			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
 			
@@ -62,16 +64,14 @@ public class RenderHandler {
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			if(toggleBlend) RenderSystem.enableBlend();
 			
-			s.render(stack.last().pose());
+			s.render(stack.last().pose(), projectionMatrix);
 			
 			if(toggleBlend) RenderSystem.disableBlend();
 			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
 			else if(toggleDepthTest) RenderSystem.disableDepthTest();
 			if(toggleDepthMask) RenderSystem.depthMask(true);
 			if(toggleTexture) RenderSystem.enableTexture();
-			
-			RenderSystem.popMatrix();
-			
+
 			stack.popPose();
 		}
 	}

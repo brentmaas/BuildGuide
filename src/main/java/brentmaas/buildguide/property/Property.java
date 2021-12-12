@@ -2,13 +2,13 @@ package brentmaas.buildguide.property;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.screen.PropertyScreen;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.BaseComponent;
 
 public abstract class Property<T> {
 	protected final static int baseY = 125;
@@ -16,25 +16,25 @@ public abstract class Property<T> {
 	
 	protected int y;
 	public T value;
-	protected TextComponent name;
+	protected BaseComponent name;
 	public ArrayList<AbstractButton> buttonList = new ArrayList<AbstractButton>();
-	public ArrayList<TextFieldWidget> textFieldList = new ArrayList<TextFieldWidget>();
+	public ArrayList<EditBox> editBoxList = new ArrayList<EditBox>();
 	protected boolean visible = true;
 	
-	public Property(int slot, T value, TextComponent name, Runnable onUpdate) {
+	public Property(int slot, T value, BaseComponent name, Runnable onUpdate){
 		y = baseY + slot * height;
 		this.value = value;
 		this.name = name;
 	}
 	
-	public abstract void addTextFields(FontRenderer fr);
+	public abstract void addTextFields(Font fr);
 	
 	public void onSelectedInGUI() {
 		for(AbstractButton b: buttonList) {
 			b.visible = true;
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.visible = true;
+		for(EditBox eb: editBoxList) {
+			eb.visible = true;
 		}
 		visible = true;
 	}
@@ -43,18 +43,18 @@ public abstract class Property<T> {
 		for(AbstractButton b: buttonList) {
 			b.visible = false;
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.visible = false;
+		for(EditBox eb: editBoxList) {
+			eb.visible = false;
 		}
 		visible = false;
 	}
 	
 	public void addToPropertyScreen(PropertyScreen screen) {
 		for(AbstractButton b: buttonList) {
-			screen.addButtonExternal(b);
+			screen.addWidgetExternal(b);
 		}
-		for(TextFieldWidget tfw: textFieldList) {
-			screen.addTextFieldExternal(tfw);
+		for(EditBox eb: editBoxList) {
+			screen.addWidgetExternal(eb);
 		}
 	}
 	
@@ -62,22 +62,22 @@ public abstract class Property<T> {
 		this.value = value;
 	}
 	
-	public void setName(TextComponent name) {
+	public void setName(BaseComponent name) {
 		this.name = name;
 	}
 	
 	public boolean mightNeedTextFields() {
-		return textFieldList.size() == 0;
+		return editBoxList.size() == 0;
 	}
 	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, FontRenderer font) {
-		for(TextFieldWidget tfw: textFieldList) {
-			tfw.render(matrixStack, mouseX, mouseY, partialTicks);
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks, Font font) {
+		for(EditBox eb: editBoxList) {
+			eb.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 		drawString(matrixStack, name.getString(), 5, y + 5, 0xFFFFFF, font);
 	}
 	
-	protected void drawString(MatrixStack matrixStack, String text, float x, float y, int colour, FontRenderer font) {
+	protected void drawString(PoseStack matrixStack, String text, float x, float y, int colour, Font font) {
 		if(visible) {
 			font.drawShadow(matrixStack, text, x, y, colour);
 		}

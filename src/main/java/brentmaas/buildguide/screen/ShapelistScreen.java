@@ -1,6 +1,6 @@
 package brentmaas.buildguide.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.screen.widget.CheckboxRunnableButton;
@@ -8,13 +8,13 @@ import brentmaas.buildguide.screen.widget.ShapeList;
 import brentmaas.buildguide.shapes.Shape;
 import brentmaas.buildguide.shapes.ShapeRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.phys.Vec3;
 
 public class ShapelistScreen extends Screen{
 	private String titleNewShape;
@@ -28,10 +28,10 @@ public class ShapelistScreen extends Screen{
 	private int newShapeId = 0;
 	
 	private Button buttonClose;
-	private Button buttonBack = new Button(0, 0, 20, 20, new StringTextComponent("<-"), button -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
-	private Button buttonNewShapePrevious = new Button(0, 25, 20, 20, new StringTextComponent("<-"), button -> updateNewShape(-1));
-	private Button buttonNewShapeNext = new Button(120, 25, 20, 20, new StringTextComponent("->"), button -> updateNewShape(1));
-	private Button buttonAdd = new Button(0, 45, 140, 20, new TranslationTextComponent("screen.buildguide.add"), button -> {
+	private Button buttonBack = new Button(0, 0, 20, 20, new TextComponent("<-"), button -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
+	private Button buttonNewShapePrevious = new Button(0, 25, 20, 20, new TextComponent("<-"), button -> updateNewShape(-1));
+	private Button buttonNewShapeNext = new Button(120, 25, 20, 20, new TextComponent("->"), button -> updateNewShape(1));
+	private Button buttonAdd = new Button(0, 45, 140, 20, new TranslatableComponent("screen.buildguide.add"), button -> {
 		StateManager.getState().advancedModeShapes.add(ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(newShapeId)));
 		StateManager.getState().resetBasepos(StateManager.getState().advancedModeShapes.size() - 1);
 		StateManager.getState().advancedModeShapes.get(StateManager.getState().advancedModeShapes.size() - 1).update();
@@ -39,8 +39,8 @@ public class ShapelistScreen extends Screen{
 		
 		checkActive();
 	});
-	private CheckboxRunnableButton buttonVisible = new CheckboxRunnableButton(120, 65, 20, 20, new StringTextComponent(""), true, false, button -> setShapeVisibility());
-	private Button buttonDelete = new Button(0, 85, 140, 20, new TranslationTextComponent("screen.buildguide.delete"), button -> {
+	private CheckboxRunnableButton buttonVisible = new CheckboxRunnableButton(120, 65, 20, 20, new TextComponent(""), true, false, button -> setShapeVisibility());
+	private Button buttonDelete = new Button(0, 85, 140, 20, new TranslatableComponent("screen.buildguide.delete"), button -> {
 		if(shapeList.getSelected() != null) {
 			StateManager.getState().advancedModeShapes.remove(shapeList.getSelected().getShapeId());
 			shapeList.removeEntry(shapeList.getSelected());
@@ -48,20 +48,20 @@ public class ShapelistScreen extends Screen{
 		
 		checkActive();
 	});
-	private Button buttonGlobalBasepos = new Button(0, 125, 140, 20, new TranslationTextComponent("screen.buildguide.setglobalbasepos"), button -> {
+	private Button buttonGlobalBasepos = new Button(0, 125, 140, 20, new TranslatableComponent("screen.buildguide.setglobalbasepos"), button -> {
 		if(StateManager.getState().isShapeAvailable()) setGlobalBasePos();
 	});
 	//TODO: World manager button
-	private Button buttonBaseposXDecrease = new Button(20, 145, 20, 20, new StringTextComponent("-"), button -> shiftGlobalBasePos(-1, 0, 0));
-	private Button buttonBaseposXIncrease = new Button(120, 145, 20, 20, new StringTextComponent("+"), button -> shiftGlobalBasePos(1, 0, 0));
-	private Button buttonBaseposYDecrease = new Button(20, 165, 20, 20, new StringTextComponent("-"), button -> shiftGlobalBasePos(0, -1, 0));
-	private Button buttonBaseposYIncrease = new Button(120, 165, 20, 20, new StringTextComponent("+"), button -> shiftGlobalBasePos(0, 1, 0));
-	private Button buttonBaseposZDecrease = new Button(20, 185, 20, 20, new StringTextComponent("-"), button -> shiftGlobalBasePos(0, 0, -1));
-	private Button buttonBaseposZIncrease = new Button(120, 185, 20, 20, new StringTextComponent("+"), button -> shiftGlobalBasePos(0, 0, 1));
-	private TextFieldWidget textFieldX;
-	private TextFieldWidget textFieldY;
-	private TextFieldWidget textFieldZ;
-	private Button buttonSetX = new Button(90, 145, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonBaseposXDecrease = new Button(20, 145, 20, 20, new TextComponent("-"), button -> shiftGlobalBasePos(-1, 0, 0));
+	private Button buttonBaseposXIncrease = new Button(120, 145, 20, 20, new TextComponent("+"), button -> shiftGlobalBasePos(1, 0, 0));
+	private Button buttonBaseposYDecrease = new Button(20, 165, 20, 20, new TextComponent("-"), button -> shiftGlobalBasePos(0, -1, 0));
+	private Button buttonBaseposYIncrease = new Button(120, 165, 20, 20, new TextComponent("+"), button -> shiftGlobalBasePos(0, 1, 0));
+	private Button buttonBaseposZDecrease = new Button(20, 185, 20, 20, new TextComponent("-"), button -> shiftGlobalBasePos(0, 0, -1));
+	private Button buttonBaseposZIncrease = new Button(120, 185, 20, 20, new TextComponent("+"), button -> shiftGlobalBasePos(0, 0, 1));
+	private EditBox textFieldX;
+	private EditBox textFieldY;
+	private EditBox textFieldZ;
+	private Button buttonSetX = new Button(90, 145, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.x;
@@ -73,7 +73,7 @@ public class ShapelistScreen extends Screen{
 			textFieldX.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetY = new Button(90, 165, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetY = new Button(90, 165, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.y;
@@ -85,7 +85,7 @@ public class ShapelistScreen extends Screen{
 			textFieldY.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetZ = new Button(90, 185, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetZ = new Button(90, 185, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getValue());
 			int delta = newval - (int) StateManager.getState().getCurrentShape().basePos.z;
@@ -99,57 +99,58 @@ public class ShapelistScreen extends Screen{
 	});
 	
 	public ShapelistScreen() {
-		super(new TranslationTextComponent("screen.buildguide.shapelist"));
+		super(new TranslatableComponent("screen.buildguide.shapelist"));
 	}
 	
 	@Override
-	protected void init() {
-		titleNewShape = new TranslationTextComponent("screen.buildguide.newshape").getString();
-		titleShapes = new TranslationTextComponent("screen.buildguide.shapes").getString();
-		titleGlobalBasepos = new TranslationTextComponent("screen.buildguide.globalbasepos").getString();
-		titleVisible = new TranslationTextComponent("screen.buildguide.visible").getString();
-		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
+	public void init() {
+		titleNewShape = new TranslatableComponent("screen.buildguide.newshape").getString();
+		titleShapes = new TranslatableComponent("screen.buildguide.shapes").getString();
+		titleGlobalBasepos = new TranslatableComponent("screen.buildguide.globalbasepos").getString();
+		titleVisible = new TranslatableComponent("screen.buildguide.visible").getString();
+		titleNumberOfBlocks = new TranslatableComponent("screen.buildguide.numberofblocks").getString();
 		
-		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new TextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		checkActive();
 		
-		addButton(buttonClose);
-		addButton(buttonBack);
-		addButton(buttonNewShapePrevious);
-		addButton(buttonNewShapeNext);
-		addButton(buttonAdd);
-		addButton(buttonVisible);
-		addButton(buttonDelete);
-		addButton(buttonGlobalBasepos);
-		addButton(buttonBaseposXDecrease);
-		addButton(buttonBaseposXIncrease);
-		addButton(buttonBaseposYDecrease);
-		addButton(buttonBaseposYIncrease);
-		addButton(buttonBaseposZDecrease);
-		addButton(buttonBaseposZIncrease);
-		addButton(buttonSetX);
-		addButton(buttonSetY);
-		addButton(buttonSetZ);
+		addRenderableWidget(buttonClose);
+		addRenderableWidget(buttonBack);
+		addRenderableWidget(buttonNewShapePrevious);
+		addRenderableWidget(buttonNewShapeNext);
+		addRenderableWidget(buttonAdd);
+		addRenderableWidget(buttonVisible);
+		addRenderableWidget(buttonDelete);
+		addRenderableWidget(buttonGlobalBasepos);
+		addRenderableWidget(buttonBaseposXDecrease);
+		addRenderableWidget(buttonBaseposXIncrease);
+		addRenderableWidget(buttonBaseposYDecrease);
+		addRenderableWidget(buttonBaseposYIncrease);
+		addRenderableWidget(buttonBaseposZDecrease);
+		addRenderableWidget(buttonBaseposZIncrease);
+		addRenderableWidget(buttonSetX);
+		addRenderableWidget(buttonSetY);
+		addRenderableWidget(buttonSetZ);
 		
-		textFieldX = new TextFieldWidget(font, 40, 145, 50, 20, new StringTextComponent(""));
+		textFieldX = new EditBox(font, 40, 145, 50, 20, new TextComponent(""));
 		textFieldX.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
 		textFieldX.setTextColor(0xFFFFFF);
-		children.add(textFieldX);
-		textFieldY = new TextFieldWidget(font, 40, 165, 50, 20, new StringTextComponent(""));
+		addRenderableWidget(textFieldX);
+		textFieldY = new EditBox(font, 40, 165, 50, 20, new TextComponent(""));
 		textFieldY.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
 		textFieldY.setTextColor(0xFFFFFF);
-		children.add(textFieldY);
-		textFieldZ = new TextFieldWidget(font, 40, 185, 50, 20, new StringTextComponent(""));
+		addRenderableWidget(textFieldY);
+		textFieldZ = new EditBox(font, 40, 185, 50, 20, new TextComponent(""));
 		textFieldZ.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
 		textFieldZ.setTextColor(0xFFFFFF);
-		children.add(textFieldZ);
+		addRenderableWidget(textFieldZ);
 		
 		shapeList = new ShapeList(minecraft, 150, 300, 25, height, 20, () -> {
 			updateGlobalBasepos();
 			if(StateManager.getState().isShapeAvailable()) buttonVisible.setChecked(StateManager.getState().getCurrentShape().visible);
 		});
-		children.add(shapeList);
+		
+		addWidget(shapeList);
 	}
 	
 	@Override
@@ -158,7 +159,7 @@ public class ShapelistScreen extends Screen{
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawShadow(matrixStack, titleNewShape, (140 - font.width(titleNewShape)) / 2, 15, 0xFFFFFF);
@@ -166,7 +167,7 @@ public class ShapelistScreen extends Screen{
 		font.drawShadow(matrixStack, titleGlobalBasepos, (140 - font.width(titleGlobalBasepos)) / 2, 115, 0xFFFFFF);
 		font.drawShadow(matrixStack, titleNumberOfBlocks, 305 + (100 - font.width(titleNumberOfBlocks)) / 2, 15, 0xFFFFFF);
 		
-		String newShapeName = new TranslationTextComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
+		String newShapeName = new TranslatableComponent(ShapeRegistry.getTranslationKeys().get(newShapeId)).getString();
 		font.drawShadow(matrixStack, newShapeName, 20 + (100 - font.width(newShapeName)) / 2, 30, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, titleVisible, 5, 70, StateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
@@ -197,7 +198,7 @@ public class ShapelistScreen extends Screen{
 			textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
 			textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
 			textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
-		} else {
+		}else {
 			textFieldX.setValue("-");
 			textFieldY.setValue("-");
 			textFieldZ.setValue("-");
@@ -219,7 +220,7 @@ public class ShapelistScreen extends Screen{
 	}
 	
 	private void setGlobalBasePos() {
-		Vector3d pos = Minecraft.getInstance().player.position();
+		Vec3 pos = Minecraft.getInstance().player.position();
 		int deltaX = (int) (Math.floor(pos.x) - StateManager.getState().getCurrentShape().basePos.x);
 		int deltaY = (int) (Math.floor(pos.y) - StateManager.getState().getCurrentShape().basePos.y);
 		int deltaZ = (int) (Math.floor(pos.z) - StateManager.getState().getCurrentShape().basePos.z);
@@ -260,11 +261,7 @@ public class ShapelistScreen extends Screen{
 		}
 	}
 	
-	public void addButtonExternal(AbstractButton button) {
-		addButton(button);
-	}
-	
-	public void addTextFieldExternal(TextFieldWidget tfw) {
-		children.add(tfw);
+	public void addWidgetExternal(AbstractWidget widget) {
+		addRenderableWidget(widget);
 	}
 }

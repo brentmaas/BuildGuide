@@ -1,5 +1,6 @@
 package brentmaas.buildguide.shapes;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +20,8 @@ public class ShapeRegistry {
 	
 	public static Shape getNewInstance(String classIdentifier) {
 		try {
-			return shapeRegistry.get(classIdentifier).newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
+			return shapeRegistry.get(classIdentifier).getDeclaredConstructor().newInstance();
+		}catch(InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			BuildGuide.logger.error("Unable to instantiate Shape class '" + classIdentifier + "'");
 			e.printStackTrace();
 			System.exit(1);

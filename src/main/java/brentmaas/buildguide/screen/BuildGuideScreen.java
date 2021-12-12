@@ -1,15 +1,15 @@
 package brentmaas.buildguide.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.StateManager;
 import brentmaas.buildguide.property.Property;
 import brentmaas.buildguide.shapes.Shape;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class BuildGuideScreen extends PropertyScreen{
 	private String titleGlobalProperties;
@@ -20,22 +20,22 @@ public class BuildGuideScreen extends PropertyScreen{
 	
 	private Button buttonClose;
 	//It's better off as custom buttons instead of PropertyEnum
-	private Button buttonShapePrevious = new Button(60, 25, 20, 20, new StringTextComponent("<-"), button -> updateShape(-1));
-	private Button buttonShapeNext = new Button(140, 25, 20, 20, new StringTextComponent("->"), button -> updateShape(1));
-	private Button buttonShapelist = new Button(140, 25, 20, 20, new StringTextComponent("..."), button -> Minecraft.getInstance().setScreen(new ShapelistScreen()));
-	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslationTextComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
-	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslationTextComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().setScreen(new VisualisationScreen()));
+	private Button buttonShapePrevious = new Button(60, 25, 20, 20, new TextComponent("<-"), button -> updateShape(-1));
+	private Button buttonShapeNext = new Button(140, 25, 20, 20, new TextComponent("->"), button -> updateShape(1));
+	private Button buttonShapelist = new Button(140, 25, 20, 20, new TextComponent("..."), button -> Minecraft.getInstance().setScreen(new ShapelistScreen()));
+	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslatableComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
+	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslatableComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().setScreen(new VisualisationScreen()));
 	//It's better off as custom buttons instead of PropertyInt
-	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(-1, 0, 0));
-	private Button buttonBaseposXIncrease = new Button(285, 45, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(1, 0, 0));
-	private Button buttonBaseposYDecrease = new Button(185, 65, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, -1, 0));
-	private Button buttonBaseposYIncrease = new Button(285, 65, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 1, 0));
-	private Button buttonBaseposZDecrease = new Button(185, 85, 20, 20, new StringTextComponent("-"), button -> shiftBasePos(0, 0, -1));
-	private Button buttonBaseposZIncrease = new Button(285, 85, 20, 20, new StringTextComponent("+"), button -> shiftBasePos(0, 0, 1));
-	private TextFieldWidget textFieldX;
-	private TextFieldWidget textFieldY;
-	private TextFieldWidget textFieldZ;
-	private Button buttonSetX = new Button(255, 45, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new TextComponent("-"), button -> shiftBasePos(-1, 0, 0));
+	private Button buttonBaseposXIncrease = new Button(285, 45, 20, 20, new TextComponent("+"), button -> shiftBasePos(1, 0, 0));
+	private Button buttonBaseposYDecrease = new Button(185, 65, 20, 20, new TextComponent("-"), button -> shiftBasePos(0, -1, 0));
+	private Button buttonBaseposYIncrease = new Button(285, 65, 20, 20, new TextComponent("+"), button -> shiftBasePos(0, 1, 0));
+	private Button buttonBaseposZDecrease = new Button(185, 85, 20, 20, new TextComponent("-"), button -> shiftBasePos(0, 0, -1));
+	private Button buttonBaseposZIncrease = new Button(285, 85, 20, 20, new TextComponent("+"), button -> shiftBasePos(0, 0, 1));
+	private EditBox textFieldX;
+	private EditBox textFieldY;
+	private EditBox textFieldZ;
+	private Button buttonSetX = new Button(255, 45, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getValue());
 			StateManager.getState().setBaseposX(newval);
@@ -44,7 +44,7 @@ public class BuildGuideScreen extends PropertyScreen{
 			textFieldX.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetY = new Button(255, 65, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetY = new Button(255, 65, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getValue());
 			StateManager.getState().setBaseposY(newval);
@@ -53,7 +53,7 @@ public class BuildGuideScreen extends PropertyScreen{
 			textFieldY.setTextColor(0xFF0000);
 		}
 	});
-	private Button buttonSetZ = new Button(255, 85, 30, 20, new TranslationTextComponent("screen.buildguide.set"), button -> {
+	private Button buttonSetZ = new Button(255, 85, 30, 20, new TranslatableComponent("screen.buildguide.set"), button -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getValue());
 			StateManager.getState().setBaseposZ(newval);
@@ -64,16 +64,16 @@ public class BuildGuideScreen extends PropertyScreen{
 	});
 	
 	public BuildGuideScreen() {
-		super(new TranslationTextComponent("screen.buildguide.title"));
+		super(new TranslatableComponent("screen.buildguide.title"));
 	}
 	
 	@Override
 	protected void init() {
-		titleGlobalProperties = new TranslationTextComponent("screen.buildguide.globalproperties").getString();
-		titleShapeProperties = new TranslationTextComponent("screen.buildguide.shapeproperties").getString();
-		titleBasepos = new TranslationTextComponent("screen.buildguide.basepos").getString();
-		titleNumberOfBlocks = new TranslationTextComponent("screen.buildguide.numberofblocks").getString();
-		textShape = new TranslationTextComponent("screen.buildguide.shape").getString();
+		titleGlobalProperties = new TranslatableComponent("screen.buildguide.globalproperties").getString();
+		titleShapeProperties = new TranslatableComponent("screen.buildguide.shapeproperties").getString();
+		titleBasepos = new TranslatableComponent("screen.buildguide.basepos").getString();
+		titleNumberOfBlocks = new TranslatableComponent("screen.buildguide.numberofblocks").getString();
+		textShape = new TranslatableComponent("screen.buildguide.shape").getString();
 		
 		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
 			StateManager.getState().resetBasepos();
@@ -83,7 +83,7 @@ public class BuildGuideScreen extends PropertyScreen{
 			//Advanced mode shapes should be empty
 		}
 		
-		buttonClose = new Button(this.width - 20, 0, 20, 20, new StringTextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
+		buttonClose = new Button(this.width - 20, 0, 20, 20, new TextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		if(!StateManager.getState().isShapeAvailable()) {
 			buttonBasepos.active = false;
@@ -99,37 +99,37 @@ public class BuildGuideScreen extends PropertyScreen{
 			buttonSetZ.active = false;
 		}
 		
-		addButton(buttonClose);
+		addRenderableWidget(buttonClose);
 		if(!StateManager.getState().propertyAdvancedMode.value) {
-			addButton(buttonShapePrevious);
-			addButton(buttonShapeNext);
+			addRenderableWidget(buttonShapePrevious);
+			addRenderableWidget(buttonShapeNext);
 		}else {
-			addButton(buttonShapelist);
+			addRenderableWidget(buttonShapelist);
 		}
-		addButton(buttonBasepos);
-		addButton(buttonVisualisation);
-		addButton(buttonBaseposXDecrease);
-		addButton(buttonBaseposXIncrease);
-		addButton(buttonBaseposYDecrease);
-		addButton(buttonBaseposYIncrease);
-		addButton(buttonBaseposZDecrease);
-		addButton(buttonBaseposZIncrease);
-		addButton(buttonSetX);
-		addButton(buttonSetY);
-		addButton(buttonSetZ);
+		addRenderableWidget(buttonBasepos);
+		addRenderableWidget(buttonVisualisation);
+		addRenderableWidget(buttonBaseposXDecrease);
+		addRenderableWidget(buttonBaseposXIncrease);
+		addRenderableWidget(buttonBaseposYDecrease);
+		addRenderableWidget(buttonBaseposYIncrease);
+		addRenderableWidget(buttonBaseposZDecrease);
+		addRenderableWidget(buttonBaseposZIncrease);
+		addRenderableWidget(buttonSetX);
+		addRenderableWidget(buttonSetY);
+		addRenderableWidget(buttonSetZ);
 		
-		textFieldX = new TextFieldWidget(font, 205, 45, 50, 20, new StringTextComponent(""));
+		textFieldX = new EditBox(font, 205, 45, 50, 20, new TextComponent(""));
 		textFieldX.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.x : "-");
 		textFieldX.setTextColor(0xFFFFFF);
-		children.add(textFieldX);
-		textFieldY = new TextFieldWidget(font, 205, 65, 50, 20, new StringTextComponent(""));
+		addRenderableWidget(textFieldX);
+		textFieldY = new EditBox(font, 205, 65, 50, 20, new TextComponent(""));
 		textFieldY.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.y : "-");
 		textFieldY.setTextColor(0xFFFFFF);
-		children.add(textFieldY);
-		textFieldZ = new TextFieldWidget(font, 205, 85, 50, 20, new StringTextComponent(""));
+		addRenderableWidget(textFieldY);
+		textFieldZ = new EditBox(font, 205, 85, 50, 20, new TextComponent(""));
 		textFieldZ.setValue(StateManager.getState().isShapeAvailable() ? "" + (int) StateManager.getState().getCurrentShape().basePos.z : "-");
 		textFieldZ.setTextColor(0xFFFFFF);
-		children.add(textFieldZ);
+		addRenderableWidget(textFieldZ);
 		
 		addProperty(StateManager.getState().propertyEnable);
 		addProperty(StateManager.getState().propertyAdvancedMode);
@@ -154,7 +154,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		font.drawShadow(matrixStack, title.getString(), (width - font.width(title.getString())) / 2, 5, 0xFFFFFF);
 		font.drawShadow(matrixStack, titleGlobalProperties, (160 - font.width(titleGlobalProperties)) / 2, 15, 0xFFFFFF);
@@ -169,7 +169,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
-		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslationTextComponent("shape.buildguide.none").getString();
+		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString();
 		font.drawShadow(matrixStack, shapeName, 80 + (60 - font.width(shapeName)) / 2, 30, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, "X", 170, 50, 0xFFFFFF);

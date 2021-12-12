@@ -1,9 +1,10 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeTorus extends Shape{
 	private enum direction{
@@ -14,9 +15,9 @@ public class ShapeTorus extends Shape{
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(1, 5, new TranslationTextComponent("property.buildguide.outerradius"), () -> this.updateOuter());
-	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.innerradius"), () -> this.updateInner());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(1, 5, new TranslatableComponent("property.buildguide.outerradius"), () -> this.updateOuter());
+	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.innerradius"), () -> this.updateInner());
 	
 	public ShapeTorus() {
 		super();

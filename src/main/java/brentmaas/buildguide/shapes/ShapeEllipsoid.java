@@ -1,9 +1,10 @@
 package brentmaas.buildguide.shapes;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
 import brentmaas.buildguide.property.PropertyEnum;
 import brentmaas.buildguide.property.PropertyPositiveInt;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeEllipsoid extends Shape{
 	private enum dome {
@@ -18,10 +19,10 @@ public class ShapeEllipsoid extends Shape{
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 3, new TranslationTextComponent("property.buildguide.semiaxis", "X"), () -> this.update());
-	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
-	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(3, dome.NO, new TranslationTextComponent("property.buildguide.dome"), () -> this.update(), domeNames);
+	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 3, new TranslatableComponent("property.buildguide.semiaxis", "X"), () -> this.update());
+	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
+	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(3, dome.NO, new TranslatableComponent("property.buildguide.dome"), () -> this.update(), domeNames);
 	
 	public ShapeEllipsoid() {
 		super();

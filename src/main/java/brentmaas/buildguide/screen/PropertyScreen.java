@@ -2,18 +2,17 @@ package brentmaas.buildguide.screen;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.property.Property;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
-public abstract class PropertyScreen extends Screen{
+public class PropertyScreen extends Screen{
 	protected ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	
-	public PropertyScreen(ITextComponent title) {
+	public PropertyScreen(Component title) {
 		super(title);
 	}
 	
@@ -24,7 +23,7 @@ public abstract class PropertyScreen extends Screen{
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 		for(Property<?> p: properties) {
 			p.render(matrixStack, mouseX, mouseY, partialTicks, font);
@@ -36,11 +35,7 @@ public abstract class PropertyScreen extends Screen{
 		return false;
 	}
 	
-	public void addButtonExternal(AbstractButton button) {
-		addButton(button);
-	}
-	
-	public void addTextFieldExternal(TextFieldWidget tfw) {
-		children.add(tfw);
+	public void addWidgetExternal(AbstractWidget widget) {
+		addRenderableWidget(widget);
 	}
 }

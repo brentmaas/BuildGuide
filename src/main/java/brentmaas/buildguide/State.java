@@ -7,16 +7,16 @@ import brentmaas.buildguide.screen.BuildGuideScreen;
 import brentmaas.buildguide.shapes.Shape;
 import brentmaas.buildguide.shapes.ShapeRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class State {
 	public Shape[] simpleModeShapes;
 	public int iSimple = 0;
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
 	public int iAdvanced = 0;
-	public PropertyBoolean propertyEnable = new PropertyBoolean(-4, false, new TranslationTextComponent("screen.buildguide.enable"), null);
-	public PropertyBoolean propertyDepthTest = new PropertyBoolean(2, true, new TranslationTextComponent("screen.buildguide.depthtest"), null);
-	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, new TranslationTextComponent("screen.buildguide.advancedmode"), () -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
+	public PropertyBoolean propertyEnable = new PropertyBoolean(-4, false, new TranslatableComponent("screen.buildguide.enable"), null);
+	public PropertyBoolean propertyDepthTest = new PropertyBoolean(2, true, new TranslatableComponent("screen.buildguide.depthtest"), null);
+	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, new TranslatableComponent("screen.buildguide.advancedmode"), () -> Minecraft.getInstance().setScreen(new BuildGuideScreen()));
 	
 	public State() {
 		ArrayList<String> classIdentifiers = ShapeRegistry.getClassIdentifiers();
@@ -50,7 +50,7 @@ public class State {
 	public void resetBasepos() {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).resetBasepos();
-		} else {
+		}else {
 			for(Shape s: simpleModeShapes) s.resetBasepos();
 		}
 	}
@@ -62,7 +62,7 @@ public class State {
 	public void setBasepos(int x, int y, int z) {
 		if(propertyAdvancedMode.value) {
 			advancedModeShapes.get(iAdvanced).setBasepos(x, y, z);
-		} else {
+		}else {
 			for(Shape s: simpleModeShapes) s.setBasepos(x, y, z);
 		}
 	}
