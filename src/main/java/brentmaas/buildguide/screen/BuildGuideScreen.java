@@ -87,7 +87,6 @@ public class BuildGuideScreen extends PropertyScreen{
 		
 		if(!StateManager.getState().isShapeAvailable()) {
 			buttonBasepos.active = false;
-			buttonVisualisation.active = false;
 			buttonBaseposXDecrease.active = false;
 			buttonBaseposXIncrease.active = false;
 			buttonBaseposYDecrease.active = false;
