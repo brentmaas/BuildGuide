@@ -75,13 +75,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		titleNumberOfBlocks = new TranslatableComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslatableComponent("screen.buildguide.shape").getString();
 		
-		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
-			StateManager.getState().resetBasepos();
-			for(Shape shape: StateManager.getState().simpleModeShapes) {
-				shape.update();
-			}
-			//Advanced mode shapes should be empty
-		}
+		StateManager.getState().initCheck();
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new TextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		

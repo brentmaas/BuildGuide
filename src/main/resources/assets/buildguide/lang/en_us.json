@@ -7,6 +7,9 @@
 	"key.buildguide.openbuildguide": "Open Build Guide",
 	"key.buildguide.openshapelist": "Open shape list (advanced mode)",
 	"key.buildguide.openvisualisation": "Open visualization",
+	"key.buildguide.setbasepos": "Set base position",
+	"key.buildguide.setglobalbasepos": "Set global base position (advanced mode)",
+	"key.buildguide.toggleenable": "Toggle enabled",
 	
 	"_comment": "Shape properties",
 	"property.buildguide.direction": "Direction",

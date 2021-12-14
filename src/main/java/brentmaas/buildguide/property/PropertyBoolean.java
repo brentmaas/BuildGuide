@@ -20,4 +20,10 @@ public class PropertyBoolean extends Property<Boolean>{
 	public void addTextFields(Font fr) {
 		
 	}
+	
+	@Override
+	public void setValue(Boolean value) {
+		super.setValue(value);
+		button.setChecked(value);
+	}
 }

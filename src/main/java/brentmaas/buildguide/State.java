@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class State {
+	private boolean initialised = false;
 	public Shape[] simpleModeShapes;
 	public int iSimple = 0;
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
@@ -23,6 +24,7 @@ public class State {
 		simpleModeShapes = new Shape[classIdentifiers.size()];
 		for(int i = 0;i < classIdentifiers.size();++i) {
 			simpleModeShapes[i] = ShapeRegistry.getNewInstance(classIdentifiers.get(i));
+			simpleModeShapes[i].update();
 		}
 	}
 	
@@ -31,6 +33,18 @@ public class State {
 			return advancedModeShapes.size() > 0 ? advancedModeShapes.get(iAdvanced) : null;
 		}
 		return simpleModeShapes[iSimple];
+	}
+	
+	public void initCheck() {
+		if(!initialised) {
+			if(simpleModeShapes[0].basePos == null) {
+				for(Shape s: simpleModeShapes) {
+					s.resetBasepos();
+				}
+			}
+			//Advanced mode shapes should be empty
+			initialised = true;
+		}
 	}
 	
 	public void updateCurrentShape() {
