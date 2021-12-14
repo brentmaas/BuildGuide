@@ -168,7 +168,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
-		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString();
+		String shapeName = (StateManager.getState().isShapeAvailable() && !StateManager.getState().getCurrentShape().visible ? "\247m" : "") + (StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString());
 		font.drawShadow(matrixStack, shapeName, 80 + (60 - font.width(shapeName)) / 2, 30, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
