@@ -19,12 +19,12 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 public class InputHandler {
 	private static final String keyCategory = "key.buildguide.category";
 	
-	public static KeyBinding openBuildGuide;
-	public static KeyBinding openShapeList;
-	public static KeyBinding openVisualisation;
-	public static KeyBinding toggleEnable;
-	public static KeyBinding setBasepos;
-	public static KeyBinding setGlobalBasepos;
+	private static KeyBinding openBuildGuide;
+	private static KeyBinding openShapeList;
+	private static KeyBinding openVisualisation;
+	private static KeyBinding toggleEnable;
+	private static KeyBinding setBasepos;
+	private static KeyBinding setGlobalBasepos;
 	
 	public static void register() {
 		openBuildGuide = new KeyBinding("key.buildguide.openbuildguide", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_B, keyCategory);
