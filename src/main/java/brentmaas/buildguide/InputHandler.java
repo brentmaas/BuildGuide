@@ -60,6 +60,7 @@ public class InputHandler {
 		}
 		
 		if(toggleEnable.isDown()) {
+			StateManager.getState().initCheck(); //We need State to be initialised before rendering does something
 			StateManager.getState().propertyEnable.setValue(!StateManager.getState().propertyEnable.value);
 		}
 		
