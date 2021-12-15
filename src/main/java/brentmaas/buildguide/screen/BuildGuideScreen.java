@@ -23,7 +23,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private Button buttonShapePrevious = new Button(60, 25, 20, 20, new TextComponent("<-"), button -> updateShape(-1));
 	private Button buttonShapeNext = new Button(140, 25, 20, 20, new TextComponent("->"), button -> updateShape(1));
 	private Button buttonShapelist = new Button(140, 25, 20, 20, new TextComponent("..."), button -> Minecraft.getInstance().setScreen(new ShapelistScreen()));
-	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslatableComponent("screen.buildguide.setbasepos"), button -> StateManager.getState().resetBasepos());
+	private Button buttonBasepos = new Button(185, 25, 120, 20, new TranslatableComponent("screen.buildguide.setbasepos"), button -> setBasePos());
 	private Button buttonVisualisation = new Button(0, 65, 160, 20, new TranslatableComponent("screen.buildguide.visualisation"), button -> Minecraft.getInstance().setScreen(new VisualisationScreen()));
 	//It's better off as custom buttons instead of PropertyInt
 	private Button buttonBaseposXDecrease = new Button(185, 45, 20, 20, new TextComponent("-"), button -> shiftBasePos(-1, 0, 0));
@@ -75,19 +75,12 @@ public class BuildGuideScreen extends PropertyScreen{
 		titleNumberOfBlocks = new TranslatableComponent("screen.buildguide.numberofblocks").getString();
 		textShape = new TranslatableComponent("screen.buildguide.shape").getString();
 		
-		if(StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos == null) { //Very likely the first time opening, so basepos and shapes haven't been properly set up yet
-			StateManager.getState().resetBasepos();
-			for(Shape shape: StateManager.getState().simpleModeShapes) {
-				shape.update();
-			}
-			//Advanced mode shapes should be empty
-		}
+		StateManager.getState().initCheck();
 		
 		buttonClose = new Button(this.width - 20, 0, 20, 20, new TextComponent("X"), button -> Minecraft.getInstance().setScreen(null));
 		
 		if(!StateManager.getState().isShapeAvailable()) {
 			buttonBasepos.active = false;
-			buttonVisualisation.active = false;
 			buttonBaseposXDecrease.active = false;
 			buttonBaseposXIncrease.active = false;
 			buttonBaseposYDecrease.active = false;
@@ -169,7 +162,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		font.drawShadow(matrixStack, numberOfStacks, 305 + (100 - font.width(numberOfStacks)) / 2, 45, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, textShape, 5, 30, 0xFFFFFF);
-		String shapeName = StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString();
+		String shapeName = (StateManager.getState().isShapeAvailable() && !StateManager.getState().getCurrentShape().visible ? "\247m" : "") + (StateManager.getState().isShapeAvailable() ? StateManager.getState().getCurrentShape().getTranslatedName() : new TranslatableComponent("shape.buildguide.none").getString());
 		font.drawShadow(matrixStack, shapeName, 80 + (60 - font.width(shapeName)) / 2, 30, 0xFFFFFF);
 		
 		font.drawShadow(matrixStack, "X", 170, 50, 0xFFFFFF);
@@ -189,13 +182,29 @@ public class BuildGuideScreen extends PropertyScreen{
 		StateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
-	private void shiftBasePos(int dx, int dy, int dz) {
-		StateManager.getState().shiftBasepos(dx, dy, dz);
+	private void setBasePos() {
+		StateManager.getState().resetBasepos();
 		textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
 		textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
 		textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
 		textFieldX.setTextColor(0xFFFFFF);
 		textFieldY.setTextColor(0xFFFFFF);
 		textFieldZ.setTextColor(0xFFFFFF);
+	}
+	
+	private void shiftBasePos(int dx, int dy, int dz) {
+		StateManager.getState().shiftBasepos(dx, dy, dz);
+		if(dx != 0) {
+			textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+			textFieldX.setTextColor(0xFFFFFF);
+		}
+		if(dy != 0) {
+			textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+			textFieldY.setTextColor(0xFFFFFF);
+		}
+		if(dz != 0) {
+			textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
+			textFieldZ.setTextColor(0xFFFFFF);
+		}
 	}
 }

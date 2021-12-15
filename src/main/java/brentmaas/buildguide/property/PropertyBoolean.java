@@ -17,6 +17,12 @@ public class PropertyBoolean extends Property<Boolean>{
 		buttonList.add(button);
 	}
 	
+	@Override
+	public void setValue(Boolean value) {
+		super.setValue(value);
+		button.setChecked(value);
+	}
+	
 	public void addTextFields(Font fr) {
 		
 	}
