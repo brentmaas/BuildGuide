@@ -146,7 +146,6 @@ public class ShapelistScreen extends Screen{
 		addRenderableWidget(textFieldZ);
 		
 		shapeList = new ShapeList(minecraft, 150, 300, 25, height, 20, () -> {
-			//updateGlobalBasepos();
 			if(StateManager.getState().isShapeAvailable()) {
 				textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
 				textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
