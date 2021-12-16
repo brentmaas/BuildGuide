@@ -146,7 +146,19 @@ public class ShapelistScreen extends Screen{
 		addRenderableWidget(textFieldZ);
 		
 		shapeList = new ShapeList(minecraft, 150, 300, 25, height, 20, () -> {
-			updateGlobalBasepos();
+			//updateGlobalBasepos();
+			if(StateManager.getState().isShapeAvailable()) {
+				textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+				textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+				textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
+			}else {
+				textFieldX.setValue("-");
+				textFieldY.setValue("-");
+				textFieldZ.setValue("-");
+			}
+			textFieldX.setTextColor(0xFFFFFF);
+			textFieldY.setTextColor(0xFFFFFF);
+			textFieldZ.setTextColor(0xFFFFFF);
 			if(StateManager.getState().isShapeAvailable()) buttonVisible.setChecked(StateManager.getState().getCurrentShape().visible);
 		});
 		
@@ -193,21 +205,6 @@ public class ShapelistScreen extends Screen{
 		shapeList.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 	
-	private void updateGlobalBasepos() {
-		if(StateManager.getState().isShapeAvailable()) {
-			textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
-			textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
-			textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
-		}else {
-			textFieldX.setValue("-");
-			textFieldY.setValue("-");
-			textFieldZ.setValue("-");
-		}
-		textFieldX.setTextColor(0xFFFFFF);
-		textFieldY.setTextColor(0xFFFFFF);
-		textFieldZ.setTextColor(0xFFFFFF);
-	}
-	
 	private void updateNewShape(int di) {
 		newShapeId = Math.floorMod(newShapeId + di, ShapeRegistry.getNumberOfShapes());
 	}
@@ -216,7 +213,33 @@ public class ShapelistScreen extends Screen{
 		for(Shape s: StateManager.getState().advancedModeShapes) {
 			s.shiftBasepos(dx, dy, dz);
 		}
-		updateGlobalBasepos();
+		if(StateManager.getState().isShapeAvailable()) {
+			if(dx != 0) {
+				textFieldX.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.x);
+				textFieldX.setTextColor(0xFFFFFF);
+			}
+			if(dy != 0) {
+				textFieldY.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.y);
+				textFieldY.setTextColor(0xFFFFFF);
+			}
+			if(dz != 0) {
+				textFieldZ.setValue("" + (int) StateManager.getState().getCurrentShape().basePos.z);
+				textFieldZ.setTextColor(0xFFFFFF);
+			}
+		}else {
+			if(dx != 0) {
+				textFieldX.setValue("-");
+				textFieldX.setTextColor(0xFFFFFF);
+			}
+			if(dy != 0) {
+				textFieldY.setValue("-");
+				textFieldY.setTextColor(0xFFFFFF);
+			}
+			if(dz != 0) {
+				textFieldZ.setValue("-");
+				textFieldZ.setTextColor(0xFFFFFF);
+			}
+		}
 	}
 	
 	private void setGlobalBasePos() {
