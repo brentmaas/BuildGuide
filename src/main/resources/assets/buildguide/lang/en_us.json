@@ -12,6 +12,7 @@
 	"key.buildguide.toggleenable": "Toggle enabled",
 	
 	"_comment": "Shape properties",
+	"property.buildguide.depth": "Depth",
 	"property.buildguide.direction": "Direction",
 	"property.buildguide.dome": "Dome",
 	"property.buildguide.height": "Height",

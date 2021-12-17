@@ -33,7 +33,7 @@ public class ShapePolygon extends Shape{
 	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> this.update());
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
 	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> this.update(), rotationNames);
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.height"), () -> this.update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.depth"), () -> this.update());
 	
 	public ShapePolygon() {
 		super();
@@ -42,7 +42,7 @@ public class ShapePolygon extends Shape{
 		properties.add(propertyRadius);
 		properties.add(propertyDir);
 		properties.add(propertyRot);
-		properties.add(propertyHeight);
+		properties.add(propertyDepth);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
@@ -54,14 +54,14 @@ public class ShapePolygon extends Shape{
 			int minB = (int) Math.floor(Math.min(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
 			int maxA = (int) Math.ceil(Math.max(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))));
 			int maxB = (int) Math.ceil(Math.max(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
-			for(int a = minA;a < maxA + 1;++a) {
-				for(int b = minB;b < maxB + 1;++b) {
+			for(int a = minA;a <= maxA;++a) {
+				for(int b = minB;b <= maxB;++b) {
 					double adx = (a - r * Math.sin(2 * Math.PI * i / n)) * Math.cos(2 * Math.PI * i / n) + (b + r * Math.cos(2 * Math.PI * i / n)) * Math.sin(2 * Math.PI * i / n);
 					double d2 = (a - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) * (a - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) + (b + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n)) * (b + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n));
 					double theta = Math.atan2(b, a) + Math.PI / 2;
 					if(theta < 0 && i > 0) theta += 2 * Math.PI;
 					if(d2 <= 0.25 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
-						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
+						for(int h = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);h < (propertyDepth.value > 0 ? propertyDepth.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
 								addShapeCube(builder, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);
