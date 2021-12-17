@@ -1,0 +1,79 @@
+package brentmaas.buildguide.shapes;
+
+import com.mojang.blaze3d.vertex.BufferBuilder;
+
+import brentmaas.buildguide.property.PropertyEnum;
+import brentmaas.buildguide.property.PropertyNonzeroInt;
+import brentmaas.buildguide.property.PropertyPositiveInt;
+import net.minecraft.network.chat.TranslatableComponent;
+
+public class ShapeParaboloid extends Shape{
+	private enum direction{
+		X,
+		Y,
+		Z
+	}
+	
+	private String[] directionNames = {"X", "Y", "Z"};
+	
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
+	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Y"), () -> this.update());
+	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Z"), () -> this.update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 3, new TranslatableComponent("property.buildguide.height"), () -> this.update());
+	
+	public ShapeParaboloid() {
+		super();
+		
+		properties.add(propertyDir);
+		properties.add(propertyHalfwidth1);
+		properties.add(propertyHalfwidth2);
+		properties.add(propertyHeight);
+	}
+	
+	protected void updateShape(BufferBuilder builder) {
+		int hw1 = propertyHalfwidth1.value;
+		int hw2 = propertyHalfwidth2.value;
+		int h = propertyHeight.value;
+		double fac1 = ((double) h) / hw1 / hw1;
+		double fac2 = ((double) h) / hw2 / hw2;
+		
+		for(int a = -hw1;a <= hw1;++a) {
+			for(int b = -hw2;b <= hw2;++b) {
+				for(int c = 0;c < Math.abs(propertyHeight.value);++c) {
+					if(fac1 * a * a + fac2 * b * b >= c && (fac1 * (a - Math.signum(a)) * (a - Math.signum(a)) + fac2 * b * b < c || fac1 * a * a + fac2 * (b - Math.signum(b)) * (b - Math.signum(b)) < c || fac1 * a * a + fac2 * b * b < c + 1)) {
+						switch(propertyDir.value) {
+						case X:
+							addShapeCube(builder, (int) (c * Math.signum(c)), a, b);
+							break;
+						case Y:
+							addShapeCube(builder, a, (int) (c * Math.signum(c)), b);
+							break;
+						case Z:
+							addShapeCube(builder, a, b, (int) (c * Math.signum(c)));
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+		switch(propertyDir.value) {
+		case X:
+			propertyHalfwidth1.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "Y"));
+			propertyHalfwidth2.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "Z"));
+			break;
+		case Y:
+			propertyHalfwidth1.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "X"));
+			propertyHalfwidth2.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "Z"));
+			break;
+		case Z:
+			propertyHalfwidth1.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "X"));
+			propertyHalfwidth2.setName(new TranslatableComponent("property.buildguide.halfwidthdir", "Y"));
+			break;
+		}
+	}
+	
+	public String getTranslationKey() {
+		return "shape.buildguide.paraboloid";
+	}
+}
