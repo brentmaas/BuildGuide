@@ -29,6 +29,7 @@ public class PropertyInt extends Property<Integer>{
 				int newval = Integer.parseInt(valueWidget.getValue());
 				this.value = newval;
 				valueWidget.setTextColor(0xFFFFFF);
+				if(onUpdate != null) onUpdate.run();
 			}catch(NumberFormatException e) {
 				valueWidget.setTextColor(0xFF0000);
 			}
