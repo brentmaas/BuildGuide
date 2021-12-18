@@ -16,10 +16,10 @@ public class ShapeParaboloid extends Shape{
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Y"), () -> this.update());
-	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Z"), () -> this.update());
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 3, new TranslatableComponent("property.buildguide.height"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Y"), () -> update());
+	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.halfwidthdir", "Z"), () -> update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 3, new TranslatableComponent("property.buildguide.height"), () -> update());
 	
 	public ShapeParaboloid() {
 		super();

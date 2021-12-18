@@ -28,11 +28,11 @@ public class ShapeParabola extends Shape{
 	private String[] directionNames = {"X", "Y", "Z"};
 	private String[] rotationNames = {"0°", "90°", "180°", "270°"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(1, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> this.update(), rotationNames);
-	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.halfwidth"), () -> this.update());
-	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, 3, new TranslatableComponent("property.buildguide.height"), () -> this.update());
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.depth"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(1, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(2, 3, new TranslatableComponent("property.buildguide.halfwidth"), () -> update());
+	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, 3, new TranslatableComponent("property.buildguide.height"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapeParabola() {
 		super();

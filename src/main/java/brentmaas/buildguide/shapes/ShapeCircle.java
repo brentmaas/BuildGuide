@@ -16,9 +16,9 @@ public class ShapeCircle extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> this.update());
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(2, 1, new TranslatableComponent("property.buildguide.depth"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(2, 1, new TranslatableComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapeCircle() {
 		super();

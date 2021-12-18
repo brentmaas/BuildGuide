@@ -29,11 +29,11 @@ public class ShapePolygon extends Shape{
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, new TranslatableComponent("property.buildguide.sides"), () -> this.update(), 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> this.update());
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> this.update(), rotationNames);
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.depth"), () -> this.update());
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, new TranslatableComponent("property.buildguide.sides"), () -> update(), 3);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslatableComponent("property.buildguide.radius"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslatableComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslatableComponent("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslatableComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapePolygon() {
 		super();
