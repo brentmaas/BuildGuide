@@ -2,6 +2,9 @@ package brentmaas.buildguide.shapes;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.spi.StandardLevel;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -55,7 +58,7 @@ public abstract class Shape {
 		buffer = new VertexBuffer();
 		buffer.upload(builder);
 		if(Config.debugGenerationTimingsEnabled) {
-			BuildGuide.logger.atLevel(BuildGuide.logger.getLevel()).log("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+			BuildGuide.logger.atLevel(BuildGuide.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuide.logger.getLevel()).log("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	
