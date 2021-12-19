@@ -15,10 +15,10 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> this.update());
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> this.update());
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 1, new TranslationTextComponent("property.buildguide.height"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, new TranslationTextComponent("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(3, 1, new TranslationTextComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapeEllipse() {
 		super();
@@ -26,7 +26,7 @@ public class ShapeEllipse extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertySemi1);
 		properties.add(propertySemi2);
-		properties.add(propertyHeight);
+		properties.add(propertyDepth);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
@@ -63,7 +63,7 @@ public class ShapeEllipse extends Shape {
 					if((r2_outer2 >= 1 && r2_inner2 <= 1) || (double) a * a / da / da + 1.0 / db / db < 1) continue;
 				}
 				
-				for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
+				for(int s = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);s < (propertyDepth.value > 0 ? propertyDepth.value : 1);++s) {
 					switch(propertyDir.value) {
 					case X:
 						addShapeCube(builder, s, a, b);

@@ -2,6 +2,8 @@ package brentmaas.buildguide.shapes;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.spi.StandardLevel;
 import org.lwjgl.opengl.GL11;
 
 import brentmaas.buildguide.BuildGuide;
@@ -54,7 +56,7 @@ public abstract class Shape {
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_COLOR);
 		buffer.upload(builder);
 		if(Config.debugGenerationTimingsEnabled) {
-			BuildGuide.logger.debug("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+			BuildGuide.logger.atLevel(BuildGuide.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuide.logger.getLevel()).log("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	

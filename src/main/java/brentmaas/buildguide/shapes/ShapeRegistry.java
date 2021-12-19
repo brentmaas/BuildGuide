@@ -21,7 +21,7 @@ public class ShapeRegistry {
 		try {
 			return shapeRegistry.get(classIdentifier).newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			BuildGuide.logger.error("Unable to instantiate Shape class '" + classIdentifier + "'");
+			BuildGuide.logger.fatal("Unable to instantiate Shape class '" + classIdentifier + "'");
 			e.printStackTrace();
 			System.exit(1);
 		}

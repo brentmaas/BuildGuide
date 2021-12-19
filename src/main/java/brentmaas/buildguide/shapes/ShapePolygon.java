@@ -28,11 +28,11 @@ public class ShapePolygon extends Shape{
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, new TranslationTextComponent("property.buildguide.sides"), () -> this.update(), 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.radius"), () -> this.update());
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslationTextComponent("property.buildguide.rotation"), () -> this.update(), rotationNames);
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(4, 1, new TranslationTextComponent("property.buildguide.height"), () -> this.update());
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, new TranslationTextComponent("property.buildguide.sides"), () -> update(), 3);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.radius"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, new TranslationTextComponent("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, new TranslationTextComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapePolygon() {
 		super();
@@ -41,7 +41,7 @@ public class ShapePolygon extends Shape{
 		properties.add(propertyRadius);
 		properties.add(propertyDir);
 		properties.add(propertyRot);
-		properties.add(propertyHeight);
+		properties.add(propertyDepth);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
@@ -60,7 +60,7 @@ public class ShapePolygon extends Shape{
 					double theta = Math.atan2(b, a) + Math.PI / 2;
 					if(theta < 0 && i > 0) theta += 2 * Math.PI;
 					if(d2 <= 0.25 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
-						for(int h = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);h < (propertyHeight.value > 0 ? propertyHeight.value : 1);++h) {
+						for(int h = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);h < (propertyDepth.value > 0 ? propertyDepth.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
 								addShapeCube(builder, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);

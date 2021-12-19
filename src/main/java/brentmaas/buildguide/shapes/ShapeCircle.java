@@ -15,16 +15,16 @@ public class ShapeCircle extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> this.update(), directionNames);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.radius"), () -> this.update());
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(2, 1, new TranslationTextComponent("property.buildguide.height"), () -> this.update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, new TranslationTextComponent("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, new TranslationTextComponent("property.buildguide.radius"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(2, 1, new TranslationTextComponent("property.buildguide.depth"), () -> update());
 	
 	public ShapeCircle() {
 		super();
 		
 		properties.add(propertyDir);
 		properties.add(propertyRadius);
-		properties.add(propertyHeight);
+		properties.add(propertyDepth);
 	}
 	
 	protected void updateShape(BufferBuilder builder) {
@@ -46,7 +46,7 @@ public class ShapeCircle extends Shape {
 				for(int z = -dz; z <= dz;++z) {
 					int r2 = x * x + y * y + z * z;
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
-						for(int s = (propertyHeight.value > 0 ? 0 : propertyHeight.value + 1);s < (propertyHeight.value > 0 ? propertyHeight.value : 1);++s) {
+						for(int s = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);s < (propertyDepth.value > 0 ? propertyDepth.value : 1);++s) {
 							addShapeCube(builder, x + (propertyDir.value == direction.X ? s : 0), y + (propertyDir.value == direction.Y ? s : 0), z + (propertyDir.value == direction.Z ? s : 0));
 						}
 					}
