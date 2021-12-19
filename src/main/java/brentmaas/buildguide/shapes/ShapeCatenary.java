@@ -34,12 +34,7 @@ public class ShapeCatenary extends Shape{
 			double chi;
 			while(Math.abs(chi = 2 * a * Math.sinh(dr / 2 / a) - Math.sqrt(s * s - dy * dy)) > eps) {
 				double dchi = 2 * Math.sinh(dr / 2 / a) - dr / a * Math.cosh(dr / 2 / a);
-				double newa = a - chi / dchi;
-				if(newa < a / 2) {
-					a /= 2;
-				}else {
-					a = newa;
-				}
+				a = Math.max(a - chi / dchi, a / 2);
 			}
 			
 			double rl = 0;
