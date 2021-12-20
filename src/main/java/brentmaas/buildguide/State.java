@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import brentmaas.buildguide.property.PropertyBoolean;
 import brentmaas.buildguide.screen.BuildGuideScreen;
 import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.shapes.ShapeCircle;
 import brentmaas.buildguide.shapes.ShapeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -25,6 +26,9 @@ public class State {
 		for(int i = 0;i < classIdentifiers.size();++i) {
 			simpleModeShapes[i] = ShapeRegistry.getNewInstance(classIdentifiers.get(i));
 			simpleModeShapes[i].update();
+			if(classIdentifiers.get(i) == ShapeCircle.class.getName()) {
+				iSimple = i;
+			}
 		}
 	}
 	

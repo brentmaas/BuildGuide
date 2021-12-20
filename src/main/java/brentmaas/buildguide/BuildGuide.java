@@ -3,11 +3,14 @@ package brentmaas.buildguide;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import brentmaas.buildguide.shapes.ShapeCatenary;
 import brentmaas.buildguide.shapes.ShapeCircle;
 import brentmaas.buildguide.shapes.ShapeCuboid;
 import brentmaas.buildguide.shapes.ShapeEllipse;
 import brentmaas.buildguide.shapes.ShapeEllipsoid;
 import brentmaas.buildguide.shapes.ShapeLine;
+import brentmaas.buildguide.shapes.ShapeParabola;
+import brentmaas.buildguide.shapes.ShapeParaboloid;
 import brentmaas.buildguide.shapes.ShapePolygon;
 import brentmaas.buildguide.shapes.ShapeRegistry;
 import brentmaas.buildguide.shapes.ShapeSphere;
@@ -32,11 +35,14 @@ public class BuildGuide {
 	public BuildGuide() {
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+			ShapeRegistry.registerShape(ShapeCatenary.class);
 			ShapeRegistry.registerShape(ShapeCircle.class);
 			ShapeRegistry.registerShape(ShapeCuboid.class);
 			ShapeRegistry.registerShape(ShapeEllipse.class);
 			ShapeRegistry.registerShape(ShapeEllipsoid.class);
 			ShapeRegistry.registerShape(ShapeLine.class);
+			ShapeRegistry.registerShape(ShapeParabola.class);
+			ShapeRegistry.registerShape(ShapeParaboloid.class);
 			ShapeRegistry.registerShape(ShapePolygon.class);
 			ShapeRegistry.registerShape(ShapeSphere.class);
 			ShapeRegistry.registerShape(ShapeTorus.class);

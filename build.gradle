@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.17.1-0.3.1'
+version = '1.17.1-0.3.2'
 group = 'brentmaas.buildguide' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'buildguide'
 
@@ -149,7 +149,7 @@ jar {
         attributes([
                 "Specification-Title"     : "buildguide",
                 "Specification-Vendor"    : "buildguide",
-                "Specification-Version"   : "9",
+                "Specification-Version"   : "10",
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "buildguide",
