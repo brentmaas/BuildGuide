@@ -34,22 +34,22 @@ public class ShapeParaboloid extends Shape{
 		int hw1 = propertyHalfwidth1.value;
 		int hw2 = propertyHalfwidth2.value;
 		int h = propertyHeight.value;
-		double fac1 = ((double) h) / hw1 / hw1;
-		double fac2 = ((double) h) / hw2 / hw2;
+		double fac1 = Math.abs((double) h) / hw1 / hw1;
+		double fac2 = Math.abs((double) h) / hw2 / hw2;
 		
 		for(int a = -hw1;a <= hw1;++a) {
 			for(int b = -hw2;b <= hw2;++b) {
-				for(int c = 0;c < Math.abs(propertyHeight.value);++c) {
+				for(int c = 0;c < Math.abs(h);++c) {
 					if(fac1 * a * a + fac2 * b * b >= c && (fac1 * (a - Math.signum(a)) * (a - Math.signum(a)) + fac2 * b * b < c || fac1 * a * a + fac2 * (b - Math.signum(b)) * (b - Math.signum(b)) < c || fac1 * a * a + fac2 * b * b < c + 1)) {
 						switch(propertyDir.value) {
 						case X:
-							addShapeCube(builder, (int) (c * Math.signum(c)), a, b);
+							addShapeCube(builder, (int) (c * Math.signum(h)), a, b);
 							break;
 						case Y:
-							addShapeCube(builder, a, (int) (c * Math.signum(c)), b);
+							addShapeCube(builder, a, (int) (c * Math.signum(h)), b);
 							break;
 						case Z:
-							addShapeCube(builder, a, b, (int) (c * Math.signum(c)));
+							addShapeCube(builder, a, b, (int) (c * Math.signum(h)));
 							break;
 						}
 					}
