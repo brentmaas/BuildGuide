@@ -1,15 +1,5 @@
-/.metadata/
-
 # Ignore Gradle project-specific cache directory
 .gradle
 
 # Ignore Gradle build output directory
 build
-
-# Eclipse
-.settings
-.project
-.classpath
-
-# Minecraft stuff, it's here for some reason
-run
