@@ -1,11 +1,11 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.fabric;
 
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.fabric.shapes.Shape;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;

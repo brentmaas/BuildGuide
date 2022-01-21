@@ -1,8 +1,8 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.fabric.screen;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.property.Property;
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.fabric.StateManager;
+import brentmaas.buildguide.fabric.property.Property;
+import brentmaas.buildguide.fabric.shapes.Shape;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;

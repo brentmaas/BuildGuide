@@ -1,4 +1,4 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.fabric.property;
 
 import net.minecraft.text.Text;
 

@@ -1,11 +1,11 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.fabric;
 
 import org.lwjgl.glfw.GLFW;
 
-import brentmaas.buildguide.screen.BuildGuideScreen;
-import brentmaas.buildguide.screen.ShapelistScreen;
-import brentmaas.buildguide.screen.VisualisationScreen;
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.fabric.screen.BuildGuideScreen;
+import brentmaas.buildguide.fabric.screen.ShapelistScreen;
+import brentmaas.buildguide.fabric.screen.VisualisationScreen;
+import brentmaas.buildguide.fabric.shapes.Shape;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;

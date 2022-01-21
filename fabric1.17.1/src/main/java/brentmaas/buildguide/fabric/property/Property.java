@@ -1,8 +1,8 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.fabric.property;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.screen.PropertyScreen;
+import brentmaas.buildguide.fabric.screen.PropertyScreen;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;

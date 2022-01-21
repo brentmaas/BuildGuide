@@ -1,20 +1,20 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.fabric;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import brentmaas.buildguide.shapes.ShapeCatenary;
-import brentmaas.buildguide.shapes.ShapeCircle;
-import brentmaas.buildguide.shapes.ShapeCuboid;
-import brentmaas.buildguide.shapes.ShapeEllipse;
-import brentmaas.buildguide.shapes.ShapeEllipsoid;
-import brentmaas.buildguide.shapes.ShapeLine;
-import brentmaas.buildguide.shapes.ShapeParabola;
-import brentmaas.buildguide.shapes.ShapeParaboloid;
-import brentmaas.buildguide.shapes.ShapePolygon;
-import brentmaas.buildguide.shapes.ShapeRegistry;
-import brentmaas.buildguide.shapes.ShapeSphere;
-import brentmaas.buildguide.shapes.ShapeTorus;
+import brentmaas.buildguide.fabric.shapes.ShapeCatenary;
+import brentmaas.buildguide.fabric.shapes.ShapeCircle;
+import brentmaas.buildguide.fabric.shapes.ShapeCuboid;
+import brentmaas.buildguide.fabric.shapes.ShapeEllipse;
+import brentmaas.buildguide.fabric.shapes.ShapeEllipsoid;
+import brentmaas.buildguide.fabric.shapes.ShapeLine;
+import brentmaas.buildguide.fabric.shapes.ShapeParabola;
+import brentmaas.buildguide.fabric.shapes.ShapeParaboloid;
+import brentmaas.buildguide.fabric.shapes.ShapePolygon;
+import brentmaas.buildguide.fabric.shapes.ShapeRegistry;
+import brentmaas.buildguide.fabric.shapes.ShapeSphere;
+import brentmaas.buildguide.fabric.shapes.ShapeTorus;
 import net.fabricmc.api.ClientModInitializer;
 
 public class BuildGuide implements ClientModInitializer {

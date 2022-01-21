@@ -1,10 +1,10 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import brentmaas.buildguide.BuildGuide;
+import brentmaas.buildguide.forge.BuildGuide;
 
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();

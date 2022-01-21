@@ -1,12 +1,12 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.forge.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.screen.widget.CheckboxRunnableButton;
-import brentmaas.buildguide.screen.widget.ShapeList;
-import brentmaas.buildguide.shapes.Shape;
-import brentmaas.buildguide.shapes.ShapeRegistry;
+import brentmaas.buildguide.forge.StateManager;
+import brentmaas.buildguide.forge.screen.widget.CheckboxRunnableButton;
+import brentmaas.buildguide.forge.screen.widget.ShapeList;
+import brentmaas.buildguide.forge.shapes.Shape;
+import brentmaas.buildguide.forge.shapes.ShapeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;

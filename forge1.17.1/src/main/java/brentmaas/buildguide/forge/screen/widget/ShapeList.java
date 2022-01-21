@@ -1,4 +1,4 @@
-package brentmaas.buildguide.screen.widget;
+package brentmaas.buildguide.forge.screen.widget;
 
 import javax.annotation.Nullable;
 
@@ -11,7 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 
-import brentmaas.buildguide.StateManager;
+import brentmaas.buildguide.forge.StateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.renderer.GameRenderer;

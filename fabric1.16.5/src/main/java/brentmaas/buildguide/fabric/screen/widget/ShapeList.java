@@ -1,11 +1,11 @@
-package brentmaas.buildguide.screen.widget;
+package brentmaas.buildguide.fabric.screen.widget;
 
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import brentmaas.buildguide.StateManager;
+import brentmaas.buildguide.fabric.StateManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.render.BufferBuilder;

@@ -1,20 +1,20 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import brentmaas.buildguide.shapes.ShapeCatenary;
-import brentmaas.buildguide.shapes.ShapeCircle;
-import brentmaas.buildguide.shapes.ShapeCuboid;
-import brentmaas.buildguide.shapes.ShapeEllipse;
-import brentmaas.buildguide.shapes.ShapeEllipsoid;
-import brentmaas.buildguide.shapes.ShapeLine;
-import brentmaas.buildguide.shapes.ShapeParabola;
-import brentmaas.buildguide.shapes.ShapeParaboloid;
-import brentmaas.buildguide.shapes.ShapePolygon;
-import brentmaas.buildguide.shapes.ShapeRegistry;
-import brentmaas.buildguide.shapes.ShapeSphere;
-import brentmaas.buildguide.shapes.ShapeTorus;
+import brentmaas.buildguide.forge.shapes.ShapeCatenary;
+import brentmaas.buildguide.forge.shapes.ShapeCircle;
+import brentmaas.buildguide.forge.shapes.ShapeCuboid;
+import brentmaas.buildguide.forge.shapes.ShapeEllipse;
+import brentmaas.buildguide.forge.shapes.ShapeEllipsoid;
+import brentmaas.buildguide.forge.shapes.ShapeLine;
+import brentmaas.buildguide.forge.shapes.ShapeParabola;
+import brentmaas.buildguide.forge.shapes.ShapeParaboloid;
+import brentmaas.buildguide.forge.shapes.ShapePolygon;
+import brentmaas.buildguide.forge.shapes.ShapeRegistry;
+import brentmaas.buildguide.forge.shapes.ShapeSphere;
+import brentmaas.buildguide.forge.shapes.ShapeTorus;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -1,4 +1,4 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.forge.property;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;

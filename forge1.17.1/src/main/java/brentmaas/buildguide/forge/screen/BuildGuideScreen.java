@@ -1,10 +1,10 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.forge.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.property.Property;
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.forge.StateManager;
+import brentmaas.buildguide.forge.property.Property;
+import brentmaas.buildguide.forge.shapes.Shape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;

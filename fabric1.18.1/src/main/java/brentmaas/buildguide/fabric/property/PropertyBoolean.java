@@ -1,6 +1,6 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.fabric.property;
 
-import brentmaas.buildguide.screen.widget.CheckboxRunnableButton;
+import brentmaas.buildguide.fabric.screen.widget.CheckboxRunnableButton;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;

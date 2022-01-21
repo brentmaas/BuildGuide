@@ -1,9 +1,9 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
-import brentmaas.buildguide.property.PropertyEnum;
-import brentmaas.buildguide.property.PropertyMinimumInt;
-import brentmaas.buildguide.property.PropertyNonzeroInt;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.forge.property.PropertyEnum;
+import brentmaas.buildguide.forge.property.PropertyMinimumInt;
+import brentmaas.buildguide.forge.property.PropertyNonzeroInt;
+import brentmaas.buildguide.forge.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 

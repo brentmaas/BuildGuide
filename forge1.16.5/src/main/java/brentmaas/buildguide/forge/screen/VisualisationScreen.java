@@ -1,9 +1,9 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.forge.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.screen.widget.Slider;
+import brentmaas.buildguide.forge.StateManager;
+import brentmaas.buildguide.forge.screen.widget.Slider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;

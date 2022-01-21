@@ -1,4 +1,4 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.fabric.property;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ButtonWidget;

@@ -1,4 +1,4 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.fabric.shapes;
 
 import java.util.ArrayList;
 
@@ -6,9 +6,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.spi.StandardLevel;
 import org.lwjgl.opengl.GL11;
 
-import brentmaas.buildguide.BuildGuide;
-import brentmaas.buildguide.Config;
-import brentmaas.buildguide.property.Property;
+import brentmaas.buildguide.fabric.BuildGuide;
+import brentmaas.buildguide.fabric.Config;
+import brentmaas.buildguide.fabric.property.Property;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;

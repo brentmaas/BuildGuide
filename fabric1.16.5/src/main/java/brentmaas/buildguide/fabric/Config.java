@@ -1,4 +1,4 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.fabric;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

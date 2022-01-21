@@ -1,10 +1,10 @@
-package brentmaas.buildguide.property;
+package brentmaas.buildguide.forge.property;
 
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import brentmaas.buildguide.screen.PropertyScreen;
+import brentmaas.buildguide.forge.screen.PropertyScreen;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.AbstractButton;

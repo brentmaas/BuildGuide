@@ -6,6 +6,16 @@
  */
 
 tasks.register('unpackjars') {
+	def commonfolder = file('./build/tmp/common')
+	if(commonfolder.exists()) {
+		delete commonfolder
+	}
+	copy {
+		from(zipTree('./common/build/libs/common.jar'))
+		into(commonfolder)
+	}
+	delete commonfolder.absolutePath + '/META-INF'
+	
 	gradle.ext.mcversions.each {
 		def folder = file('./build/tmp/' + it)
 		if(folder.exists()) {
@@ -69,12 +79,28 @@ tasks.register('unpackjars') {
 				}
 			}
 		}
+		
+		fileTree(commonfolder).each {
+			def relpath = it.absolutePath.substring(commonfolder.absolutePath.length())
+			def target = file(folder.absolutePath + relpath)
+			if(relpath != '\\META-INF\\MANIFEST.MF' && !target.exists()) {
+				def source = it
+				def targetParent = target.getParentFile()
+				targetParent.mkdirs()
+				copy {
+					from source
+					into targetParent
+				}
+			}
+		}
 	}
 }
 
 gradle.ext.mcversions.each {
 	def mcversion = it
 	task "zip$it"(type: Zip, dependsOn: "unpackjars") {
+		dependsOn ':fabric' + mcversion + ':build'
+		dependsOn ':forge' + mcversion + ':build'
 		from fileTree('./build/tmp/' + mcversion)
 		archiveName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
 		destinationDir = file('./build/libs')
@@ -90,11 +116,10 @@ task build {
 
 configure(subprojects.findAll {it.name != 'common'}) {
 	apply plugin: 'java'
-	sourceSets {
-		main {
-			java {
-				srcDir '../common/src'
-			}
-		}
+	dependencies {
+		implementation project(":common")
+	}
+	sourceSets.main.resources {
+		srcDir '../common/resources'
 	}
 }

@@ -1,10 +1,10 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.property.PropertyEnum;
-import brentmaas.buildguide.property.PropertyNonzeroInt;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.forge.property.PropertyEnum;
+import brentmaas.buildguide.forge.property.PropertyNonzeroInt;
+import brentmaas.buildguide.forge.property.PropertyPositiveInt;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeParabola extends Shape{

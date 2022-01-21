@@ -1,10 +1,10 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.forge.screen;
 
 import java.util.ArrayList;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import brentmaas.buildguide.property.Property;
+import brentmaas.buildguide.forge.property.Property;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;

@@ -1,10 +1,10 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.fabric.screen;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.screen.widget.CheckboxRunnableButton;
-import brentmaas.buildguide.screen.widget.ShapeList;
-import brentmaas.buildguide.shapes.Shape;
-import brentmaas.buildguide.shapes.ShapeRegistry;
+import brentmaas.buildguide.fabric.StateManager;
+import brentmaas.buildguide.fabric.screen.widget.CheckboxRunnableButton;
+import brentmaas.buildguide.fabric.screen.widget.ShapeList;
+import brentmaas.buildguide.fabric.shapes.Shape;
+import brentmaas.buildguide.fabric.shapes.ShapeRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -164,7 +164,7 @@ public class ShapelistScreen extends Screen{
 	}
 	
 	@Override
-	public boolean isPauseScreen() {
+	public boolean shouldPause() {
 		return false;
 	}
 	

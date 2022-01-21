@@ -1,4 +1,4 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import org.lwjgl.opengl.GL11;
 
@@ -7,7 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.forge.shapes.Shape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.phys.Vec3;

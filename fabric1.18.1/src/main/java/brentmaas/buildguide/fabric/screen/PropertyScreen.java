@@ -1,8 +1,8 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.fabric.screen;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.property.Property;
+import brentmaas.buildguide.fabric.property.Property;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.util.math.MatrixStack;
@@ -30,7 +30,7 @@ public class PropertyScreen extends Screen{
 	}
 	
 	@Override
-	public boolean isPauseScreen() {
+	public boolean shouldPause() {
 		return false;
 	}
 	

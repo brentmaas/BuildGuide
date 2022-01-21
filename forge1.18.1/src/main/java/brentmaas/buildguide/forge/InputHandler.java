@@ -1,13 +1,13 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.platform.InputConstants;
 
-import brentmaas.buildguide.screen.BuildGuideScreen;
-import brentmaas.buildguide.screen.ShapelistScreen;
-import brentmaas.buildguide.screen.VisualisationScreen;
-import brentmaas.buildguide.shapes.Shape;
+import brentmaas.buildguide.forge.screen.BuildGuideScreen;
+import brentmaas.buildguide.forge.screen.ShapelistScreen;
+import brentmaas.buildguide.forge.screen.VisualisationScreen;
+import brentmaas.buildguide.forge.shapes.Shape;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;

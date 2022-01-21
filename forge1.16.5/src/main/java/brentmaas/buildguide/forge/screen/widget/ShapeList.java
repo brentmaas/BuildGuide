@@ -1,4 +1,4 @@
-package brentmaas.buildguide.screen.widget;
+package brentmaas.buildguide.forge.screen.widget;
 
 import javax.annotation.Nullable;
 
@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import brentmaas.buildguide.StateManager;
+import brentmaas.buildguide.forge.StateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.list.ExtendedList;
 import net.minecraft.client.renderer.BufferBuilder;

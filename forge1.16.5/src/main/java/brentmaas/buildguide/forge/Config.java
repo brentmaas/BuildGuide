@@ -1,4 +1,4 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import org.apache.commons.lang3.tuple.Pair;
 

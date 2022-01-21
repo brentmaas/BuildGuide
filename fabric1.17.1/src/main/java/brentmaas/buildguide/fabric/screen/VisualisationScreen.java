@@ -1,7 +1,7 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.fabric.screen;
 
-import brentmaas.buildguide.StateManager;
-import brentmaas.buildguide.screen.widget.Slider;
+import brentmaas.buildguide.fabric.StateManager;
+import brentmaas.buildguide.fabric.screen.widget.Slider;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;

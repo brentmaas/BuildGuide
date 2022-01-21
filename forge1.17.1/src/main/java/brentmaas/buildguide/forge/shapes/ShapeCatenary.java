@@ -1,9 +1,9 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 
-import brentmaas.buildguide.property.PropertyInt;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.forge.property.PropertyInt;
+import brentmaas.buildguide.forge.property.PropertyPositiveInt;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ShapeCatenary extends Shape{

@@ -1,4 +1,4 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
 import java.util.ArrayList;
 
@@ -12,9 +12,9 @@ import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 
-import brentmaas.buildguide.BuildGuide;
-import brentmaas.buildguide.Config;
-import brentmaas.buildguide.property.Property;
+import brentmaas.buildguide.forge.BuildGuide;
+import brentmaas.buildguide.forge.Config;
+import brentmaas.buildguide.forge.property.Property;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.phys.Vec3;

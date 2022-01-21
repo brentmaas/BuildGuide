@@ -1,10 +1,10 @@
-package brentmaas.buildguide.screen;
+package brentmaas.buildguide.fabric.screen;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.property.Property;
+import brentmaas.buildguide.fabric.property.Property;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.AbstractButtonWidget;
+import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -35,7 +35,7 @@ public class PropertyScreen extends Screen{
 		return false;
 	}
 	
-	public void addButtonExternal(AbstractButtonWidget button) {
+	public void addButtonExternal(ClickableWidget button) {
 		addButton(button);
 	}
 	

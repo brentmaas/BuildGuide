@@ -1,4 +1,4 @@
-package brentmaas.buildguide.screen.widget;
+package brentmaas.buildguide.forge.screen.widget;
 
 import net.minecraft.client.gui.widget.button.CheckboxButton;
 import net.minecraft.util.text.ITextComponent;

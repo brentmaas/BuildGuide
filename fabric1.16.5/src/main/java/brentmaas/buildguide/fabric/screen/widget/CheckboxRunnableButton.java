@@ -1,4 +1,4 @@
-package brentmaas.buildguide.screen.widget;
+package brentmaas.buildguide.fabric.screen.widget;
 
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;

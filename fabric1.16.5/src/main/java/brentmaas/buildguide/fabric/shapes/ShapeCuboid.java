@@ -1,7 +1,7 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.fabric.shapes;
 
-import brentmaas.buildguide.property.PropertyEnum;
-import brentmaas.buildguide.property.PropertyNonzeroInt;
+import brentmaas.buildguide.fabric.property.PropertyEnum;
+import brentmaas.buildguide.fabric.property.PropertyNonzeroInt;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;

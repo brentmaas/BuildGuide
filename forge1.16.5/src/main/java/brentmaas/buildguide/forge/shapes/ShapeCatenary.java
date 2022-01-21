@@ -1,7 +1,7 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.forge.shapes;
 
-import brentmaas.buildguide.property.PropertyInt;
-import brentmaas.buildguide.property.PropertyPositiveInt;
+import brentmaas.buildguide.forge.property.PropertyInt;
+import brentmaas.buildguide.forge.property.PropertyPositiveInt;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.text.TranslationTextComponent;
 

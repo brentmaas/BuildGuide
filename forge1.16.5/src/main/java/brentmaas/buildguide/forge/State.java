@@ -1,12 +1,12 @@
-package brentmaas.buildguide;
+package brentmaas.buildguide.forge;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.property.PropertyBoolean;
-import brentmaas.buildguide.screen.BuildGuideScreen;
-import brentmaas.buildguide.shapes.Shape;
-import brentmaas.buildguide.shapes.ShapeCircle;
-import brentmaas.buildguide.shapes.ShapeRegistry;
+import brentmaas.buildguide.forge.property.PropertyBoolean;
+import brentmaas.buildguide.forge.screen.BuildGuideScreen;
+import brentmaas.buildguide.forge.shapes.Shape;
+import brentmaas.buildguide.forge.shapes.ShapeCircle;
+import brentmaas.buildguide.forge.shapes.ShapeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TranslationTextComponent;
 

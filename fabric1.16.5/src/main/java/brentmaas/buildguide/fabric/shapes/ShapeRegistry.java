@@ -1,11 +1,11 @@
-package brentmaas.buildguide.shapes;
+package brentmaas.buildguide.fabric.shapes;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import brentmaas.buildguide.BuildGuide;
+import brentmaas.buildguide.fabric.BuildGuide;
 
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();
