@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import brentmaas.buildguide.forge.BuildGuide;
+import brentmaas.buildguide.forge.BuildGuideForge;
 
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();
@@ -21,7 +21,7 @@ public class ShapeRegistry {
 		try {
 			return shapeRegistry.get(classIdentifier).newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			BuildGuide.logger.fatal("Unable to instantiate Shape class '" + classIdentifier + "'");
+			BuildGuideForge.logger.fatal("Unable to instantiate Shape class '" + classIdentifier + "'");
 			e.printStackTrace();
 			System.exit(1);
 		}

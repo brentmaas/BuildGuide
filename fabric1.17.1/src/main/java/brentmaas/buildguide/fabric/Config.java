@@ -21,7 +21,7 @@ public class Config {
 			writer.write("\n[Debug]\n\t#Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.\n\tdebugGenerationTimingsEnabled = " + debugGenerationTimingsEnabled + "\n\n");
 			writer.close();
 		} catch (IOException e) {
-			BuildGuide.logger.error("Could not initialise config file");
+			BuildGuideFabric.logger.error("Could not initialise config file");
 			e.printStackTrace();
 		}
 	}
@@ -48,7 +48,7 @@ public class Config {
 			}
 			reader.close();
 		} catch (IOException e) {
-			BuildGuide.logger.error("Could not read config file");
+			BuildGuideFabric.logger.error("Could not read config file");
 			e.printStackTrace();
 		}
 	}

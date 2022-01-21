@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import brentmaas.buildguide.fabric.BuildGuide;
+import brentmaas.buildguide.fabric.BuildGuideFabric;
 
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();
@@ -22,7 +22,7 @@ public class ShapeRegistry {
 		try {
 			return shapeRegistry.get(classIdentifier).getDeclaredConstructor().newInstance();
 		}catch(InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			BuildGuide.logger.fatal("Unable to instantiate Shape class '" + classIdentifier + "'");
+			BuildGuideFabric.logger.fatal("Unable to instantiate Shape class '" + classIdentifier + "'");
 			e.printStackTrace();
 			System.exit(1);
 		}

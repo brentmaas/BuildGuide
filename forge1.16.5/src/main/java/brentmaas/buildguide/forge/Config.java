@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.config.ModConfig;
 
-@EventBusSubscriber(modid=BuildGuide.modid, bus=EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid=BuildGuideForge.modid, bus=EventBusSubscriber.Bus.MOD)
 public class Config {
 	//Config
 	//https://cadiboo.github.io/tutorials/1.15.1/forge/3.3-config/

@@ -16,6 +16,7 @@ import brentmaas.buildguide.forge.shapes.ShapeRegistry;
 import brentmaas.buildguide.forge.shapes.ShapeSphere;
 import brentmaas.buildguide.forge.shapes.ShapeTorus;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.IExtensionPoint;
@@ -24,16 +25,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
-import net.minecraftforge.fmlserverevents.FMLServerStartingEvent;
+import net.minecraftforge.network.NetworkConstants;
 
-@Mod(BuildGuide.modid)
-public class BuildGuide {
+@Mod(BuildGuideForge.modid)
+public class BuildGuideForge {
 	public static final String modid = "buildguide";
 	public static final Logger logger = LogManager.getLogger();
 	
-	public BuildGuide() {
-		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+	public BuildGuideForge() {
+		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			ShapeRegistry.registerShape(ShapeCatenary.class);
 			ShapeRegistry.registerShape(ShapeCircle.class);
@@ -59,7 +59,7 @@ public class BuildGuide {
 	}
 	
 	@SubscribeEvent
-	public void onServerStarting(FMLServerStartingEvent event) {
+	public void onServerStarting(ServerStartingEvent event) {
 		logger.warn("Build Guide is a client-only mod! Running it on a server is discouraged!");
 	}
 }

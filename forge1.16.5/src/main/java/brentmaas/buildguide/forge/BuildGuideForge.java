@@ -28,12 +28,12 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
 
-@Mod(BuildGuide.modid)
-public class BuildGuide {
+@Mod(BuildGuideForge.modid)
+public class BuildGuideForge {
 	public static final String modid = "buildguide";
 	public static final Logger logger = LogManager.getLogger();
 	
-	public BuildGuide() {
+	public BuildGuideForge() {
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			ShapeRegistry.registerShape(ShapeCatenary.class);

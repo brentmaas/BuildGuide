@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.spi.StandardLevel;
 import org.lwjgl.opengl.GL11;
 
-import brentmaas.buildguide.fabric.BuildGuide;
+import brentmaas.buildguide.fabric.BuildGuideFabric;
 import brentmaas.buildguide.fabric.Config;
 import brentmaas.buildguide.fabric.property.Property;
 import net.minecraft.client.MinecraftClient;
@@ -56,7 +56,7 @@ public abstract class Shape {
 		buffer = new VertexBuffer(VertexFormats.POSITION_COLOR);
 		buffer.upload(builder);
 		if(Config.debugGenerationTimingsEnabled) {
-			BuildGuide.logger.log(BuildGuide.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuide.logger.getLevel(), "Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+			BuildGuideFabric.logger.log(BuildGuideFabric.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuideFabric.logger.getLevel(), "Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	

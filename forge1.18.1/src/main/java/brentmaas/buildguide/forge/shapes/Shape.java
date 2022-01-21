@@ -12,7 +12,7 @@ import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 
-import brentmaas.buildguide.forge.BuildGuide;
+import brentmaas.buildguide.forge.BuildGuideForge;
 import brentmaas.buildguide.forge.Config;
 import brentmaas.buildguide.forge.property.Property;
 import net.minecraft.client.Minecraft;
@@ -58,7 +58,7 @@ public abstract class Shape {
 		buffer = new VertexBuffer();
 		buffer.upload(builder);
 		if(Config.debugGenerationTimingsEnabled) {
-			BuildGuide.logger.atLevel(BuildGuide.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuide.logger.getLevel()).log("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+			BuildGuideForge.logger.atLevel(BuildGuideForge.logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : BuildGuideForge.logger.getLevel()).log("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	

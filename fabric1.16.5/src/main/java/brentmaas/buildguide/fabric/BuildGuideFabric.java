@@ -17,7 +17,7 @@ import brentmaas.buildguide.fabric.shapes.ShapeSphere;
 import brentmaas.buildguide.fabric.shapes.ShapeTorus;
 import net.fabricmc.api.ClientModInitializer;
 
-public class BuildGuide implements ClientModInitializer {
+public class BuildGuideFabric implements ClientModInitializer {
 	public static final Logger logger = LogManager.getLogger();
 	
 	@Override
