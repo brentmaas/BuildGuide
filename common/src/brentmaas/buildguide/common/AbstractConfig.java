@@ -43,7 +43,7 @@ public abstract class AbstractConfig {
 	
 	public abstract class AbstractConfigElement<T> {
 		public T value;
-		protected String name;
+		public String name;
 		protected String comment;
 		
 		public AbstractConfigElement(String name, T defaultValue, String comment){

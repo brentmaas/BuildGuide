@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "buildguide",
-  "version": "0.3.2",
+  "version": "0.3.3",
 
   "name": "Build Guide",
   "description": "Simple client-only building guide mod.",
@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "brentmaas.buildguide.BuildGuide"
+      "brentmaas.buildguide.fabric.BuildGuideFabric"
     ]
   },
 

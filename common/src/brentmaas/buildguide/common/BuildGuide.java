@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common;
 
-import brentmaas.buildguide.common.screen.IScreenHandler;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.widget.IWidgetHandler;
 import brentmaas.buildguide.common.shapes.IShapeHandler;
 import brentmaas.buildguide.common.shapes.ShapeCatenary;
@@ -20,7 +20,7 @@ public class BuildGuide {
 	public static final String modid = "buildguide";
 	
 	public static AbstractInputHandler keyBindHandler;
-	public static IScreenHandler screenHandler;
+	public static AbstractScreenHandler screenHandler;
 	public static IWidgetHandler widgetHandler;
 	public static AbstractStateManager stateManager;
 	public static IShapeHandler shapeHandler;
@@ -28,7 +28,7 @@ public class BuildGuide {
 	public static ILogHandler logHandler;
 	public static AbstractConfig config;
 	
-	public static void register(AbstractInputHandler keyBindHandler, IScreenHandler screenHandler, IWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, AbstractConfig config) {
+	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, IWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, AbstractConfig config) {
 		BuildGuide.keyBindHandler = keyBindHandler;
 		BuildGuide.screenHandler = screenHandler;
 		BuildGuide.widgetHandler = widgetHandler;

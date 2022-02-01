@@ -1,34 +1,22 @@
 package brentmaas.buildguide.fabric;
 
-import java.util.HashMap;
-
+import brentmaas.buildguide.common.AbstractStateManager;
 import net.minecraft.client.MinecraftClient;
 
-public class StateManager {
-	private static HashMap<String,State> stateStore;
+public class StateManager extends AbstractStateManager {
 	
-	public static void init() {
-		stateStore = new HashMap<String,State>();
+	
+	protected String getWorldName() {
+		if(MinecraftClient.getInstance().getServer() != null) return MinecraftClient.getInstance().getServer().getSaveProperties().getLevelName();
+		return null;
 	}
 	
-	private static String getKey() {
-		String host;
-		if(MinecraftClient.getInstance().getServer() != null) {
-			host = MinecraftClient.getInstance().getServer().getSaveProperties().getLevelName();
-		}else if(MinecraftClient.getInstance().getCurrentServerEntry() != null) {
-			host = MinecraftClient.getInstance().getCurrentServerEntry().address;
-		}else {
-			host = "unknown";
-		}
-		
-		return host + "@" + MinecraftClient.getInstance().world.getRegistryKey().getValue();
+	protected String getServerAddress() {
+		if(MinecraftClient.getInstance().getCurrentServerEntry() != null) return MinecraftClient.getInstance().getCurrentServerEntry().address;
+		return null;
 	}
 	
-	public static State getState() {
-		String key = getKey();
-		
-		if(!stateStore.containsKey(key)) stateStore.put(key, new State());
-		
-		return stateStore.get(key);
+	protected String getDimensionKey() {
+		return MinecraftClient.getInstance().world.getRegistryKey().getValue().toString();
 	}
 }

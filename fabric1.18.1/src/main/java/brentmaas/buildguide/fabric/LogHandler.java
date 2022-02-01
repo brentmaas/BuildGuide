@@ -1,4 +1,4 @@
-package brentmaas.buildguide.forge;
+package brentmaas.buildguide.fabric;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;

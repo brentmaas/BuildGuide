@@ -21,7 +21,7 @@ pluginManagement {
 rootProject.name = 'BuildGuide'
 
 gradle.ext.modid = 'buildguide'
-gradle.ext.modversion = '0.3.3'
+gradle.ext.modversion = '0.3.3' //Version must also be set in fabric<version>/src/main/resources/fabric.mod.json!
 gradle.ext.modspecversion = '11'
 
 gradle.ext.fabricgroup = gradle.ext.modid + '.fabric'

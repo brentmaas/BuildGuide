@@ -1,28 +1,24 @@
 package brentmaas.buildguide.forge.screen;
 
-import brentmaas.buildguide.common.screen.BaseScreen;
-import brentmaas.buildguide.common.screen.IScreenHandler;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.IScreenWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
-public class ScreenHandler implements IScreenHandler {
+public class ScreenHandler extends AbstractScreenHandler {
 	
 	
-	public void showScreen(BaseScreen screen) {
-		if(screen != null) wrapScreen(screen).show();
-		else Minecraft.getInstance().setScreen(null);
+	public void showNone() {
+		Minecraft.getInstance().setScreen(null);
 	}
 	
-	public IScreenWrapper wrapScreen(BaseScreen screen) {
-		IScreenWrapper wrapper = new ScreenWrapper(new TextComponent(screen.title));
-		wrapper.attachScreen(screen);
-		return wrapper;
+	public IScreenWrapper createWrapper(String title) {
+		return new ScreenWrapper(new TextComponent(title));
 	}
 	
-	public String translate(String string) {
-		return new TranslatableComponent(string).getString();
+	public String translate(String translationKey) {
+		return new TranslatableComponent(translationKey).getString();
 	}
 	
 	public String translate(String translationKey, Object... values) {

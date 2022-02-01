@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
-//TODO Move more to interface
 public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> implements IShapeList {
 	private Runnable update;
 	
@@ -114,11 +113,13 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		if(!hasDepthMask) RenderSystem.depthMask(false);
 		if(!hasDepthTest) RenderSystem.disableDepthTest();
 	}
-	
+
+	@Override
 	public int getRowWidth() {
 		return width - 12;
 	}
-	
+
+	@Override
 	protected int getScrollbarPosition() {
 		return x1 - 6;
 	}

@@ -6,7 +6,9 @@ import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import brentmaas.buildguide.fabric.shapes.Shape;
+import brentmaas.buildguide.common.AbstractRenderHandler;
+import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.fabric.shape.ShapeBuffer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
@@ -15,61 +17,85 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
-public class RenderHandler {
+public class RenderHandler extends AbstractRenderHandler {
+	private MatrixStack matrixStackInstance;
+	private Matrix4f projectionMatrixInstance;
 	
-	
-	public static void register() {
-		WorldRenderEvents.LAST.register(RenderHandler::onRenderBlock);
+	public void register() {
+		WorldRenderEvents.LAST.register(this::onRenderBlock);
 	}
 	
-	public static void onRenderBlock(WorldRenderContext context) {
-		MinecraftClient.getInstance().getProfiler().push("buildguide");
+	public void onRenderBlock(WorldRenderContext context) {
+		matrixStackInstance = context.matrixStack();
+		projectionMatrixInstance = context.projectionMatrix();
 		
-		if(StateManager.getState().propertyEnable.value && StateManager.getState().isShapeAvailable() && StateManager.getState().getCurrentShape().basePos != null) {
-			MatrixStack stack = context.matrixStack();
-			Matrix4f projectionMatrix = context.projectionMatrix();
-			if(StateManager.getState().propertyAdvancedMode.value) {
-				for(Shape shape: StateManager.getState().advancedModeShapes) renderShape(stack, projectionMatrix, shape);
-			}else {
-				renderShape(stack, projectionMatrix, StateManager.getState().getCurrentShape());
-			}
-		}
+		render();
 	}
 	
-	private static void renderShape(MatrixStack stack, Matrix4f projectionMatrix, Shape s) {
-		if(s.visible) {
-			RenderSystem.setShader(GameRenderer::getPositionColorShader);
-			
-			stack.push();
-			Vec3d projectedView = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
-			stack.translate(-projectedView.x + s.basePos.x, -projectedView.y + s.basePos.y, -projectedView.z + s.basePos.z);
-			
-			boolean toggleTexture = GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
-			
-			boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-			boolean toggleDepthTest = StateManager.getState().propertyDepthTest.value ^ hasDepthTest;
-			
-			boolean toggleDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-			
-			boolean toggleBlend = !GL11.glIsEnabled(GL11.GL_BLEND);
-			
-			if(toggleTexture) RenderSystem.disableTexture();
-			if(toggleDepthTest && hasDepthTest) RenderSystem.disableDepthTest();
-			else if(toggleDepthTest) RenderSystem.enableDepthTest();
-			if(toggleDepthMask) RenderSystem.depthMask(false);
-			RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-			RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE_MINUS_SRC_ALPHA);
-			if(toggleBlend) RenderSystem.enableBlend();
-			
-			s.render(stack.peek().getPositionMatrix(), projectionMatrix);
-			
-			if(toggleBlend) RenderSystem.disableBlend();
-			if(toggleDepthTest && hasDepthTest) RenderSystem.enableDepthTest();
-			else if(toggleDepthTest) RenderSystem.disableDepthTest();
-			if(toggleDepthMask) RenderSystem.depthMask(true);
-			if(toggleTexture) RenderSystem.enableTexture();
-			
-			stack.pop();
-		}
+	public void renderShapeBuffer(Shape shape) {
+		((ShapeBuffer) shape.buffer).render(matrixStackInstance.peek().getPositionMatrix(), projectionMatrixInstance);
+	}
+	
+	protected void setupRenderingShape(Shape shape) {
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		
+		matrixStackInstance.push();
+		Vec3d projectedView = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
+		matrixStackInstance.translate(-projectedView.x + shape.basepos.x, -projectedView.y + shape.basepos.y, -projectedView.z + shape.basepos.z);
+	}
+	
+	protected void endRenderingShape() {
+		matrixStackInstance.pop();
+	}
+	
+	protected boolean textureEnabled() {
+		return GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+	}
+	
+	protected boolean depthTestEnabled() {
+		return GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+	}
+	
+	protected boolean depthMaskEnabled() {
+		return GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
+	}
+	
+	protected boolean blendEnabled() {
+		return GL11.glIsEnabled(GL11.GL_BLEND);
+	}
+	
+	protected void setTexture(boolean enabled) {
+		if(enabled) RenderSystem.enableTexture();
+		else RenderSystem.disableTexture();
+	}
+	
+	protected void setDepthTest(boolean enabled) {
+		if(enabled) RenderSystem.enableDepthTest();
+		else RenderSystem.disableDepthTest();
+	}
+	
+	protected void setDepthMask(boolean enabled) {
+		RenderSystem.depthMask(enabled);
+	}
+	
+	protected void setBlend(boolean enabled) {
+		if(enabled) RenderSystem.enableBlend();
+		else RenderSystem.disableBlend();
+	}
+	
+	protected void setupNotCulling() {
+		RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+	}
+	
+	protected void setupBlendFunc() {
+		RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE_MINUS_SRC_ALPHA);
+	}
+	
+	protected void pushProfiler(String key) {
+		MinecraftClient.getInstance().getProfiler().push(key);
+	}
+	
+	protected void popProfiler() {
+		MinecraftClient.getInstance().getProfiler().pop();
 	}
 }
