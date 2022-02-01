@@ -1,34 +1,22 @@
 package brentmaas.buildguide.forge;
 
-import java.util.HashMap;
-
+import brentmaas.buildguide.common.AbstractStateManager;
 import net.minecraft.client.Minecraft;
 
-public class StateManager {
-	private static HashMap<String,State> stateStore;
+public class StateManager extends AbstractStateManager {
 	
-	public static void init() {
-		stateStore = new HashMap<String,State>();
+	
+	protected String getWorldName() {
+		if(Minecraft.getInstance().getSingleplayerServer() != null) return Minecraft.getInstance().getSingleplayerServer().getWorldData().getLevelName();
+		return null;
 	}
 	
-	private static String getKey() {
-		String host;
-		if(Minecraft.getInstance().getSingleplayerServer() != null) {
-			host = Minecraft.getInstance().getSingleplayerServer().getWorldData().getLevelName();
-		}else if(Minecraft.getInstance().getCurrentServer() != null) {
-			host = Minecraft.getInstance().getCurrentServer().ip;
-		}else {
-			host = "unknown";
-		}
-		
-		return host + "@" + Minecraft.getInstance().level.dimension().location();
+	protected String getServerAddress() {
+		if(Minecraft.getInstance().getCurrentServer() != null) return Minecraft.getInstance().getCurrentServer().ip;
+		return null;
 	}
 	
-	public static State getState() {
-		String key = getKey();
-		
-		if(!stateStore.containsKey(key)) stateStore.put(key, new State());
-		
-		return stateStore.get(key);
+	protected String getDimensionKey() {
+		return Minecraft.getInstance().level.dimension().location().toString();
 	}
 }

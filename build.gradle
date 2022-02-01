@@ -119,7 +119,12 @@ configure(subprojects.findAll {it.name != 'common'}) {
 	dependencies {
 		implementation project(":common")
 	}
-	sourceSets.main.resources {
-		srcDir '../common/resources'
+	sourceSets.main{
+		java {
+			srcDir '../common/src'
+		}
+		resources {
+			srcDir '../common/resources'
+		}
 	}
 }
