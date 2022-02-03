@@ -2,43 +2,67 @@ package brentmaas.buildguide.forge;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import brentmaas.buildguide.common.AbstractConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-@EventBusSubscriber(modid=BuildGuideForge.modid, bus=EventBusSubscriber.Bus.MOD)
-public class Config {
-	//Config
-	//https://cadiboo.github.io/tutorials/1.15.1/forge/3.3-config/
-	public static final ClientConfig clientConfig;
-	public static final ForgeConfigSpec clientConfigSpec;
-	static {
-		final Pair<ClientConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
+public class Config extends AbstractConfig {
+	public static Config instance = new Config();
+	protected ForgeConfigSpec.Builder builderInstance;
+	
+	public final ClientConfig clientConfig;
+	public final ForgeConfigSpec clientConfigSpec;
+	
+	public Config() {
+		final Pair<ClientConfig,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
 		clientConfig = specPair.getLeft();
 		clientConfigSpec = specPair.getRight();
 	}
-	public static boolean debugGenerationTimingsEnabled;
 	
-	public static void bakeConfig() {
-		Config.debugGenerationTimingsEnabled = clientConfig.debugGenerationTimingsEnabled.get();
+	protected AbstractConfigElement<Boolean> createBooleanElement(String name, Boolean defaultValue, String comment) {
+		return new BooleanConfigElement(name, defaultValue, comment);
 	}
 	
-	@SubscribeEvent
-	public static void onModConfigEvent(final ModConfigEvent event) {
-		if(event.getConfig().getSpec() == Config.clientConfigSpec) {
-			Config.bakeConfig();
+	protected void pushCategory(String category) {
+		builderInstance.push(category);
+	}
+	
+	protected void popCategory() {
+		builderInstance.pop();
+	}
+	
+	//Override build() as it needs to be called way before BuildGuideForge get instantiated
+	@Override
+	public void build() {
+		
+	}
+	
+	private void superbuild() {
+		super.build();
+	}
+	
+	protected class ClientConfig {
+		
+		
+		public ClientConfig(ForgeConfigSpec.Builder builder) {
+			Config.this.builderInstance = builder;
+			Config.this.superbuild();
 		}
 	}
 	
-	public static class ClientConfig{
-		public final BooleanValue debugGenerationTimingsEnabled;
+	protected class BooleanConfigElement extends AbstractConfigElement<Boolean> {
+		protected BooleanValue configValue;
 		
-		public ClientConfig(ForgeConfigSpec.Builder builder) {
-			builder.push("Debug");
-			debugGenerationTimingsEnabled = builder.comment("Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.").translation("config.buildguide.debugGenerationTimingsEnabled").define("debugGenerationTimingsEnabled", false);
-			builder.pop();
+		protected BooleanConfigElement(String name, Boolean defaultValue, String comment) {
+			super(name, defaultValue, comment);
+		}
+		
+		protected void build() {
+			configValue = comment != null ? Config.this.builderInstance.comment(comment).define(name, (boolean) value) : Config.this.builderInstance.define(name, (boolean) value);
+		}
+		
+		protected void load() {
+			value = configValue.get();
 		}
 	}
 }
