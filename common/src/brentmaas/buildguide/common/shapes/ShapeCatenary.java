@@ -5,7 +5,7 @@ import brentmaas.buildguide.common.property.PropertyInt;
 import brentmaas.buildguide.common.property.PropertyPositiveInt;
 
 public class ShapeCatenary extends Shape {
-private static final double eps = 0.001;
+	private static final double eps = 0.001;
 	
 	private PropertyInt propertyDx = new PropertyInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
 	private PropertyInt propertyDy = new PropertyInt(1, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());

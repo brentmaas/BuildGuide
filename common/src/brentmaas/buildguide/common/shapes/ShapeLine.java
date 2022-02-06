@@ -1,44 +1,28 @@
 package brentmaas.buildguide.common.shapes;
 
 import brentmaas.buildguide.common.BuildGuide;
-import brentmaas.buildguide.common.property.PropertyEnum;
-import brentmaas.buildguide.common.property.PropertyNonzeroInt;
+import brentmaas.buildguide.common.property.PropertyInt;
 
 public class ShapeLine extends Shape {
-	private enum direction{
-		X,
-		Y,
-		Z
-	}
-	
-	private final String[] directionNames = {"X", "Y", "Z"};
-	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyNonzeroInt propertyLength = new PropertyNonzeroInt(1, 5, BuildGuide.screenHandler.translate("property.buildguide.length"), () -> {update();});
+	private PropertyInt propertyDx = new PropertyInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
+	private PropertyInt propertyDy = new PropertyInt(1, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
+	private PropertyInt propertyDz = new PropertyInt(2, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
 	
 	public ShapeLine() {
 		super();
 		
-		properties.add(propertyDir);
-		properties.add(propertyLength);
+		properties.add(propertyDx);
+		properties.add(propertyDy);
+		properties.add(propertyDz);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) {
-		int dx = 0, dy = 0, dz = 0;
-		switch(propertyDir.value) {
-		case X:
-			dx = (int) Math.signum(propertyLength.value);
-			break;
-		case Y:
-			dy = (int) Math.signum(propertyLength.value);
-			break;
-		case Z:
-			dz = (int) Math.signum(propertyLength.value);
-			break;
-		}
-		
-		for(int i = 0;i < Math.abs(propertyLength.value);++i) {
-			addShapeCube(buffer, dx * i, dy * i, dz * i);
+		int d = Math.max(Math.max(Math.abs(propertyDx.value), Math.abs(propertyDy.value)), Math.abs(propertyDz.value));
+		double dx = ((double) propertyDx.value) / d;
+		double dy = ((double) propertyDy.value) / d;
+		double dz = ((double) propertyDz.value) / d;
+		for(int i = 0;i <= d;++i) {
+			addShapeCube(buffer, (int) (dx * i + 0.5 * Math.signum(propertyDx.value)), (int) (dy * i + 0.5 * Math.signum(propertyDy.value)), (int) (dz * i + 0.5 * Math.signum(propertyDz.value)));
 		}
 	}
 	
