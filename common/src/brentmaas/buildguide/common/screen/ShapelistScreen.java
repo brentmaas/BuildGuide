@@ -56,7 +56,7 @@ public class ShapelistScreen extends BaseScreen {
 	private ITextField textFieldZ = BuildGuide.widgetHandler.createTextField(40, 185, 50, 20, "");
 	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(90, 145, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldX.getText());
+			int newval = Integer.parseInt(textFieldX.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShape().basepos.x;
 			for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(delta, 0, 0);
@@ -68,7 +68,7 @@ public class ShapelistScreen extends BaseScreen {
 	});
 	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(90, 165, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldY.getText());
+			int newval = Integer.parseInt(textFieldY.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShape().basepos.y;
 			for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(0, delta, 0);
@@ -80,7 +80,7 @@ public class ShapelistScreen extends BaseScreen {
 	});
 	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(90, 185, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldZ.getText());
+			int newval = Integer.parseInt(textFieldZ.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShape().basepos.z;
 			for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) {
 				s.shiftBasepos(0, 0, delta);
@@ -118,11 +118,11 @@ public class ShapelistScreen extends BaseScreen {
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
 		
-		textFieldX.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x : "-");
+		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x : "-");
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y : "-");
+		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y : "-");
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z : "-");
+		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
 		addTextField(textFieldX);
@@ -131,13 +131,13 @@ public class ShapelistScreen extends BaseScreen {
 		
 		shapeList = BuildGuide.widgetHandler.createShapelist(150, 300, 25, wrapper.getHeight(), 20, () -> {
 			if(BuildGuide.stateManager.getState().isShapeAvailable()) {
-				textFieldX.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
-				textFieldY.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
-				textFieldZ.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
 			}else {
-				textFieldX.setText("-");
-				textFieldY.setText("-");
-				textFieldZ.setText("-");
+				textFieldX.setTextValue("-");
+				textFieldY.setTextValue("-");
+				textFieldZ.setTextValue("-");
 			}
 			textFieldX.setTextColour(0xFFFFFF);
 			textFieldY.setTextColour(0xFFFFFF);
@@ -185,28 +185,28 @@ public class ShapelistScreen extends BaseScreen {
 		}
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			if(dx != 0) {
-				textFieldX.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
 				textFieldX.setTextColour(0xFFFFFF);
 			}
 			if(dy != 0) {
-				textFieldY.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
 				textFieldY.setTextColour(0xFFFFFF);
 			}
 			if(dz != 0) {
-				textFieldZ.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
 				textFieldZ.setTextColour(0xFFFFFF);
 			}
 		} else {
 			if(dx != 0) {
-				textFieldX.setText("-");
+				textFieldX.setTextValue("-");
 				textFieldX.setTextColour(0xFFFFFF);
 			}
 			if(dy != 0) {
-				textFieldY.setText("-");
+				textFieldY.setTextValue("-");
 				textFieldY.setTextColour(0xFFFFFF);
 			}
 			if(dz != 0) {
-				textFieldZ.setText("-");
+				textFieldZ.setTextValue("-");
 				textFieldZ.setTextColour(0xFFFFFF);
 			}
 		}
@@ -221,7 +221,7 @@ public class ShapelistScreen extends BaseScreen {
 	}
 	
 	private void setShapeVisibility() {
-		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShape().visible = buttonVisible.isChecked();
+		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShape().visible = buttonVisible.isSelected();
 	}
 	
 	private void checkActive() {

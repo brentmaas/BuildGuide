@@ -12,7 +12,19 @@ public class TextFieldImpl extends TextFieldWidget implements ITextField {
 		super(MinecraftClient.getInstance().textRenderer, x, y, width, height, new LiteralText(value));
 	}
 	
+	public void setTextValue(String text) {
+		setText(text);
+	}
+	
 	public void setTextColour(int colour) {
 		setEditableColor(colour);
+	}
+	
+	public void setVisibility(boolean visible) {
+		setVisible(visible);
+	}
+	
+	public String getTextValue() {
+		return getText();
 	}
 }

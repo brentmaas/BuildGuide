@@ -10,19 +10,19 @@ public class PropertyInt extends Property<Integer> {
 		super(slot, value, name);
 		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, 20, "-", () -> {
 			--this.value;
-			valueTextField.setText("" + this.value);
+			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
 		buttonList.add(BuildGuide.widgetHandler.createButton(190, y, 20, 20, "+", () -> {
 			++this.value;
-			valueTextField.setText("" + this.value);
+			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
 		buttonList.add(BuildGuide.widgetHandler.createButton(160, y, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 			try {
-				int newval = Integer.parseInt(valueTextField.getText());
+				int newval = Integer.parseInt(valueTextField.getTextValue());
 				this.value = newval;
 				valueTextField.setTextColour(0xFFFFFF);
 				if(onPress != null) onPress.run();
@@ -31,14 +31,14 @@ public class PropertyInt extends Property<Integer> {
 			}
 		}));
 		valueTextField = BuildGuide.widgetHandler.createTextField(110, y, 50, 20, "");
-		valueTextField.setText("" + value);
+		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 		textFieldList.add(valueTextField);
 	}
 	
 	public void setValue(Integer value) {
 		super.setValue(value);
-		valueTextField.setText("" + value);
+		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 	}
 }

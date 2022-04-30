@@ -30,7 +30,7 @@ public abstract class Property<T> {
 			b.setVisible(true);
 		}
 		for(ITextField tf: textFieldList) {
-			tf.setVisible(true);
+			tf.setVisibility(true);
 		}
 		for(ICheckboxRunnableButton cb: checkboxList) {
 			cb.setVisible(true);
@@ -43,7 +43,7 @@ public abstract class Property<T> {
 			b.setVisible(false);
 		}
 		for(ITextField tf: textFieldList) {
-			tf.setVisible(false);
+			tf.setVisibility(false);
 		}
 		for(ICheckboxRunnableButton cb: checkboxList) {
 			cb.setVisible(false);

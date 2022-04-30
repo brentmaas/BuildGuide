@@ -15,12 +15,16 @@ public class SliderImpl extends AbstractSlider implements ISlider {
 		prefix = name + ": ";
 	}
 	
-	public void updateMessage() {
+	public void updateText() {
 		setMessage(new StringTextComponent(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
 	}
 	
 	protected void applyValue() {
 		
+	}
+	
+	public void updateMessage() {
+		updateText();
 	}
 	
 	public void setSliderValue(double value) {
