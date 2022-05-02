@@ -12,7 +12,7 @@ public class TextFieldImpl extends TextFieldWidget implements ITextField {
 		super(Minecraft.getInstance().font, x, y, width, height, new StringTextComponent(value));
 	}
 	
-	public void setText(String text) {
+	public void setTextValue(String text) {
 		setValue(text);
 	}
 	
@@ -20,7 +20,11 @@ public class TextFieldImpl extends TextFieldWidget implements ITextField {
 		setTextColor(colour);
 	}
 	
-	public String getText() {
+	public void setVisibility(boolean visible) {
+		setVisible(visible);
+	}
+	
+	public String getTextValue() {
 		return getValue();
 	}
 }

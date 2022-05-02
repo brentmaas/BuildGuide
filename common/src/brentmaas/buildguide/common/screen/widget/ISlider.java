@@ -3,7 +3,7 @@ package brentmaas.buildguide.common.screen.widget;
 public interface ISlider {
 	//TODO Move implementation more towards here
 	
-	public void updateMessage();
+	public void updateText();
 	
 	public void setSliderValue(double value);
 	

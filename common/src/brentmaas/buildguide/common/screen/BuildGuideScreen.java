@@ -32,7 +32,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private ITextField textFieldZ = BuildGuide.widgetHandler.createTextField(205, 85, 50, 20, "");;
 	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(255, 45, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldX.getText());
+			int newval = Integer.parseInt(textFieldX.getTextValue());
 			BuildGuide.stateManager.getState().setBaseposX(newval);
 		}catch(NumberFormatException e) {
 			textFieldX.setTextColour(0xFF0000);
@@ -40,7 +40,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	});;
 	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(255, 65, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldY.getText());
+			int newval = Integer.parseInt(textFieldY.getTextValue());
 			BuildGuide.stateManager.getState().setBaseposY(newval);
 		}catch(NumberFormatException e) {
 			textFieldY.setTextColour(0xFF0000);
@@ -48,7 +48,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	});;
 	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(255, 85, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
-			int newval = Integer.parseInt(textFieldZ.getText());
+			int newval = Integer.parseInt(textFieldZ.getTextValue());
 			BuildGuide.stateManager.getState().setBaseposZ(newval);
 		}catch(NumberFormatException e) {
 			textFieldZ.setTextColour(0xFF0000);
@@ -98,11 +98,11 @@ public class BuildGuideScreen extends PropertyScreen{
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
 		
-		textFieldX.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x : "-");
+		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x : "-");
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y : "-");
+		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y : "-");
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setText(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z : "-");
+		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
 		addTextField(textFieldX);
@@ -162,26 +162,26 @@ public class BuildGuideScreen extends PropertyScreen{
 	
 	private void setBasepos() {
 		BuildGuide.stateManager.getState().resetBasepos();
-		textFieldX.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+		textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
 		textFieldZ.setTextColour(0xFFFFFF);
 	}
 	
 	private void shiftBasepos(int dx, int dy, int dz) {
 		BuildGuide.stateManager.getState().shiftBasepos(dx, dy, dz);
 		if(dx != 0) {
-			textFieldX.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+			textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
 			textFieldX.setTextColour(0xFFFFFF);
 		}
 		if(dy != 0) {
-			textFieldY.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+			textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
 			textFieldY.setTextColour(0xFFFFFF);
 		}
 		if(dz != 0) {
-			textFieldZ.setText("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+			textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
 			textFieldZ.setTextColour(0xFFFFFF);
 		}
 	}

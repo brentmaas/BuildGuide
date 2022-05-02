@@ -34,10 +34,10 @@ public class VisualisationScreen extends PropertyScreen {
 		sliderShapeG.setSliderValue(1.0);
 		sliderShapeB.setSliderValue(1.0);
 		sliderShapeA.setSliderValue(0.5);
-		sliderShapeR.updateMessage();
-		sliderShapeG.updateMessage();
-		sliderShapeB.updateMessage();
-		sliderShapeA.updateMessage();
+		sliderShapeR.updateText();
+		sliderShapeG.updateText();
+		sliderShapeB.updateText();
+		sliderShapeA.updateText();
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setShapeColour(1.0f, 1.0f, 1.0f, 0.5f);
 		}
@@ -47,10 +47,10 @@ public class VisualisationScreen extends PropertyScreen {
 		sliderBaseposG.setSliderValue(0.0);
 		sliderBaseposB.setSliderValue(0.0);
 		sliderBaseposA.setSliderValue(0.5);
-		sliderBaseposR.updateMessage();
-		sliderBaseposG.updateMessage();
-		sliderBaseposB.updateMessage();
-		sliderBaseposA.updateMessage();
+		sliderBaseposR.updateText();
+		sliderBaseposG.updateText();
+		sliderBaseposB.updateText();
+		sliderBaseposA.updateText();
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setBaseposColour(1.0f, 0.0f, 0.0f, 0.5f);
 		}
