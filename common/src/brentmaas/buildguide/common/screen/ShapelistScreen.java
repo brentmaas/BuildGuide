@@ -18,14 +18,12 @@ public class ShapelistScreen extends BaseScreen {
 	
 	private IShapeList shapeList;
 	
-	private int newShapeId = 0;
-	
 	private IButton buttonClose;
 	private IButton buttonBack = BuildGuide.widgetHandler.createButton(0, 0, 20, 20, "<-", () -> BuildGuide.screenHandler.showScreen(new BuildGuideScreen()));
 	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(0, 25, 20, 20, "<-", () -> updateNewShape(-1));
 	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(120, 25, 20, 20, "->", () -> updateNewShape(1));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(0, 45, 140, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
-		BuildGuide.stateManager.getState().advancedModeShapes.add(ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(newShapeId)));
+		BuildGuide.stateManager.getState().advancedModeShapes.add(ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(BuildGuide.stateManager.getState().iAdvancedNew)));
 		BuildGuide.stateManager.getState().resetBasepos(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1);
 		BuildGuide.stateManager.getState().advancedModeShapes.get(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1).update();
 		shapeList.addEntry(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1);
@@ -159,7 +157,7 @@ public class ShapelistScreen extends BaseScreen {
 		drawShadowCentred(titleGlobalBasepos, 70, 115, 0xFFFFFF);
 		drawShadowCentred(titleNumberOfBlocks, 355, 15, 0xFFFFFF);
 		
-		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKeys().get(newShapeId)), 70, 30, 0xFFFFFF);
+		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKeys().get(BuildGuide.stateManager.getState().iAdvancedNew)), 70, 30, 0xFFFFFF);
 		
 		drawShadow(titleVisible, 5, 70, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
@@ -176,7 +174,7 @@ public class ShapelistScreen extends BaseScreen {
 	}
 	
 	private void updateNewShape(int di) {
-		newShapeId = Math.floorMod(newShapeId + di, ShapeRegistry.getNumberOfShapes());
+		BuildGuide.stateManager.getState().iAdvancedNew = Math.floorMod(BuildGuide.stateManager.getState().iAdvancedNew + di, ShapeRegistry.getNumberOfShapes());
 	}
 	
 	private void shiftGlobalBasepos(int dx, int dy, int dz) {

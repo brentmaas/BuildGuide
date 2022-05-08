@@ -11,9 +11,10 @@ import brentmaas.buildguide.common.shape.ShapeRegistry;
 public class State {
 	private boolean initialised = false;
 	public Shape[] simpleModeShapes;
-	public int iSimple = 0;
+	public int iSimple = ShapeRegistry.getShapeId(ShapeCircle.class);
 	public ArrayList<Shape> advancedModeShapes = new ArrayList<Shape>();
 	public int iAdvanced = 0;
+	public int iAdvancedNew = ShapeRegistry.getShapeId(ShapeCircle.class);
 	public PropertyBoolean propertyEnable = new PropertyBoolean(-4, false, BuildGuide.screenHandler.translate("screen.buildguide.enable"), null);
 	public PropertyBoolean propertyDepthTest = new PropertyBoolean(3, true, BuildGuide.screenHandler.translate("screen.buildguide.depthtest"), null);
 	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(-2, false, BuildGuide.screenHandler.translate("screen.buildguide.advancedmode"), () -> BuildGuide.screenHandler.showScreen(new BuildGuideScreen()));
@@ -24,9 +25,6 @@ public class State {
 		for(int i = 0;i < classIdentifiers.size();++i) {
 			simpleModeShapes[i] = ShapeRegistry.getNewInstance(classIdentifiers.get(i));
 			simpleModeShapes[i].update();
-			if(classIdentifiers.get(i) == ShapeCircle.class.getName()) {
-				iSimple = i;
-			}
 		}
 	}
 	

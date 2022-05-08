@@ -41,4 +41,21 @@ public class ShapeRegistry {
 	public static int getNumberOfShapes() {
 		return classIdentifiers.size();
 	}
+	
+	public static String getClassIdentifier(Class<? extends Shape> shapeClass) {
+		for(String classIdentifier: classIdentifiers) {
+			if(shapeRegistry.get(classIdentifier) == shapeClass) return classIdentifier;
+		}
+		return null;
+	}
+	
+	public static int getShapeId(Class<? extends Shape> shapeClass) {
+		String classIdentifier = getClassIdentifier(shapeClass);
+		if(classIdentifier == null) return 0;
+		return getShapeId(classIdentifier);
+	}
+	
+	public static int getShapeId(String classIdentifier) {
+		return classIdentifiers.contains(classIdentifier) ? classIdentifiers.indexOf(classIdentifier) : 0;
+	}
 }
