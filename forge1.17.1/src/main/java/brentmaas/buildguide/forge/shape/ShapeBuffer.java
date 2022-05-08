@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 
-import brentmaas.buildguide.common.shapes.IShapeBuffer;
+import brentmaas.buildguide.common.shape.IShapeBuffer;
 
 public class ShapeBuffer implements IShapeBuffer {
 	private BufferBuilder builder;
@@ -33,7 +33,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	}
 	
 	public void close() {
-		buffer.close();
+		if(buffer != null) buffer.close();
 	}
 	
 	public void render(Matrix4f model, Matrix4f projection) {

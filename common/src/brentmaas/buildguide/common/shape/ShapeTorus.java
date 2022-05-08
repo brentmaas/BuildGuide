@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -25,7 +25,7 @@ public class ShapeTorus extends Shape {
 		properties.add(propertyInnerRadius);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		for(int a = -propertyOuterRadius.value - propertyInnerRadius.value;a < propertyOuterRadius.value + propertyInnerRadius.value + 1;++a) {
 			for(int b = -propertyOuterRadius.value - propertyInnerRadius.value;b < propertyOuterRadius.value + propertyInnerRadius.value + 1;++b) {
 				double theta = Math.atan2(b, a);

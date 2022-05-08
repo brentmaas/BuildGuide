@@ -2,19 +2,19 @@ package brentmaas.buildguide.common;
 
 import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.widget.IWidgetHandler;
-import brentmaas.buildguide.common.shapes.IShapeHandler;
-import brentmaas.buildguide.common.shapes.ShapeCatenary;
-import brentmaas.buildguide.common.shapes.ShapeCircle;
-import brentmaas.buildguide.common.shapes.ShapeCuboid;
-import brentmaas.buildguide.common.shapes.ShapeEllipse;
-import brentmaas.buildguide.common.shapes.ShapeEllipsoid;
-import brentmaas.buildguide.common.shapes.ShapeLine;
-import brentmaas.buildguide.common.shapes.ShapeParabola;
-import brentmaas.buildguide.common.shapes.ShapeParaboloid;
-import brentmaas.buildguide.common.shapes.ShapePolygon;
-import brentmaas.buildguide.common.shapes.ShapeRegistry;
-import brentmaas.buildguide.common.shapes.ShapeSphere;
-import brentmaas.buildguide.common.shapes.ShapeTorus;
+import brentmaas.buildguide.common.shape.IShapeHandler;
+import brentmaas.buildguide.common.shape.ShapeCatenary;
+import brentmaas.buildguide.common.shape.ShapeCircle;
+import brentmaas.buildguide.common.shape.ShapeCuboid;
+import brentmaas.buildguide.common.shape.ShapeEllipse;
+import brentmaas.buildguide.common.shape.ShapeEllipsoid;
+import brentmaas.buildguide.common.shape.ShapeLine;
+import brentmaas.buildguide.common.shape.ShapeParabola;
+import brentmaas.buildguide.common.shape.ShapeParaboloid;
+import brentmaas.buildguide.common.shape.ShapePolygon;
+import brentmaas.buildguide.common.shape.ShapeRegistry;
+import brentmaas.buildguide.common.shape.ShapeSphere;
+import brentmaas.buildguide.common.shape.ShapeTorus;
 
 public class BuildGuide {
 	public static final String modid = "buildguide";

@@ -7,7 +7,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
-import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.forge.shape.ShapeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.vector.Vector3d;

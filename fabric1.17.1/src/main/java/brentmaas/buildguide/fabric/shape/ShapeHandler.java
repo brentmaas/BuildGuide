@@ -1,8 +1,8 @@
 package brentmaas.buildguide.fabric.shape;
 
-import brentmaas.buildguide.common.shapes.IShapeBuffer;
-import brentmaas.buildguide.common.shapes.IShapeHandler;
-import brentmaas.buildguide.common.shapes.Shape.Basepos;
+import brentmaas.buildguide.common.shape.IShapeBuffer;
+import brentmaas.buildguide.common.shape.IShapeHandler;
+import brentmaas.buildguide.common.shape.Shape.Basepos;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
 

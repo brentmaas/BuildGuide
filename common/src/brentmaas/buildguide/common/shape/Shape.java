@@ -1,6 +1,10 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.locks.ReentrantLock;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.Property;
@@ -10,6 +14,7 @@ public abstract class Shape {
 	public IShapeBuffer buffer;
 	private int nBlocks = 0;
 	public boolean visible = true;
+	public boolean ready = false;
 	
 	public Basepos basepos = null;
 	
@@ -23,25 +28,46 @@ public abstract class Shape {
 	public float colourBaseposB = 0.0f;
 	public float colourBaseposA = 0.5f;
 	
-	protected abstract void updateShape(IShapeBuffer builder);
+	private static ExecutorService executor = Executors.newCachedThreadPool();
+	public ReentrantLock lock = new ReentrantLock();
+	private Future<?> future = null;
+	
+	protected abstract void updateShape(IShapeBuffer builder) throws IllegalStateException, InterruptedException;
 	public abstract String getTranslationKey();
 	
 	public void update() {
-		nBlocks = 0;
-		long t = System.currentTimeMillis();
-		if(buffer != null) buffer.close();
-		buffer = BuildGuide.shapeHandler.newBuffer();
-		buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
-		updateShape(buffer);
-		buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
-		addCube(buffer, 0.4, 0.4, 0.4, 0.2);
-		buffer.end();
-		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
-			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
-		}
+		ready = false;
+		if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
+		if(buffer != null) buffer.close(); //Can only be done in render thread
+		future = executor.submit(() -> {
+			try {
+				lock.lock();
+				ready = false; //Again in case of a second thread started before a first thread ended
+				nBlocks = 0;
+				long t = System.currentTimeMillis();
+				buffer = BuildGuide.shapeHandler.newBuffer();
+				buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
+				updateShape(buffer);
+				buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
+				addCube(buffer, 0.4, 0.4, 0.4, 0.2);
+				buffer.end();
+				if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
+					BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+				}
+				ready = true;
+			}catch(InterruptedException e) {
+				//Don't print exception
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				lock.unlock();
+			}
+		});
 	}
 	
-	protected void addCube(IShapeBuffer buffer, double x, double y, double z, double s) {
+	protected void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {
+		if(Thread.currentThread().isInterrupted()) throw new InterruptedException(); //Interrupt check for concurrent shape generation
+		
 		//-X
 		buffer.pushVertex(x, y, z);
 		buffer.pushVertex(x, y, z+s);
@@ -79,7 +105,7 @@ public abstract class Shape {
 		buffer.pushVertex(x, y+s, z+s);
 	}
 	
-	protected void addShapeCube(IShapeBuffer buffer, int x, int y, int z) {
+	protected void addShapeCube(IShapeBuffer buffer, int x, int y, int z) throws InterruptedException {
 		addCube(buffer, x + 0.2, y + 0.2, z + 0.2, 0.6);
 		
 		++nBlocks;
@@ -102,6 +128,7 @@ public abstract class Shape {
 	}
 	
 	public int getNumberOfBlocks() {
+		if(!ready) return 0;
 		return nBlocks;
 	}
 	

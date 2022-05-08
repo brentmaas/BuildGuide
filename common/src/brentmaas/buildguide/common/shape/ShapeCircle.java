@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -26,7 +26,7 @@ public class ShapeCircle extends Shape{
 		properties.add(propertyDepth);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int dx = propertyRadius.value, dy = propertyRadius.value, dz = propertyRadius.value;
 		switch(propertyDir.value) {
 		case X:

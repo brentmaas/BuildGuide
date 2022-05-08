@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -33,7 +33,7 @@ public class ShapeCuboid extends Shape {
 		properties.add(propertyWalls);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int dx = propertyX.value;
 		int dy = propertyY.value;
 		int dz = propertyZ.value;

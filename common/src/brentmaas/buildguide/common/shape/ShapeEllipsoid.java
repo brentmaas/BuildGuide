@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -31,7 +31,7 @@ public class ShapeEllipsoid extends Shape {
 		properties.add(propertyDome);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int dx = propertySemiX.value;
 		int dy = propertySemiY.value;
 		int dz = propertySemiZ.value;

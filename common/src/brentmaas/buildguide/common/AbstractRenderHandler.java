@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common;
 
-import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.common.shape.Shape;
 
 public abstract class AbstractRenderHandler {
 	
@@ -52,35 +52,41 @@ public abstract class AbstractRenderHandler {
 	}
 	
 	private void renderShape(Shape shape) {
-		if(shape.visible) {
-			setupRenderingShape(shape);
-			
-			boolean toggleTexture = textureEnabled();
-			
-			boolean hasDepthTest = depthTestEnabled();
-			boolean toggleDepthTest = BuildGuide.stateManager.getState().propertyDepthTest.value ^ hasDepthTest;
-			
-			boolean toggleDepthMask = depthMaskEnabled();
-			
-			boolean toggleBlend = !blendEnabled();
-			
-			if(toggleTexture) setTexture(false);
-			if(toggleDepthTest && hasDepthTest) setDepthTest(false);
-			else if(toggleDepthTest) setDepthTest(true);
-			if(toggleDepthMask) setDepthMask(false);
-			setupNotCulling();
-			setupBlendFunc();
-			if(toggleBlend) setBlend(true);
-			
-			renderShapeBuffer(shape);
-			
-			if(toggleBlend) setBlend(false);
-			if(toggleDepthTest && hasDepthTest) setDepthTest(true);
-			else if(toggleDepthTest) setDepthTest(false);
-			if(toggleDepthMask) setDepthMask(true);
-			if(toggleTexture) setTexture(true);
-			
-			endRenderingShape();
+		if(shape.lock.tryLock()) {
+			try {
+				if(shape.visible && shape.ready) {
+					setupRenderingShape(shape);
+					
+					boolean toggleTexture = textureEnabled();
+					
+					boolean hasDepthTest = depthTestEnabled();
+					boolean toggleDepthTest = BuildGuide.stateManager.getState().propertyDepthTest.value ^ hasDepthTest;
+					
+					boolean toggleDepthMask = depthMaskEnabled();
+					
+					boolean toggleBlend = !blendEnabled();
+					
+					if(toggleTexture) setTexture(false);
+					if(toggleDepthTest && hasDepthTest) setDepthTest(false);
+					else if(toggleDepthTest) setDepthTest(true);
+					if(toggleDepthMask) setDepthMask(false);
+					setupNotCulling();
+					setupBlendFunc();
+					if(toggleBlend) setBlend(true);
+					
+					renderShapeBuffer(shape);
+					
+					if(toggleBlend) setBlend(false);
+					if(toggleDepthTest && hasDepthTest) setDepthTest(true);
+					else if(toggleDepthTest) setDepthTest(false);
+					if(toggleDepthMask) setDepthMask(true);
+					if(toggleTexture) setTexture(true);
+					
+					endRenderingShape();
+				}
+			}finally {
+				shape.lock.unlock();
+			}
 		}
 	}
 }

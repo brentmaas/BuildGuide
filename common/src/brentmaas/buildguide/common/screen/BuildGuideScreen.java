@@ -4,7 +4,7 @@ import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.Property;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ITextField;
-import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.common.shape.Shape;
 
 public class BuildGuideScreen extends PropertyScreen{
 	private String titleGlobalProperties = BuildGuide.screenHandler.translate("screen.buildguide.globalproperties");;

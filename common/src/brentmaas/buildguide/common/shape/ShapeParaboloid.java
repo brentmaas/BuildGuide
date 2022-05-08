@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -28,7 +28,7 @@ public class ShapeParaboloid extends Shape {
 		properties.add(propertyHeight);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int hw1 = propertyHalfwidth1.value;
 		int hw2 = propertyHalfwidth2.value;
 		int h = propertyHeight.value;

@@ -5,9 +5,9 @@ import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ITextField;
-import brentmaas.buildguide.common.shapes.Shape;
-import brentmaas.buildguide.common.shapes.Shape.Basepos;
-import brentmaas.buildguide.common.shapes.ShapeRegistry;
+import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeRegistry;
+import brentmaas.buildguide.common.shape.Shape.Basepos;
 
 public class ShapelistScreen extends BaseScreen {
 	private String titleNewShape = BuildGuide.screenHandler.translate("screen.buildguide.newshape");

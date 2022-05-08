@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;

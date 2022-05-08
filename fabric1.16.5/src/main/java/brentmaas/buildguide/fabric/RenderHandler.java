@@ -7,7 +7,7 @@ import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
-import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.fabric.shape.ShapeBuffer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;

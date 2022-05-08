@@ -2,7 +2,7 @@ package brentmaas.buildguide.fabric.shape;
 
 import org.lwjgl.opengl.GL11;
 
-import brentmaas.buildguide.common.shapes.IShapeBuffer;
+import brentmaas.buildguide.common.shape.IShapeBuffer;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.VertexFormats;
@@ -32,7 +32,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	}
 	
 	public void close() {
-		buffer.close();
+		if(buffer != null) buffer.close();
 	}
 	
 	public void render(Matrix4f model) {

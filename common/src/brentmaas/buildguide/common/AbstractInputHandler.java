@@ -3,8 +3,8 @@ package brentmaas.buildguide.common;
 import brentmaas.buildguide.common.screen.BuildGuideScreen;
 import brentmaas.buildguide.common.screen.ShapelistScreen;
 import brentmaas.buildguide.common.screen.VisualisationScreen;
-import brentmaas.buildguide.common.shapes.Shape;
-import brentmaas.buildguide.common.shapes.Shape.Basepos;
+import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.Shape.Basepos;
 
 public abstract class AbstractInputHandler {
 	private IKeyBind openBuildGuide;

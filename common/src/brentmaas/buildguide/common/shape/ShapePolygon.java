@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -43,7 +43,7 @@ public class ShapePolygon extends Shape {
 		properties.add(propertyDepth);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int n = propertySides.value;
 		int r = propertyRadius.value;
 		int rot = propertyRot.value.ordinal();

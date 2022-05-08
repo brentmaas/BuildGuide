@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
-import brentmaas.buildguide.common.shapes.Shape;
+import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.forge.shape.ShapeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;

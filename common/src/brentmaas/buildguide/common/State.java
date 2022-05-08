@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.screen.BuildGuideScreen;
-import brentmaas.buildguide.common.shapes.Shape;
-import brentmaas.buildguide.common.shapes.ShapeCircle;
-import brentmaas.buildguide.common.shapes.ShapeRegistry;
+import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeCircle;
+import brentmaas.buildguide.common.shape.ShapeRegistry;
 
 public class State {
 	private boolean initialised = false;

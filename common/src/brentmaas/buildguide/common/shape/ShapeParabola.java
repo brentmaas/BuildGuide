@@ -1,4 +1,4 @@
-package brentmaas.buildguide.common.shapes;
+package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyEnum;
@@ -42,7 +42,7 @@ public class ShapeParabola extends Shape {
 		properties.add(propertyDepth);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) {
+	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int hw = propertyHalfwidth.value;
 		int h = propertyHeight.value;
 		double fac = ((double) h) / hw / hw;
