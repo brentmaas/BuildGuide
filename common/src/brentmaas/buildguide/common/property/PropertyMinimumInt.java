@@ -10,19 +10,19 @@ public class PropertyMinimumInt extends Property<Integer> {
 	public PropertyMinimumInt(int slot, int value, String name, Runnable onPress, int minInt) {
 		super(slot, value, name);
 		this.minInt = minInt;
-		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, 20, "-", () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
 			if(this.value > this.minInt) --this.value; 
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(190, y, 20, 20, "+", () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(190, y, 20, height, "+", () -> {
 			++this.value;
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(160, y, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 			try {
 				int newval = Integer.parseInt(valueTextField.getTextValue());
 				this.value = newval;
@@ -36,7 +36,7 @@ public class PropertyMinimumInt extends Property<Integer> {
 				valueTextField.setTextColour(0xFF0000);
 			}
 		}));
-		valueTextField = BuildGuide.widgetHandler.createTextField(110, y, 50, 20, "");
+		valueTextField = BuildGuide.widgetHandler.createTextField(110, y, 50, height, "");
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 		textFieldList.add(valueTextField);

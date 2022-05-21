@@ -2,11 +2,19 @@ package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyInt;
+import brentmaas.buildguide.common.property.PropertyRunnable;
 
 public class ShapeLine extends Shape {
 	private PropertyInt propertyDx = new PropertyInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
 	private PropertyInt propertyDy = new PropertyInt(1, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
 	private PropertyInt propertyDz = new PropertyInt(2, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
+	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(3, () -> {
+		Basepos pos = BuildGuide.shapeHandler.getPlayerPosition();
+		propertyDx.setValue(pos.x - basepos.x);
+		propertyDy.setValue(pos.y - basepos.y);
+		propertyDz.setValue(pos.z - basepos.z);
+		update();
+	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
 	
 	public ShapeLine() {
 		super();
@@ -14,6 +22,7 @@ public class ShapeLine extends Shape {
 		properties.add(propertyDx);
 		properties.add(propertyDy);
 		properties.add(propertyDz);
+		properties.add(propertySetEndpoint);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {

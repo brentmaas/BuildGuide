@@ -26,6 +26,7 @@
 	"property.buildguide.radius": "Radius",
 	"property.buildguide.rotation": "Rotation",
 	"property.buildguide.semiaxis": "%s semi-axis",
+	"property.buildguide.setendpoint": "Set endpoint",
 	"property.buildguide.sides": "Sides",
 	"property.buildguide.walls": "Walls",
 	"property.buildguide.width": "Width",
