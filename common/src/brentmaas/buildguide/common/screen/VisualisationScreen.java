@@ -1,5 +1,7 @@
 package brentmaas.buildguide.common.screen;
 
+import java.util.Random;
+
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ISlider;
@@ -30,7 +32,25 @@ public class VisualisationScreen extends PropertyScreen {
 			BuildGuide.stateManager.getState().setBaseposColour((float) sliderBaseposR.getSliderValue(), (float) sliderBaseposG.getSliderValue(), (float) sliderBaseposB.getSliderValue(), (float) sliderBaseposA.getSliderValue());
 		}
 	});
-	private IButton buttonDefaultShape = BuildGuide.widgetHandler.createButton(0, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
+	private IButton buttonSetShapeRandom = BuildGuide.widgetHandler.createButton(0, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.setrandom"), () -> {
+		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
+			Random random = new Random();
+			sliderShapeR.setSliderValue(random.nextDouble());
+			sliderShapeG.setSliderValue(random.nextDouble());
+			sliderShapeB.setSliderValue(random.nextDouble());
+			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
+		}
+	});
+	private IButton buttonSetBaseposRandom = BuildGuide.widgetHandler.createButton(110, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.setrandom"), () -> {
+		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
+			Random random = new Random();
+			sliderBaseposR.setSliderValue(random.nextDouble());
+			sliderBaseposG.setSliderValue(random.nextDouble());
+			sliderBaseposB.setSliderValue(random.nextDouble());
+			BuildGuide.stateManager.getState().setBaseposColour((float) sliderBaseposR.getSliderValue(), (float) sliderBaseposG.getSliderValue(), (float) sliderBaseposB.getSliderValue(), (float) sliderBaseposA.getSliderValue());
+		}
+	});
+	private IButton buttonDefaultShape = BuildGuide.widgetHandler.createButton(0, 165, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
 		sliderShapeR.setSliderValue(1.0);
 		sliderShapeG.setSliderValue(1.0);
 		sliderShapeB.setSliderValue(1.0);
@@ -43,7 +63,7 @@ public class VisualisationScreen extends PropertyScreen {
 			BuildGuide.stateManager.getState().setShapeColour(1.0f, 1.0f, 1.0f, 0.5f);
 		}
 	});
-	private IButton buttonDefaultBasepos = BuildGuide.widgetHandler.createButton(110, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
+	private IButton buttonDefaultBasepos = BuildGuide.widgetHandler.createButton(110, 165, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
 		sliderBaseposR.setSliderValue(1.0);
 		sliderBaseposG.setSliderValue(0.0);
 		sliderBaseposB.setSliderValue(0.0);
@@ -93,6 +113,8 @@ public class VisualisationScreen extends PropertyScreen {
 		addSlider(sliderBaseposA);
 		addButton(buttonSetShape);
 		addButton(buttonDefaultShape);
+		addButton(buttonSetShapeRandom);
+		addButton(buttonSetBaseposRandom);
 		addButton(buttonSetBasepos);
 		addButton(buttonDefaultBasepos);
 		
@@ -105,6 +127,6 @@ public class VisualisationScreen extends PropertyScreen {
 		drawShadowCentred(titleColours, 105, 15, 0xFFFFFF);
 		drawShadowCentred(titleShape, 50, 35, 0xFFFFFF);
 		drawShadowCentred(titleBasepos, 160, 35, 0xFFFFFF);
-		drawShadowCentred(titleRendering, 80, 175, 0xFFFFFF);
+		drawShadowCentred(titleRendering, 80, 195, 0xFFFFFF);
 	}
 }

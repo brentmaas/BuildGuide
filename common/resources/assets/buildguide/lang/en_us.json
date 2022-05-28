@@ -48,6 +48,7 @@
 	"screen.buildguide.set": "Set",
 	"screen.buildguide.setbasepos": "Set base position",
 	"screen.buildguide.setglobalbasepos": "Set global base position",
+	"screen.buildguide.setrandom": "Set random",
 	"screen.buildguide.shape": "Shape",
 	"screen.buildguide.shapes": "Shapes",
 	"screen.buildguide.shapelist": "Shape list",
