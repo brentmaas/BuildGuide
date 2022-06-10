@@ -6,8 +6,8 @@ import brentmaas.buildguide.common.screen.widget.ITextField;
 public class PropertyInt extends Property<Integer> {
 	private ITextField valueTextField;
 	
-	public PropertyInt(int slot, int value, String name, Runnable onPress) {
-		super(slot, value, name);
+	public PropertyInt(int value, String name, Runnable onPress) {
+		super(value, name);
 		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
 			--this.value;
 			valueTextField.setTextValue("" + this.value);

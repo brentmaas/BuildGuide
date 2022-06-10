@@ -6,8 +6,8 @@ import brentmaas.buildguide.common.screen.widget.ITextField;
 public class PropertyNonzeroInt extends Property<Integer> {
 	private ITextField valueTextField;
 	
-	public PropertyNonzeroInt(int slot, int value, String name, Runnable onPress) {
-		super(slot, value, name);
+	public PropertyNonzeroInt(int value, String name, Runnable onPress) {
+		super(value, name);
 		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
 			--this.value;
 			if(this.value == 0) this.value = -1;

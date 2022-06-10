@@ -15,6 +15,10 @@ public class ButtonImpl extends Button implements IButton {
 		this.active = active;
 	}
 	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	public ButtonImpl(int x, int y, int width, int height, String text, IButton.IPressable onPress) {
 		super(x, y, width, height, new TextComponent(text), button -> onPress.onPress());
 	}

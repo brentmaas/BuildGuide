@@ -24,6 +24,10 @@ public class TextFieldImpl extends EditBox implements ITextField {
 		setVisible(visible);
 	}
 	
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	public String getTextValue() {
 		return getValue();
 	}

@@ -17,8 +17,8 @@ public class ShapeSphere extends Shape {
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(1, dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
 	
 	public ShapeSphere() {
 		super();

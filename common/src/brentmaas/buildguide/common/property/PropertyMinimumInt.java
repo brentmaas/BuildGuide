@@ -7,8 +7,8 @@ public class PropertyMinimumInt extends Property<Integer> {
 	private ITextField valueTextField;
 	private int minInt;
 	
-	public PropertyMinimumInt(int slot, int value, String name, Runnable onPress, int minInt) {
-		super(slot, value, name);
+	public PropertyMinimumInt(int value, String name, Runnable onPress, int minInt) {
+		super(value, name);
 		this.minInt = minInt;
 		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
 			if(this.value > this.minInt) --this.value; 

@@ -14,10 +14,10 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(1, 3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(2, 3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(3, 1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
 	
 	public ShapeEllipse() {
 		super();

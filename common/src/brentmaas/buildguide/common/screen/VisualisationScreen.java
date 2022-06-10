@@ -118,6 +118,7 @@ public class VisualisationScreen extends PropertyScreen {
 		addButton(buttonSetBasepos);
 		addButton(buttonDefaultBasepos);
 		
+		BuildGuide.stateManager.getState().propertyDepthTest.setSlot(4);
 		addProperty(BuildGuide.stateManager.getState().propertyDepthTest);
 	}
 	

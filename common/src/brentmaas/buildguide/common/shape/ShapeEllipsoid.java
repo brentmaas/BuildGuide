@@ -17,10 +17,10 @@ public class ShapeEllipsoid extends Shape {
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"), () -> update());
-	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(1, 3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(2, 3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(3, dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
+	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"), () -> update());
+	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
 	
 	public ShapeEllipsoid() {
 		super();

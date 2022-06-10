@@ -8,17 +8,17 @@ import brentmaas.buildguide.common.property.PropertyRunnable;
 public class ShapeCatenary extends Shape {
 	private static final double eps = 0.001;
 	
-	private PropertyInt propertyDx = new PropertyInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
-	private PropertyInt propertyDy = new PropertyInt(1, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
-	private PropertyInt propertyDz = new PropertyInt(2, 0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
-	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(3, () -> {
+	private PropertyInt propertyDx = new PropertyInt(3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
+	private PropertyInt propertyDy = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
+	private PropertyInt propertyDz = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
+	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(() -> {
 		Basepos pos = BuildGuide.shapeHandler.getPlayerPosition();
 		propertyDx.setValue(pos.x - basepos.x);
 		propertyDy.setValue(pos.y - basepos.y);
 		propertyDz.setValue(pos.z - basepos.z);
 		update();
 	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
-	private PropertyPositiveInt propertyAddLength = new PropertyPositiveInt(4, 1, BuildGuide.screenHandler.translate("property.buildguide.addlength"), () -> update());
+	private PropertyPositiveInt propertyAddLength = new PropertyPositiveInt(1, BuildGuide.screenHandler.translate("property.buildguide.addlength"), () -> update());
 	
 	public ShapeCatenary() {
 		super();

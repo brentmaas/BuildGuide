@@ -26,11 +26,11 @@ public class ShapeParabola extends Shape {
 	private String[] directionNames = {"X", "Y", "Z"};
 	private String[] rotationNames = {"0\u00B0", "90\u00B0", "180\u00B0", "270\u00B0"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(1, rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
-	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(2, 3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
-	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, 3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
+	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
 	
 	public ShapeParabola() {
 		super();

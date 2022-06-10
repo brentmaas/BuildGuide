@@ -27,11 +27,11 @@ public class ShapePolygon extends Shape {
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(0, 3, BuildGuide.screenHandler.translate("property.buildguide.sides"), () -> update(), 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(1, 3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(2, direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(3, rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(4, 1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(3, BuildGuide.screenHandler.translate("property.buildguide.sides"), () -> update(), 3);
+	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
 	
 	public ShapePolygon() {
 		super();

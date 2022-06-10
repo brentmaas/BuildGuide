@@ -6,8 +6,8 @@ import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 public class PropertyBoolean extends Property<Boolean> {
 	private ICheckboxRunnableButton button;
 	
-	public PropertyBoolean(int slot, Boolean value, String name, Runnable onPress) {
-		super(slot, value, name);
+	public PropertyBoolean(Boolean value, String name, Runnable onPress) {
+		super(value, name);
 		button = BuildGuide.widgetHandler.createCheckbox(140, y, 20, height, "", value, false, () -> {
 			this.value = button.isSelected();
 			if(onPress != null) onPress.run();

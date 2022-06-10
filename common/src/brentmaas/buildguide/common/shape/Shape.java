@@ -112,8 +112,9 @@ public abstract class Shape {
 	}
 	
 	public void onSelectedInGUI() {
-		for(Property<?> p: properties) {
-			p.onSelectedInGUI();
+		for(int i = 0;i < properties.size();++i) {
+			properties.get(i).setSlot(i);
+			properties.get(i).onSelectedInGUI();
 		}
 	}
 	

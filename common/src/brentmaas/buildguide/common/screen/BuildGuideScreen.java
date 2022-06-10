@@ -109,7 +109,9 @@ public class BuildGuideScreen extends PropertyScreen{
 		addTextField(textFieldY);
 		addTextField(textFieldZ);
 		
+		BuildGuide.stateManager.getState().propertyEnable.setSlot(-4);
 		addProperty(BuildGuide.stateManager.getState().propertyEnable);
+		BuildGuide.stateManager.getState().propertyAdvancedMode.setSlot(-2);
 		addProperty(BuildGuide.stateManager.getState().propertyAdvancedMode);
 		
 		if(BuildGuide.stateManager.getState().propertyAdvancedMode.value) {

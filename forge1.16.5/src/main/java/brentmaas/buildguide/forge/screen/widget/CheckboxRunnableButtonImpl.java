@@ -32,4 +32,8 @@ public class CheckboxRunnableButtonImpl extends CheckboxButton implements ICheck
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
 }

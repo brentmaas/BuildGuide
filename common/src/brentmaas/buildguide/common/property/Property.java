@@ -19,8 +19,8 @@ public abstract class Property<T> {
 	public ArrayList<ICheckboxRunnableButton> checkboxList = new ArrayList<ICheckboxRunnableButton>();
 	protected boolean visible = true;
 	
-	public Property(int slot, T value, String name) {
-		y = baseY + slot * height;
+	public Property(T value, String name) {
+		y = baseY;
 		this.value = value;
 		this.name = name;
 	}
@@ -69,6 +69,19 @@ public abstract class Property<T> {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setSlot(int slot) {
+		y = baseY + slot * height;
+		for(IButton button: buttonList) {
+			button.setY(y);
+		}
+		for(ITextField textField: textFieldList) {
+			textField.setY(y);
+		}
+		for(ICheckboxRunnableButton checkbox: checkboxList) {
+			checkbox.setY(y);
+		}
 	}
 	
 	public void render(PropertyScreen screen) {

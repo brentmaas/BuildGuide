@@ -14,10 +14,10 @@ public class ShapeParaboloid extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(0, direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(1, 3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
-	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(2, 3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, 3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
+	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
 	
 	public ShapeParaboloid() {
 		super();
