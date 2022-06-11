@@ -36,33 +36,48 @@ public abstract class Shape {
 	public abstract String getTranslationKey();
 	
 	public void update() {
-		ready = false;
-		if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
-		if(buffer != null) buffer.close(); //Can only be done in render thread
-		future = executor.submit(() -> {
-			try {
-				lock.lock();
-				ready = false; //Again in case of a second thread started before a first thread ended
-				nBlocks = 0;
-				long t = System.currentTimeMillis();
-				buffer = BuildGuide.shapeHandler.newBuffer();
-				buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
-				updateShape(buffer);
-				buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
-				addCube(buffer, 0.4, 0.4, 0.4, 0.2);
-				buffer.end();
-				if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
-					BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+		if(BuildGuide.config.asyncEnabled.value) {
+			ready = false;
+			if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
+			if(buffer != null) buffer.close(); //Can only be done in render thread
+			future = executor.submit(() -> {
+				try {
+					lock.lock();
+					ready = false; //Again in case of a second thread started before a first thread ended
+					doUpdate();
+					ready = true;
+				}catch(InterruptedException e) {
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					lock.unlock();
 				}
+			});
+		}else {
+			ready = false;
+			if(buffer != null) buffer.close();
+			try {
+				doUpdate();
 				ready = true;
 			}catch(InterruptedException e) {
-				//Don't print exception
-			}catch(Exception e) {
-				e.printStackTrace();
-			}finally {
-				lock.unlock();
+				
 			}
-		});
+		}
+	}
+	
+	private void doUpdate() throws InterruptedException {
+		nBlocks = 0;
+		long t = System.currentTimeMillis();
+		buffer = BuildGuide.shapeHandler.newBuffer();
+		buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
+		updateShape(buffer);
+		buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
+		addCube(buffer, 0.4, 0.4, 0.4, 0.2);
+		buffer.end();
+		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
+			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+		}
 	}
 	
 	protected void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {

@@ -8,11 +8,12 @@ import brentmaas.buildguide.fabric.screen.ScreenHandler;
 import brentmaas.buildguide.fabric.screen.widget.WidgetHandler;
 import brentmaas.buildguide.fabric.shape.ShapeHandler;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 
 public class BuildGuideFabric implements ClientModInitializer {
 	private static final Logger logger = LogManager.getLogger();	
 	
 	public void onInitializeClient() {
-		BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), new Config());
+		BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), FabricLoader.getInstance().getConfigDir().toString() + "/");
 	}
 }

@@ -118,7 +118,9 @@ public class VisualisationScreen extends PropertyScreen {
 		addButton(buttonSetBasepos);
 		addButton(buttonDefaultBasepos);
 		
-		BuildGuide.stateManager.getState().propertyDepthTest.setSlot(4);
+		BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours.setSlot(3);
+		addProperty(BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours);
+		BuildGuide.stateManager.getState().propertyDepthTest.setSlot(5);
 		addProperty(BuildGuide.stateManager.getState().propertyDepthTest);
 	}
 	
@@ -128,6 +130,6 @@ public class VisualisationScreen extends PropertyScreen {
 		drawShadowCentred(titleColours, 105, 15, 0xFFFFFF);
 		drawShadowCentred(titleShape, 50, 35, 0xFFFFFF);
 		drawShadowCentred(titleBasepos, 160, 35, 0xFFFFFF);
-		drawShadowCentred(titleRendering, 80, 195, 0xFFFFFF);
+		drawShadowCentred(titleRendering, 80, 215, 0xFFFFFF);
 	}
 }

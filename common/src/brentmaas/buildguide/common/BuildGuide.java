@@ -26,9 +26,9 @@ public class BuildGuide {
 	public static IShapeHandler shapeHandler;
 	public static AbstractRenderHandler renderHandler;
 	public static ILogHandler logHandler;
-	public static AbstractConfig config;
+	public static Config config;
 	
-	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, IWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, AbstractConfig config) {
+	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, IWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, String configFolder) {
 		BuildGuide.keyBindHandler = keyBindHandler;
 		BuildGuide.screenHandler = screenHandler;
 		BuildGuide.widgetHandler = widgetHandler;
@@ -36,7 +36,7 @@ public class BuildGuide {
 		BuildGuide.shapeHandler = shapeHandler;
 		BuildGuide.renderHandler = renderHandler;
 		BuildGuide.logHandler = logHandler;
-		BuildGuide.config = config;
+		BuildGuide.config = new Config(configFolder);
 		
 		ShapeRegistry.registerShape(ShapeCatenary.class);
 		ShapeRegistry.registerShape(ShapeCircle.class);
@@ -54,8 +54,5 @@ public class BuildGuide {
 		keyBindHandler.registerOnKeyInput();
 		
 		renderHandler.register();
-		
-		config.build();
-		config.load();
 	}
 }

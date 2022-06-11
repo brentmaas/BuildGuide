@@ -7,5 +7,7 @@ public interface ILogHandler {
 	
 	public void error(String message);
 	
+	public void errorOrHigher(String message);
+	
 	public void debugOrHigher(String message);
 }

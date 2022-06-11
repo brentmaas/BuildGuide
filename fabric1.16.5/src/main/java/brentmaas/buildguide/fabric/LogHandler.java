@@ -21,6 +21,10 @@ public class LogHandler implements ILogHandler {
 		logger.error(message);
 	}
 	
+	public void errorOrHigher(String message) {
+		logger.log(logger.getLevel().intLevel() >= StandardLevel.ERROR.intLevel() ? Level.ERROR : logger.getLevel(), message);
+	}
+	
 	public void debugOrHigher(String message) {
 		logger.log(logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : logger.getLevel(), message);
 	}

@@ -17,6 +17,7 @@ public class State {
 	public int iAdvancedNew = ShapeRegistry.getShapeId(ShapeCircle.class);
 	public PropertyBoolean propertyEnable = new PropertyBoolean(false, BuildGuide.screenHandler.translate("screen.buildguide.enable"), null);
 	public PropertyBoolean propertyAdvancedMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("screen.buildguide.advancedmode"), () -> BuildGuide.screenHandler.showScreen(new BuildGuideScreen()));
+	public PropertyBoolean propertyAdvancedModeRandomColours = new PropertyBoolean(BuildGuide.config.advancedRandomColorsDefaultEnabled.value, BuildGuide.screenHandler.translate("screen.buildguide.advancedmoderandomcolors"), null);
 	public PropertyBoolean propertyDepthTest = new PropertyBoolean(true, BuildGuide.screenHandler.translate("screen.buildguide.depthtest"), null);
 	
 	public State() {

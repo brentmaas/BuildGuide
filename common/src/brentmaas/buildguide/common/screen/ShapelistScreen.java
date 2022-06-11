@@ -1,5 +1,7 @@
 package brentmaas.buildguide.common.screen;
 
+import java.util.Random;
+
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
@@ -23,9 +25,19 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(0, 25, 20, 20, "<-", () -> updateNewShape(-1));
 	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(120, 25, 20, 20, "->", () -> updateNewShape(1));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(0, 45, 140, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
-		BuildGuide.stateManager.getState().advancedModeShapes.add(ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(BuildGuide.stateManager.getState().iAdvancedNew)));
-		BuildGuide.stateManager.getState().resetBasepos(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1);
-		BuildGuide.stateManager.getState().advancedModeShapes.get(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1).update();
+		Shape newShape = ShapeRegistry.getNewInstance(ShapeRegistry.getClassIdentifiers().get(BuildGuide.stateManager.getState().iAdvancedNew));
+		newShape.resetBasepos();
+		if(BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours.value) {
+			Random random = new Random();
+			newShape.colourShapeR = random.nextFloat();
+			newShape.colourShapeG = random.nextFloat();
+			newShape.colourShapeB = random.nextFloat();
+			newShape.colourBaseposR = random.nextFloat();
+			newShape.colourBaseposG = random.nextFloat();
+			newShape.colourBaseposB = random.nextFloat();
+		}
+		newShape.update();
+		BuildGuide.stateManager.getState().advancedModeShapes.add(newShape);
 		shapeList.addEntry(BuildGuide.stateManager.getState().advancedModeShapes.size() - 1);
 		
 		checkActive();
