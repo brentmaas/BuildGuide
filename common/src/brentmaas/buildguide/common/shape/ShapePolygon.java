@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyMinimumInt;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
@@ -32,6 +33,7 @@ public class ShapePolygon extends Shape {
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
+	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
 	
 	public ShapePolygon() {
 		super();
@@ -41,22 +43,35 @@ public class ShapePolygon extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyRot);
 		properties.add(propertyDepth);
+		properties.add(property2x2);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int n = propertySides.value;
 		int r = propertyRadius.value;
 		int rot = propertyRot.value.ordinal();
+		double offset = property2x2.value ? 0.5 : 0.0;
+		switch(propertyDir.value) {
+		case X:
+			setBaseposOffset(0.0, offset, offset);
+			break;
+		case Y:
+			setBaseposOffset(offset, 0.0, offset);
+			break;
+		case Z:
+			setBaseposOffset(offset, offset, 0.0);
+			break;
+		}
 		for(int i = 0;i < n;++i) {
 			int minA = (int) Math.floor(Math.min(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))));
 			int minB = (int) Math.floor(Math.min(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
 			int maxA = (int) Math.ceil(Math.max(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))));
 			int maxB = (int) Math.ceil(Math.max(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
-			for(int a = minA;a < maxA + 1;++a) {
-				for(int b = minB;b < maxB + 1;++b) {
-					double adx = (a - r * Math.sin(2 * Math.PI * i / n)) * Math.cos(2 * Math.PI * i / n) + (b + r * Math.cos(2 * Math.PI * i / n)) * Math.sin(2 * Math.PI * i / n);
-					double d2 = (a - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) * (a - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) + (b + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n)) * (b + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n));
-					double theta = Math.atan2(b, a) + Math.PI / 2;
+			for(int a = (int) Math.floor(minA + offset);a < (int) Math.ceil(maxA + 1 + offset);++a) {
+				for(int b = (int) Math.floor(minB + offset);b < (int) Math.ceil(maxB + 1 + offset);++b) {
+					double adx = (a - offset - r * Math.sin(2 * Math.PI * i / n)) * Math.cos(2 * Math.PI * i / n) + (b - offset + r * Math.cos(2 * Math.PI * i / n)) * Math.sin(2 * Math.PI * i / n);
+					double d2 = (a - offset - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) * (a - offset - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) + (b - offset + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n)) * (b - offset + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n));
+					double theta = Math.atan2(b - offset, a - offset) + Math.PI / 2;
 					if(theta < 0 && i > 0) theta += 2 * Math.PI;
 					if(d2 <= 0.25 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
 						for(int h = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);h < (propertyDepth.value > 0 ? propertyDepth.value : 1);++h) {

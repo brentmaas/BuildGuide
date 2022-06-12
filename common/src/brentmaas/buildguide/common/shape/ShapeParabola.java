@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveInt;
@@ -31,6 +32,7 @@ public class ShapeParabola extends Shape {
 	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
 	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
+	private PropertyBoolean property1x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos1x2"), () -> update());
 	
 	public ShapeParabola() {
 		super();
@@ -40,6 +42,7 @@ public class ShapeParabola extends Shape {
 		properties.add(propertyHalfwidth);
 		properties.add(propertyHeight);
 		properties.add(propertyDepth);
+		properties.add(property1x2);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
@@ -47,10 +50,23 @@ public class ShapeParabola extends Shape {
 		int h = propertyHeight.value;
 		double fac = ((double) h) / hw / hw;
 		int rot = propertyRot.value.ordinal();
+		double offset = property1x2.value ? 0.5 : 0.0;
 		
-		for(int a = -hw;a <= hw;++a) {
+		switch(propertyDir.value) {
+		case X:
+			setBaseposOffset(0.0, offset * rotYX[rot], offset * rotXX[rot]);
+			break;
+		case Y:
+			setBaseposOffset(offset * rotYX[rot], 0.0, offset * rotXX[rot]);
+			break;
+		case Z:
+			setBaseposOffset(offset * rotXX[rot], offset * rotYX[rot], 0.0);
+			break;
+		}
+		
+		for(int a = (int) Math.floor(-hw+offset);a <= (int) Math.ceil(hw+offset);++a) {
 			for(int b = 0;b < h;++b) {
-				if(fac * a * a >= b && (fac * (a - Math.signum(a)) * (a - Math.signum(a)) < b || fac * a * a < b + 1)) {
+				if(fac * (a - offset) * (a - offset) >= b && (fac * (a - offset - Math.signum(a - offset)) * (a - offset - Math.signum(a - offset)) < b || fac * (a - offset) * (a - offset) < b + 1)) {
 					for(int s = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);s < (propertyDepth.value > 0 ? propertyDepth.value : 1);++s) {
 						switch(propertyDir.value) {
 						case X:

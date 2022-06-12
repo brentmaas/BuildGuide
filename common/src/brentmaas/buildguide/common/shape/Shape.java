@@ -28,6 +28,10 @@ public abstract class Shape {
 	public float colourBaseposB = 0.0f;
 	public float colourBaseposA = 0.5f;
 	
+	protected double baseposOffsetX = 0.0;
+	protected double baseposOffsetY = 0.0;
+	protected double baseposOffsetZ = 0.0;
+	
 	private static ExecutorService executor = Executors.newCachedThreadPool();
 	public ReentrantLock lock = new ReentrantLock();
 	private Future<?> future = null;
@@ -73,7 +77,7 @@ public abstract class Shape {
 		buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
 		updateShape(buffer);
 		buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
-		addCube(buffer, 0.4, 0.4, 0.4, 0.2);
+		addCube(buffer, 0.4 + baseposOffsetX, 0.4 + baseposOffsetY, 0.4 + baseposOffsetZ, 0.2);
 		buffer.end();
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
 			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
@@ -124,6 +128,12 @@ public abstract class Shape {
 		addCube(buffer, x + 0.2, y + 0.2, z + 0.2, 0.6);
 		
 		++nBlocks;
+	}
+	
+	protected void setBaseposOffset(double dx, double dy, double dz) {
+		baseposOffsetX = dx;
+		baseposOffsetY = dy;
+		baseposOffsetZ = dz;
 	}
 	
 	public void onSelectedInGUI() {

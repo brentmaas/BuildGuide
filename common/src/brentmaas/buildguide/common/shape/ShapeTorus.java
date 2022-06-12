@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyPositiveInt;
 
@@ -16,6 +17,7 @@ public class ShapeTorus extends Shape {
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
 	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
+	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
 	
 	public ShapeTorus() {
 		super();
@@ -23,26 +25,39 @@ public class ShapeTorus extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyOuterRadius);
 		properties.add(propertyInnerRadius);
+		properties.add(property2x2);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		for(int a = -propertyOuterRadius.value - propertyInnerRadius.value;a < propertyOuterRadius.value + propertyInnerRadius.value + 1;++a) {
-			for(int b = -propertyOuterRadius.value - propertyInnerRadius.value;b < propertyOuterRadius.value + propertyInnerRadius.value + 1;++b) {
-				double theta = Math.atan2(b, a);
-				double a_circ = propertyOuterRadius.value * Math.cos(theta);
-				double b_circ = propertyOuterRadius.value * Math.sin(theta);
+		double offset = property2x2.value ? 0.5 : 0.0;
+		switch(propertyDir.value) {
+		case X:
+			setBaseposOffset(0.0, offset, offset);
+			break;
+		case Y:
+			setBaseposOffset(offset, 0.0, offset);
+			break;
+		case Z:
+			setBaseposOffset(offset, offset, 0.0);
+			break;
+		}
+		for(int a = (int) Math.floor(-propertyOuterRadius.value - propertyInnerRadius.value - offset);a < (int) Math.ceil(propertyOuterRadius.value + propertyInnerRadius.value + 1 + offset);++a) {
+			for(int b = (int) Math.floor(-propertyOuterRadius.value - propertyInnerRadius.value - offset);b < (int) Math.ceil(propertyOuterRadius.value + propertyInnerRadius.value + 1 + offset);++b) {
+				double theta = Math.atan2(b - offset, a - offset);
+				double a_circ = propertyOuterRadius.value * Math.cos(theta) + offset;
+				double b_circ = propertyOuterRadius.value * Math.sin(theta) + offset;
 				for(int c = -propertyInnerRadius.value;c < propertyInnerRadius.value + 1;++c) {
 					double r2 = (a - a_circ) * (a - a_circ) + (b - b_circ) * (b - b_circ) + c * c;
 					if(r2 >= (propertyInnerRadius.value - 0.5) * (propertyInnerRadius.value - 0.5) && r2 < (propertyInnerRadius.value + 0.5) * (propertyInnerRadius.value + 0.5)) {
 						switch(propertyDir.value) {
 						case X:
-							addShapeCube(buffer, a, b, c);
+							addShapeCube(buffer, c, b, a);
 							break;
 						case Y:
-							addShapeCube(buffer, b, c, a);
+							addShapeCube(buffer, a, c, b);
 							break;
 						case Z:
-							addShapeCube(buffer, c, a, b);
+							addShapeCube(buffer, b, a, c);
 							break;
 						}
 					}
