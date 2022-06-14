@@ -35,8 +35,10 @@ public abstract class Shape {
 	private static ExecutorService executor = Executors.newCachedThreadPool();
 	public ReentrantLock lock = new ReentrantLock();
 	private Future<?> future = null;
+	private long completedAt = 0;
+	public boolean error = false;
 	
-	protected abstract void updateShape(IShapeBuffer builder) throws IllegalStateException, InterruptedException;
+	protected abstract void updateShape(IShapeBuffer builder) throws Exception;
 	public abstract String getTranslationKey();
 	
 	public void update() {
@@ -48,29 +50,38 @@ public abstract class Shape {
 				try {
 					lock.lock();
 					ready = false; //Again in case of a second thread started before a first thread ended
+					error = false;
 					doUpdate();
-					ready = true;
 				}catch(InterruptedException e) {
-					
+					error = true;
 				}catch(Exception e) {
+					error = true;
 					e.printStackTrace();
 				}finally {
+					completedAt = System.currentTimeMillis();
+					ready = true;
 					lock.unlock();
 				}
 			});
 		}else {
 			ready = false;
+			error = false;
 			if(buffer != null) buffer.close();
 			try {
 				doUpdate();
-				ready = true;
 			}catch(InterruptedException e) {
-				
+				error = true;
+			}catch(Exception e) {
+				error = true;
+				e.printStackTrace();
+			}finally {
+				completedAt = System.currentTimeMillis();
+				ready = true;
 			}
 		}
 	}
 	
-	private void doUpdate() throws InterruptedException {
+	private void doUpdate() throws Exception {
 		nBlocks = 0;
 		long t = System.currentTimeMillis();
 		buffer = BuildGuide.shapeHandler.newBuffer();
@@ -156,6 +167,10 @@ public abstract class Shape {
 	public int getNumberOfBlocks() {
 		if(!ready) return 0;
 		return nBlocks;
+	}
+	
+	public long getHowLongAgoCompletedMillis() {
+		return System.currentTimeMillis() - completedAt;
 	}
 	
 	public void resetBasepos() {

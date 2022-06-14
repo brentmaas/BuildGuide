@@ -2,6 +2,9 @@
 	"_comment": "Config",
 	"config.buildguide.debugGenerationTimingsEnabled": "Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.",
 	
+	"_comment": "Errors",
+	"error.buildguide.invalidvalue": "Shape generation encountered an invalid value. Try less extreme values.",
+	
 	"_comment": "Keybindings",
 	"key.buildguide.category": "Build Guide",
 	"key.buildguide.openbuildguide": "Open Build Guide",

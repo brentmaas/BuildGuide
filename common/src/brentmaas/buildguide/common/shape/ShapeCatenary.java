@@ -30,7 +30,7 @@ public class ShapeCatenary extends Shape {
 		properties.add(propertyAddLength);
 	}
 	
-	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
+	protected void updateShape(IShapeBuffer buffer) throws Exception {
 		double dr = Math.sqrt(propertyDx.value * propertyDx.value + propertyDz.value * propertyDz.value);
 		int dy = propertyDy.value;
 		int ds = propertyAddLength.value;
@@ -42,6 +42,9 @@ public class ShapeCatenary extends Shape {
 			while(Math.abs(chi = 2 * a * Math.sinh(dr / 2 / a) - Math.sqrt(s * s - dy * dy)) > eps) {
 				double dchi = 2 * Math.sinh(dr / 2 / a) - dr / a * Math.cosh(dr / 2 / a);
 				a = Math.max(a - chi / dchi, a / 2);
+			}
+			if(!Double.isFinite(a)) {
+				throw new IllegalStateException(BuildGuide.screenHandler.translate("error.buildguide.invalidvalue"));
 			}
 			
 			double rl = 0;

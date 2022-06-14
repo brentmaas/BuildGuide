@@ -7,11 +7,13 @@ import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.shape.Shape;
 
 public class BuildGuideScreen extends PropertyScreen{
-	private String titleGlobalProperties = BuildGuide.screenHandler.translate("screen.buildguide.globalproperties");;
-	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");;
-	private String titleBasepos = BuildGuide.screenHandler.translate("screen.buildguide.basepos");;
-	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");;
-	private String textShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");;
+	private String titleGlobalProperties = BuildGuide.screenHandler.translate("screen.buildguide.globalproperties");
+	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");
+	private String titleBasepos = BuildGuide.screenHandler.translate("screen.buildguide.basepos");
+	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
+	private String textShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
+	
+	private static final String[] progressIndicator = {"|", "/", "-" , "\\"};
 	
 	private IButton buttonClose;
 	//It's better off as custom buttons instead of PropertyEnum
@@ -145,9 +147,16 @@ public class BuildGuideScreen extends PropertyScreen{
 		drawShadowCentred("" + n, 355, 30, 0xFFFFFF);
 		drawShadowCentred("(" + (n / 64) + " x 64 + " + (n % 64) + ")", 355, 45, 0xFFFFFF);
 		
+		int colourFraction = (int) Math.max(Math.min(BuildGuide.stateManager.getState().getCurrentShape().getHowLongAgoCompletedMillis() * 0xFF / 1000, 0xFF), 0);
+		String progressIndicatorPart = "";
+		if(!BuildGuide.stateManager.getState().getCurrentShape().ready) {
+			System.out.println("not ready");
+			long time = System.currentTimeMillis();
+			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
+		}
 		drawShadow(textShape, 5, 30, 0xFFFFFF);
-		String shapeName = (BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShape().visible ? "\247m" : "") + (BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none"));
-		drawShadowCentred(shapeName, 110, 30, 0xFFFFFF);
+		String shapeName = (BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShape().visible ? "\247m" : "") + (BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
+		drawShadowCentred(shapeName, 110, 30, BuildGuide.stateManager.getState().getCurrentShape().error ? 0xFF0000 : (0x00FF00 + colourFraction * 0x010001));
 		
 		drawShadow("X", 170, 50, 0xFFFFFF);
 		drawShadow("Y", 170, 70, 0xFFFFFF);

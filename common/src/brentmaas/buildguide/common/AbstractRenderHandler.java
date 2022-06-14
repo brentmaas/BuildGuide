@@ -54,7 +54,7 @@ public abstract class AbstractRenderHandler {
 	private void renderShape(Shape shape) {
 		if(shape.lock.tryLock()) {
 			try {
-				if(shape.visible && shape.ready) {
+				if(shape.visible && shape.ready && !shape.error) {
 					setupRenderingShape(shape);
 					
 					boolean toggleTexture = textureEnabled();
