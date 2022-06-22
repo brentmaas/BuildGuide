@@ -32,7 +32,7 @@ public class ShapeParabola extends Shape {
 	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
 	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean property1x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos1x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeParabola() {
 		super();
@@ -42,7 +42,7 @@ public class ShapeParabola extends Shape {
 		properties.add(propertyHalfwidth);
 		properties.add(propertyHeight);
 		properties.add(propertyDepth);
-		properties.add(property1x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
@@ -50,7 +50,7 @@ public class ShapeParabola extends Shape {
 		int h = propertyHeight.value;
 		double fac = ((double) h) / hw / hw;
 		int rot = propertyRot.value.ordinal();
-		double offset = property1x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		
 		switch(propertyDir.value) {
 		case X:

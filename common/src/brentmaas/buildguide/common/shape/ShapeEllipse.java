@@ -19,7 +19,7 @@ public class ShapeEllipse extends Shape {
 	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
 	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeEllipse() {
 		super();
@@ -28,12 +28,12 @@ public class ShapeEllipse extends Shape {
 		properties.add(propertySemi1);
 		properties.add(propertySemi2);
 		properties.add(propertyDepth);
-		properties.add(property2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int da = propertySemi1.value, db = propertySemi2.value;
-		double offset = property2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
 			setBaseposOffset(0.0, offset, offset);

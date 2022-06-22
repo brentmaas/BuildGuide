@@ -18,7 +18,7 @@ public class ShapeCircle extends Shape{
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeCircle() {
 		super();
@@ -26,12 +26,12 @@ public class ShapeCircle extends Shape{
 		properties.add(propertyDir);
 		properties.add(propertyRadius);
 		properties.add(propertyDepth);
-		properties.add(property2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int dx = propertyRadius.value, dy = propertyRadius.value, dz = propertyRadius.value;
-		double offset = property2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
 			dx = 0;

@@ -19,7 +19,7 @@ public class ShapeParaboloid extends Shape {
 	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
 	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
 	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
-	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeParaboloid() {
 		super();
@@ -28,7 +28,7 @@ public class ShapeParaboloid extends Shape {
 		properties.add(propertyHalfwidth1);
 		properties.add(propertyHalfwidth2);
 		properties.add(propertyHeight);
-		properties.add(property2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
@@ -37,7 +37,7 @@ public class ShapeParaboloid extends Shape {
 		int h = propertyHeight.value;
 		double fac1 = Math.abs((double) h) / hw1 / hw1;
 		double fac2 = Math.abs((double) h) / hw2 / hw2;
-		double offset = property2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
 			setBaseposOffset(0.0, offset, offset);

@@ -17,7 +17,7 @@ public class ShapeTorus extends Shape {
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
 	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
-	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeTorus() {
 		super();
@@ -25,11 +25,11 @@ public class ShapeTorus extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyOuterRadius);
 		properties.add(propertyInnerRadius);
-		properties.add(property2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		double offset = property2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
 			setBaseposOffset(0.0, offset, offset);

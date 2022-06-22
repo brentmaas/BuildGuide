@@ -33,7 +33,7 @@ public class ShapePolygon extends Shape {
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean property2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapePolygon() {
 		super();
@@ -43,14 +43,14 @@ public class ShapePolygon extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyRot);
 		properties.add(propertyDepth);
-		properties.add(property2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int n = propertySides.value;
 		int r = propertyRadius.value;
 		int rot = propertyRot.value.ordinal();
-		double offset = property2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
 			setBaseposOffset(0.0, offset, offset);

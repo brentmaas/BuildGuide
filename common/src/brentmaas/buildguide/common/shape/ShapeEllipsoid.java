@@ -22,7 +22,7 @@ public class ShapeEllipsoid extends Shape {
 	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
 	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
 	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
-	private PropertyBoolean property2x2x2 = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.basepos2x2x2"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeEllipsoid() {
 		super();
@@ -31,14 +31,14 @@ public class ShapeEllipsoid extends Shape {
 		properties.add(propertySemiY);
 		properties.add(propertySemiZ);
 		properties.add(propertyDome);
-		properties.add(property2x2x2);
+		properties.add(propertyEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int dx = propertySemiX.value;
 		int dy = propertySemiY.value;
 		int dz = propertySemiZ.value;
-		double offset = property2x2x2.value ? 0.5 : 0.0;
+		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		setBaseposOffset(offset, offset, offset);
 		
 		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0 : -dx) + offset); x <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_X ? 0 : dx) + offset);++x) {
