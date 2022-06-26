@@ -3,19 +3,21 @@ package brentmaas.buildguide.common.property;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 
-public class PropertyMinimumInt extends Property<Integer> {
+public class PropertyMinimumFloat extends Property<Float> {
 	private ITextField valueTextField;
-	private int minValue;
+	private float minValue;
+	private boolean inclusive;
 	
-	public PropertyMinimumInt(int value, String name, Runnable onPress, int minValue) {
+	public PropertyMinimumFloat(float value, String name, Runnable onPress, float minValue, boolean inclusive) {
 		super(value, name);
 		this.minValue = minValue;
+		this.inclusive = inclusive;
 		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
-			if(this.value > this.minValue) {
+			if(this.value - 1 > this.minValue || (this.inclusive && this.value - 1 == this.minValue)) {
 				--this.value;
 				valueTextField.setTextValue("" + this.value);
 				valueTextField.setTextColour(0xFFFFFF);
-				if(onPress != null) onPress.run(); 
+				if(onPress != null) onPress.run();
 			}
 		}));
 		buttonList.add(BuildGuide.widgetHandler.createButton(190, y, 20, height, "+", () -> {
@@ -26,8 +28,8 @@ public class PropertyMinimumInt extends Property<Integer> {
 		}));
 		buttonList.add(BuildGuide.widgetHandler.createButton(160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 			try {
-				int newVal = Integer.parseInt(valueTextField.getTextValue());
-				if(newVal >= this.minValue) {
+				float newVal = Float.parseFloat(valueTextField.getTextValue());
+				if(newVal > this.minValue || (this.inclusive && newVal == this.minValue)) {
 					this.value = newVal;
 					valueTextField.setTextColour(0xFFFFFF);
 					if(onPress != null) onPress.run();
@@ -44,8 +46,8 @@ public class PropertyMinimumInt extends Property<Integer> {
 		textFieldList.add(valueTextField);
 	}
 	
-	public void setValue(Integer value) {
-		if(value >= minValue) {
+	public void setValue(float value) {
+		if(value > minValue || (inclusive && value == minValue)) {
 			super.setValue(value);
 			valueTextField.setTextValue("" + value);
 			valueTextField.setTextColour(0xFFFFFF);

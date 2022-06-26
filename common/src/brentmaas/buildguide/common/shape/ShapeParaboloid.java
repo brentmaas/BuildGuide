@@ -4,7 +4,7 @@ import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapeParaboloid extends Shape {
 	private enum direction{
@@ -16,8 +16,8 @@ public class ShapeParaboloid extends Shape {
 	private String[] directionNames = {"X", "Y", "Z"};
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveInt propertyHalfwidth1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
-	private PropertyPositiveInt propertyHalfwidth2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
+	private PropertyPositiveFloat propertyHalfwidth1 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
+	private PropertyPositiveFloat propertyHalfwidth2 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
 	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
@@ -32,8 +32,7 @@ public class ShapeParaboloid extends Shape {
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		int hw1 = propertyHalfwidth1.value;
-		int hw2 = propertyHalfwidth2.value;
+		float hw1 = propertyHalfwidth1.value, hw2 = propertyHalfwidth2.value;
 		int h = propertyHeight.value;
 		double fac1 = Math.abs((double) h) / hw1 / hw1;
 		double fac2 = Math.abs((double) h) / hw2 / hw2;

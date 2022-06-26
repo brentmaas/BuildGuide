@@ -3,7 +3,7 @@ package brentmaas.buildguide.common.shape;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyInt;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 import brentmaas.buildguide.common.property.PropertyRunnable;
 
 public class ShapeCatenary extends Shape {
@@ -19,7 +19,7 @@ public class ShapeCatenary extends Shape {
 		propertyDz.setValue(pos.z - basepos.z);
 		update();
 	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
-	private PropertyPositiveInt propertyAddLength = new PropertyPositiveInt(1, BuildGuide.screenHandler.translate("property.buildguide.addlength"), () -> update());
+	private PropertyPositiveFloat propertyAddLength = new PropertyPositiveFloat(1, BuildGuide.screenHandler.translate("property.buildguide.addlength"), () -> update());
 	private PropertyBoolean propertyInvert = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.invert"), () -> update());
 	
 	public ShapeCatenary() {
@@ -36,7 +36,7 @@ public class ShapeCatenary extends Shape {
 	protected void updateShape(IShapeBuffer buffer) throws Exception {
 		double dr = Math.sqrt(propertyDx.value * propertyDx.value + propertyDz.value * propertyDz.value);
 		int dy = propertyDy.value;
-		int ds = propertyAddLength.value;
+		float ds = propertyAddLength.value;
 		boolean inv = propertyInvert.value;
 		if(dr >= 1) {
 			double s = Math.sqrt(dr * dr + dy * dy) + ds;

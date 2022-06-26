@@ -4,7 +4,7 @@ import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapeParabola extends Shape {
 	private enum direction{
@@ -29,8 +29,8 @@ public class ShapeParabola extends Shape {
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
-	private PropertyPositiveInt propertyHalfwidth = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
-	private PropertyPositiveInt propertyHeight = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
+	private PropertyPositiveFloat propertyHalfwidth = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidth"), () -> update());
+	private PropertyPositiveFloat propertyHeight = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
@@ -46,8 +46,7 @@ public class ShapeParabola extends Shape {
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		int hw = propertyHalfwidth.value;
-		int h = propertyHeight.value;
+		float hw = propertyHalfwidth.value, h = propertyHeight.value;
 		double fac = ((double) h) / hw / hw;
 		int rot = propertyRot.value.ordinal();
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;

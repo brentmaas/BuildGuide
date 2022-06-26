@@ -3,7 +3,7 @@ package brentmaas.buildguide.common.shape;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapeEllipsoid extends Shape {
 	private enum dome {
@@ -18,9 +18,9 @@ public class ShapeEllipsoid extends Shape {
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveInt propertySemiX = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"), () -> update());
-	private PropertyPositiveInt propertySemiY = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveInt propertySemiZ = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyPositiveFloat propertySemiX = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"), () -> update());
+	private PropertyPositiveFloat propertySemiY = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveFloat propertySemiZ = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
 	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
@@ -35,9 +35,7 @@ public class ShapeEllipsoid extends Shape {
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		int dx = propertySemiX.value;
-		int dy = propertySemiY.value;
-		int dz = propertySemiZ.value;
+		float dx = propertySemiX.value, dy = propertySemiY.value, dz = propertySemiZ.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		setBaseposOffset(offset, offset, offset);
 		

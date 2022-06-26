@@ -3,7 +3,7 @@ package brentmaas.buildguide.common.shape;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapeTorus extends Shape {
 	private enum direction{
@@ -15,8 +15,8 @@ public class ShapeTorus extends Shape {
 	private String[] directionNames = {"X", "Y", "Z"};
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveInt propertyOuterRadius = new PropertyPositiveInt(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
-	private PropertyPositiveInt propertyInnerRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
+	private PropertyPositiveFloat propertyOuterRadius = new PropertyPositiveFloat(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
+	private PropertyPositiveFloat propertyInnerRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeTorus() {
@@ -29,6 +29,7 @@ public class ShapeTorus extends Shape {
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
+		float or = propertyOuterRadius.value, ir = propertyInnerRadius.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
@@ -41,14 +42,14 @@ public class ShapeTorus extends Shape {
 			setBaseposOffset(offset, offset, 0.0);
 			break;
 		}
-		for(int a = (int) Math.floor(-propertyOuterRadius.value - propertyInnerRadius.value - offset);a < (int) Math.ceil(propertyOuterRadius.value + propertyInnerRadius.value + 1 + offset);++a) {
-			for(int b = (int) Math.floor(-propertyOuterRadius.value - propertyInnerRadius.value - offset);b < (int) Math.ceil(propertyOuterRadius.value + propertyInnerRadius.value + 1 + offset);++b) {
+		for(int a = (int) Math.floor(-or - ir - offset);a < (int) Math.ceil(or + ir + 1 + offset);++a) {
+			for(int b = (int) Math.floor(-or - ir - offset);b < (int) Math.ceil(or + ir + 1 + offset);++b) {
 				double theta = Math.atan2(b - offset, a - offset);
-				double a_circ = propertyOuterRadius.value * Math.cos(theta) + offset;
-				double b_circ = propertyOuterRadius.value * Math.sin(theta) + offset;
-				for(int c = -propertyInnerRadius.value;c < propertyInnerRadius.value + 1;++c) {
+				double a_circ = or * Math.cos(theta) + offset;
+				double b_circ = or * Math.sin(theta) + offset;
+				for(int c = (int) Math.floor(-ir);c < (int) Math.ceil(ir + 1);++c) {
 					double r2 = (a - a_circ) * (a - a_circ) + (b - b_circ) * (b - b_circ) + c * c;
-					if(r2 >= (propertyInnerRadius.value - 0.5) * (propertyInnerRadius.value - 0.5) && r2 < (propertyInnerRadius.value + 0.5) * (propertyInnerRadius.value + 0.5)) {
+					if(r2 >= (ir - 0.5) * (ir - 0.5) && r2 < (ir + 0.5) * (ir + 0.5)) {
 						switch(propertyDir.value) {
 						case X:
 							addShapeCube(buffer, c, b, a);

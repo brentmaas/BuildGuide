@@ -4,7 +4,7 @@ import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapeEllipse extends Shape {
 	private enum direction{
@@ -16,8 +16,8 @@ public class ShapeEllipse extends Shape {
 	private String[] directionNames = {"X", "Y", "Z"};
 	
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveInt propertySemi1 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveInt propertySemi2 = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyPositiveFloat propertySemi1 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveFloat propertySemi2 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
 	
@@ -32,7 +32,7 @@ public class ShapeEllipse extends Shape {
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		int da = propertySemi1.value, db = propertySemi2.value;
+		float da = propertySemi1.value, db = propertySemi2.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:

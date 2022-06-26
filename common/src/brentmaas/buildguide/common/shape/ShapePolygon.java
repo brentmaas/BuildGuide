@@ -5,7 +5,7 @@ import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyMinimumInt;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
-import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 
 public class ShapePolygon extends Shape {
 	private enum direction{
@@ -29,7 +29,7 @@ public class ShapePolygon extends Shape {
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
 	private PropertyMinimumInt propertySides = new PropertyMinimumInt(3, BuildGuide.screenHandler.translate("property.buildguide.sides"), () -> update(), 3);
-	private PropertyPositiveInt propertyRadius = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
+	private PropertyPositiveFloat propertyRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
 	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
@@ -48,7 +48,7 @@ public class ShapePolygon extends Shape {
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		int n = propertySides.value;
-		int r = propertyRadius.value;
+		float r = propertyRadius.value;
 		int rot = propertyRot.value.ordinal();
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
