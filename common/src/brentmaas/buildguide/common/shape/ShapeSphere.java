@@ -35,9 +35,9 @@ public class ShapeSphere extends Shape {
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		setBaseposOffset(offset, offset, offset);
 		
-		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0 : -radius) + offset); x <= Math.ceil((propertyDome.value == dome.NEGATIVE_X ? 0 : radius) + offset);++x) {
-			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0 : -radius) + offset); y <= Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? 0 : radius) + offset);++y) {
-				for(int z = (int) Math.floor((propertyDome.value == dome.POSITIVE_Z ? 0 : -radius) + offset); z <= Math.ceil((propertyDome.value == dome.NEGATIVE_Z ? 0 : radius) + offset);++z) {
+		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0.5 : -radius) + offset); x <= Math.ceil((propertyDome.value == dome.NEGATIVE_X ? -0.5 : radius) + offset);++x) {
+			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0.5 : -radius) + offset); y <= Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? -0.5 : radius) + offset);++y) {
+				for(int z = (int) Math.floor((propertyDome.value == dome.POSITIVE_Z ? 0.5 : -radius) + offset); z <= Math.ceil((propertyDome.value == dome.NEGATIVE_Z ? -0.5 : radius) + offset);++z) {
 					double r2 = (x - offset) * (x - offset) + (y - offset) * (y - offset) + (z - offset) * (z - offset);
 					if(r2 >= (radius - 0.5) * (radius - 0.5) && r2 <= (radius + 0.5) * (radius + 0.5)) {
 						addShapeCube(buffer, x, y, z);

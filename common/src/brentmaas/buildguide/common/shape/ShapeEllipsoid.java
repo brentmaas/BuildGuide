@@ -39,9 +39,9 @@ public class ShapeEllipsoid extends Shape {
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		setBaseposOffset(offset, offset, offset);
 		
-		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0 : -dx) + offset); x <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_X ? 0 : dx) + offset);++x) {
-			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0 : -dy) + offset); y <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? 0 : dy) + offset);++y) {
-				for(int z = (int) Math.floor((propertyDome.value == dome.POSITIVE_Z ? 0 : -dz) + offset); z <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_Z ? 0 : dz) + offset);++z) {
+		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0.5 : -dx) + offset); x <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_X ? -0.5 : dx) + offset);++x) {
+			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0.5 : -dy) + offset); y <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? -0.5 : dy) + offset);++y) {
+				for(int z = (int) Math.floor((propertyDome.value == dome.POSITIVE_Z ? 0.5 : -dz) + offset); z <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_Z ? -0.5 : dz) + offset);++z) {
 					double phi = Math.atan2((double) dx / dy * (y - offset), x - offset);
 					double theta = Math.atan2(Math.sqrt((x - offset) * (x - offset) + (double) dx * dx / dy / dy * (y - offset) * (y - offset)), (double) dx / dz * (z - offset));
 					double corr = Math.sqrt(1 + ((double) dx * dx / dy / dy - 1) * Math.sin(phi) * Math.sin(phi) * Math.sin(theta) * Math.sin(theta) + ((double) dx * dx / dz / dz - 1) * Math.cos(theta) * Math.cos(theta));
