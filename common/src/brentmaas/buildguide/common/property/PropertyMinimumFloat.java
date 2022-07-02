@@ -46,7 +46,7 @@ public class PropertyMinimumFloat extends Property<Float> {
 		textFieldList.add(valueTextField);
 	}
 	
-	public void setValue(float value) {
+	public void setValue(Float value) {
 		if(value > minValue || (inclusive && value == minValue)) {
 			super.setValue(value);
 			valueTextField.setTextValue("" + value);

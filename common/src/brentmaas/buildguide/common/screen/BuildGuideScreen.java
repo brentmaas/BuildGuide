@@ -150,7 +150,6 @@ public class BuildGuideScreen extends PropertyScreen{
 		int colourFraction = (int) Math.max(Math.min(BuildGuide.stateManager.getState().getCurrentShape().getHowLongAgoCompletedMillis() * 0xFF / 1000, 0xFF), 0);
 		String progressIndicatorPart = "";
 		if(!BuildGuide.stateManager.getState().getCurrentShape().ready) {
-			System.out.println("not ready");
 			long time = System.currentTimeMillis();
 			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
 		}

@@ -68,7 +68,7 @@ public class ShapeTorus extends Shape {
 	}
 	
 	private void updateOuter() {
-		if(propertyOuterRadius.value < propertyInnerRadius.value) propertyInnerRadius.setValue(propertyOuterRadius.value);;
+		if(propertyOuterRadius.value < propertyInnerRadius.value) propertyInnerRadius.setValue(propertyOuterRadius.value);
 		
 		update();
 	}
