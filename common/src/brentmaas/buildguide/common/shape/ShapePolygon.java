@@ -63,27 +63,28 @@ public class ShapePolygon extends Shape {
 			break;
 		}
 		for(int i = 0;i < n;++i) {
-			int minA = (int) Math.floor(Math.min(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))));
-			int minB = (int) Math.floor(Math.min(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
-			int maxA = (int) Math.ceil(Math.max(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))));
-			int maxB = (int) Math.ceil(Math.max(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))));
-			for(int a = (int) Math.floor(minA + offset);a < (int) Math.ceil(maxA + 1 + offset);++a) {
-				for(int b = (int) Math.floor(minB + offset);b < (int) Math.ceil(maxB + 1 + offset);++b) {
-					double adx = (a - offset - r * Math.sin(2 * Math.PI * i / n)) * Math.cos(2 * Math.PI * i / n) + (b - offset + r * Math.cos(2 * Math.PI * i / n)) * Math.sin(2 * Math.PI * i / n);
-					double d2 = (a - offset - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) * (a - offset - r * Math.sin(2 * Math.PI * i / n) - adx * Math.cos(2 * Math.PI * i / n)) + (b - offset + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n)) * (b - offset + r * Math.cos(2 * Math.PI * i / n) - adx * Math.sin(2 * Math.PI * i / n));
+			int minB = (int) Math.floor(Math.min(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
+			int maxA = (int) Math.ceil(Math.max(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))) + offset);
+			int maxB = (int) Math.ceil(Math.max(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
+			for(int a = 0;a <= maxA;++a) {
+				for(int b = minB;b <= maxB;++b) {
 					double theta = Math.atan2(b - offset, a - offset) + Math.PI / 2;
+					double dr = (a - offset) * Math.sin(2 * Math.PI * i / n) - (b - offset) * Math.cos(2 * Math.PI * i / n) - r;
 					if(theta < 0 && i > 0) theta += 2 * Math.PI;
-					if(d2 <= 0.25 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
+					if(dr >= -0.5 && dr < 0.5 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
 						for(int h = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);h < (propertyDepth.value > 0 ? propertyDepth.value : 1);++h) {
 							switch(propertyDir.value) {
 							case X:
 								addShapeCube(buffer, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);
+								if(a != 0) addShapeCube(buffer, h, b * rotXX[rot] - a * rotYX[rot], -a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Y:
 								addShapeCube(buffer, b * rotXX[rot] + a * rotYX[rot], h, a * rotXX[rot] + b * rotXY[rot]);
+								if(a != 0) addShapeCube(buffer, b * rotXX[rot] - a * rotYX[rot], h, -a * rotXX[rot] + b * rotXY[rot]);
 								break;
 							case Z:
 								addShapeCube(buffer, a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] + a * rotYX[rot], h);
+								if(a != 0) addShapeCube(buffer, -a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] - a * rotYX[rot], h);
 								break;
 							}
 						}
