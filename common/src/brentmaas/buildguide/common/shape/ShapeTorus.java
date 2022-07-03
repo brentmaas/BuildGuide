@@ -17,7 +17,8 @@ public class ShapeTorus extends Shape {
 	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
 	private PropertyPositiveFloat propertyOuterRadius = new PropertyPositiveFloat(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
 	private PropertyPositiveFloat propertyInnerRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyBoolean propertyOuterEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.outerevenmode"), () -> update());
+	private PropertyBoolean propertyInnerEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.innerevenmode"), () -> update());
 	
 	public ShapeTorus() {
 		super();
@@ -25,30 +26,32 @@ public class ShapeTorus extends Shape {
 		properties.add(propertyDir);
 		properties.add(propertyOuterRadius);
 		properties.add(propertyInnerRadius);
-		properties.add(propertyEvenMode);
+		properties.add(propertyOuterEvenMode);
+		properties.add(propertyInnerEvenMode);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		float or = propertyOuterRadius.value, ir = propertyInnerRadius.value;
-		double offset = propertyEvenMode.value ? 0.5 : 0.0;
+		double offsetOuter = propertyOuterEvenMode.value ? 0.5 : 0.0;
+		double offsetInner = propertyInnerEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
-			setBaseposOffset(0.0, offset, offset);
+			setBaseposOffset(offsetInner, offsetOuter, offsetOuter);
 			break;
 		case Y:
-			setBaseposOffset(offset, 0.0, offset);
+			setBaseposOffset(offsetOuter, offsetInner, offsetOuter);
 			break;
 		case Z:
-			setBaseposOffset(offset, offset, 0.0);
+			setBaseposOffset(offsetOuter, offsetOuter, offsetInner);
 			break;
 		}
-		for(int a = (int) Math.floor(-or - ir - offset);a < (int) Math.ceil(or + ir + 1 + offset);++a) {
-			for(int b = (int) Math.floor(-or - ir - offset);b < (int) Math.ceil(or + ir + 1 + offset);++b) {
-				double theta = Math.atan2(b - offset, a - offset);
-				double a_circ = or * Math.cos(theta) + offset;
-				double b_circ = or * Math.sin(theta) + offset;
-				for(int c = (int) Math.floor(-ir);c < (int) Math.ceil(ir + 1);++c) {
-					double r2 = (a - a_circ) * (a - a_circ) + (b - b_circ) * (b - b_circ) + c * c;
+		for(int a = (int) Math.floor(-or - ir - offsetOuter);a < (int) Math.ceil(or + ir + 1 + offsetOuter);++a) {
+			for(int b = (int) Math.floor(-or - ir - offsetOuter);b < (int) Math.ceil(or + ir + 1 + offsetOuter);++b) {
+				double theta = Math.atan2(b - offsetOuter, a - offsetOuter);
+				double a_circ = or * Math.cos(theta) + offsetOuter;
+				double b_circ = or * Math.sin(theta) + offsetOuter;
+				for(int c = (int) Math.floor(-ir + offsetInner);c < (int) Math.ceil(ir + 1 + offsetInner);++c) {
+					double r2 = (a - a_circ) * (a - a_circ) + (b - b_circ) * (b - b_circ) + (c - offsetInner) * (c - offsetInner);
 					if(r2 >= (ir - 0.5) * (ir - 0.5) && r2 < (ir + 0.5) * (ir + 0.5)) {
 						switch(propertyDir.value) {
 						case X:
