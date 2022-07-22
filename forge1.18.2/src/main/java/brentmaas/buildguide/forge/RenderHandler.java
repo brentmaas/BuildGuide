@@ -13,7 +13,8 @@ import brentmaas.buildguide.forge.shape.ShapeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent.Stage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -26,11 +27,13 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	@SubscribeEvent
-	public void onRenderBlock(RenderLevelLastEvent event) {
-		poseStackInstance = event.getPoseStack();
-		projectionMatrixInstance = event.getProjectionMatrix();
-		
-		render();
+	public void onRenderBlock(RenderLevelStageEvent event) {
+		if(event.getStage() == Stage.AFTER_WEATHER) {
+			poseStackInstance = event.getPoseStack();
+			projectionMatrixInstance = event.getProjectionMatrix();
+			
+			render();
+		}
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
