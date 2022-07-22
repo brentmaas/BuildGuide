@@ -15,7 +15,7 @@ public class Config {
 	
 	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", false, "Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.");
 	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", true, "Enable asynchronous (multithreaded) shape generation.");
-	public ConfigElement<Boolean> advancedRandomColorsDefaultEnabled = new BooleanConfigElement("advancedRandomColorsDefaultEnabled", true, "Enable random colors for new shapes in advanced mode by default.");
+	public ConfigElement<Boolean> advancedRandomColorsDefaultEnabled = new BooleanConfigElement("advancedRandomColorsDefaultEnabled", false, "Enable random colors for new shapes in advanced mode by default.");
 	
 	public Config(String configFolder) {
 		configFile = new File(configFolder + "buildguide.cfg");

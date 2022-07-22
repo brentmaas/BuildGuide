@@ -147,15 +147,15 @@ public class BuildGuideScreen extends PropertyScreen{
 		drawShadowCentred("" + n, 355, 30, 0xFFFFFF);
 		drawShadowCentred("(" + (n / 64) + " x 64 + " + (n % 64) + ")", 355, 45, 0xFFFFFF);
 		
-		int colourFraction = (int) Math.max(Math.min(BuildGuide.stateManager.getState().getCurrentShape().getHowLongAgoCompletedMillis() * 0xFF / 1000, 0xFF), 0);
+		int colourFraction = (int) Math.max(Math.min((BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getHowLongAgoCompletedMillis() : 2000) * 0xFF / 1000, 0xFF), 0);
 		String progressIndicatorPart = "";
-		if(!BuildGuide.stateManager.getState().getCurrentShape().ready) {
+		if(BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShape().ready) {
 			long time = System.currentTimeMillis();
 			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
 		}
 		drawShadow(textShape, 5, 30, 0xFFFFFF);
 		String shapeName = (BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShape().visible ? "\247m" : "") + (BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
-		drawShadowCentred(shapeName, 110, 30, BuildGuide.stateManager.getState().getCurrentShape().error ? 0xFF0000 : (0x00FF00 + colourFraction * 0x010001));
+		drawShadowCentred(shapeName, 110, 30, BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShape().error ? 0xFF0000 : (0x00FF00 + colourFraction * 0x010001));
 		
 		drawShadow("X", 170, 50, 0xFFFFFF);
 		drawShadow("Y", 170, 70, 0xFFFFFF);
