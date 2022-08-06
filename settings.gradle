@@ -30,7 +30,7 @@ gradle.ext.fabricname = rootProject.name + '-Fabric'
 gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
 
-gradle.ext.mcversions = ['1.16.5', '1.17.1', '1.18.2']
+gradle.ext.mcversions = ['1.16.5', '1.17.1', '1.18.2', '1.19.1']
 
 include 'common'
 

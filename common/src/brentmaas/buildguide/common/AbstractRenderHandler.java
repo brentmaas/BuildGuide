@@ -55,6 +55,11 @@ public abstract class AbstractRenderHandler {
 		if(shape.lock.tryLock()) {
 			try {
 				if(shape.visible && shape.ready && !shape.error) {
+					if(!shape.vertexBufferUnpacked) {
+						shape.buffer.end();
+						shape.vertexBufferUnpacked = true;
+					}
+					
 					setupRenderingShape(shape);
 					
 					boolean toggleTexture = textureEnabled();

@@ -54,7 +54,6 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonGlobalBasepos = BuildGuide.widgetHandler.createButton(0, 125, 140, 20, BuildGuide.screenHandler.translate("screen.buildguide.setglobalbasepos"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) setGlobalBasepos();
 	});
-	//TODO World manager button
 	private IButton buttonBaseposXDecrease = BuildGuide.widgetHandler.createButton(20, 145, 20, 20, "-", () -> shiftGlobalBasepos(-1, 0, 0));
 	private IButton buttonBaseposXIncrease = BuildGuide.widgetHandler.createButton(120, 145, 20, 20, "+", () -> shiftGlobalBasepos(1, 0, 0));
 	private IButton buttonBaseposYDecrease = BuildGuide.widgetHandler.createButton(20, 165, 20, 20, "-", () -> shiftGlobalBasepos(0, -1, 0));

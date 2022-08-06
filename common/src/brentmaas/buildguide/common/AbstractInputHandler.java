@@ -24,8 +24,6 @@ public abstract class AbstractInputHandler {
 		toggleEnable = registerKeyBind("key.buildguide.toggleenable", KeyCode.GLFW_KEY_UNKNOWN);
 		setBasepos = registerKeyBind("key.buildguide.setbasepos", KeyCode.GLFW_KEY_UNKNOWN);
 		setGlobalBasepos = registerKeyBind("key.buildguide.setglobalbasepos", KeyCode.GLFW_KEY_UNKNOWN);
-		
-		registerOnKeyInput();
 	}
 	
 	public void onKeyInput() {

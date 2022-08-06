@@ -15,6 +15,7 @@ public abstract class Shape {
 	private int nBlocks = 0;
 	public boolean visible = true;
 	public boolean ready = false;
+	public boolean vertexBufferUnpacked = false;
 	
 	public Basepos basepos = null;
 	
@@ -44,12 +45,14 @@ public abstract class Shape {
 	public void update() {
 		if(BuildGuide.config.asyncEnabled.value) {
 			ready = false;
+			vertexBufferUnpacked = false;
 			if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
 			if(buffer != null) buffer.close(); //Can only be done in render thread
 			future = executor.submit(() -> {
 				try {
 					lock.lock();
 					ready = false; //Again in case of a second thread started before a first thread ended
+					vertexBufferUnpacked = false;
 					error = false;
 					doUpdate();
 				}catch(InterruptedException e) {
@@ -65,6 +68,7 @@ public abstract class Shape {
 			});
 		}else {
 			ready = false;
+			vertexBufferUnpacked = false;
 			error = false;
 			if(buffer != null) buffer.close();
 			try {
@@ -89,7 +93,6 @@ public abstract class Shape {
 		updateShape(buffer);
 		buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
 		addCube(buffer, 0.4 + baseposOffsetX, 0.4 + baseposOffsetY, 0.4 + baseposOffsetZ, 0.2);
-		buffer.end();
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
 			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
