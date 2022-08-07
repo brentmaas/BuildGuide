@@ -2,21 +2,13 @@ package brentmaas.buildguide.forge.screen.widget;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.opengl.GL11;
-
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.IShapeList.IEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ObjectSelectionList;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 
 public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> implements IShapeList {
@@ -64,60 +56,29 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 	}
 	
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
-		if(!hasBlend) RenderSystem.enableBlend();
-		
-		Tesselator tessellator = Tesselator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
-		RenderSystem.setShader(GameRenderer::getPositionShader);
-		RenderSystem.setShaderColor(0, 0, 0, 0.2f);
-		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-		bufferBuilder.vertex(x0, y0, 0).endVertex();
-		bufferBuilder.vertex(x0, y1, 0).endVertex();
-		bufferBuilder.vertex(x1, y1, 0).endVertex();
-		bufferBuilder.vertex(x1, y0, 0).endVertex();
-		tessellator.end();
-		
-		if(!hasBlend) RenderSystem.disableBlend();
-		
+		fill(poseStack, x0, y0, x1, y1, (int) 0x33000000);
 		super.render(poseStack, mouseX, mouseY, partialTicks);
 	}
 	
-	protected void renderList(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
-		
-		if(!hasDepthTest) RenderSystem.enableDepthTest();
-		if(!hasDepthMask) RenderSystem.depthMask(true);
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
-		if(!hasBlend) RenderSystem.enableBlend();
-		
-		Tesselator tessellator = Tesselator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
-		RenderSystem.setShader(GameRenderer::getPositionShader);
-		RenderSystem.setShaderColor(0, 0, 0, 0);
-		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-		bufferBuilder.vertex(x0, y0 - itemHeight - 4, 0.1).endVertex();
-		bufferBuilder.vertex(x0, y0, 0.1).endVertex();
-		bufferBuilder.vertex(x1, y0, 0.1).endVertex();
-		bufferBuilder.vertex(x1, y0 - itemHeight - 4, 0.1).endVertex();
-		tessellator.end();
-		
-		super.renderList(poseStack, mouseX, mouseY, partialTicks);
-		
-		if(!hasBlend) RenderSystem.disableBlend();
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
-		if(!hasDepthMask) RenderSystem.depthMask(false);
-		if(!hasDepthTest) RenderSystem.disableDepthTest();
+	@Override
+	protected void renderSelection(PoseStack poseStack, int top, int width, int height, int colourOuter, int colourInner) {
+		int left = x0 + (this.width - width) / 2;
+		int right = x0 + (this.width + width) / 2;
+		boundedFill(poseStack, left, top - 2, right, top + height + 2, x0, y0, x1, y1, colourOuter);
+		boundedFill(poseStack, left + 1, top - 1, right - 1, top + height + 1, x0, y0, x1, y1, colourInner);
 	}
-
+	
+	private void boundedFill(PoseStack poseStack, int left, int top, int right, int bottom, int boundLeft, int boundTop, int boundRight, int boundBottom, int colour) {
+		if(left < boundRight && top < boundBottom && right > boundLeft && bottom > boundTop) {
+			fill(poseStack, Math.max(left, boundLeft), Math.max(top, boundTop), Math.min(right, boundRight), Math.min(bottom, boundBottom), colour);
+		}
+	}
+	
 	@Override
 	public int getRowWidth() {
 		return width - 12;
 	}
-
+	
 	@Override
 	protected int getScrollbarPosition() {
 		return x1 - 6;

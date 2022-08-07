@@ -1,20 +1,12 @@
 package brentmaas.buildguide.fabric.screen.widget;
 
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.opengl.GL11;
-
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.IShapeList.IEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -67,53 +59,22 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 	}
 	
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
-		if(!hasBlend) RenderSystem.enableBlend();
-		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		RenderSystem.setShader(GameRenderer::getPositionShader);
-		RenderSystem.setShaderColor(0, 0, 0, 0.2f);
-		bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION);
-		bufferBuilder.vertex(left, top, 0).next();
-		bufferBuilder.vertex(left, bottom, 0).next();
-		bufferBuilder.vertex(right, bottom, 0).next();
-		bufferBuilder.vertex(right, top, 0).next();
-		tessellator.draw();
-		
-		if(!hasBlend) RenderSystem.disableBlend();
-		
+		fill(matrixStack, left, top, right, bottom, (int) 0x33000000);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 	
-	protected void renderList(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
-		
-		if(!hasDepthTest) RenderSystem.enableDepthTest();
-		if(!hasDepthMask) RenderSystem.depthMask(true);
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
-		if(!hasBlend) RenderSystem.enableBlend();
-		
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuffer();
-		RenderSystem.setShader(GameRenderer::getPositionShader);
-		RenderSystem.setShaderColor(0, 0, 0, 0);
-		bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION);
-		bufferBuilder.vertex(left, top - itemHeight - 4, 0.1).next();
-		bufferBuilder.vertex(left, top, 0.1).next();
-		bufferBuilder.vertex(right, top, 0.1).next();
-		bufferBuilder.vertex(right, top - itemHeight - 4, 0.1).next();
-		tessellator.draw();
-		
-		super.renderList(matrixStack, mouseX, mouseY, partialTicks);
-		
-		if(!hasBlend) RenderSystem.disableBlend();
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
-		if(!hasDepthMask) RenderSystem.depthMask(false);
-		if(!hasDepthTest) RenderSystem.disableDepthTest();
+	@Override
+	protected void drawSelectionHighlight(MatrixStack matrixStack, int top, int width, int height, int colourOuter, int colourInner) {
+		int left = this.left + (this.width - width) / 2;
+		int right = this.left + (this.width + width) / 2;
+		boundedFill(matrixStack, left, top - 2, right, top + height + 2, this.left, this.top, this.right, this.bottom, colourOuter);
+		boundedFill(matrixStack, left + 1, top - 1, right - 1, top + height + 1, this.left, this.top, this.right, this.bottom, colourInner);
+	}
+	
+	private void boundedFill(MatrixStack poseStack, int left, int top, int right, int bottom, int boundLeft, int boundTop, int boundRight, int boundBottom, int colour) {
+		if(left < boundRight && top < boundBottom && right > boundLeft && bottom > boundTop) {
+			fill(poseStack, Math.max(left, boundLeft), Math.max(top, boundTop), Math.min(right, boundRight), Math.min(bottom, boundBottom), colour);
+		}
 	}
 	
 	@Override
