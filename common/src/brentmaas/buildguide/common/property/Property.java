@@ -74,13 +74,13 @@ public abstract class Property<T> {
 	public void setSlot(int slot) {
 		y = baseY + slot * height;
 		for(IButton button: buttonList) {
-			button.setY(y);
+			button.setYPosition(y);
 		}
 		for(ITextField textField: textFieldList) {
-			textField.setY(y);
+			textField.setYPosition(y);
 		}
 		for(ICheckboxRunnableButton checkbox: checkboxList) {
-			checkbox.setY(y);
+			checkbox.setYPosition(y);
 		}
 	}
 	

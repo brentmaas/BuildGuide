@@ -19,7 +19,7 @@ public class ButtonImpl extends ButtonWidget implements IButton {
 		super(x, y, width, height, new LiteralText(text), button -> onPress.onPress());
 	}
 	
-	public void setY(int y) {
+	public void setYPosition(int y) {
 		this.y = y;
 	}
 }

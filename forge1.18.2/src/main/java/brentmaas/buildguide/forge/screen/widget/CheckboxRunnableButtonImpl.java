@@ -33,7 +33,7 @@ public class CheckboxRunnableButtonImpl extends Checkbox implements ICheckboxRun
 		this.active = active;
 	}
 	
-	public void setY(int y) {
+	public void setYPosition(int y) {
 		this.y = y;
 	}
 }

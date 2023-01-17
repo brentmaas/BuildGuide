@@ -13,7 +13,7 @@ public interface ICheckboxRunnableButton {
 	
 	public void setActive(boolean active);
 	
-	public void setY(int y);
+	public void setYPosition(int y);
 	
 	public interface IPressable{
 		void onPress();

@@ -9,7 +9,7 @@ public interface ITextField {
 	
 	public void setVisibility(boolean visible);
 	
-	public void setY(int y);
+	public void setYPosition(int y);
 	
 	public String getTextValue();
 }

@@ -33,7 +33,7 @@ protected final ICheckboxRunnableButton.IPressable onPress;
 		this.active = active;
 	}
 	
-	public void setY(int y) {
+	public void setYPosition(int y) {
 		this.y = y;
 	}
 }

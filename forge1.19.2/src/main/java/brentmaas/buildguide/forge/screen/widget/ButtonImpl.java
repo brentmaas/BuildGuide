@@ -15,7 +15,7 @@ public class ButtonImpl extends Button implements IButton {
 		this.active = active;
 	}
 	
-	public void setY(int y) {
+	public void setYPosition(int y) {
 		this.y = y;
 	}
 	
