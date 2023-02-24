@@ -1,32 +1,58 @@
-task unpackjars {
-	def commonfolder = file('./build/tmp/common')
-	if(commonfolder.exists()) {
-		delete commonfolder
-	}
-    copy {
-        from fileTree('./common/resources')
-        into commonfolder
-    }
-    
-    gradle.ext.mcversions.each {
-        def folder = file('./build/tmp/' + it)
-        if(folder.exists()) {
-            delete folder
+task cleantmp {
+    doFirst {
+        def commonfolder = file('./build/tmp/common')
+        if(commonfolder.exists()) {
+            delete commonfolder
         }
-        file(folder.absolutePath + '/META-INF').mkdirs()
-        
-        def manifest = file('./build/tmp/' + it + '/META-INF/MANIFEST.MF')
-        manifest.text = 'Manifest-Version: 1.0\n'
-        
-        def fabricjar = file('./fabric' + it + '/build/libs/' + gradle.ext.fabricname + '-' + gradle.ext.modversion + '.jar')
-        if(fabricjar.exists()) {
+        gradle.ext.mcversions.each {
+            def folder = file('./build/tmp/' + it)
+            if(folder.exists()) {
+                delete folder
+            }
             def fabrictmp = file('./build/tmp/fabric' + it)
             if(fabrictmp.exists()) {
                 delete fabrictmp
             }
+            def forgetmp = file('./build/tmp/forge' + it)
+            if(forgetmp.exists()) {
+                delete forgetmp
+            }
+        }
+    }
+}
+
+task unpackjars {
+    dependsOn ':cleantmp'
+    dependsOn ':common:build'
+    gradle.ext.mcversions.each {
+		dependsOn ':fabric' + it + ':build'
+		dependsOn ':forge' + it + ':build'
+	}
+    
+    def commonfolder = file('./build/tmp/common')
+    
+    doFirst {
+        copy {
+            from fileTree('./common/resources')
+            into commonfolder
+        }
+        copy {
+            from zipTree('./common/build/libs/common.jar')
+            into commonfolder
+        }
+        
+        gradle.ext.mcversions.each {
+            def mcversion = it
+            def folder = file('./build/tmp/' + mcversion)
+            file(folder.absolutePath + '/META-INF').mkdirs()
+            
+            def manifest = file('./build/tmp/' + mcversion + '/META-INF/MANIFEST.MF')
+            manifest.text = 'Manifest-Version: 1.0\n'
+            
+            def fabrictmp = file('./build/tmp/fabric' + mcversion)
             copy {
-                from(zipTree(fabricjar))
-                into(fabrictmp)
+                from zipTree('./fabric' + mcversion + '/build/libs/' + gradle.ext.fabricname + '-' + gradle.ext.modversion + '.jar')
+                into fabrictmp
             }
             fileTree(fabrictmp).each {
                 def relpath = it.absolutePath.substring(fabrictmp.absolutePath.length())
@@ -43,17 +69,11 @@ task unpackjars {
                     }
                 }
             }
-        }
-        
-        def forgejar = file('./forge' + it + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
-        if(forgejar.exists()) {
-            def forgetmp = file('./build/tmp/forge' + it)
-            if(forgetmp.exists()) {
-                delete forgetmp
-            }
+            
+            def forgetmp = file('./build/tmp/forge' + mcversion)
             copy {
-                from(zipTree(forgejar))
-                into(forgetmp)
+                from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
+                into forgetmp
             }
             fileTree(forgetmp).each {
                 def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
@@ -74,10 +94,6 @@ task unpackjars {
     }
     
 	doLast {
-		copy {
-			from zipTree('./common/build/libs/common.jar')
-			into commonfolder
-		}
 		delete commonfolder.absolutePath + '/META-INF'
 		
 		gradle.ext.mcversions.each {
@@ -102,8 +118,7 @@ task unpackjars {
 gradle.ext.mcversions.each {
 	def mcversion = it
 	task "zip$it"(type: Zip, dependsOn: "unpackjars") {
-		dependsOn ':fabric' + mcversion + ':build'
-		dependsOn ':forge' + mcversion + ':build'
+        dependsOn ':unpackjars'
 		from fileTree('./build/tmp/' + mcversion)
 		archiveName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
 		destinationDir = file('./build/libs')
@@ -111,7 +126,6 @@ gradle.ext.mcversions.each {
 }
 
 task build {
-	dependsOn unpackjars
 	gradle.ext.mcversions.each {
 		dependsOn tasks.getByName("zip$it")
 	}
