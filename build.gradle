@@ -80,6 +80,8 @@ task unpackjars {
                 def target = file(folder.absolutePath + relpath)
                 if(relpath == '\\META-INF\\MANIFEST.MF') {
                     manifest.text += it.text.substring(it.text.indexOf('\n') + 1)
+                }else if(relpath == '\\META-INF\\mods.toml'){
+                    target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
                 }else if(!target.exists()){
                     def source = it
                     def targetParent = target.getParentFile()
