@@ -18,10 +18,10 @@ public class CheckboxRunnableButtonImpl extends CheckboxWidget implements ICheck
 	}
 	
 	public void setChecked(boolean checked) {
-		if(isSelected() != checked) onPress();
+		if(isCheckboxSelected() != checked) onPress();
 	}
 	
-	public boolean isSelected() {
+	public boolean isCheckboxSelected() {
 		return isChecked();
 	}
 	

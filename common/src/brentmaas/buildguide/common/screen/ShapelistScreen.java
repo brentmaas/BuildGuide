@@ -230,7 +230,7 @@ public class ShapelistScreen extends BaseScreen {
 	}
 	
 	private void setShapeVisibility() {
-		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShape().visible = buttonVisible.isSelected();
+		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShape().visible = buttonVisible.isCheckboxSelected();
 	}
 	
 	private void checkActive() {

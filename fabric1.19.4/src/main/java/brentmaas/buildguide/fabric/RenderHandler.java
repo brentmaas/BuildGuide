@@ -62,8 +62,7 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	protected void setTexture(boolean enabled) {
-		if(enabled) RenderSystem.enableTexture();
-		else RenderSystem.disableTexture();
+		//Appears to not be needed/available in 1.19.4
 	}
 	
 	protected void setDepthTest(boolean enabled) {

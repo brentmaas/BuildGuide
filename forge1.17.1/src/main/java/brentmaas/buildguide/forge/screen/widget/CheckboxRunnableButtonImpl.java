@@ -21,7 +21,7 @@ protected final ICheckboxRunnableButton.IPressable onPress;
 		if(selected() != checked) onPress();
 	}
 	
-	public boolean isSelected() {
+	public boolean isCheckboxSelected() {
 		return selected();
 	}
 	

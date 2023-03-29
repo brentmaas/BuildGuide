@@ -7,7 +7,7 @@ public interface ICheckboxRunnableButton {
 	
 	public void setChecked(boolean checked);
 	
-	public boolean isSelected();
+	public boolean isCheckboxSelected();
 	
 	public void setVisible(boolean visible);
 	

@@ -21,7 +21,7 @@ public class CheckboxRunnableButtonImpl extends Checkbox implements ICheckboxRun
 		if(selected() != checked) onPress();
 	}
 	
-	public boolean isSelected() {
+	public boolean isCheckboxSelected() {
 		return selected();
 	}
 	

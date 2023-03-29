@@ -24,10 +24,10 @@
   },
 
   "depends": {
-    "fabricloader": ">=0.14.12",
+    "fabricloader": ">=0.14.18",
     "fabric-key-binding-api-v1": "*",
-    "fabric": ">=0.72.0",
-    "minecraft": "~1.19",
+    "fabric": ">=0.76.0",
+    "minecraft": "~1.19.4",
     "java": ">=17"
   }
 }
