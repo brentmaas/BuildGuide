@@ -42,7 +42,7 @@ public class RenderHandler extends AbstractRenderHandler{
 		
 		poseStackInstance.pushPose();
 		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-		poseStackInstance.translate(-projectedView.x + shape.basepos.x, -projectedView.y + shape.basepos.y, -projectedView.z + shape.basepos.z);
+		poseStackInstance.translate(-projectedView.x + shape.origin.x, -projectedView.y + shape.origin.y, -projectedView.z + shape.origin.z);
 	}
 	
 	protected void endRenderingShape() {

@@ -40,7 +40,7 @@ public abstract class AbstractRenderHandler {
 	public void render() {
 		pushProfiler(BuildGuide.modid);
 		
-		if(BuildGuide.stateManager.getState().propertyEnable.value && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShape().basepos != null) {
+		if(BuildGuide.stateManager.getState().propertyEnable.value && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShape().origin != null) {
 			if(BuildGuide.stateManager.getState().propertyAdvancedMode.value) {
 				for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) renderShape(s);
 			}else {

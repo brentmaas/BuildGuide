@@ -17,21 +17,21 @@ public abstract class Shape {
 	public boolean ready = false;
 	public boolean vertexBufferUnpacked = false;
 	
-	public Basepos basepos = null;
+	public Origin origin = null;
 	
 	public float colourShapeR = 1.0f;
 	public float colourShapeG = 1.0f;
 	public float colourShapeB = 1.0f;
 	public float colourShapeA = 0.5f;
 	
-	public float colourBaseposR = 1.0f;
-	public float colourBaseposG = 0.0f;
-	public float colourBaseposB = 0.0f;
-	public float colourBaseposA = 0.5f;
+	public float colourOriginR = 1.0f;
+	public float colourOriginG = 0.0f;
+	public float colourOriginB = 0.0f;
+	public float colourOriginA = 0.5f;
 	
-	protected double baseposOffsetX = 0.0;
-	protected double baseposOffsetY = 0.0;
-	protected double baseposOffsetZ = 0.0;
+	protected double originOffsetX = 0.0;
+	protected double originOffsetY = 0.0;
+	protected double originOffsetZ = 0.0;
 	
 	private static ExecutorService executor = Executors.newCachedThreadPool();
 	public ReentrantLock lock = new ReentrantLock();
@@ -91,8 +91,8 @@ public abstract class Shape {
 		buffer = BuildGuide.shapeHandler.newBuffer();
 		buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
 		updateShape(buffer);
-		buffer.setColour((int) (255 * colourBaseposR), (int) (255 * colourBaseposG), (int) (255 * colourBaseposB), (int) (255 * colourBaseposA));
-		addCube(buffer, 0.4 + baseposOffsetX, 0.4 + baseposOffsetY, 0.4 + baseposOffsetZ, 0.2);
+		buffer.setColour((int) (255 * colourOriginR), (int) (255 * colourOriginG), (int) (255 * colourOriginB), (int) (255 * colourOriginA));
+		addCube(buffer, 0.4 + originOffsetX, 0.4 + originOffsetY, 0.4 + originOffsetZ, 0.2);
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
 			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
@@ -144,10 +144,10 @@ public abstract class Shape {
 		++nBlocks;
 	}
 	
-	protected void setBaseposOffset(double dx, double dy, double dz) {
-		baseposOffsetX = dx;
-		baseposOffsetY = dy;
-		baseposOffsetZ = dz;
+	protected void setOriginOffset(double dx, double dy, double dz) {
+		originOffsetX = dx;
+		originOffsetY = dy;
+		originOffsetZ = dz;
 	}
 	
 	public void onSelectedInGUI() {
@@ -176,24 +176,24 @@ public abstract class Shape {
 		return System.currentTimeMillis() - completedAt;
 	}
 	
-	public void resetBasepos() {
-		basepos = BuildGuide.shapeHandler.getPlayerPosition();
+	public void resetOrigin() {
+		origin = BuildGuide.shapeHandler.getPlayerPosition();
 	}
 	
-	public void setBasepos(int x, int y, int z) {
-		basepos = new Basepos(x, y, z);
+	public void setOrigin(int x, int y, int z) {
+		origin = new Origin(x, y, z);
 	}
 	
-	public void shiftBasepos(int dx, int dy, int dz) {
-		basepos.x += dx;
-		basepos.y += dy;
-		basepos.z += dz;
+	public void shiftOrigin(int dx, int dy, int dz) {
+		origin.x += dx;
+		origin.y += dy;
+		origin.z += dz;
 	}
 	
-	public static class Basepos {
+	public static class Origin {
 		public int x, y, z;
 		
-		public Basepos(int x, int y, int z) {
+		public Origin(int x, int y, int z) {
 			this.x = x;
 			this.y = y;
 			this.z = z;

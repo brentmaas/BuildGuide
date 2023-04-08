@@ -53,13 +53,13 @@ public class ShapePolygon extends Shape {
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
-			setBaseposOffset(0.0, offset, offset);
+			setOriginOffset(0.0, offset, offset);
 			break;
 		case Y:
-			setBaseposOffset(offset, 0.0, offset);
+			setOriginOffset(offset, 0.0, offset);
 			break;
 		case Z:
-			setBaseposOffset(offset, offset, 0.0);
+			setOriginOffset(offset, offset, 0.0);
 			break;
 		}
 		for(int i = 0;i < n;++i) {

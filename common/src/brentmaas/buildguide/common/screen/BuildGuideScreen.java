@@ -9,7 +9,7 @@ import brentmaas.buildguide.common.shape.Shape;
 public class BuildGuideScreen extends PropertyScreen{
 	private String titleGlobalProperties = BuildGuide.screenHandler.translate("screen.buildguide.globalproperties");
 	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");
-	private String titleBasepos = BuildGuide.screenHandler.translate("screen.buildguide.basepos");
+	private String titleOrigin = BuildGuide.screenHandler.translate("screen.buildguide.origin");
 	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
 	private String textShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
 	
@@ -20,22 +20,22 @@ public class BuildGuideScreen extends PropertyScreen{
 	private IButton buttonShapePrevious = BuildGuide.widgetHandler.createButton(60, 25, 20, 20, "<-", () -> updateShape(-1));
 	private IButton buttonShapeNext = BuildGuide.widgetHandler.createButton(140, 25, 20, 20, "->", () -> updateShape(1));
 	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(140, 25, 20, 20, "...", () -> BuildGuide.screenHandler.showScreen(new ShapelistScreen()));
-	private IButton buttonBasepos = BuildGuide.widgetHandler.createButton(185, 25, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.setbasepos"), () -> setBasepos());;
+	private IButton buttonOrigin = BuildGuide.widgetHandler.createButton(185, 25, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.setorigin"), () -> setOrigin());;
 	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(0, 65, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(new VisualisationScreen()));
 	//It's better off as custom buttons instead of PropertyInt
-	private IButton buttonBaseposXDecrease = BuildGuide.widgetHandler.createButton(185, 45, 20, 20, "-", () -> shiftBasepos(-1, 0, 0));
-	private IButton buttonBaseposXIncrease = BuildGuide.widgetHandler.createButton(285, 45, 20, 20, "+", () -> shiftBasepos(1, 0, 0));
-	private IButton buttonBaseposYDecrease = BuildGuide.widgetHandler.createButton(185, 65, 20, 20, "-", () -> shiftBasepos(0, -1, 0));
-	private IButton buttonBaseposYIncrease = BuildGuide.widgetHandler.createButton(285, 65, 20, 20, "+", () -> shiftBasepos(0, 1, 0));
-	private IButton buttonBaseposZDecrease = BuildGuide.widgetHandler.createButton(185, 85, 20, 20, "-", () -> shiftBasepos(0, 0, -1));
-	private IButton buttonBaseposZIncrease = BuildGuide.widgetHandler.createButton(285, 85, 20, 20, "+", () -> shiftBasepos(0, 0, 1));
+	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(185, 45, 20, 20, "-", () -> shiftOrigin(-1, 0, 0));
+	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(285, 45, 20, 20, "+", () -> shiftOrigin(1, 0, 0));
+	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(185, 65, 20, 20, "-", () -> shiftOrigin(0, -1, 0));
+	private IButton buttonOriginYIncrease = BuildGuide.widgetHandler.createButton(285, 65, 20, 20, "+", () -> shiftOrigin(0, 1, 0));
+	private IButton buttonOriginZDecrease = BuildGuide.widgetHandler.createButton(185, 85, 20, 20, "-", () -> shiftOrigin(0, 0, -1));
+	private IButton buttonOriginZIncrease = BuildGuide.widgetHandler.createButton(285, 85, 20, 20, "+", () -> shiftOrigin(0, 0, 1));
 	private ITextField textFieldX = BuildGuide.widgetHandler.createTextField(205, 45, 50, 20, "");;
 	private ITextField textFieldY = BuildGuide.widgetHandler.createTextField(205, 65, 50, 20, "");;
 	private ITextField textFieldZ = BuildGuide.widgetHandler.createTextField(205, 85, 50, 20, "");;
 	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(255, 45, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getTextValue());
-			BuildGuide.stateManager.getState().setBaseposX(newval);
+			BuildGuide.stateManager.getState().setOriginX(newval);
 		}catch(NumberFormatException e) {
 			textFieldX.setTextColour(0xFF0000);
 		}
@@ -43,7 +43,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(255, 65, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getTextValue());
-			BuildGuide.stateManager.getState().setBaseposY(newval);
+			BuildGuide.stateManager.getState().setOriginY(newval);
 		}catch(NumberFormatException e) {
 			textFieldY.setTextColour(0xFF0000);
 		}
@@ -51,7 +51,7 @@ public class BuildGuideScreen extends PropertyScreen{
 	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(255, 85, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getTextValue());
-			BuildGuide.stateManager.getState().setBaseposZ(newval);
+			BuildGuide.stateManager.getState().setOriginZ(newval);
 		}catch(NumberFormatException e) {
 			textFieldZ.setTextColour(0xFF0000);
 		}
@@ -69,13 +69,13 @@ public class BuildGuideScreen extends PropertyScreen{
 		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 20, 0, 20, 20, "X", () -> BuildGuide.screenHandler.showScreen(null));
 		
 		if(!BuildGuide.stateManager.getState().isShapeAvailable()) {
-			buttonBasepos.setActive(false);
-			buttonBaseposXDecrease.setActive(false);
-			buttonBaseposXIncrease.setActive(false);
-			buttonBaseposYDecrease.setActive(false);
-			buttonBaseposYIncrease.setActive(false);
-			buttonBaseposZDecrease.setActive(false);
-			buttonBaseposZIncrease.setActive(false);
+			buttonOrigin.setActive(false);
+			buttonOriginXDecrease.setActive(false);
+			buttonOriginXIncrease.setActive(false);
+			buttonOriginYDecrease.setActive(false);
+			buttonOriginYIncrease.setActive(false);
+			buttonOriginZDecrease.setActive(false);
+			buttonOriginZIncrease.setActive(false);
 			buttonSetX.setActive(false);
 			buttonSetY.setActive(false);
 			buttonSetZ.setActive(false);
@@ -88,23 +88,23 @@ public class BuildGuideScreen extends PropertyScreen{
 		}else {
 			addButton(buttonShapeList);
 		}
-		addButton(buttonBasepos);
+		addButton(buttonOrigin);
 		addButton(buttonVisualisation);
-		addButton(buttonBaseposXDecrease);
-		addButton(buttonBaseposXIncrease);
-		addButton(buttonBaseposYDecrease);
-		addButton(buttonBaseposYIncrease);
-		addButton(buttonBaseposZDecrease);
-		addButton(buttonBaseposZIncrease);
+		addButton(buttonOriginXDecrease);
+		addButton(buttonOriginXIncrease);
+		addButton(buttonOriginYDecrease);
+		addButton(buttonOriginYIncrease);
+		addButton(buttonOriginZDecrease);
+		addButton(buttonOriginZIncrease);
 		addButton(buttonSetX);
 		addButton(buttonSetY);
 		addButton(buttonSetZ);
 		
-		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x : "-");
+		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().origin.x : "-");
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y : "-");
+		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().origin.y : "-");
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z : "-");
+		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShape().origin.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
 		addTextField(textFieldX);
@@ -140,7 +140,7 @@ public class BuildGuideScreen extends PropertyScreen{
 		drawShadowCentred(title, wrapper.getWidth() / 2, 5, 0xFFFFFF);
 		drawShadowCentred(titleGlobalProperties, 80, 15, 0xFFFFFF);
 		drawShadowCentred(titleShapeProperties, 80, 115, 0xFFFFFF);
-		drawShadowCentred(titleBasepos, 245, 15, 0xFFFFFF);
+		drawShadowCentred(titleOrigin, 245, 15, 0xFFFFFF);
 		drawShadowCentred(titleNumberOfBlocks, 355, 15, 0xFFFFFF);
 		
 		int n = BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
@@ -170,28 +170,28 @@ public class BuildGuideScreen extends PropertyScreen{
 		BuildGuide.stateManager.getState().getCurrentShape().onSelectedInGUI();
 	}
 	
-	private void setBasepos() {
-		BuildGuide.stateManager.getState().resetBasepos();
-		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+	private void setOrigin() {
+		BuildGuide.stateManager.getState().resetOrigin();
+		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.x);
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.y);
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+		textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.z);
 		textFieldZ.setTextColour(0xFFFFFF);
 	}
 	
-	private void shiftBasepos(int dx, int dy, int dz) {
-		BuildGuide.stateManager.getState().shiftBasepos(dx, dy, dz);
+	private void shiftOrigin(int dx, int dy, int dz) {
+		BuildGuide.stateManager.getState().shiftOrigin(dx, dy, dz);
 		if(dx != 0) {
-			textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.x);
+			textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.x);
 			textFieldX.setTextColour(0xFFFFFF);
 		}
 		if(dy != 0) {
-			textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.y);
+			textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.y);
 			textFieldY.setTextColour(0xFFFFFF);
 		}
 		if(dz != 0) {
-			textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().basepos.z);
+			textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShape().origin.z);
 			textFieldZ.setTextColour(0xFFFFFF);
 		}
 	}

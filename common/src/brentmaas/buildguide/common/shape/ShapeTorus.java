@@ -36,13 +36,13 @@ public class ShapeTorus extends Shape {
 		double offsetInner = propertyInnerEvenMode.value ? 0.5 : 0.0;
 		switch(propertyDir.value) {
 		case X:
-			setBaseposOffset(offsetInner, offsetOuter, offsetOuter);
+			setOriginOffset(offsetInner, offsetOuter, offsetOuter);
 			break;
 		case Y:
-			setBaseposOffset(offsetOuter, offsetInner, offsetOuter);
+			setOriginOffset(offsetOuter, offsetInner, offsetOuter);
 			break;
 		case Z:
-			setBaseposOffset(offsetOuter, offsetOuter, offsetInner);
+			setOriginOffset(offsetOuter, offsetOuter, offsetInner);
 			break;
 		}
 		for(int a = (int) Math.floor(-or - ir - offsetOuter);a < (int) Math.ceil(or + ir + 1 + offsetOuter);++a) {

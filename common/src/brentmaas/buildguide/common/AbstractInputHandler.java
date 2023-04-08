@@ -4,15 +4,15 @@ import brentmaas.buildguide.common.screen.BuildGuideScreen;
 import brentmaas.buildguide.common.screen.ShapelistScreen;
 import brentmaas.buildguide.common.screen.VisualisationScreen;
 import brentmaas.buildguide.common.shape.Shape;
-import brentmaas.buildguide.common.shape.Shape.Basepos;
+import brentmaas.buildguide.common.shape.Shape.Origin;
 
 public abstract class AbstractInputHandler {
 	private IKeyBind openBuildGuide;
 	private IKeyBind openShapelist;
 	private IKeyBind openVisualisation;
 	private IKeyBind toggleEnable;
-	private IKeyBind setBasepos;
-	private IKeyBind setGlobalBasepos;
+	private IKeyBind setOrigin;
+	private IKeyBind setGlobalOrigin;
 	
 	public abstract IKeyBind registerKeyBind(String name, int keyCode);
 	public abstract void registerOnKeyInput();
@@ -22,8 +22,8 @@ public abstract class AbstractInputHandler {
 		openShapelist = registerKeyBind("key.buildguide.openshapelist", KeyCode.GLFW_KEY_UNKNOWN);
 		openVisualisation = registerKeyBind("key.buildguide.openvisualisation", KeyCode.GLFW_KEY_UNKNOWN);
 		toggleEnable = registerKeyBind("key.buildguide.toggleenable", KeyCode.GLFW_KEY_UNKNOWN);
-		setBasepos = registerKeyBind("key.buildguide.setbasepos", KeyCode.GLFW_KEY_UNKNOWN);
-		setGlobalBasepos = registerKeyBind("key.buildguide.setglobalbasepos", KeyCode.GLFW_KEY_UNKNOWN);
+		setOrigin = registerKeyBind("key.buildguide.setorigin", KeyCode.GLFW_KEY_UNKNOWN);
+		setGlobalOrigin = registerKeyBind("key.buildguide.setglobalorigin", KeyCode.GLFW_KEY_UNKNOWN);
 	}
 	
 	public void onKeyInput() {
@@ -44,17 +44,17 @@ public abstract class AbstractInputHandler {
 			BuildGuide.stateManager.getState().propertyEnable.setValue(!BuildGuide.stateManager.getState().propertyEnable.value);
 		}
 		
-		if(setBasepos.isDown() && BuildGuide.stateManager.getState().isShapeAvailable()) { 
-			BuildGuide.stateManager.getState().resetBasepos();
+		if(setOrigin.isDown() && BuildGuide.stateManager.getState().isShapeAvailable()) { 
+			BuildGuide.stateManager.getState().resetOrigin();
 		}
 		
-		if(setGlobalBasepos.isDown() && BuildGuide.stateManager.getState().propertyAdvancedMode.value && BuildGuide.stateManager.getState().isShapeAvailable()) {
-			Basepos pos = BuildGuide.shapeHandler.getPlayerPosition();
-			int dx = pos.x - BuildGuide.stateManager.getState().getCurrentShape().basepos.x;
-			int dy = pos.y - BuildGuide.stateManager.getState().getCurrentShape().basepos.y;
-			int dz = pos.z - BuildGuide.stateManager.getState().getCurrentShape().basepos.z;
+		if(setGlobalOrigin.isDown() && BuildGuide.stateManager.getState().propertyAdvancedMode.value && BuildGuide.stateManager.getState().isShapeAvailable()) {
+			Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
+			int dx = pos.x - BuildGuide.stateManager.getState().getCurrentShape().origin.x;
+			int dy = pos.y - BuildGuide.stateManager.getState().getCurrentShape().origin.y;
+			int dz = pos.z - BuildGuide.stateManager.getState().getCurrentShape().origin.z;
 			for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) {
-				s.shiftBasepos(dx, dy, dz);
+				s.shiftOrigin(dx, dy, dz);
 			}
 		}
 	}

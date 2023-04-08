@@ -35,7 +35,7 @@ public class RenderHandler extends AbstractRenderHandler {
 	protected void setupRenderingShape(Shape shape) {
 		matrixStackInstance.push();
 		Vec3d projectedView = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
-		matrixStackInstance.translate(-projectedView.x + shape.basepos.x, -projectedView.y + shape.basepos.y, -projectedView.z + shape.basepos.z);
+		matrixStackInstance.translate(-projectedView.x + shape.origin.x, -projectedView.y + shape.origin.y, -projectedView.z + shape.origin.z);
 		
 		//TODO Shader?
 		RenderSystem.pushMatrix();

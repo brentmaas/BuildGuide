@@ -43,12 +43,12 @@ public class ShapeCircle extends Shape{
 			dz = 0;
 			break;
 		}
-		setBaseposOffset(dx == 0 ? 0 : offset, dy == 0 ? 0 : offset, dz == 0 ? 0 : offset);
+		setOriginOffset(dx == 0 ? 0 : offset, dy == 0 ? 0 : offset, dz == 0 ? 0 : offset);
 		
-		for(int x = (int) Math.floor(-dx + baseposOffsetX); x <= (int) Math.ceil(dx + baseposOffsetX);++x) {
-			for(int y = (int) Math.floor(-dy + baseposOffsetY); y <= (int) Math.ceil(dy + baseposOffsetY);++y) {
-				for(int z = (int) Math.floor(-dz + baseposOffsetZ); z <= (int) Math.ceil(dz + baseposOffsetZ);++z) {
-					double r2 = (x - baseposOffsetX) * (x - baseposOffsetX) + (y - baseposOffsetY) * (y - baseposOffsetY) + (z - baseposOffsetZ) * (z - baseposOffsetZ);
+		for(int x = (int) Math.floor(-dx + originOffsetX); x <= (int) Math.ceil(dx + originOffsetX);++x) {
+			for(int y = (int) Math.floor(-dy + originOffsetY); y <= (int) Math.ceil(dy + originOffsetY);++y) {
+				for(int z = (int) Math.floor(-dz + originOffsetZ); z <= (int) Math.ceil(dz + originOffsetZ);++z) {
+					double r2 = (x - originOffsetX) * (x - originOffsetX) + (y - originOffsetY) * (y - originOffsetY) + (z - originOffsetZ) * (z - originOffsetZ);
 					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
 						for(int s = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);s < (propertyDepth.value > 0 ? propertyDepth.value : 1);++s) {
 							addShapeCube(buffer, x + (propertyDir.value == direction.X ? s : 0), y + (propertyDir.value == direction.Y ? s : 0), z + (propertyDir.value == direction.Z ? s : 0));

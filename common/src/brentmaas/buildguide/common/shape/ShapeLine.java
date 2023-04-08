@@ -9,10 +9,10 @@ public class ShapeLine extends Shape {
 	private PropertyInt propertyDy = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
 	private PropertyInt propertyDz = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
 	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(() -> {
-		Basepos pos = BuildGuide.shapeHandler.getPlayerPosition();
-		propertyDx.setValue(pos.x - basepos.x);
-		propertyDy.setValue(pos.y - basepos.y);
-		propertyDz.setValue(pos.z - basepos.z);
+		Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
+		propertyDx.setValue(pos.x - origin.x);
+		propertyDy.setValue(pos.y - origin.y);
+		propertyDz.setValue(pos.z - origin.z);
 		update();
 	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
 	

@@ -53,13 +53,13 @@ public class ShapeParabola extends Shape {
 		
 		switch(propertyDir.value) {
 		case X:
-			setBaseposOffset(0.0, offset * rotYX[rot], offset * rotXX[rot]);
+			setOriginOffset(0.0, offset * rotYX[rot], offset * rotXX[rot]);
 			break;
 		case Y:
-			setBaseposOffset(offset * rotYX[rot], 0.0, offset * rotXX[rot]);
+			setOriginOffset(offset * rotYX[rot], 0.0, offset * rotXX[rot]);
 			break;
 		case Z:
-			setBaseposOffset(offset * rotXX[rot], offset * rotYX[rot], 0.0);
+			setOriginOffset(offset * rotXX[rot], offset * rotYX[rot], 0.0);
 			break;
 		}
 		

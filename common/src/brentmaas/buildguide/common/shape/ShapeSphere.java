@@ -33,7 +33,7 @@ public class ShapeSphere extends Shape {
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		float radius = propertyRadius.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
-		setBaseposOffset(offset, offset, offset);
+		setOriginOffset(offset, offset, offset);
 		
 		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0.5 : -radius) + offset); x <= Math.ceil((propertyDome.value == dome.NEGATIVE_X ? -0.5 : radius) + offset);++x) {
 			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0.5 : -radius) + offset); y <= Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? -0.5 : radius) + offset);++y) {

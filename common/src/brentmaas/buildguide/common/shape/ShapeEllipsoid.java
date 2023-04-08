@@ -37,7 +37,7 @@ public class ShapeEllipsoid extends Shape {
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
 		float dx = propertySemiX.value, dy = propertySemiY.value, dz = propertySemiZ.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
-		setBaseposOffset(offset, offset, offset);
+		setOriginOffset(offset, offset, offset);
 		
 		for(int x = (int) Math.floor((propertyDome.value == dome.POSITIVE_X ? 0.5 : -dx) + offset); x <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_X ? -0.5 : dx) + offset);++x) {
 			for(int y = (int) Math.floor((propertyDome.value == dome.POSITIVE_Y ? 0.5 : -dy) + offset); y <= (int) Math.ceil((propertyDome.value == dome.NEGATIVE_Y ? -0.5 : dy) + offset);++y) {

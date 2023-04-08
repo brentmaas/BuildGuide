@@ -38,9 +38,9 @@ public class State {
 	
 	public void initCheck() {
 		if(!initialised) {
-			if(simpleModeShapes[0].basepos == null) {
+			if(simpleModeShapes[0].origin == null) {
 				for(Shape s: simpleModeShapes) {
-					s.resetBasepos();
+					s.resetOrigin();
 				}
 			}
 			//Advanced mode shapes should be empty
@@ -62,55 +62,55 @@ public class State {
 		return !propertyAdvancedMode.value || advancedModeShapes.size() > 0;
 	}
 	
-	public void resetBasepos() {
+	public void resetOrigin() {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).resetBasepos();
+			advancedModeShapes.get(iAdvanced).resetOrigin();
 		}else {
-			for(Shape s: simpleModeShapes) s.resetBasepos();
+			for(Shape s: simpleModeShapes) s.resetOrigin();
 		}
 	}
 	
-	public void resetBasepos(int advancedModeId) {
-		advancedModeShapes.get(advancedModeId).resetBasepos();
+	public void resetOrigin(int advancedModeId) {
+		advancedModeShapes.get(advancedModeId).resetOrigin();
 	}
 	
-	public void setBasepos(int x, int y, int z) {
+	public void setOrigin(int x, int y, int z) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).setBasepos(x, y, z);
+			advancedModeShapes.get(iAdvanced).setOrigin(x, y, z);
 		}else {
-			for(Shape s: simpleModeShapes) s.setBasepos(x, y, z);
+			for(Shape s: simpleModeShapes) s.setOrigin(x, y, z);
 		}
 	}
 	
-	public void setBaseposX(int x) {
+	public void setOriginX(int x) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).basepos.x = x;
+			advancedModeShapes.get(iAdvanced).origin.x = x;
 		}else {
-			for(Shape s: simpleModeShapes) s.basepos.x = x;
+			for(Shape s: simpleModeShapes) s.origin.x = x;
 		}
 	}
 	
-	public void setBaseposY(int y) {
+	public void setOriginY(int y) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).basepos.y = y;
+			advancedModeShapes.get(iAdvanced).origin.y = y;
 		}else {
-			for(Shape s: simpleModeShapes) s.basepos.y = y;
+			for(Shape s: simpleModeShapes) s.origin.y = y;
 		}
 	}
 	
-	public void setBaseposZ(int z) {
+	public void setOriginZ(int z) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).basepos.z = z;
+			advancedModeShapes.get(iAdvanced).origin.z = z;
 		}else {
-			for(Shape s: simpleModeShapes) s.basepos.z = z;
+			for(Shape s: simpleModeShapes) s.origin.z = z;
 		}
 	}
 	
-	public void shiftBasepos(int dx, int dy, int dz) {
+	public void shiftOrigin(int dx, int dy, int dz) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).shiftBasepos(dx, dy, dz);
+			advancedModeShapes.get(iAdvanced).shiftOrigin(dx, dy, dz);
 		}else {
-			for(Shape s: simpleModeShapes) s.shiftBasepos(dx, dy, dz);
+			for(Shape s: simpleModeShapes) s.shiftOrigin(dx, dy, dz);
 		}
 	}
 	
@@ -132,19 +132,19 @@ public class State {
 		}
 	}
 	
-	public void setBaseposColour(float r, float g, float b, float a) {
+	public void setOriginColour(float r, float g, float b, float a) {
 		if(propertyAdvancedMode.value) {
-			advancedModeShapes.get(iAdvanced).colourBaseposR = r;
-			advancedModeShapes.get(iAdvanced).colourBaseposG = g;
-			advancedModeShapes.get(iAdvanced).colourBaseposB = b;
-			advancedModeShapes.get(iAdvanced).colourBaseposA = a;
+			advancedModeShapes.get(iAdvanced).colourOriginR = r;
+			advancedModeShapes.get(iAdvanced).colourOriginG = g;
+			advancedModeShapes.get(iAdvanced).colourOriginB = b;
+			advancedModeShapes.get(iAdvanced).colourOriginA = a;
 			advancedModeShapes.get(iAdvanced).update();
 		}else {
 			for(Shape s: simpleModeShapes) {
-				s.colourBaseposR = r;
-				s.colourBaseposG = g;
-				s.colourBaseposB = b;
-				s.colourBaseposA = a;
+				s.colourOriginR = r;
+				s.colourOriginG = g;
+				s.colourOriginB = b;
+				s.colourOriginA = a;
 				s.update();
 			}
 		}

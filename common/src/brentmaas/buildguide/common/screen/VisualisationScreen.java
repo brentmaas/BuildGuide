@@ -9,7 +9,7 @@ import brentmaas.buildguide.common.screen.widget.ISlider;
 public class VisualisationScreen extends PropertyScreen {
 	private String titleColours = BuildGuide.screenHandler.translate("screen.buildguide.colours");
 	private String titleShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
-	private String titleBasepos = BuildGuide.screenHandler.translate("screen.buildguide.basepos");
+	private String titleOrigin = BuildGuide.screenHandler.translate("screen.buildguide.origin");
 	private String titleRendering = BuildGuide.screenHandler.translate("screen.buildguide.rendering");
 	
 	private IButton buttonClose;
@@ -18,18 +18,18 @@ public class VisualisationScreen extends PropertyScreen {
 	private ISlider sliderShapeG = BuildGuide.widgetHandler.createSlider(0, 65, 100, 20, "G", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourShapeG : 1.0);
 	private ISlider sliderShapeB = BuildGuide.widgetHandler.createSlider(0, 85, 100, 20, "B", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourShapeB : 1.0);
 	private ISlider sliderShapeA = BuildGuide.widgetHandler.createSlider(0, 105, 100, 20, "A", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourShapeA : 0.5);
-	private ISlider sliderBaseposR = BuildGuide.widgetHandler.createSlider(110, 45, 100, 20, "R", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourBaseposR : 1.0);
-	private ISlider sliderBaseposG = BuildGuide.widgetHandler.createSlider(110, 65, 100, 20, "G", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourBaseposG : 1.0);
-	private ISlider sliderBaseposB = BuildGuide.widgetHandler.createSlider(110, 85, 100, 20, "B", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourBaseposB : 1.0);
-	private ISlider sliderBaseposA = BuildGuide.widgetHandler.createSlider(110, 105, 100, 20, "A", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourBaseposA : 0.5);
+	private ISlider sliderOriginR = BuildGuide.widgetHandler.createSlider(110, 45, 100, 20, "R", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourOriginR : 1.0);
+	private ISlider sliderOriginG = BuildGuide.widgetHandler.createSlider(110, 65, 100, 20, "G", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourOriginG : 1.0);
+	private ISlider sliderOriginB = BuildGuide.widgetHandler.createSlider(110, 85, 100, 20, "B", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourOriginB : 1.0);
+	private ISlider sliderOriginA = BuildGuide.widgetHandler.createSlider(110, 105, 100, 20, "A", 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().colourOriginA : 0.5);
 	private IButton buttonSetShape = BuildGuide.widgetHandler.createButton(0, 125, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
 		}
 	});
-	private IButton buttonSetBasepos = BuildGuide.widgetHandler.createButton(110, 125, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetOrigin = BuildGuide.widgetHandler.createButton(110, 125, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
-			BuildGuide.stateManager.getState().setBaseposColour((float) sliderBaseposR.getSliderValue(), (float) sliderBaseposG.getSliderValue(), (float) sliderBaseposB.getSliderValue(), (float) sliderBaseposA.getSliderValue());
+			BuildGuide.stateManager.getState().setOriginColour((float) sliderOriginR.getSliderValue(), (float) sliderOriginG.getSliderValue(), (float) sliderOriginB.getSliderValue(), (float) sliderOriginA.getSliderValue());
 		}
 	});
 	private IButton buttonSetShapeRandom = BuildGuide.widgetHandler.createButton(0, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.setrandom"), () -> {
@@ -41,13 +41,13 @@ public class VisualisationScreen extends PropertyScreen {
 			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
 		}
 	});
-	private IButton buttonSetBaseposRandom = BuildGuide.widgetHandler.createButton(110, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.setrandom"), () -> {
+	private IButton buttonSetOriginRandom = BuildGuide.widgetHandler.createButton(110, 145, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.setrandom"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			Random random = new Random();
-			sliderBaseposR.setSliderValue(random.nextDouble());
-			sliderBaseposG.setSliderValue(random.nextDouble());
-			sliderBaseposB.setSliderValue(random.nextDouble());
-			BuildGuide.stateManager.getState().setBaseposColour((float) sliderBaseposR.getSliderValue(), (float) sliderBaseposG.getSliderValue(), (float) sliderBaseposB.getSliderValue(), (float) sliderBaseposA.getSliderValue());
+			sliderOriginR.setSliderValue(random.nextDouble());
+			sliderOriginG.setSliderValue(random.nextDouble());
+			sliderOriginB.setSliderValue(random.nextDouble());
+			BuildGuide.stateManager.getState().setOriginColour((float) sliderOriginR.getSliderValue(), (float) sliderOriginG.getSliderValue(), (float) sliderOriginB.getSliderValue(), (float) sliderOriginA.getSliderValue());
 		}
 	});
 	private IButton buttonDefaultShape = BuildGuide.widgetHandler.createButton(0, 165, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
@@ -63,17 +63,17 @@ public class VisualisationScreen extends PropertyScreen {
 			BuildGuide.stateManager.getState().setShapeColour(1.0f, 1.0f, 1.0f, 0.5f);
 		}
 	});
-	private IButton buttonDefaultBasepos = BuildGuide.widgetHandler.createButton(110, 165, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
-		sliderBaseposR.setSliderValue(1.0);
-		sliderBaseposG.setSliderValue(0.0);
-		sliderBaseposB.setSliderValue(0.0);
-		sliderBaseposA.setSliderValue(0.5);
-		sliderBaseposR.updateText();
-		sliderBaseposG.updateText();
-		sliderBaseposB.updateText();
-		sliderBaseposA.updateText();
+	private IButton buttonDefaultOrigin = BuildGuide.widgetHandler.createButton(110, 165, 100, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
+		sliderOriginR.setSliderValue(1.0);
+		sliderOriginG.setSliderValue(0.0);
+		sliderOriginB.setSliderValue(0.0);
+		sliderOriginA.setSliderValue(0.5);
+		sliderOriginR.updateText();
+		sliderOriginG.updateText();
+		sliderOriginB.updateText();
+		sliderOriginA.updateText();
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
-			BuildGuide.stateManager.getState().setBaseposColour(1.0f, 0.0f, 0.0f, 0.5f);
+			BuildGuide.stateManager.getState().setOriginColour(1.0f, 0.0f, 0.0f, 0.5f);
 		}
 	});
 	
@@ -91,14 +91,14 @@ public class VisualisationScreen extends PropertyScreen {
 			sliderShapeG.setActive(false);
 			sliderShapeB.setActive(false);
 			sliderShapeA.setActive(false);
-			sliderBaseposR.setActive(false);
-			sliderBaseposG.setActive(false);
-			sliderBaseposB.setActive(false);
-			sliderBaseposA.setActive(false);
+			sliderOriginR.setActive(false);
+			sliderOriginG.setActive(false);
+			sliderOriginB.setActive(false);
+			sliderOriginA.setActive(false);
 			buttonSetShape.setActive(false);
 			buttonDefaultShape.setActive(false);
-			buttonSetBasepos.setActive(false);
-			buttonDefaultBasepos.setActive(false);
+			buttonSetOrigin.setActive(false);
+			buttonDefaultOrigin.setActive(false);
 		}
 		
 		addButton(buttonClose);
@@ -107,16 +107,16 @@ public class VisualisationScreen extends PropertyScreen {
 		addSlider(sliderShapeG);
 		addSlider(sliderShapeB);
 		addSlider(sliderShapeA);
-		addSlider(sliderBaseposR);
-		addSlider(sliderBaseposG);
-		addSlider(sliderBaseposB);
-		addSlider(sliderBaseposA);
+		addSlider(sliderOriginR);
+		addSlider(sliderOriginG);
+		addSlider(sliderOriginB);
+		addSlider(sliderOriginA);
 		addButton(buttonSetShape);
 		addButton(buttonDefaultShape);
 		addButton(buttonSetShapeRandom);
-		addButton(buttonSetBaseposRandom);
-		addButton(buttonSetBasepos);
-		addButton(buttonDefaultBasepos);
+		addButton(buttonSetOriginRandom);
+		addButton(buttonSetOrigin);
+		addButton(buttonDefaultOrigin);
 		
 		BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours.setSlot(3);
 		addProperty(BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours);
@@ -129,7 +129,7 @@ public class VisualisationScreen extends PropertyScreen {
 		drawShadowCentred(title, wrapper.getWidth() / 2, 5, 0xFFFFFF);
 		drawShadowCentred(titleColours, 105, 15, 0xFFFFFF);
 		drawShadowCentred(titleShape, 50, 35, 0xFFFFFF);
-		drawShadowCentred(titleBasepos, 160, 35, 0xFFFFFF);
+		drawShadowCentred(titleOrigin, 160, 35, 0xFFFFFF);
 		drawShadowCentred(titleRendering, 80, 215, 0xFFFFFF);
 	}
 }
