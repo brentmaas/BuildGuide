@@ -11,9 +11,9 @@ public class ShapeLine extends Shape {
 	private PropertyInt propertyDz = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
 	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(() -> {
 		Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
-		propertyDx.setValue(pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
-		propertyDy.setValue(pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);
-		propertyDz.setValue(pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z);
+		propertyDx.setValue(pos.x - shapeSet.origin.x);
+		propertyDy.setValue(pos.y - shapeSet.origin.y);
+		propertyDz.setValue(pos.z - shapeSet.origin.z);
 		update();
 	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
 	

@@ -15,24 +15,7 @@ public abstract class Shape {
 	private int nBlocks = 0;
 	public boolean ready = false;
 	public boolean vertexBufferUnpacked = false;
-
-	@Deprecated
-	public float colourShapeR = 1.0f;
-	@Deprecated
-	public float colourShapeG = 1.0f;
-	@Deprecated
-	public float colourShapeB = 1.0f;
-	@Deprecated
-	public float colourShapeA = 0.5f;
-
-	@Deprecated
-	public float colourOriginR = 1.0f;
-	@Deprecated
-	public float colourOriginG = 0.0f;
-	@Deprecated
-	public float colourOriginB = 0.0f;
-	@Deprecated
-	public float colourOriginA = 0.5f;
+	protected ShapeSet shapeSet;
 	
 	protected double originOffsetX = 0.0;
 	protected double originOffsetY = 0.0;
@@ -94,9 +77,9 @@ public abstract class Shape {
 		nBlocks = 0;
 		long t = System.currentTimeMillis();
 		buffer = BuildGuide.shapeHandler.newBuffer();
-		buffer.setColour((int) (255 * colourShapeR), (int) (255 * colourShapeG), (int) (255 * colourShapeB), (int) (255 * colourShapeA));
+		buffer.setColour((int) (255 * shapeSet.colourShapeR), (int) (255 * shapeSet.colourShapeG), (int) (255 * shapeSet.colourShapeB), (int) (255 * shapeSet.colourShapeA));
 		updateShape(buffer);
-		buffer.setColour((int) (255 * colourOriginR), (int) (255 * colourOriginG), (int) (255 * colourOriginB), (int) (255 * colourOriginA));
+		buffer.setColour((int) (255 * shapeSet.colourOriginR), (int) (255 * shapeSet.colourOriginG), (int) (255 * shapeSet.colourOriginB), (int) (255 * shapeSet.colourOriginA));
 		addCube(buffer, 0.4 + originOffsetX, 0.4 + originOffsetY, 0.4 + originOffsetZ, 0.2);
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
 			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");

@@ -31,6 +31,7 @@ public class ShapeSet {
 	
 	private Shape initialiseShape(String shapeId) {
 		Shape newShape = ShapeRegistry.getNewInstance(shapeId);
+		newShape.shapeSet = this;
 		newShape.update();
 		return newShape;
 	}
@@ -41,15 +42,6 @@ public class ShapeSet {
 	
 	public void updateShape() {
 		if(shapes[index] != null) {
-			//TODO Remove dirty hack
-			shapes[index].colourShapeR = colourShapeR;
-			shapes[index].colourShapeG = colourShapeG;
-			shapes[index].colourShapeB = colourShapeB;
-			shapes[index].colourShapeA = colourShapeA;
-			shapes[index].colourOriginR = colourOriginR;
-			shapes[index].colourOriginG = colourOriginG;
-			shapes[index].colourOriginB = colourOriginB;
-			shapes[index].colourOriginA = colourOriginA;
 			shapes[index].update();
 		}
 	}
@@ -57,15 +49,6 @@ public class ShapeSet {
 	public void updateAllShapes() {
 		for(Shape s: shapes) {
 			if(s != null) {
-				//TODO Remove dirty hack
-				s.colourShapeR = colourShapeR;
-				s.colourShapeG = colourShapeG;
-				s.colourShapeB = colourShapeB;
-				s.colourShapeA = colourShapeA;
-				s.colourOriginR = colourOriginR;
-				s.colourOriginG = colourOriginG;
-				s.colourOriginB = colourOriginB;
-				s.colourOriginA = colourOriginA;
 				s.update();
 			}
 		}
