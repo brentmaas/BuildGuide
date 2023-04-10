@@ -5,10 +5,10 @@ import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
-import brentmaas.buildguide.common.screen.widget.IWidgetHandler;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import net.minecraft.client.MinecraftClient;
 
-public class WidgetHandler implements IWidgetHandler {
+public class WidgetHandler extends AbstractWidgetHandler {
 	
 	
 	public IButton createButton(int x, int y, int width, int height, String text, IButton.IPressable onPress) {

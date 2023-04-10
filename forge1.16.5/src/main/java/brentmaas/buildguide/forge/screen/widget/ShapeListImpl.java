@@ -30,9 +30,9 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 		
 		this.update = update;
 		
-		for(int shapeId = 0;shapeId < BuildGuide.stateManager.getState().advancedModeShapes.size();++shapeId) {
+		for(int shapeId = 0;shapeId < BuildGuide.stateManager.getState().shapeSets.size();++shapeId) {
 			addEntry(new Entry(shapeId));
-			if(shapeId == BuildGuide.stateManager.getState().iAdvanced) setSelected(children().get(children().size() - 1));
+			if(shapeId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
 		}
 	}
 	
@@ -43,12 +43,12 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 	
 	public boolean removeEntry(Entry entry) {
 		for(Entry e: children()) {
-			if(e.getShapeId() > entry.getShapeId()) {
-				e.setShapeId(e.getShapeId() - 1);
+			if(e.getShapeSetId() > entry.getShapeSetId()) {
+				e.setShapeSetId(e.getShapeSetId() - 1);
 			}
 		}
-		if(children().size() > entry.getShapeId() + 1) setSelected(children().get(entry.getShapeId() + 1));
-		else if(children().size() > 1) setSelected(children().get(entry.getShapeId() - 1));
+		if(children().size() > entry.getShapeSetId() + 1) setSelected(children().get(entry.getShapeSetId() + 1));
+		else if(children().size() > 1) setSelected(children().get(entry.getShapeSetId() - 1));
 		return super.removeEntry(entry);
 	}
 	
@@ -58,7 +58,7 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 	
 	public void setSelected(@Nullable Entry entry) {
 		super.setSelected(entry);
-		if(entry != null) BuildGuide.stateManager.getState().iAdvanced = entry.getShapeId();
+		if(entry != null) BuildGuide.stateManager.getState().iShapeSet = entry.getShapeSetId();
 		update.run();
 	}
 	
@@ -128,7 +128,7 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 		}
 		
 		public void render(MatrixStack matrixStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			Minecraft.getInstance().font.drawShadow(matrixStack, (BuildGuide.stateManager.getState().advancedModeShapes.get(shapeId).visible ? "" : "\247m") + BuildGuide.stateManager.getState().advancedModeShapes.get(shapeId).getTranslatedName(), x + 5, y + 4, 0xFFFFFF);
+			Minecraft.getInstance().font.drawShadow(matrixStack, (BuildGuide.stateManager.getState().shapeSets.get(shapeId).visible ? "" : BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH) + BuildGuide.stateManager.getState().shapeSets.get(shapeId).getShape().getTranslatedName(), x + 5, y + 4, 0xFFFFFF);
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -136,11 +136,11 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 			return false;
 		}
 		
-		public void setShapeId(int shapeId) {
+		public void setShapeSetId(int shapeId) {
 			this.shapeId = shapeId;
 		}
 		
-		public int getShapeId() {
+		public int getShapeSetId() {
 			return shapeId;
 		}
 		

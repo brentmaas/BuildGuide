@@ -1,7 +1,12 @@
 package brentmaas.buildguide.common.screen;
 
 public abstract class AbstractScreenHandler {
-	
+	public final String TEXT_MODIFIER_OBFUSCATED = "\247k";
+	public final String TEXT_MODIFIER_BOLD = "\247l";
+	public final String TEXT_MODIFIER_STRIKETHROUGH = "\247m";
+	public final String TEXT_MODIFIER_UNDERLINE = "\247n";
+	public final String TEXT_MODIFIER_ITALIC = "\247o";
+	public final String TEXT_MODIFIER_RESET = "\247r";
 	
 	public void showScreen(BaseScreen screen) {
 		if(screen != null) wrapScreen(screen).show();

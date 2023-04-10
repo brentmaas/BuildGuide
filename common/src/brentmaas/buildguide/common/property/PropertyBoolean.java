@@ -8,7 +8,7 @@ public class PropertyBoolean extends Property<Boolean> {
 	
 	public PropertyBoolean(Boolean value, String name, Runnable onPress) {
 		super(value, name);
-		button = BuildGuide.widgetHandler.createCheckbox(140, y, 20, height, "", value, false, () -> {
+		button = BuildGuide.widgetHandler.createCheckbox(x + 140, y, 20, height, "", value, false, () -> {
 			this.value = button.isCheckboxSelected();
 			if(onPress != null) onPress.run();
 		});

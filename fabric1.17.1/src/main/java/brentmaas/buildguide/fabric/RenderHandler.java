@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
 import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.fabric.shape.ShapeBuffer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
@@ -36,12 +37,12 @@ public class RenderHandler extends AbstractRenderHandler {
 		((ShapeBuffer) shape.buffer).render(matrixStackInstance.peek().getModel(), projectionMatrixInstance);
 	}
 	
-	protected void setupRenderingShape(Shape shape) {
+	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		
 		matrixStackInstance.push();
 		Vec3d projectedView = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
-		matrixStackInstance.translate(-projectedView.x + shape.origin.x, -projectedView.y + shape.origin.y, -projectedView.z + shape.origin.z);
+		matrixStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
 	}
 	
 	protected void endRenderingShape() {

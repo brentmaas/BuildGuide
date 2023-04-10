@@ -2,15 +2,17 @@ package brentmaas.buildguide.common.property;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.common.screen.PropertyScreen;
+import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 
 public abstract class Property<T> {
-	protected final static int baseY = 125;
+	protected final static int baseX = 180;
+	protected final static int baseY = 70;
 	protected final static int height = 20;
 	
+	protected int x;
 	protected int y;
 	public T value;
 	protected String name;
@@ -20,6 +22,7 @@ public abstract class Property<T> {
 	protected boolean visible = true;
 	
 	public Property(T value, String name) {
+		x = baseX;
 		y = baseY;
 		this.value = value;
 		this.name = name;
@@ -51,7 +54,7 @@ public abstract class Property<T> {
 		visible = false;
 	}
 	
-	public void addToPropertyScreen(PropertyScreen screen) {
+	public void addToScreen(BaseScreen screen) {
 		for(IButton b: buttonList) {
 			screen.addButton(b);
 		}
@@ -72,6 +75,7 @@ public abstract class Property<T> {
 	}
 	
 	public void setSlot(int slot) {
+		x = baseX;
 		y = baseY + slot * height;
 		for(IButton button: buttonList) {
 			button.setYPosition(y);
@@ -84,15 +88,15 @@ public abstract class Property<T> {
 		}
 	}
 	
-	public void render(PropertyScreen screen) {
-		drawString(screen, name, 5, y + 5, 0xFFFFFF);
+	public void render(BaseScreen screen) {
+		drawString(screen, name, x + 5, y + 5, 0xFFFFFF);
 	}
 	
-	public void drawString(PropertyScreen screen, String text, int x, int y, int colour) {
+	public void drawString(BaseScreen screen, String text, int x, int y, int colour) {
 		if(visible) screen.drawShadow(text, x, y, 0xFFFFFF);
 	}
 	
-	public void drawStringCentred(PropertyScreen screen, String text, int x, int y, int colour) {
+	public void drawStringCentred(BaseScreen screen, String text, int x, int y, int colour) {
 		if(visible) screen.drawShadowCentred(text, x, y, 0xFFFFFF);
 	}
 }

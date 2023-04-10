@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
 import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.forge.shape.ShapeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
@@ -39,10 +40,10 @@ public class RenderHandler extends AbstractRenderHandler {
 		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
 	}
 	
-	protected void setupRenderingShape(Shape shape) {
+	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
 		poseStackInstance.pushPose();
 		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-		poseStackInstance.translate(-projectedView.x + shape.origin.x, -projectedView.y + shape.origin.y, -projectedView.z + shape.origin.z);
+		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
 	}
 	
 	protected void endRenderingShape() {

@@ -2,7 +2,7 @@ package brentmaas.buildguide.forge.shape;
 
 import brentmaas.buildguide.common.shape.IShapeBuffer;
 import brentmaas.buildguide.common.shape.IShapeHandler;
-import brentmaas.buildguide.common.shape.Shape.Origin;
+import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 

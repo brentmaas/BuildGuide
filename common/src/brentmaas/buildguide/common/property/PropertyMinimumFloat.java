@@ -12,7 +12,7 @@ public class PropertyMinimumFloat extends Property<Float> {
 		super(value, name);
 		this.minValue = minValue;
 		this.inclusive = inclusive;
-		buttonList.add(BuildGuide.widgetHandler.createButton(90, y, 20, height, "-", () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, "-", () -> {
 			if(this.value - 1 > this.minValue || (this.inclusive && this.value - 1 == this.minValue)) {
 				--this.value;
 				valueTextField.setTextValue("" + this.value);
@@ -20,13 +20,13 @@ public class PropertyMinimumFloat extends Property<Float> {
 				if(onPress != null) onPress.run();
 			}
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(190, y, 20, height, "+", () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, "+", () -> {
 			++this.value;
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+		buttonList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 			try {
 				float newVal = Float.parseFloat(valueTextField.getTextValue());
 				if(newVal > this.minValue || (this.inclusive && newVal == this.minValue)) {
@@ -40,7 +40,7 @@ public class PropertyMinimumFloat extends Property<Float> {
 				valueTextField.setTextColour(0xFF0000);
 			}
 		}));
-		valueTextField = BuildGuide.widgetHandler.createTextField(110, y, 50, height, "");
+		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, height, "");
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 		textFieldList.add(valueTextField);

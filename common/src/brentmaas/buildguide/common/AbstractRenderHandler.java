@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common;
 
 import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeSet;
 
 public abstract class AbstractRenderHandler {
 	
@@ -9,7 +10,7 @@ public abstract class AbstractRenderHandler {
 	
 	public abstract void renderShapeBuffer(Shape shape);
 	
-	protected abstract void setupRenderingShape(Shape shape);
+	protected abstract void setupRenderingShapeSet(ShapeSet shape);
 	
 	protected abstract void endRenderingShape();
 	
@@ -40,32 +41,28 @@ public abstract class AbstractRenderHandler {
 	public void render() {
 		pushProfiler(BuildGuide.modid);
 		
-		if(BuildGuide.stateManager.getState().propertyEnable.value && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShape().origin != null) {
-			if(BuildGuide.stateManager.getState().propertyAdvancedMode.value) {
-				for(Shape s: BuildGuide.stateManager.getState().advancedModeShapes) renderShape(s);
-			}else {
-				renderShape(BuildGuide.stateManager.getState().getCurrentShape());
-			}
+		if(BuildGuide.stateManager.getState().enabled && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShapeSet().origin != null) {
+			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) renderShapeSet(s); 
 		}
 		
 		popProfiler();
 	}
 	
-	private void renderShape(Shape shape) {
-		if(shape.lock.tryLock()) {
+	private void renderShapeSet(ShapeSet shapeSet) {
+		if(shapeSet.getShape().lock.tryLock()) {
 			try {
-				if(shape.visible && shape.ready && !shape.error) {
-					if(!shape.vertexBufferUnpacked) {
-						shape.buffer.end();
-						shape.vertexBufferUnpacked = true;
+				if(shapeSet.visible && shapeSet.getShape().ready && !shapeSet.getShape().error) {
+					if(!shapeSet.getShape().vertexBufferUnpacked) {
+						shapeSet.getShape().buffer.end();
+						shapeSet.getShape().vertexBufferUnpacked = true;
 					}
 					
-					setupRenderingShape(shape);
+					setupRenderingShapeSet(shapeSet);
 					
 					boolean toggleTexture = textureEnabled();
 					
 					boolean hasDepthTest = depthTestEnabled();
-					boolean toggleDepthTest = BuildGuide.stateManager.getState().propertyDepthTest.value ^ hasDepthTest;
+					boolean toggleDepthTest = BuildGuide.stateManager.getState().depthTest ^ hasDepthTest;
 					
 					boolean toggleDepthMask = depthMaskEnabled();
 					
@@ -79,7 +76,7 @@ public abstract class AbstractRenderHandler {
 					setupBlendFunc();
 					if(toggleBlend) setBlend(true);
 					
-					renderShapeBuffer(shape);
+					renderShapeBuffer(shapeSet.getShape());
 					
 					if(toggleBlend) setBlend(false);
 					if(toggleDepthTest && hasDepthTest) setDepthTest(true);
@@ -90,7 +87,7 @@ public abstract class AbstractRenderHandler {
 					endRenderingShape();
 				}
 			}finally {
-				shape.lock.unlock();
+				shapeSet.getShape().lock.unlock();
 			}
 		}
 	}

@@ -12,8 +12,8 @@ public interface IShapeList {
 	public static interface IEntry {
 		
 		
-		public void setShapeId(int shapeId);
+		public void setShapeSetId(int shapeId);
 		
-		public int getShapeId();
+		public int getShapeSetId();
 	}
 }

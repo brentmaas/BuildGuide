@@ -13,20 +13,25 @@ public abstract class Shape {
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	public IShapeBuffer buffer;
 	private int nBlocks = 0;
-	public boolean visible = true;
 	public boolean ready = false;
 	public boolean vertexBufferUnpacked = false;
-	
-	public Origin origin = null;
-	
+
+	@Deprecated
 	public float colourShapeR = 1.0f;
+	@Deprecated
 	public float colourShapeG = 1.0f;
+	@Deprecated
 	public float colourShapeB = 1.0f;
+	@Deprecated
 	public float colourShapeA = 0.5f;
-	
+
+	@Deprecated
 	public float colourOriginR = 1.0f;
+	@Deprecated
 	public float colourOriginG = 0.0f;
+	@Deprecated
 	public float colourOriginB = 0.0f;
+	@Deprecated
 	public float colourOriginA = 0.5f;
 	
 	protected double originOffsetX = 0.0;
@@ -174,29 +179,5 @@ public abstract class Shape {
 	
 	public long getHowLongAgoCompletedMillis() {
 		return System.currentTimeMillis() - completedAt;
-	}
-	
-	public void resetOrigin() {
-		origin = BuildGuide.shapeHandler.getPlayerPosition();
-	}
-	
-	public void setOrigin(int x, int y, int z) {
-		origin = new Origin(x, y, z);
-	}
-	
-	public void shiftOrigin(int dx, int dy, int dz) {
-		origin.x += dx;
-		origin.y += dy;
-		origin.z += dz;
-	}
-	
-	public static class Origin {
-		public int x, y, z;
-		
-		public Origin(int x, int y, int z) {
-			this.x = x;
-			this.y = y;
-			this.z = z;
-		}
 	}
 }

@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.shape.Shape.Origin;
+import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public interface IShapeHandler {
 	
