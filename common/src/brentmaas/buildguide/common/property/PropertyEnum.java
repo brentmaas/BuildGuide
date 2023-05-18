@@ -9,11 +9,11 @@ public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	public PropertyEnum(T value, String name, Runnable onPress, String[] names) {
 		super(value, name);
 		this.names = names;
-		buttonList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, "<-", () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, "<-", () -> {
 			this.value = this.value.getDeclaringClass().getEnumConstants()[Math.floorMod(this.value.ordinal() - 1, this.value.getDeclaringClass().getEnumConstants().length)];
 			if(onPress != null) onPress.run();
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, "->", () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, "->", () -> {
 			this.value = this.value.getDeclaringClass().getEnumConstants()[Math.floorMod(this.value.ordinal() + 1, this.value.getDeclaringClass().getEnumConstants().length)];
 			if(onPress != null) onPress.run();
 		}));

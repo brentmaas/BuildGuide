@@ -15,6 +15,14 @@ public class SliderImpl extends AbstractSlider implements ISlider {
 		prefix = name + ": ";
 	}
 	
+	public void setYPosition(int y) {
+		this.y = y;
+	}
+	
+	public void setVisibility(boolean visible) {
+		this.visible = visible;
+	}
+	
 	public void updateText() {
 		setMessage(new StringTextComponent(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
 	}

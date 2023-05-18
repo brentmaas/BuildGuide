@@ -12,7 +12,7 @@ public class PropertyBoolean extends Property<Boolean> {
 			this.value = button.isCheckboxSelected();
 			if(onPress != null) onPress.run();
 		});
-		checkboxList.add(button);
+		widgetList.add(button);
 	}
 	
 	public void setValue(Boolean value) {

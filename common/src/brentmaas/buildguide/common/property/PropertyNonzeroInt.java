@@ -8,21 +8,18 @@ public class PropertyNonzeroInt extends Property<Integer> {
 	
 	public PropertyNonzeroInt(int value, String name, Runnable onPress) {
 		super(value, name);
-		buttonList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, "-", () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, "-", () -> {
 			--this.value;
 			if(this.value == 0) this.value = -1;
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, "+", () -> {
-			++this.value;
-			if(this.value == 0) this.value = 1;
-			valueTextField.setTextValue("" + this.value);
-			valueTextField.setTextColour(0xFFFFFF);
-			if(onPress != null) onPress.run();
-		}));
-		buttonList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, height, "");
+		valueTextField.setTextValue("" + value);
+		valueTextField.setTextColour(0xFFFFFF);
+		widgetList.add(valueTextField);
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, height, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
 			try {
 				int newval = Integer.parseInt(valueTextField.getTextValue());
 				this.value = newval;
@@ -36,10 +33,13 @@ public class PropertyNonzeroInt extends Property<Integer> {
 				valueTextField.setTextColour(0xFF0000);
 			}
 		}));
-		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, height, "");
-		valueTextField.setTextValue("" + value);
-		valueTextField.setTextColour(0xFFFFFF);
-		textFieldList.add(valueTextField);
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, "+", () -> {
+			++this.value;
+			if(this.value == 0) this.value = 1;
+			valueTextField.setTextValue("" + this.value);
+			valueTextField.setTextColour(0xFFFFFF);
+			if(onPress != null) onPress.run();
+		}));
 	}
 	
 	public void setValue(Integer value) {

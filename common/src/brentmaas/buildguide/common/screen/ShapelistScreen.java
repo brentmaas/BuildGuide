@@ -104,22 +104,6 @@ public class ShapelistScreen extends BaseScreen {
 		
 		checkActive();
 		
-		addButton(buttonNewShapePrevious);
-		addButton(buttonNewShapeNext);
-		addButton(buttonAdd);
-		addCheckbox(buttonVisible);
-		addButton(buttonDelete);
-		addButton(buttonGlobalOrigin);
-		addButton(buttonOriginXDecrease);
-		addButton(buttonOriginXIncrease);
-		addButton(buttonOriginYDecrease);
-		addButton(buttonOriginYIncrease);
-		addButton(buttonOriginZDecrease);
-		addButton(buttonOriginZIncrease);
-		addButton(buttonSetX);
-		addButton(buttonSetY);
-		addButton(buttonSetZ);
-		
 		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x : "-");
 		textFieldX.setTextColour(0xFFFFFF);
 		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y : "-");
@@ -127,9 +111,24 @@ public class ShapelistScreen extends BaseScreen {
 		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
-		addTextField(textFieldX);
-		addTextField(textFieldY);
-		addTextField(textFieldZ);
+		addWidget(buttonNewShapePrevious);
+		addWidget(buttonNewShapeNext);
+		addWidget(buttonAdd);
+		addWidget(buttonVisible);
+		addWidget(buttonDelete);
+		addWidget(buttonGlobalOrigin);
+		addWidget(buttonOriginXDecrease);
+		addWidget(textFieldX);
+		addWidget(buttonSetX);
+		addWidget(buttonOriginXIncrease);
+		addWidget(buttonOriginYDecrease);
+		addWidget(textFieldY);
+		addWidget(buttonSetY);
+		addWidget(buttonOriginYIncrease);
+		addWidget(buttonOriginZDecrease);
+		addWidget(textFieldZ);
+		addWidget(buttonSetZ);
+		addWidget(buttonOriginZIncrease);
 		
 		shapeList = BuildGuide.widgetHandler.createShapelist(180, 325, 70, wrapper.getHeight(), 20, () -> {
 			if(BuildGuide.stateManager.getState().isShapeAvailable()) {
@@ -147,7 +146,7 @@ public class ShapelistScreen extends BaseScreen {
 			if(BuildGuide.stateManager.getState().isShapeAvailable()) buttonVisible.setChecked(BuildGuide.stateManager.getState().getCurrentShapeSet().visible);
 		});
 		
-		addShapeList(shapeList);
+		addWidget(shapeList);
 	}
 	
 	public void render() {

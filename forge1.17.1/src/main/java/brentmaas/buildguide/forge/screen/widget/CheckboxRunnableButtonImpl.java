@@ -36,4 +36,8 @@ protected final ICheckboxRunnableButton.IPressable onPress;
 	public void setYPosition(int y) {
 		this.y = y;
 	}
+	
+	public void setVisibility(boolean visible) {
+		this.visible = visible;
+	}
 }

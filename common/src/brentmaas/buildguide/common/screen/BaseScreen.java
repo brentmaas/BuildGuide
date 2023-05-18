@@ -10,6 +10,7 @@ import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
+import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public abstract class BaseScreen {
 	protected String title = BuildGuide.screenHandler.translate("screen.buildguide.title");
@@ -30,12 +31,12 @@ public abstract class BaseScreen {
 			BuildGuide.stateManager.getState().enabled = buttonEnabled.isCheckboxSelected();
 		});
 		
-		addButton(buttonClose);
-		addCheckbox(buttonEnabled);
-		addButton(buttonBuildGuide);
-		addButton(buttonVisualisation);
-		addButton(buttonShapeList);
-		addButton(buttonSettings);
+		addWidget(buttonEnabled);
+		addWidget(buttonClose);
+		addWidget(buttonBuildGuide);
+		addWidget(buttonVisualisation);
+		addWidget(buttonShapeList);
+		addWidget(buttonSettings);
 	}
 	
 	public void render() {
@@ -51,24 +52,20 @@ public abstract class BaseScreen {
 		this.wrapper = wrapper;
 	}
 	
-	public void addButton(IButton button) {
-		if(wrapper != null) wrapper.addButton(button);
-	}
-	
-	public void addTextField(ITextField textField) {
-		if(wrapper != null) wrapper.addTextField(textField);
-	}
-	
-	public void addCheckbox(ICheckboxRunnableButton checkbox) {
-		if(wrapper != null) wrapper.addCheckbox(checkbox);
-	}
-	
-	public void addSlider(ISlider slider){
-		if(wrapper != null) wrapper.addSlider(slider);
-	}
-	
-	public void addShapeList(IShapeList shapeList) {
-		if(wrapper != null) wrapper.addShapeList(shapeList);
+	public void addWidget(IWidget widget) {
+		if(wrapper != null) {
+			if(widget instanceof IButton) {
+				wrapper.addButton((IButton) widget);
+			} else if(widget instanceof ITextField) {
+				wrapper.addTextField((ITextField) widget);
+			} else if(widget instanceof ICheckboxRunnableButton) {
+				wrapper.addCheckbox((ICheckboxRunnableButton) widget);
+			} else if(widget instanceof ISlider) {
+				wrapper.addSlider((ISlider) widget);
+			} else if(widget instanceof IShapeList) {
+				wrapper.addShapeList((IShapeList) widget);
+			}
+		}
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {

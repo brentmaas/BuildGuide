@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common.screen.widget;
 
-public interface ICheckboxRunnableButton {
+public interface ICheckboxRunnableButton extends IWidget {
 	
 	
 	public void onPress();
@@ -9,11 +9,7 @@ public interface ICheckboxRunnableButton {
 	
 	public boolean isCheckboxSelected();
 	
-	public void setVisible(boolean visible);
-	
 	public void setActive(boolean active);
-	
-	public void setYPosition(int y);
 	
 	public interface IPressable{
 		void onPress();

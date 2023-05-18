@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common.screen.widget;
 
-public interface ISlider {
+public interface ISlider extends IWidget {
 	//TODO Move implementation more towards here
 	
 	public void updateText();

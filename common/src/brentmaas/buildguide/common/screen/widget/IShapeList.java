@@ -1,6 +1,6 @@
 package brentmaas.buildguide.common.screen.widget;
 
-public interface IShapeList {
+public interface IShapeList extends IWidget {
 	//TODO Move implementation more towards here
 	
 	public void addEntry(int shapeId);

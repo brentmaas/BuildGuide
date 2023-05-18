@@ -36,4 +36,8 @@ public class CheckboxRunnableButtonImpl extends Checkbox implements ICheckboxRun
 	public void setYPosition(int y) {
 		this.y = y;
 	}
+	
+	public void setVisibility(boolean visible) {
+		this.visible = visible;
+	}
 }

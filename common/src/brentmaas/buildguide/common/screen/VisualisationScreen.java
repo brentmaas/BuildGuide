@@ -101,21 +101,21 @@ public class VisualisationScreen extends BaseScreen {
 			BuildGuide.stateManager.getState().depthTest = buttonDepthTest.isCheckboxSelected();
 		});
 		
-		addSlider(sliderShapeR);
-		addSlider(sliderShapeG);
-		addSlider(sliderShapeB);
-		addSlider(sliderShapeA);
-		addSlider(sliderOriginR);
-		addSlider(sliderOriginG);
-		addSlider(sliderOriginB);
-		addSlider(sliderOriginA);
-		addButton(buttonSetShape);
-		addButton(buttonDefaultShape);
-		addButton(buttonSetShapeRandom);
-		addButton(buttonSetOriginRandom);
-		addButton(buttonSetOrigin);
-		addButton(buttonDefaultOrigin);
-		addCheckbox(buttonDepthTest);
+		addWidget(sliderShapeR);
+		addWidget(sliderShapeG);
+		addWidget(sliderShapeB);
+		addWidget(sliderShapeA);
+		addWidget(buttonSetShape);
+		addWidget(buttonSetShapeRandom);
+		addWidget(buttonDefaultShape);
+		addWidget(sliderOriginR);
+		addWidget(sliderOriginG);
+		addWidget(sliderOriginB);
+		addWidget(sliderOriginA);
+		addWidget(buttonSetOrigin);
+		addWidget(buttonSetOriginRandom);
+		addWidget(buttonDefaultOrigin);
+		addWidget(buttonDepthTest);
 	}
 	
 	public void render() {

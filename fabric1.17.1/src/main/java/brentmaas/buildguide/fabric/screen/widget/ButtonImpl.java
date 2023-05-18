@@ -7,7 +7,7 @@ import net.minecraft.text.LiteralText;
 public class ButtonImpl extends ButtonWidget implements IButton {
 	
 	
-	public void setVisible(boolean visible) {
+	public void setVisibility(boolean visible) {
 		this.visible = visible;
 	}
 	

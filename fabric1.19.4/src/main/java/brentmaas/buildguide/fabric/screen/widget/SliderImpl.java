@@ -15,6 +15,14 @@ public class SliderImpl extends SliderWidget implements ISlider {
 		prefix = name + ": ";
 	}
 	
+	public void setYPosition(int y) {
+		this.setY(y);
+	}
+	
+	public void setVisibility(boolean visible) {
+		this.visible = visible;
+	}
+	
 	public void updateText() {
 		setMessage(Text.literal(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
 	}

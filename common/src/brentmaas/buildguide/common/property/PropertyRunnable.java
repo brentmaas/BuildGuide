@@ -8,7 +8,7 @@ public class PropertyRunnable extends Property<Runnable> {
 	
 	public PropertyRunnable(Runnable value, String name) {
 		super(value, name);
-		buttonList.add(BuildGuide.widgetHandler.createButton(x, y, 210, height, name, () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x, y, 210, height, name, () -> {
 			this.value.run();
 		}));
 	}

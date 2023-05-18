@@ -73,19 +73,6 @@ public class BuildGuideScreen extends BaseScreen{
 			buttonSetZ.setActive(false);
 		}
 		
-		addButton(buttonShapePrevious);
-		addButton(buttonShapeNext);
-		addButton(buttonOrigin);
-		addButton(buttonOriginXDecrease);
-		addButton(buttonOriginXIncrease);
-		addButton(buttonOriginYDecrease);
-		addButton(buttonOriginYIncrease);
-		addButton(buttonOriginZDecrease);
-		addButton(buttonOriginZIncrease);
-		addButton(buttonSetX);
-		addButton(buttonSetY);
-		addButton(buttonSetZ);
-		
 		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x : "-");
 		textFieldX.setTextColour(0xFFFFFF);
 		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y : "-");
@@ -93,9 +80,21 @@ public class BuildGuideScreen extends BaseScreen{
 		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
-		addTextField(textFieldX);
-		addTextField(textFieldY);
-		addTextField(textFieldZ);
+		addWidget(buttonShapePrevious);
+		addWidget(buttonShapeNext);
+		addWidget(buttonOrigin);
+		addWidget(buttonOriginXDecrease);
+		addWidget(textFieldX);
+		addWidget(buttonSetX);
+		addWidget(buttonOriginXIncrease);
+		addWidget(buttonOriginYDecrease);
+		addWidget(textFieldY);
+		addWidget(buttonSetY);
+		addWidget(buttonOriginYIncrease);
+		addWidget(buttonOriginZDecrease);
+		addWidget(textFieldZ);
+		addWidget(buttonSetZ);
+		addWidget(buttonOriginZIncrease);
 		
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			addShapeProperties(BuildGuide.stateManager.getState().getCurrentShape());

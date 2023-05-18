@@ -38,6 +38,14 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		}
 	}
 	
+	public void setYPosition(int y) {
+		//Shape lists don't do y position
+	}
+	
+	public void setVisibility(boolean visible) {
+		//Shape lists don't do visibility
+	}
+	
 	public void addEntry(int shapeId) {
 		addEntry(new Entry(shapeId));
 		setSelected(children().get(shapeId));
