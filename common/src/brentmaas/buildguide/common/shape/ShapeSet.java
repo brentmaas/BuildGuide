@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import brentmaas.buildguide.common.BuildGuide;
 
 public class ShapeSet {
-	private Shape[] shapes;
+	public Shape[] shapes;
 	private int index;
 	
 	public Origin origin;

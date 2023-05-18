@@ -97,7 +97,11 @@ public class BuildGuideScreen extends BaseScreen{
 		addWidget(buttonOriginZIncrease);
 		
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
-			addShapeProperties(BuildGuide.stateManager.getState().getCurrentShape());
+			for(Shape shape: BuildGuide.stateManager.getState().getCurrentShapeSet().shapes) {
+				if(shape != null) {
+					addShapeProperties(shape);
+				}
+			}
 			BuildGuide.stateManager.getState().getCurrentShape().onSelectedInGUI();
 		}
 	}
