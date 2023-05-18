@@ -12,8 +12,6 @@ public class BuildGuideScreen extends BaseScreen{
 	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
 	private String titleShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
 	
-	private static final String[] progressIndicator = {"|", "/", "-" , "\\"};
-	
 	//It's better off as custom buttons instead of PropertyEnum
 	private IButton buttonShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, "<-", () -> updateShape(-1));
 	private IButton buttonShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, "->", () -> updateShape(1));
@@ -110,14 +108,7 @@ public class BuildGuideScreen extends BaseScreen{
 		super.render();
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShape, 85, 55, 0xFFFFFF);
-		int colourFraction = (int) Math.max(Math.min((BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getHowLongAgoCompletedMillis() : 2000) * 0xFF / 1000, 0xFF), 0);
-		String progressIndicatorPart = "";
-		if(BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShape().ready) {
-			long time = System.currentTimeMillis();
-			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
-		}
-		String shapeName = (BuildGuide.stateManager.getState().isShapeAvailable() && !BuildGuide.stateManager.getState().getCurrentShapeSet().visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + (BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
-		drawShadowCentred(shapeName, 85, 75, BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShape().error ? 0xFF0000 : (0x00FF00 + colourFraction * 0x010001));
+		drawShadowCentred(BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().getCurrentShapeSet()), 85, 75, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().getCurrentShape()));
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleOrigin, 85, 100, 0xFFFFFF);
 		drawShadow("X", 10, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);

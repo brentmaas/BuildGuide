@@ -136,7 +136,7 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 		}
 		
 		public void render(MatrixStack matrixStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			Minecraft.getInstance().font.drawShadow(matrixStack, (BuildGuide.stateManager.getState().shapeSets.get(shapeId).visible ? "" : BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH) + BuildGuide.stateManager.getState().shapeSets.get(shapeId).getShape().getTranslatedName(), x + 5, y + 4, 0xFFFFFF);
+			Minecraft.getInstance().font.drawShadow(matrixStack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeId).getShape()));
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
