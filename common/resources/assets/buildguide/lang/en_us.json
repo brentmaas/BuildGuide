@@ -38,6 +38,7 @@
 	
 	"_comment": "Screens",
 	"screen.buildguide.add": "Add",
+	"screen.buildguide.configuration": "Configuration",
 	"screen.buildguide.delete": "Delete",
 	"screen.buildguide.default": "Default",
 	"screen.buildguide.depthtest": "Depth test",
@@ -53,7 +54,6 @@
 	"screen.buildguide.setglobalorigin": "Set global origin",
 	"screen.buildguide.setorigin": "Set origin",
 	"screen.buildguide.setrandom": "Set random",
-	"screen.buildguide.settings": "Settings",
 	"screen.buildguide.shape": "Shape",
 	"screen.buildguide.shapecolour": "Shape colour",
 	"screen.buildguide.shapes": "Shapes",

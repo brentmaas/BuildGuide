@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.BuildGuideScreen;
-import brentmaas.buildguide.common.screen.SettingsScreen;
+import brentmaas.buildguide.common.screen.ConfigurationScreen;
 import brentmaas.buildguide.common.screen.ShapelistScreen;
 import brentmaas.buildguide.common.screen.VisualisationScreen;
 import brentmaas.buildguide.common.shape.Shape;
@@ -36,7 +36,7 @@ public class State {
 		case Shapelist:
 			return new ShapelistScreen();
 		case Settings:
-			return new SettingsScreen();
+			return new ConfigurationScreen();
 		default:
 			return new BuildGuideScreen();
 		}

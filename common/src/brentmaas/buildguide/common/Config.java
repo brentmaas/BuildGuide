@@ -11,9 +11,9 @@ import java.util.Arrays;
 
 public class Config {
 	private File configFile;
-	private ArrayList<ConfigElement<?>> configElements = new ArrayList<ConfigElement<?>>();
+	public ArrayList<ConfigElement<?>> configElements = new ArrayList<ConfigElement<?>>();
 	
-	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", false, "Enable debug output telling you how long it took for a shape to generate. It's spams a lot in the debug log.");
+	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", false, "Enable debug output telling you how long it took for a shape to generate.");
 	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", true, "Enable asynchronous (multithreaded) shape generation.");
 	public ConfigElement<Boolean> advancedRandomColorsDefaultEnabled = new BooleanConfigElement("advancedRandomColorsDefaultEnabled", false, "Enable random colors for new shapes in advanced mode by default.");
 	
@@ -89,9 +89,10 @@ public class Config {
 	}
 	
 	public abstract class ConfigElement<T> {
-		protected String key;
+		public String key;
 		public T value;
-		protected String comment;
+		private T defaultValue;
+		public String comment;
 		
 		public ConfigElement(String key, T defaultValue){
 			this(key, defaultValue, null);
@@ -100,7 +101,16 @@ public class Config {
 		public ConfigElement(String key, T defaultValue, String comment) {
 			this.key = key;
 			value = defaultValue;
+			this.defaultValue = defaultValue;
 			this.comment = comment;
+		}
+		
+		public void resetToDefault() {
+			value = defaultValue;
+		}
+		
+		public void setValue(T value) {
+			this.value = value;
 		}
 		
 		public abstract void setValue(String value);
