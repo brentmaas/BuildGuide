@@ -27,11 +27,11 @@ public abstract class AbstractScreenHandler {
 	
 	public String getFormattedShapeName(ShapeSet shapeSet) {
 		String progressIndicatorPart = "";
-		if(shapeSet.isShapeAvailable() && !shapeSet.getShape().ready) {
+		if(shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.getShape().ready) {
 			long time = System.currentTimeMillis();
 			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
 		}
-		return (shapeSet.isShapeAvailable() && !shapeSet.visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + (shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
+		return (shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + (shapeSet != null && shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
 	}
 	
 	public int getShapeProgressColour(Shape shape) {
