@@ -122,8 +122,8 @@ gradle.ext.mcversions.each {
 	task "zip$it"(type: Zip, dependsOn: "unpackjars") {
         dependsOn ':unpackjars'
 		from fileTree('./build/tmp/' + mcversion)
-		archiveName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
-		destinationDir = file('./build/libs')
+		archiveFileName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
+		destinationDirectory = file('./build/libs')
 	}
 }
 
