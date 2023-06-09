@@ -32,9 +32,9 @@ private Runnable update;
 		
 		this.update = update;
 		
-		for(int shapeId = 0;shapeId < BuildGuide.stateManager.getState().shapeSets.size();++shapeId) {
-			addEntry(new Entry(shapeId));
-			if(shapeId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
+		for(int shapeSetId = 0;shapeSetId < BuildGuide.stateManager.getState().shapeSets.size();++shapeSetId) {
+			addEntry(new Entry(shapeSetId));
+			if(shapeSetId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
 		}
 	}
 	
@@ -46,9 +46,9 @@ private Runnable update;
 		//Shape lists don't do visibility
 	}
 	
-	public void addEntry(int shapeId) {
-		addEntry(new Entry(shapeId));
-		setSelected(children().get(shapeId));
+	public void addEntry(int shapeSetId) {
+		addEntry(new Entry(shapeSetId));
+		setSelected(children().get(shapeSetId));
 	}
 	
 	public boolean removeEntry(Entry entry) {
@@ -133,14 +133,14 @@ private Runnable update;
 	}
 	
 	public final class Entry extends ObjectSelectionList.Entry<ShapeListImpl.Entry> implements IEntry {
-		private int shapeId;
+		private int shapeSetId;
 		
-		public Entry(int shapeId) {
-			this.shapeId = shapeId;
+		public Entry(int shapeSetId) {
+			this.shapeSetId = shapeSetId;
 		}
 		
 		public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			Minecraft.getInstance().font.drawShadow(poseStack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeId).getShape()));
+			Minecraft.getInstance().font.drawShadow(poseStack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape()));
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -148,12 +148,12 @@ private Runnable update;
 			return false;
 		}
 		
-		public void setShapeSetId(int shapeId) {
-			this.shapeId = shapeId;
+		public void setShapeSetId(int shapeSetId) {
+			this.shapeSetId = shapeSetId;
 		}
 		
 		public int getShapeSetId() {
-			return shapeId;
+			return shapeSetId;
 		}
 		
 		public Component getNarration() {

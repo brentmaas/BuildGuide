@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 public class ButtonImpl extends Button implements IButton {
 	
 	
-	public void setVisible(boolean visible) {
+	public void setVisibility(boolean visible) {
 		this.visible = visible;
 	}
 	

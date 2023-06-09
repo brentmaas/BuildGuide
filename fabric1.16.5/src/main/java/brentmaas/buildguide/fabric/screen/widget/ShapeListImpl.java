@@ -29,9 +29,9 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		
 		this.update = update;
 		
-		for(int shapeId = 0;shapeId < BuildGuide.stateManager.getState().shapeSets.size();++shapeId) {
-			addEntry(new Entry(shapeId));
-			if(shapeId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
+		for(int shapeSetId = 0;shapeSetId < BuildGuide.stateManager.getState().shapeSets.size();++shapeSetId) {
+			addEntry(new Entry(shapeSetId));
+			if(shapeSetId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
 		}
 	}
 	
@@ -43,9 +43,9 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		//Shape lists don't do visibility
 	}
 	
-	public void addEntry(int shapeId) {
-		addEntry(new Entry(shapeId));
-		setSelected(children().get(shapeId));
+	public void addEntry(int shapeSetId) {
+		addEntry(new Entry(shapeSetId));
+		setSelected(children().get(shapeSetId));
 	}
 	
 	public boolean removeEntry(Entry entry) {
@@ -128,14 +128,14 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 	}
 	
 	public final class Entry extends AlwaysSelectedEntryListWidget.Entry<ShapeListImpl.Entry> implements IEntry {
-		private int shapeId;
+		private int shapeSetId;
 		
-		public Entry(int shapeId) {
-			this.shapeId = shapeId;
+		public Entry(int shapeSetId) {
+			this.shapeSetId = shapeSetId;
 		}
 		
 		public void render(MatrixStack stack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			MinecraftClient.getInstance().textRenderer.drawWithShadow(stack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeId).getShape()));
+			MinecraftClient.getInstance().textRenderer.drawWithShadow(stack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape()));
 		}
 		
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -143,12 +143,12 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 			return false;
 		}
 		
-		public void setShapeSetId(int shapeId) {
-			this.shapeId = shapeId;
+		public void setShapeSetId(int shapeSetId) {
+			this.shapeSetId = shapeSetId;
 		}
 		
 		public int getShapeSetId() {
-			return shapeId;
+			return shapeSetId;
 		}
 		
 		public Text getNarration() {

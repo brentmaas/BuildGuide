@@ -14,6 +14,14 @@ public class SliderImpl extends AbstractSliderButton implements ISlider {
 		this.max = max;
 		prefix = name + ": ";
 	}
+	 
+	public void setYPosition(int y) { 
+		this.setY(y); 
+	} 
+	 
+	public void setVisibility(boolean visible) { 
+		this.visible = visible; 
+	} 
 	
 	public void updateText() {
 		setMessage(Component.literal(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
