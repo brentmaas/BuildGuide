@@ -67,6 +67,7 @@
 	"_comment": "Shapes",
 	"shape.buildguide.catenary": "Catenary",
 	"shape.buildguide.circle": "Circle",
+	"shape.buildguide.cone": "Cone",
 	"shape.buildguide.cuboid": "Cuboid",
 	"shape.buildguide.ellipse": "Ellipse",
 	"shape.buildguide.ellipsoid": "Ellipsoid",

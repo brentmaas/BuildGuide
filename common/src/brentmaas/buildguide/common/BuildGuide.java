@@ -5,6 +5,7 @@ import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.shape.IShapeHandler;
 import brentmaas.buildguide.common.shape.ShapeCatenary;
 import brentmaas.buildguide.common.shape.ShapeCircle;
+import brentmaas.buildguide.common.shape.ShapeCone;
 import brentmaas.buildguide.common.shape.ShapeCuboid;
 import brentmaas.buildguide.common.shape.ShapeEllipse;
 import brentmaas.buildguide.common.shape.ShapeEllipsoid;
@@ -40,6 +41,7 @@ public class BuildGuide {
 		
 		ShapeRegistry.registerShape(ShapeCatenary.class);
 		ShapeRegistry.registerShape(ShapeCircle.class);
+		ShapeRegistry.registerShape(ShapeCone.class);
 		ShapeRegistry.registerShape(ShapeCuboid.class);
 		ShapeRegistry.registerShape(ShapeEllipse.class);
 		ShapeRegistry.registerShape(ShapeEllipsoid.class);
