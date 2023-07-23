@@ -6,7 +6,7 @@ import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.shape.Shape;
 
-public class BuildGuideScreen extends BaseScreen{
+public class ShapeScreen extends BaseScreen{
 	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");
 	private String titleOrigin = BuildGuide.screenHandler.translate("screen.buildguide.origin");
 	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
