@@ -14,6 +14,8 @@ public abstract class AbstractRenderHandler {
 	
 	protected abstract void endRenderingShape();
 	
+	protected abstract boolean isCompatibilityProfile();
+	
 	protected abstract boolean textureEnabled();
 	
 	protected abstract boolean depthTestEnabled();
@@ -59,7 +61,7 @@ public abstract class AbstractRenderHandler {
 					
 					setupRenderingShapeSet(shapeSet);
 					
-					boolean toggleTexture = textureEnabled();
+					boolean toggleTexture = isCompatibilityProfile() && textureEnabled();
 					
 					boolean hasDepthTest = depthTestEnabled();
 					boolean toggleDepthTest = BuildGuide.stateManager.getState().depthTest ^ hasDepthTest;

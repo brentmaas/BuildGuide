@@ -2,6 +2,7 @@ package brentmaas.buildguide.fabric;
 
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
 import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
@@ -44,6 +45,10 @@ public class RenderHandler extends AbstractRenderHandler {
 	
 	protected void endRenderingShape() {
 		matrixStackInstance.pop();
+	}
+	
+	protected boolean isCompatibilityProfile() {
+		return GL32.glGetInteger(GL32.GL_CONTEXT_PROFILE_MASK) == GL32.GL_CONTEXT_COMPATIBILITY_PROFILE_BIT;
 	}
 	
 	protected boolean textureEnabled() {

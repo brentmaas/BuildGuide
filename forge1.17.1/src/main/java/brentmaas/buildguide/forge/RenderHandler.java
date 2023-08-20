@@ -1,6 +1,7 @@
 package brentmaas.buildguide.forge;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -48,6 +49,10 @@ public class RenderHandler extends AbstractRenderHandler{
 	
 	protected void endRenderingShape() {
 		poseStackInstance.popPose();
+	}
+	
+	protected boolean isCompatibilityProfile() {
+		return GL32.glGetInteger(GL32.GL_CONTEXT_PROFILE_MASK) == GL32.GL_CONTEXT_COMPATIBILITY_PROFILE_BIT;
 	}
 	
 	protected boolean textureEnabled() {
