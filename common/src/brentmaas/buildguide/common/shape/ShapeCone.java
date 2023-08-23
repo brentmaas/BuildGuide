@@ -45,7 +45,6 @@ public class ShapeCone extends Shape {
 		
 		float radius = propertyRadius.value;
 		float height = propertyHeight.value;
-		System.out.println(height + ", " + (height < 0 ? (int) Math.floor(height) : 0) + ", " + (height > 0 ? (int) Math.ceil(height) : 0));
 		for(int x = (int) Math.floor(-radius + offset);x <= (int) Math.ceil(radius + offset);++x) {
 			for(int y = (int) Math.floor(-radius + offset);y <= (int) Math.ceil(radius + offset);++y) {
 				for(int z = height < 0 ? (int) Math.floor(height) : 0;z <= (height > 0 ? (int) Math.ceil(height) : 0);++z) {
