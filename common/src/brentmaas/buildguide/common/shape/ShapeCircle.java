@@ -30,28 +30,26 @@ public class ShapeCircle extends Shape{
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
-		float dx = propertyRadius.value, dy = propertyRadius.value, dz = propertyRadius.value;
+		float radius = propertyRadius.value;
+		int depth = propertyDepth.value;
 		double offset = propertyEvenMode.value ? 0.5 : 0.0;
-		switch(propertyDir.value) {
-		case X:
-			dx = 0;
-			break;
-		case Y:
-			dy = 0;
-			break;
-		case Z:
-			dz = 0;
-			break;
-		}
-		setOriginOffset(dx == 0 ? 0 : offset, dy == 0 ? 0 : offset, dz == 0 ? 0 : offset);
+		setOriginOffset(propertyDir.value == direction.X ? 0 : offset, propertyDir.value == direction.Y ? 0 : offset, propertyDir.value == direction.Z ? 0 : offset);
 		
-		for(int x = (int) Math.floor(-dx + originOffsetX); x <= (int) Math.ceil(dx + originOffsetX);++x) {
-			for(int y = (int) Math.floor(-dy + originOffsetY); y <= (int) Math.ceil(dy + originOffsetY);++y) {
-				for(int z = (int) Math.floor(-dz + originOffsetZ); z <= (int) Math.ceil(dz + originOffsetZ);++z) {
-					double r2 = (x - originOffsetX) * (x - originOffsetX) + (y - originOffsetY) * (y - originOffsetY) + (z - originOffsetZ) * (z - originOffsetZ);
-					if(r2 >= (propertyRadius.value - 0.5) * (propertyRadius.value - 0.5) && r2 <= (propertyRadius.value + 0.5) * (propertyRadius.value + 0.5)) {
-						for(int s = (propertyDepth.value > 0 ? 0 : propertyDepth.value + 1);s < (propertyDepth.value > 0 ? propertyDepth.value : 1);++s) {
-							addShapeCube(buffer, x + (propertyDir.value == direction.X ? s : 0), y + (propertyDir.value == direction.Y ? s : 0), z + (propertyDir.value == direction.Z ? s : 0));
+		for(int x = (int) Math.floor(-radius + offset);x <= (int) Math.ceil(radius + offset);++x) {
+			for(int y = (int) Math.floor(-radius + offset);y <= (int) Math.ceil(radius + offset);++y) {
+				double r2 = (x - offset) * (x - offset) + (y - offset) * (y - offset);
+				if(r2 >= (radius - 0.5) * (radius - 0.5) && r2 <= (radius + 0.5) * (radius + 0.5)) {
+					for(int z = (depth > 0 ? 0 : depth + 1);z < (depth > 0 ? depth : 1);++z) {
+						switch(propertyDir.value) {
+						case X:
+							addShapeCube(buffer, z, x, y);
+							break;
+						case Y:
+							addShapeCube(buffer, x, z, y);
+							break;
+						case Z:
+							addShapeCube(buffer, x, y, z);
+							break;
 						}
 					}
 				}
