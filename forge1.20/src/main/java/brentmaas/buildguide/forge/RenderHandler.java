@@ -1,7 +1,6 @@
 package brentmaas.buildguide.forge;
 
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -56,19 +55,19 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	protected boolean textureEnabled() {
-		return GL11.glIsEnabled(GL11.GL_TEXTURE_2D);
+		return GL32.glIsEnabled(GL32.GL_TEXTURE_2D);
 	}
 	
 	protected boolean depthTestEnabled() {
-		return GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
+		return GL32.glIsEnabled(GL32.GL_DEPTH_TEST);
 	}
 	
 	protected boolean depthMaskEnabled() {
-		return GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
+		return GL32.glGetBoolean(GL32.GL_DEPTH_WRITEMASK);
 	}
 	
 	protected boolean blendEnabled() {
-		return GL11.glIsEnabled(GL11.GL_BLEND);
+		return GL32.glIsEnabled(GL32.GL_BLEND);
 	}
 	
 	protected void setTexture(boolean enabled) {
@@ -90,7 +89,7 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	protected void setupNotCulling() {
-		RenderSystem.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+		RenderSystem.polygonMode(GL32.GL_FRONT_AND_BACK, GL32.GL_FILL);
 	}
 	
 	protected void setupBlendFunc() {

@@ -2,7 +2,7 @@ package brentmaas.buildguide.forge.screen.widget;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -71,13 +71,13 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 	}
 	
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuilder();
 		RenderSystem.color4f(0, 0, 0, 0.2f);
-		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		bufferBuilder.begin(GL32.GL_QUADS, DefaultVertexFormats.POSITION);
 		bufferBuilder.vertex(x0, y0, 0).endVertex();
 		bufferBuilder.vertex(x0, y1, 0).endVertex();
 		bufferBuilder.vertex(x1, y1, 0).endVertex();
@@ -90,20 +90,20 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 	}
 	
 	protected void renderList(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		boolean hasDepthTest = GL32.glIsEnabled(GL32.GL_DEPTH_TEST);
+		boolean hasDepthMask = GL32.glGetBoolean(GL32.GL_DEPTH_WRITEMASK);
+		int depthFunc = GL32.glGetInteger(GL32.GL_DEPTH_FUNC);
+		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND);
 		
 		if(!hasDepthTest) RenderSystem.enableDepthTest();
 		if(!hasDepthMask) RenderSystem.depthMask(true);
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
+		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(GL32.GL_LEQUAL);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuilder();
 		RenderSystem.color4f(0, 0, 0, 0);
-		bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
+		bufferBuilder.begin(GL32.GL_QUADS, DefaultVertexFormats.POSITION);
 		bufferBuilder.vertex(x0, y0 - itemHeight - 4, 0.1).endVertex();
 		bufferBuilder.vertex(x0, y0, 0.1).endVertex();
 		bufferBuilder.vertex(x1, y0, 0.1).endVertex();
@@ -113,7 +113,7 @@ public class ShapeListImpl extends ExtendedList<ShapeListImpl.Entry> implements 
 		super.renderList(matrixStack, x, y, mouseX, mouseY, partialTicks);
 		
 		if(!hasBlend) RenderSystem.disableBlend();
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
+		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
 		if(!hasDepthMask) RenderSystem.depthMask(false);
 		if(!hasDepthTest) RenderSystem.disableDepthTest();
 	}

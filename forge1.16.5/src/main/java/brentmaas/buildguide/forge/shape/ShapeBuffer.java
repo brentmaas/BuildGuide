@@ -1,6 +1,6 @@
 package brentmaas.buildguide.forge.shape;
 
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
 
 import brentmaas.buildguide.common.shape.IShapeBuffer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -14,7 +14,7 @@ public class ShapeBuffer implements IShapeBuffer{
 	
 	public ShapeBuffer() {
 		builder = new BufferBuilder(4); //4 is lowest working. Number of blocks isn't always known, so it'll have to grow on its own
-		builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+		builder.begin(GL32.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 	}
 	
 	public void setColour(int r, int g, int b, int a) {
@@ -38,7 +38,7 @@ public class ShapeBuffer implements IShapeBuffer{
 	public void render(Matrix4f model) {
 		buffer.bind();
 		DefaultVertexFormats.POSITION_COLOR.setupBufferState(0);
-		buffer.draw(model, GL11.GL_QUADS);
+		buffer.draw(model, GL32.GL_QUADS);
 		VertexBuffer.unbind();
 		DefaultVertexFormats.POSITION_COLOR.clearBufferState();
 	}

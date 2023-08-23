@@ -2,7 +2,7 @@ package brentmaas.buildguide.forge.screen.widget;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -73,7 +73,7 @@ private Runnable update;
 	}
 	
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
 		Tesselator tessellator = Tesselator.getInstance();
@@ -93,14 +93,14 @@ private Runnable update;
 	}
 	
 	protected void renderList(PoseStack poseStack, int x, int y, int mouseX, int mouseY, float partialTicks) {
-		boolean hasDepthTest = GL11.glIsEnabled(GL11.GL_DEPTH_TEST);
-		boolean hasDepthMask = GL11.glGetBoolean(GL11.GL_DEPTH_WRITEMASK);
-		int depthFunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
-		boolean hasBlend = GL11.glIsEnabled(GL11.GL_BLEND);
+		boolean hasDepthTest = GL32.glIsEnabled(GL32.GL_DEPTH_TEST);
+		boolean hasDepthMask = GL32.glGetBoolean(GL32.GL_DEPTH_WRITEMASK);
+		int depthFunc = GL32.glGetInteger(GL32.GL_DEPTH_FUNC);
+		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND);
 		
 		if(!hasDepthTest) RenderSystem.enableDepthTest();
 		if(!hasDepthMask) RenderSystem.depthMask(true);
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(GL11.GL_LEQUAL);
+		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(GL32.GL_LEQUAL);
 		if(!hasBlend) RenderSystem.enableBlend();
 		
 		Tesselator tessellator = Tesselator.getInstance();
@@ -117,7 +117,7 @@ private Runnable update;
 		super.renderList(poseStack, x, y, mouseX, mouseY, partialTicks);
 		
 		if(!hasBlend) RenderSystem.disableBlend();
-		if(depthFunc != GL11.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
+		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(depthFunc);
 		if(!hasDepthMask) RenderSystem.depthMask(false);
 		if(!hasDepthTest) RenderSystem.disableDepthTest();
 	}
