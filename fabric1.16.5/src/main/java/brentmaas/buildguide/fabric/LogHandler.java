@@ -28,4 +28,8 @@ public class LogHandler implements ILogHandler {
 	public void debugOrHigher(String message) {
 		logger.log(logger.getLevel().intLevel() >= StandardLevel.DEBUG.intLevel() ? Level.DEBUG : logger.getLevel(), message);
 	}
+	
+	public void debugThrowable(String message, Throwable throwable) {
+		logger.debug(message, throwable);
+	}
 }

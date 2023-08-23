@@ -47,7 +47,7 @@ public abstract class Shape {
 					error = true;
 				}catch(Exception e) {
 					error = true;
-					e.printStackTrace();
+					BuildGuide.logHandler.debugThrowable("An exception occurred while rendering a shape.", e);
 				}finally {
 					completedAt = System.currentTimeMillis();
 					ready = true;
@@ -65,7 +65,7 @@ public abstract class Shape {
 				error = true;
 			}catch(Exception e) {
 				error = true;
-				e.printStackTrace();
+				BuildGuide.logHandler.debugThrowable("An exception occurred while rendering a shape.", e);
 			}finally {
 				completedAt = System.currentTimeMillis();
 				ready = true;
