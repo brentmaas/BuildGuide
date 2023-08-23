@@ -11,9 +11,12 @@ import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.screen.widget.IWidget;
+import brentmaas.buildguide.common.shape.ShapeSet;
 
 public abstract class BaseScreen {
 	protected String title = BuildGuide.screenHandler.translate("screen.buildguide.title");
+	protected String titleNumberOfBlocksShape = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocksshape");
+	protected String titleNumberOfBlocksTotal = BuildGuide.screenHandler.translate("screen.buildguide.numberofblockstotal");
 	protected String textEnabled = BuildGuide.screenHandler.translate("screen.buildguide.enable");
 	protected IScreenWrapper wrapper;
 	protected ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
@@ -42,6 +45,17 @@ public abstract class BaseScreen {
 	public void render() {
 		drawShadowCentred(title, wrapper.getWidth() / 2, 10, 0xFFFFFF);
 		drawShadow(textEnabled, 30, 10, 0xFFFFFF);
+		
+		drawShadowCentred(titleNumberOfBlocksShape, wrapper.getWidth() / 4, 5, 0xFFFFFF);
+		int n = BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
+		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 4, 20, 0xFFFFFF);
+		
+		drawShadowCentred(titleNumberOfBlocksTotal, wrapper.getWidth() * 3 / 4, 5, 0xFFFFFF);
+		int nTotal = 0;
+		for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
+			if(s.visible) nTotal += s.getShape().getNumberOfBlocks();
+		}
+		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() * 3 / 4, 20, 0xFFFFFF);
 		
 		for(Property<?> p: properties) {
 			p.render(this);

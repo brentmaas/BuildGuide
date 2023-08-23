@@ -15,7 +15,6 @@ public class ShapelistScreen extends BaseScreen {
 	private String titleNewShape = BuildGuide.screenHandler.translate("screen.buildguide.newshape");
 	private String titleSelectedShape = BuildGuide.screenHandler.translate("screen.buildguide.selectedshape");
 	private String textVisible = BuildGuide.screenHandler.translate("screen.buildguide.visible");
-	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
 	private String titleGlobalOrigin = BuildGuide.screenHandler.translate("screen.buildguide.globalorigin");
 	private String titleShapes = BuildGuide.screenHandler.translate("screen.buildguide.shapes");
 	
@@ -157,13 +156,6 @@ public class ShapelistScreen extends BaseScreen {
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleSelectedShape, 85, 120, 0xFFFFFF);
 		drawShadow(textVisible, 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		
-		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleNumberOfBlocks, 85, 290, 0xFFFFFF);
-		int n = 0;
-		for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-			if(s.visible) n += s.getShape().getNumberOfBlocks();
-		}
-		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", 85, 305, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleGlobalOrigin, 85, 185, 0xFFFFFF);
 		drawShadow("X", 10, 225, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);

@@ -9,7 +9,6 @@ import brentmaas.buildguide.common.shape.Shape;
 public class ShapeScreen extends BaseScreen{
 	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");
 	private String titleOrigin = BuildGuide.screenHandler.translate("screen.buildguide.origin");
-	private String titleNumberOfBlocks = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocks");
 	private String titleShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
 	
 	//It's better off as custom buttons instead of PropertyEnum
@@ -114,10 +113,6 @@ public class ShapeScreen extends BaseScreen{
 		drawShadow("X", 10, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		drawShadow("Y", 10, 160, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		drawShadow("Z", 10, 180, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		
-		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleNumberOfBlocks, 85, 205, 0xFFFFFF);
-		int n = BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
-		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", 85, 220, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapeProperties, 285, 55, 0xFFFFFF);
 	}
