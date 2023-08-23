@@ -26,7 +26,7 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
 		ShapeSet newShapeSet = new ShapeSet(BuildGuide.stateManager.getState().iShapeNew);
 		newShapeSet.resetOrigin();
-		if(BuildGuide.stateManager.getState().propertyAdvancedModeRandomColours.value) {
+		if(BuildGuide.config.advancedRandomColorsDefaultEnabled.value) {
 			Random random = new Random();
 			newShapeSet.colourShapeR = random.nextFloat();
 			newShapeSet.colourShapeG = random.nextFloat();

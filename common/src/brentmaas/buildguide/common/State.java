@@ -2,7 +2,6 @@ package brentmaas.buildguide.common;
 
 import java.util.ArrayList;
 
-import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.ShapeScreen;
 import brentmaas.buildguide.common.screen.ConfigurationScreen;
@@ -21,8 +20,6 @@ public class State {
 	public boolean enabled = false;
 	public boolean depthTest = true;
 	public ActiveScreen currentScreen = ActiveScreen.BuildGuide;
-	@Deprecated
-	public PropertyBoolean propertyAdvancedModeRandomColours = new PropertyBoolean(BuildGuide.config.advancedRandomColorsDefaultEnabled.value, BuildGuide.screenHandler.translate("screen.buildguide.advancedmoderandomcolors"), null);
 	
 	public BaseScreen createNewScreen(ActiveScreen newActiveScreen) {
 		currentScreen = newActiveScreen;
