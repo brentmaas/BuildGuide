@@ -7,8 +7,6 @@ import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 
 public interface IScreenWrapper {
-	
-	
 	public void attachScreen(BaseScreen screen);
 	
 	public void show();

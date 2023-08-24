@@ -5,8 +5,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
 public class ButtonImpl extends ButtonWidget implements IButton {
-	
-	
 	public void setVisibility(boolean visible) {
 		this.visible = visible;
 	}

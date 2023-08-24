@@ -1,8 +1,6 @@
 package brentmaas.buildguide.common.screen.widget;
 
 public abstract class AbstractWidgetHandler {
-	
-	
 	public abstract IButton createButton(int x, int y, int width, int height, String text, IButton.IPressable onPress);
 	
 	public IButton createButton(int x, int y, int width, int height, String text, IButton.IPressable onPress, boolean active) {

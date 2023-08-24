@@ -4,8 +4,6 @@ import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.common.shape.ShapeSet;
 
 public abstract class AbstractRenderHandler {
-	
-	
 	public abstract void register();
 	
 	public abstract void renderShapeBuffer(Shape shape);

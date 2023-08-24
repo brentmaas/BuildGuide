@@ -8,8 +8,6 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 
 public class InputHandler extends AbstractInputHandler {
-	
-	
 	public IKeyBind registerKeyBind(String name, int keyCode) {
 		return new KeyBindImpl(name, keyCode);
 	}

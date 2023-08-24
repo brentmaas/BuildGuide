@@ -6,8 +6,6 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.text.StringTextComponent;
 
 public class TextFieldImpl extends TextFieldWidget implements ITextField {
-	
-	
 	public TextFieldImpl(int x, int y, int width, int height, String value) {
 		super(Minecraft.getInstance().font, x, y, width, height, new StringTextComponent(value));
 	}

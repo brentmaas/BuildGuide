@@ -7,8 +7,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
 
 public class ShapeHandler implements IShapeHandler {
-	
-	
 	public IShapeBuffer newBuffer() {
 		return new ShapeBuffer();
 	}

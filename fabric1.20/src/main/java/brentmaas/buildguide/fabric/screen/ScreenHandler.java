@@ -6,8 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
 public class ScreenHandler extends AbstractScreenHandler {
-	
-	
 	public void showNone() {
 		MinecraftClient.getInstance().setScreen(null);
 	}

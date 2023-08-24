@@ -6,8 +6,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.TextComponent;
 
 public class TextFieldImpl extends EditBox implements ITextField {
-	
-	
 	public TextFieldImpl(int x, int y, int width, int height, String value) {
 		super(Minecraft.getInstance().font, x, y, width, height, new TextComponent(value));
 	}

@@ -1,8 +1,6 @@
 package brentmaas.buildguide.common.screen.widget;
 
 public interface ICheckboxRunnableButton extends IWidget {
-	
-	
 	public void onPress();
 	
 	public void setChecked(boolean checked);

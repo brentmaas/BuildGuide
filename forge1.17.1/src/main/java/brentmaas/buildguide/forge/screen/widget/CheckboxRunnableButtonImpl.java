@@ -5,7 +5,7 @@ import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.network.chat.TextComponent;
 
 public class CheckboxRunnableButtonImpl extends Checkbox implements ICheckboxRunnableButton {
-protected final ICheckboxRunnableButton.IPressable onPress;
+	protected final ICheckboxRunnableButton.IPressable onPress;
 	
 	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, String title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
 		super(x, y, width, height, new TextComponent(title), checked, drawTitle);

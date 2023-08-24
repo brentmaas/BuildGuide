@@ -7,8 +7,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 public class ScreenHandler extends AbstractScreenHandler {
-	
-	
 	public void showNone() {
 		MinecraftClient.getInstance().setScreen(null);
 	}

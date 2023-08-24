@@ -7,8 +7,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ScreenHandler extends AbstractScreenHandler {
-	
-	
 	public void showNone() {
 		Minecraft.getInstance().setScreen(null);
 	}

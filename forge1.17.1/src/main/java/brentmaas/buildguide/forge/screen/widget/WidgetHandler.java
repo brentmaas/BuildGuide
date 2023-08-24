@@ -9,8 +9,6 @@ import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import net.minecraft.client.Minecraft;
 
 public class WidgetHandler extends AbstractWidgetHandler{
-	
-	
 	public IButton createButton(int x, int y, int width, int height, String text, IButton.IPressable onPress) {
 		return new ButtonImpl(x, y, width, height, text, onPress);
 	}

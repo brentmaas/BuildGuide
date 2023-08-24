@@ -10,8 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class InputHandler extends AbstractInputHandler{
-	
-	
 	public IKeyBind registerKeyBind(String name, int keyCode) {
 		return new KeyBindImpl(name, keyCode);
 	}

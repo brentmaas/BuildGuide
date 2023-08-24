@@ -13,8 +13,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class InputHandler extends AbstractInputHandler{
-	
-	
 	public IKeyBind registerKeyBind(String name, int keyCode) {
 		return new KeyBindImpl(name, keyCode);
 	}

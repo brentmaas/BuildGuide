@@ -21,7 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
 public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> implements IShapeList {
-private Runnable update;
+	private Runnable update;
 	
 	public ShapeListImpl(Minecraft minecraft, int left, int right, int top, int bottom, int slotHeight, Runnable update) {
 		super(minecraft, right - left, bottom - top, top, bottom, slotHeight);
