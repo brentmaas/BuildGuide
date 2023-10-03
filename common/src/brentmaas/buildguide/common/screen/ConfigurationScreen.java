@@ -31,13 +31,13 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		
-		buttonAdvancedRandomColorsDefaultEnabled = BuildGuide.widgetHandler.createCheckbox(255, 160, 20, 20, "", BuildGuide.config.advancedRandomColorsDefaultEnabled.value, false, () -> {
-			BuildGuide.config.advancedRandomColorsDefaultEnabled.setValue(buttonAdvancedRandomColorsDefaultEnabled.isCheckboxSelected());
+		buttonAdvancedRandomColorsDefaultEnabled = BuildGuide.widgetHandler.createCheckbox(255, 160, 20, 20, "", BuildGuide.config.shapeListRandomColorsDefaultEnabled.value, false, () -> {
+			BuildGuide.config.shapeListRandomColorsDefaultEnabled.setValue(buttonAdvancedRandomColorsDefaultEnabled.isCheckboxSelected());
 			BuildGuide.config.write();
 		});
 		buttonAdvancedRandomColorsDefaultEnabledDefault = BuildGuide.widgetHandler.createButton(280, 160, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
-			BuildGuide.config.advancedRandomColorsDefaultEnabled.resetToDefault();
-			buttonAdvancedRandomColorsDefaultEnabled.setChecked(BuildGuide.config.advancedRandomColorsDefaultEnabled.value);
+			BuildGuide.config.shapeListRandomColorsDefaultEnabled.resetToDefault();
+			buttonAdvancedRandomColorsDefaultEnabled.setChecked(BuildGuide.config.shapeListRandomColorsDefaultEnabled.value);
 			BuildGuide.config.write();
 		});
 		
@@ -58,7 +58,7 @@ public class ConfigurationScreen extends BaseScreen {
 		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.asyncEnabled.key, 10, 115, 0xFFFFFF);
 		drawShadowLeft(BuildGuide.config.asyncEnabled.comment, 10, 135, 0xFFFFFF);
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.advancedRandomColorsDefaultEnabled.key, 10, 165, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.advancedRandomColorsDefaultEnabled.comment, 10, 185, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.shapeListRandomColorsDefaultEnabled.key, 10, 165, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.shapeListRandomColorsDefaultEnabled.comment, 10, 185, 0xFFFFFF);
 	}
 }
