@@ -36,6 +36,11 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		attachedScreen.render();
 	}
 	
+	@Override
+	public void renderInGameBackground(DrawContext drawContext) {
+		// Disable dark background
+	}
+	
 	public boolean shouldPause() {
 		return attachedScreen.isPauseScreen();
 	}
