@@ -110,9 +110,9 @@ public class ShapeScreen extends BaseScreen{
 		drawShadowCentred(BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().getCurrentShapeSet()), 85, 75, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().getCurrentShape()));
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleOrigin, 85, 100, 0xFFFFFF);
-		drawShadow("X", 10, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		drawShadow("Y", 10, 160, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		drawShadow("Z", 10, 180, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("X", 10, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("Y", 10, 160, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("Z", 10, 180, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapeProperties, 285, 55, 0xFFFFFF);
 	}

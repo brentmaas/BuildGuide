@@ -65,7 +65,7 @@ public abstract class Property<T> {
 	}
 	
 	public void drawString(BaseScreen screen, String text, int x, int y, int colour) {
-		if(visible) screen.drawShadow(text, x, y, 0xFFFFFF);
+		if(visible) screen.drawShadowLeft(text, x, y, 0xFFFFFF);
 	}
 	
 	public void drawStringCentred(BaseScreen screen, String text, int x, int y, int colour) {

@@ -52,13 +52,13 @@ public class ConfigurationScreen extends BaseScreen {
 	public void render() {
 		super.render();
 		
-		drawShadow(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 65, 0xFFFFFF);
-		drawShadow(BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 85, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 65, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 85, 0xFFFFFF);
 		
-		drawShadow(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.asyncEnabled.key, 10, 115, 0xFFFFFF);
-		drawShadow(BuildGuide.config.asyncEnabled.comment, 10, 135, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.asyncEnabled.key, 10, 115, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.asyncEnabled.comment, 10, 135, 0xFFFFFF);
 		
-		drawShadow(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.advancedRandomColorsDefaultEnabled.key, 10, 165, 0xFFFFFF);
-		drawShadow(BuildGuide.config.advancedRandomColorsDefaultEnabled.comment, 10, 185, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.advancedRandomColorsDefaultEnabled.key, 10, 165, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.advancedRandomColorsDefaultEnabled.comment, 10, 185, 0xFFFFFF);
 	}
 }

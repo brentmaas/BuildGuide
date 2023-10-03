@@ -124,6 +124,6 @@ public class VisualisationScreen extends BaseScreen {
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapeColour, 65, 55, 0xFFFFFF);
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleOriginColour, 200, 55, 0xFFFFFF);
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleRendering, 85, 220, 0xFFFFFF);
-		drawShadow(textDepthTest, 30, 240, 0xFFFFFF);
+		drawShadowLeft(textDepthTest, 30, 240, 0xFFFFFF);
 	}
 }

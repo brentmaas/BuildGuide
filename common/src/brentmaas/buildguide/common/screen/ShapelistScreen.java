@@ -155,12 +155,12 @@ public class ShapelistScreen extends BaseScreen {
 		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKeys().get(BuildGuide.stateManager.getState().iShapeNew)), 85, 75, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleSelectedShape, 85, 120, 0xFFFFFF);
-		drawShadow(textVisible, 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft(textVisible, 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleGlobalOrigin, 85, 185, 0xFFFFFF);
-		drawShadow("X", 10, 225, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		drawShadow("Y", 10, 245, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
-		drawShadow("Z", 10, 265, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("X", 10, 225, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("Y", 10, 245, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft("Z", 10, 265, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapes, 250, 55, 0xFFFFFF);
 	}

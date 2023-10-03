@@ -44,18 +44,20 @@ public abstract class BaseScreen {
 	
 	public void render() {
 		drawShadowCentred(title, wrapper.getWidth() / 2, 10, 0xFFFFFF);
-		drawShadow(textEnabled, 30, 10, 0xFFFFFF);
+		drawShadowLeft(textEnabled, 30, 10, 0xFFFFFF);
 		
-		drawShadowCentred(titleNumberOfBlocksShape, wrapper.getWidth() / 4, 5, 0xFFFFFF);
+		int titlesMax = Math.max(wrapper.getTextWidth(titleNumberOfBlocksShape), wrapper.getTextWidth(titleNumberOfBlocksTotal));
+		
+		drawShadowCentred(titleNumberOfBlocksShape, wrapper.getWidth() / 2 - wrapper.getTextWidth(title) / 2 - titlesMax / 2 - 20, 5, 0xFFFFFF);
 		int n = BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
-		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 4, 20, 0xFFFFFF);
+		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 2 - wrapper.getTextWidth(title) / 2 - titlesMax / 2 - 20, 20, 0xFFFFFF);
 		
-		drawShadowCentred(titleNumberOfBlocksTotal, wrapper.getWidth() * 3 / 4, 5, 0xFFFFFF);
+		drawShadowCentred(titleNumberOfBlocksTotal, wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 5, 0xFFFFFF);
 		int nTotal = 0;
 		for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
 			if(s.visible) nTotal += s.getShape().getNumberOfBlocks();
 		}
-		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() * 3 / 4, 20, 0xFFFFFF);
+		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 20, 0xFFFFFF);
 		
 		for(Property<?> p: properties) {
 			p.render(this);
@@ -82,12 +84,16 @@ public abstract class BaseScreen {
 		}
 	}
 	
-	public void drawShadow(String text, int x, int y, int colour) {
+	public void drawShadowLeft(String text, int x, int y, int colour) {
 		if(wrapper != null) wrapper.drawShadow(text, x, y, colour);
 	}
 	
 	public void drawShadowCentred(String text, int x, int y, int colour) {
 		if(wrapper != null) wrapper.drawShadow(text, x - wrapper.getTextWidth(text) / 2, y, colour);
+	}
+	
+	public void drawShadowRight(String text, int x, int y, int colour) {
+		if(wrapper != null) wrapper.drawShadow(text, x - wrapper.getTextWidth(text), y, colour);
 	}
 	
 	protected void addProperty(Property<?> p) {
