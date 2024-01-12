@@ -25,10 +25,6 @@ public class CheckboxRunnableButtonImpl extends CheckboxButton implements ICheck
 		return selected();
 	}
 	
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-	
 	public void setActive(boolean active) {
 		this.active = active;
 	}

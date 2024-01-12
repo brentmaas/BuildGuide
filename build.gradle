@@ -139,13 +139,13 @@ configure(subprojects.findAll {it.name != 'common'}) {
 	dependencies {
 		implementation project(":common")
 	}
-    sourceSets.main {
-        java {
+    if(it.name != 'forge1.20.4') { //TODO: Make this work universally again
+        sourceSets.main.java {
             srcDir '../common/src'
         }
-        resources {
-            srcDir '../common/resources'
-        }
+    }
+    sourceSets.main.resources {
+        srcDir '../common/resources'
     }
     eclipse {
         classpath {
