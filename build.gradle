@@ -47,7 +47,7 @@ task unpackjars {
             file(folder.absolutePath + '/META-INF').mkdirs()
             
             def manifest = file('./build/tmp/' + mcversion + '/META-INF/MANIFEST.MF')
-            manifest.text = 'Manifest-Version: 1.0\n'
+            manifest.text = 'Manifest-Version: 1.0'
             
             def fabrictmp = file('./build/tmp/fabric' + mcversion)
             copy {
@@ -58,7 +58,11 @@ task unpackjars {
                 def relpath = it.absolutePath.substring(fabrictmp.absolutePath.length())
                 def target = file(folder.absolutePath + relpath)
                 if(relpath == '\\META-INF\\MANIFEST.MF') {
-                    manifest.text += it.text.substring(it.text.indexOf('\n') + 1)
+                    it.text.eachLine {
+                        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
+                            manifest.text += ('\n' + it)
+                        }
+                    }
                 }else if(!target.exists()){
                     def source = it
                     def targetParent = target.getParentFile()
@@ -79,7 +83,11 @@ task unpackjars {
                 def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
                 def target = file(folder.absolutePath + relpath)
                 if(relpath == '\\META-INF\\MANIFEST.MF') {
-                    manifest.text += it.text.substring(it.text.indexOf('\n') + 1)
+                    it.text.eachLine {
+                        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
+                            manifest.text += ('\n' + it)
+                        }
+                    }
                 }else if(relpath == '\\META-INF\\mods.toml'){
                     target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
                 }else if(!target.exists()){
