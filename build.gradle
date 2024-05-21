@@ -25,9 +25,9 @@ task unpackjars {
     dependsOn ':cleantmp'
     dependsOn ':common:build'
     gradle.ext.mcversions.each {
-		dependsOn ':fabric' + it + ':build'
-		dependsOn ':forge' + it + ':build'
-	}
+        dependsOn ':fabric' + it + ':build'
+        dependsOn ':forge' + it + ':build'
+    }
     
     def commonfolder = file('./build/tmp/common')
     
@@ -103,51 +103,51 @@ task unpackjars {
         }
     }
     
-	doLast {
-		delete commonfolder.absolutePath + '/META-INF'
-		
-		gradle.ext.mcversions.each {
+    doLast {
+        delete commonfolder.absolutePath + '/META-INF'
+        
+        gradle.ext.mcversions.each {
             def folder = file('./build/tmp/' + it)
-			fileTree(commonfolder).each {
-				def relpath = it.absolutePath.substring(commonfolder.absolutePath.length())
-				def target = file(folder.absolutePath + relpath)
-				if(relpath != '\\META-INF\\MANIFEST.MF' && !target.exists()) {
-					def source = it
-					def targetParent = target.getParentFile()
-					targetParent.mkdirs()
-					copy {
-						from source
-						into targetParent
-					}
-				}
-			}
-		}
-	}
+            fileTree(commonfolder).each {
+                def relpath = it.absolutePath.substring(commonfolder.absolutePath.length())
+                def target = file(folder.absolutePath + relpath)
+                if(relpath != '\\META-INF\\MANIFEST.MF' && !target.exists()) {
+                    def source = it
+                    def targetParent = target.getParentFile()
+                    targetParent.mkdirs()
+                    copy {
+                        from source
+                        into targetParent
+                    }
+                }
+            }
+        }
+    }
 }
 
 gradle.ext.mcversions.each {
-	def mcversion = it
-	task "zip$it"(type: Zip, dependsOn: "unpackjars") {
+    def mcversion = it
+    task "zip$it"(type: Zip, dependsOn: "unpackjars") {
         dependsOn ':unpackjars'
-		from fileTree('./build/tmp/' + mcversion)
-		archiveFileName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
-		destinationDirectory = file('./build/libs')
-	}
+        from fileTree('./build/tmp/' + mcversion)
+        archiveFileName = rootProject.name + "-" + mcversion + "-" + gradle.ext.modversion + ".jar"
+        destinationDirectory = file('./build/libs')
+    }
 }
 
 task build {
-	gradle.ext.mcversions.each {
-		dependsOn tasks.getByName("zip$it")
-	}
+    gradle.ext.mcversions.each {
+        dependsOn tasks.getByName("zip$it")
+    }
 }
 
 configure(subprojects.findAll {it.name != 'common'}) {
-	apply plugin: 'java'
+    apply plugin: 'java'
     apply plugin: 'eclipse'
-	dependencies {
-		implementation project(":common")
-	}
-    if(it.name != 'forge1.20.4') { //TODO: Make this work universally again
+    dependencies {
+        implementation project(":common")
+    }
+    if(it.name != 'forge1.20.4' && it.name != 'forge1.20.6') { //TODO: Make this work universally again
         sourceSets.main.java {
             srcDir '../common/src'
         }
