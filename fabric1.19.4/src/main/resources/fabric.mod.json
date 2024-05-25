@@ -1,20 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "buildguide",
-  "version": "0.4.1",
+  "id": "${modid}",
+  "version": "${version}",
 
-  "name": "Build Guide",
-  "description": "Simple client-only building guide mod.",
+  "name": "${modname}",
+  "description": "${moddesc}",
   "authors": [
-    "brentmaas"
+    "${modauthor}"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/build-guide",
-    "sources": "https://www.github.com/brentmaas/BuildGuide"
+    "homepage": "${modsources}",
+    "issues": "${modissues}",
+    "sources": "${modsources}"
   },
 
-  "license": "Creative Commons Attribution-NonCommercial 3.0 Unported",
-  "icon": "assets/modid/icon.png",
+  "license": "${modlicense}",
+  "icon": "assets/${modid}/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -24,10 +25,10 @@
   },
 
   "depends": {
-    "fabricloader": ">=0.14.22",
+    "fabricloader": ">=${fabricloader}",
     "fabric-key-binding-api-v1": "*",
-    "fabric": ">=0.87.0",
-    "minecraft": "~1.19.4",
-    "java": ">=17"
+    "fabric": ">=${fabric_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": "${java_version}"
   }
 }

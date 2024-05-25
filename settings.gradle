@@ -25,11 +25,18 @@ pluginManagement {
 rootProject.name = 'BuildGuide'
 
 gradle.ext.modid = 'buildguide'
-gradle.ext.modversion = '0.4.1' //Version must also be set in fabric<version>/src/main/resources/fabric.mod.json!
+gradle.ext.modversion = '0.4.1'
 gradle.ext.modspecversion = '13'
+gradle.ext.modname = 'Build Guide'
+gradle.ext.moddesc = 'Simple client-only building guide mod.'
+gradle.ext.modauthor = 'brentmaas'
+gradle.ext.modsources = 'https://www.github.com/brentmaas/BuildGuide'
+gradle.ext.modissues = 'https://github.com/brentmaas/BuildGuide/issues'
+gradle.ext.modlicense = 'Creative Commons Attribution-NonCommercial 3.0 Unported'
 
 gradle.ext.fabricgroup = gradle.ext.modid + '.fabric'
 gradle.ext.fabricname = rootProject.name + '-Fabric'
+gradle.ext.fabricloader = '0.15.11'
 
 gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
