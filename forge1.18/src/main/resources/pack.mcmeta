@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "buildguide resources",
-        "pack_format": 8
+        "description": "${modid} resources",
+        "pack_format": ${pack_format}
     }
 }

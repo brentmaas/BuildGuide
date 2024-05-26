@@ -28,7 +28,7 @@ gradle.ext.modid = 'buildguide'
 gradle.ext.modversion = '0.4.1'
 gradle.ext.modspecversion = '13'
 gradle.ext.modname = 'Build Guide'
-gradle.ext.moddesc = 'Simple client-only building guide mod.'
+gradle.ext.moddesc = 'A client-side only mod to project shapes like circles and spheres into the world. It works both in singleplayer and multiplayer, even if the server doesn\'t have the mod installed.'
 gradle.ext.modauthor = 'brentmaas'
 gradle.ext.modsources = 'https://www.github.com/brentmaas/BuildGuide'
 gradle.ext.modissues = 'https://github.com/brentmaas/BuildGuide/issues'
@@ -40,6 +40,7 @@ gradle.ext.fabricloader = '0.15.11'
 
 gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
+gradle.ext.forgemapping = 'official'
 
 gradle.ext.mcversions = ['1.16.4', '1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6']
 

@@ -1,8 +1,8 @@
 {
     "pack": {
-        "description": "buildguide resources",
-        "pack_format": 9,
-        "forge:resource_pack_format": 9,
-        "forge:data_pack_format": 10
+        "description": "${modid} resources",
+        "pack_format": ${pack_format},
+        "forge:resource_pack_format": ${pack_format},
+        "forge:data_pack_format": ${pack_format}
     }
 }
