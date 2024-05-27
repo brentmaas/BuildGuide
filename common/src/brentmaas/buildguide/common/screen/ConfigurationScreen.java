@@ -16,8 +16,7 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		buttonDebugGenerationTimingsEnabledDefault = BuildGuide.widgetHandler.createButton(280, 60, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
-			BuildGuide.config.debugGenerationTimingsEnabled.resetToDefault();
-			buttonDebugGenerationTiminigsEnabled.setChecked(BuildGuide.config.debugGenerationTimingsEnabled.value);
+			buttonDebugGenerationTiminigsEnabled.setChecked(BuildGuide.config.debugGenerationTimingsEnabled.getDefault());
 			BuildGuide.config.write();
 		});
 		
@@ -26,8 +25,7 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		buttonAsyncEnabledDefault = BuildGuide.widgetHandler.createButton(280, 110, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
-			BuildGuide.config.asyncEnabled.resetToDefault();
-			buttonAsyncEnabled.setChecked(BuildGuide.config.asyncEnabled.value);
+			buttonAsyncEnabled.setChecked(BuildGuide.config.asyncEnabled.getDefault());
 			BuildGuide.config.write();
 		});
 		
@@ -36,8 +34,7 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		buttonAdvancedRandomColorsDefaultEnabledDefault = BuildGuide.widgetHandler.createButton(280, 160, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
-			BuildGuide.config.shapeListRandomColorsDefaultEnabled.resetToDefault();
-			buttonAdvancedRandomColorsDefaultEnabled.setChecked(BuildGuide.config.shapeListRandomColorsDefaultEnabled.value);
+			buttonAdvancedRandomColorsDefaultEnabled.setChecked(BuildGuide.config.shapeListRandomColorsDefaultEnabled.getDefault());
 			BuildGuide.config.write();
 		});
 		

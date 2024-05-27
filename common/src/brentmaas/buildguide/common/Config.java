@@ -105,8 +105,8 @@ public class Config {
 			this.comment = comment;
 		}
 		
-		public void resetToDefault() {
-			value = defaultValue;
+		public T getDefault() {
+			return defaultValue;
 		}
 		
 		public void setValue(T value) {

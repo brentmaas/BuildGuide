@@ -34,7 +34,7 @@ public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	
 	public void setChecked(boolean checked) {
 		initCheckboxIfNull();
-		if(checkbox.isChecked() != checked) onPress();
+		if(checkbox.isChecked() != checked) checkbox.onPress();
 	}
 	
 	public boolean isCheckboxSelected() {
