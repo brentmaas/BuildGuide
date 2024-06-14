@@ -42,7 +42,7 @@ gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
 gradle.ext.forgemapping = 'official'
 
-gradle.ext.mcversions = ['1.16.4', '1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6']
+gradle.ext.mcversions = ['1.16.4', '1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6', '1.21']
 
 include 'common'
 

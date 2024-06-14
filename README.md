@@ -7,4 +7,4 @@ For older Fabric versions before 0.3.3, see https://github.com/brentmaas/BuildGu
 To build the project, use `gradlew build`. To run a certain version (say, Forge 1.19.4), use `gradlew forge1.19.4:runClient`.
 
 ## Eclipse
-The project supports generating Eclipse files with `gradlew eclipse`. It is, however, HIGHLY recommended you get rid of Buildship, as it stubbornly ignores custom Gradle files and just does its own thing.
+Optionally, run `gradlew genSources` beforehand to generate sources. The project supports generating Eclipse files with `gradlew eclipse`. It is, however, HIGHLY recommended you get rid of Buildship, as it stubbornly ignores custom Gradle files and just does its own thing.
