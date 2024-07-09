@@ -33,6 +33,7 @@ processResources {
     inputs.property "fabricloader", gradle.ext.fabricloader
     inputs.property "fabric_version", project.fabric_version
     inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "java_version", project.java_version
     
     filesMatching("fabric.mod.json") {
         expand inputs.properties
