@@ -3,8 +3,8 @@ package brentmaas.buildguide.common;
 import java.util.ArrayList;
 
 import brentmaas.buildguide.common.screen.BaseScreen;
-import brentmaas.buildguide.common.screen.ShapeScreen;
 import brentmaas.buildguide.common.screen.ConfigurationScreen;
+import brentmaas.buildguide.common.screen.ShapeScreen;
 import brentmaas.buildguide.common.screen.ShapelistScreen;
 import brentmaas.buildguide.common.screen.VisualisationScreen;
 import brentmaas.buildguide.common.shape.Shape;
@@ -19,7 +19,7 @@ public class State {
 	public int iShapeNew = ShapeRegistry.getShapeId(ShapeCircle.class);
 	public boolean enabled = false;
 	public boolean depthTest = true;
-	public ActiveScreen currentScreen = ActiveScreen.BuildGuide;
+	public ActiveScreen currentScreen = ActiveScreen.Shape;
 	
 	public BaseScreen createNewScreen(ActiveScreen newActiveScreen) {
 		currentScreen = newActiveScreen;
@@ -34,6 +34,7 @@ public class State {
 			return new ShapelistScreen();
 		case Settings:
 			return new ConfigurationScreen();
+		case Shape:
 		default:
 			return new ShapeScreen();
 		}
@@ -43,15 +44,39 @@ public class State {
 		return shapeSets.size() > 0 ? shapeSets.get(iShapeSet).getShape() : null;
 	}
 	
+	public ShapeSet getShapeSet(int index) {
+		return shapeSets.size() > 0 ? shapeSets.get(index) : null;
+	}
+	
 	public ShapeSet getCurrentShapeSet() {
-		return shapeSets.size() > 0 ? shapeSets.get(iShapeSet) : null;
+		return getShapeSet(iShapeSet);
+	}
+	
+	public void pushNewShapeSet() {
+		ShapeSet newShapeSet = new ShapeSet(iShapeNew);
+		newShapeSet.resetOrigin();
+		if(BuildGuide.config.shapeListRandomColorsDefaultEnabled.value) {
+			Random random = new Random();
+			newShapeSet.colourShapeR = random.nextFloat();
+			newShapeSet.colourShapeG = random.nextFloat();
+			newShapeSet.colourShapeB = random.nextFloat();
+			newShapeSet.colourOriginR = random.nextFloat();
+			newShapeSet.colourOriginG = random.nextFloat();
+			newShapeSet.colourOriginB = random.nextFloat();
+		}
+		newShapeSet.updateAllShapes();
+		shapeSets.add(newShapeSet);
 	}
 	
 	public void initCheck() {
 		if(!initialised) {
-			shapeSets.add(new ShapeSet(iShapeNew));
-			if(shapeSets.get(0).origin == null) {
-				shapeSets.get(0).resetOrigin();
+			if(shapeSets.size() == 0) {
+				pushNewShapeSet();
+			}
+			for(ShapeSet s: shapeSets) {
+				if(s.origin == null) {
+					s.resetOrigin();
+				}
 			}
 			initialised = true;
 		}
@@ -65,30 +90,60 @@ public class State {
 		return shapeSets.size() > 0;
 	}
 	
+	public int getNumberOfShapeSets() {
+		return shapeSets.size();
+	}
+	
 	public void resetOrigin() {
 		shapeSets.get(iShapeSet).resetOrigin();
 	}
 	
-	public void setOrigin(int x, int y, int z) {
-		shapeSets.get(iShapeSet).origin.x = x;
-		shapeSets.get(iShapeSet).origin.y = y;
-		shapeSets.get(iShapeSet).origin.z = z;
+	public void setOriginX(int index, int x) {
+		shapeSets.get(index).origin.x = x;
 	}
 	
 	public void setOriginX(int x) {
-		shapeSets.get(iShapeSet).origin.x = x;
+		setOriginX(iShapeSet, x);
+	}
+	
+	public void setOriginY(int y, int index) {
+		shapeSets.get(index).origin.y = y;
 	}
 	
 	public void setOriginY(int y) {
-		shapeSets.get(iShapeSet).origin.y = y;
+		setOriginX(iShapeSet, y);
+	}
+	
+	public void setOriginZ(int index, int z) {
+		shapeSets.get(index).origin.z = z;
 	}
 	
 	public void setOriginZ(int z) {
-		shapeSets.get(iShapeSet).origin.z = z;
+		setOriginX(iShapeSet, z);
+	}
+	
+	public void setOrigin(int index, int x, int y, int z) {
+		shapeSets.get(index).origin.x = x;
+		shapeSets.get(index).origin.y = y;
+		shapeSets.get(index).origin.z = z;
+	}
+	
+	public void setOrigin(int x, int y, int z) {
+		setOrigin(iShapeSet, x, y, z);
+	}
+	
+	public void shiftOrigin(int index, int dx, int dy, int dz) {
+		shapeSets.get(index).shiftOrigin(dx, dy, dz);
 	}
 	
 	public void shiftOrigin(int dx, int dy, int dz) {
-		shapeSets.get(iShapeSet).shiftOrigin(dx, dy, dz);
+		shiftOrigin(iShapeSet, dx, dy, dz);
+	}
+	
+	public void shiftOrigins(int dx, int dy, int dz) {
+		for(ShapeSet s: shapeSets) {
+			s.shiftOrigin(dx, dy, dz);
+		}
 	}
 	
 	public void setShapeColour(float r, float g, float b, float a) {
@@ -107,8 +162,16 @@ public class State {
 		shapeSets.get(iShapeSet).updateAllShapes();
 	}
 	
+	public int getNumberOfBlocks() {
+		int num = 0;
+		for(ShapeSet s: shapeSets) {
+			if(s.visible) num += s.getShape().getNumberOfBlocks();
+		}
+		return num;
+	}
+	
 	public static enum ActiveScreen {
-		BuildGuide,
+		Shape,
 		Visualisation,
 		Shapelist,
 		Settings

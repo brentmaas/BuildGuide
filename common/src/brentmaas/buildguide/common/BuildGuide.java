@@ -1,5 +1,7 @@
 package brentmaas.buildguide.common;
 
+import java.io.File;
+
 import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.shape.IShapeHandler;
@@ -29,7 +31,7 @@ public class BuildGuide {
 	public static ILogHandler logHandler;
 	public static Config config;
 	
-	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, AbstractWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, String configFolder) {
+	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, AbstractWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, File configFolder) {
 		BuildGuide.keyBindHandler = keyBindHandler;
 		BuildGuide.screenHandler = screenHandler;
 		BuildGuide.widgetHandler = widgetHandler;

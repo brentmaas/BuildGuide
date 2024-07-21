@@ -1,9 +1,14 @@
 package brentmaas.buildguide.fabric;
 
 import brentmaas.buildguide.common.AbstractStateManager;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 
 public class StateManager extends AbstractStateManager {
+	public StateManager() {
+		super(FabricLoader.getInstance().getGameDir().toFile());
+	}
+	
 	protected String getWorldName() {
 		if(MinecraftClient.getInstance().getServer() != null) return MinecraftClient.getInstance().getServer().getSaveProperties().getLevelName();
 		return null;

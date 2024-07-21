@@ -1,14 +1,11 @@
 package brentmaas.buildguide.common.screen;
 
-import java.util.Random;
-
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.shape.ShapeRegistry;
-import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public class ShapelistScreen extends BaseScreen {
@@ -23,20 +20,8 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, "<-", () -> updateNewShape(-1));
 	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, "->", () -> updateNewShape(1));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
-		ShapeSet newShapeSet = new ShapeSet(BuildGuide.stateManager.getState().iShapeNew);
-		newShapeSet.resetOrigin();
-		if(BuildGuide.config.shapeListRandomColorsDefaultEnabled.value) {
-			Random random = new Random();
-			newShapeSet.colourShapeR = random.nextFloat();
-			newShapeSet.colourShapeG = random.nextFloat();
-			newShapeSet.colourShapeB = random.nextFloat();
-			newShapeSet.colourOriginR = random.nextFloat();
-			newShapeSet.colourOriginG = random.nextFloat();
-			newShapeSet.colourOriginB = random.nextFloat();
-		}
-		newShapeSet.updateAllShapes();
-		BuildGuide.stateManager.getState().shapeSets.add(newShapeSet);
-		shapeList.addEntry(BuildGuide.stateManager.getState().shapeSets.size() - 1);
+		BuildGuide.stateManager.getState().pushNewShapeSet();
+		shapeList.addEntry(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1);
 		
 		checkActive();
 	});
@@ -65,9 +50,7 @@ public class ShapelistScreen extends BaseScreen {
 		try {
 			int newval = Integer.parseInt(textFieldX.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
-			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-				s.shiftOrigin(delta, 0, 0);
-			}
+			BuildGuide.stateManager.getState().shiftOrigins(delta, 0, 0);
 			textFieldX.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldX.setTextColour(0xFF0000);
@@ -77,9 +60,7 @@ public class ShapelistScreen extends BaseScreen {
 		try {
 			int newval = Integer.parseInt(textFieldY.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
-			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-				s.shiftOrigin(0, delta, 0);
-			}
+			BuildGuide.stateManager.getState().shiftOrigins(0, delta, 0);
 			textFieldY.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldY.setTextColour(0xFF0000);
@@ -89,9 +70,7 @@ public class ShapelistScreen extends BaseScreen {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
-			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-				s.shiftOrigin(0, 0, delta);
-			}
+			BuildGuide.stateManager.getState().shiftOrigins(0, 0, delta);
 			textFieldZ.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
 			textFieldZ.setTextColour(0xFF0000);
@@ -152,7 +131,7 @@ public class ShapelistScreen extends BaseScreen {
 		super.render();
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleNewShape, 85, 55, 0xFFFFFF);
-		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKeys().get(BuildGuide.stateManager.getState().iShapeNew)), 85, 75, 0xFFFFFF);
+		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKey(BuildGuide.stateManager.getState().iShapeNew)), 85, 75, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleSelectedShape, 85, 120, 0xFFFFFF);
 		drawShadowLeft(textVisible, 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
@@ -170,9 +149,7 @@ public class ShapelistScreen extends BaseScreen {
 	}
 	
 	private void shiftGlobalOrigin(int dx, int dy, int dz) {
-		for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-			s.shiftOrigin(dx, dy, dz);
-		}
+		BuildGuide.stateManager.getState().shiftOrigins(dx, dy, dz);
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			if(dx != 0) {
 				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);

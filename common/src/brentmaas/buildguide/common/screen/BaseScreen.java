@@ -11,7 +11,6 @@ import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.screen.widget.IWidget;
-import brentmaas.buildguide.common.shape.ShapeSet;
 
 public abstract class BaseScreen {
 	protected String title = BuildGuide.screenHandler.translate("screen.buildguide.title");
@@ -23,7 +22,7 @@ public abstract class BaseScreen {
 	
 	private IButton buttonClose;
 	private ICheckboxRunnableButton buttonEnabled;
-	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.BuildGuide)), !(this instanceof ShapeScreen));
+	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shape)), !(this instanceof ShapeScreen));
 	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(130, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Visualisation)), !(this instanceof VisualisationScreen));
 	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(255, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.shapelist"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shapelist)), !(this instanceof ShapelistScreen));
 	private IButton buttonConfiguration = BuildGuide.widgetHandler.createButton(380, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.configuration"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Settings)), !(this instanceof ConfigurationScreen));
@@ -53,10 +52,7 @@ public abstract class BaseScreen {
 		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 2 - wrapper.getTextWidth(title) / 2 - titlesMax / 2 - 20, 20, 0xFFFFFF);
 		
 		drawShadowCentred(titleNumberOfBlocksTotal, wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 5, 0xFFFFFF);
-		int nTotal = 0;
-		for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-			if(s.visible) nTotal += s.getShape().getNumberOfBlocks();
-		}
+		int nTotal = BuildGuide.stateManager.getState().getNumberOfBlocks();
 		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 20, 0xFFFFFF);
 		
 		for(Property<?> p: properties) {

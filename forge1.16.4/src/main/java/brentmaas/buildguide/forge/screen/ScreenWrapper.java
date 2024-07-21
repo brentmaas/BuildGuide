@@ -30,11 +30,13 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		super(title);
 	}
 	
+	@Override
 	public void init() {
 		super.init();
 		attachedScreen.init();
 	}
 	
+	@Override
 	public void render(MatrixStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(poseStack, mouseX, mouseY, partialTicks);
 		poseStackInstance = poseStack;
@@ -44,6 +46,7 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		}
 	}
 	
+	@Override
 	public boolean isPauseScreen() {
 		return attachedScreen.isPauseScreen();
 	}

@@ -30,14 +30,6 @@ public class ShapeRegistry {
 		return null;
 	}
 	
-	public static ArrayList<String> getClassIdentifiers(){
-		return classIdentifiers;
-	}
-	
-	public static ArrayList<String> getTranslationKeys(){
-		return translationKeys;
-	}
-	
 	public static int getNumberOfShapes() {
 		return classIdentifiers.size();
 	}
@@ -45,6 +37,20 @@ public class ShapeRegistry {
 	public static String getClassIdentifier(Class<? extends Shape> shapeClass) {
 		for(String classIdentifier: classIdentifiers) {
 			if(shapeRegistry.get(classIdentifier) == shapeClass) return classIdentifier;
+		}
+		return null;
+	}
+	
+	public static String getClassIdentifier(int index) {
+		if(index < getNumberOfShapes()) {
+			return classIdentifiers.get(index);
+		}
+		return null;
+	}
+	
+	public static String getTranslationKey(int index) {
+		if(index < getNumberOfShapes()) {
+			return translationKeys.get(index);
 		}
 		return null;
 	}
@@ -57,5 +63,9 @@ public class ShapeRegistry {
 	
 	public static int getShapeId(String classIdentifier) {
 		return classIdentifiers.contains(classIdentifier) ? classIdentifiers.indexOf(classIdentifier) : 0;
+	}
+	
+	public static boolean isClassIdentifierValid(String classIdentifier) {
+		return classIdentifiers.contains(classIdentifier);
 	}
 }

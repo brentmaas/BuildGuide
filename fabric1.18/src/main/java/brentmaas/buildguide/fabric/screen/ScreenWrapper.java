@@ -25,18 +25,21 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		super(title);
 	}
 	
+	@Override
 	public void init() {
 		super.init();
 		attachedScreen.init();
 	}
 	
+	@Override
 	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		super.render(stack, mouseX, mouseY, partialTicks);
 		matrixStackInstance = stack;
 		attachedScreen.render();
 	}
 	
-	public boolean shouldPause() {
+	@Override
+	public boolean isPauseScreen() {
 		return attachedScreen.isPauseScreen();
 	}
 	

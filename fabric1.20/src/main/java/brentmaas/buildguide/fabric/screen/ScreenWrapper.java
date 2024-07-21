@@ -25,17 +25,20 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		super(title);
 	}
 	
+	@Override
 	public void init() {
 		super.init();
 		attachedScreen.init();
 	}
 	
+	@Override
 	public void render(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
 		super.render(drawContext, mouseX, mouseY, partialTicks);
 		drawContextInstance = drawContext;
 		attachedScreen.render();
 	}
 	
+	@Override
 	public boolean shouldPause() {
 		return attachedScreen.isPauseScreen();
 	}

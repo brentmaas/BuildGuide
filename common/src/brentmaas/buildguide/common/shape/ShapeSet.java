@@ -1,7 +1,5 @@
 package brentmaas.buildguide.common.shape;
 
-import java.util.ArrayList;
-
 import brentmaas.buildguide.common.BuildGuide;
 
 public class ShapeSet {
@@ -23,10 +21,9 @@ public class ShapeSet {
 	public float colourOriginA = 0.5f;
 	
 	public ShapeSet(int startIndex) {
-		ArrayList<String> classIdentifiers = ShapeRegistry.getClassIdentifiers();
-		shapes = new Shape[classIdentifiers.size()];
+		shapes = new Shape[ShapeRegistry.getNumberOfShapes()];
 		index = startIndex;
-		shapes[index] = initialiseShape(classIdentifiers.get(index));
+		shapes[index] = initialiseShape(ShapeRegistry.getClassIdentifier(index));
 	}
 	
 	private Shape initialiseShape(String shapeId) {
@@ -54,6 +51,24 @@ public class ShapeSet {
 		}
 	}
 	
+	public void setOriginX(int x) {
+		origin.x = x;
+	}
+	
+	public void setOriginY(int y) {
+		origin.y = y;
+	}
+	
+	public void setOriginZ(int z) {
+		origin.z = z;
+	}
+	
+	public void setOrigin(int x, int y, int z) {
+		origin.x = x;
+		origin.y = y;
+		origin.z = z;
+	}
+	
 	public void shiftOrigin(int dx, int dy, int dz) {
 		origin.x += dx;
 		origin.y += dy;
@@ -70,7 +85,7 @@ public class ShapeSet {
 	
 	public Shape getShape() {
 		if(shapes[index] == null) {
-			shapes[index] = initialiseShape(ShapeRegistry.getClassIdentifiers().get(index));
+			shapes[index] = initialiseShape(ShapeRegistry.getClassIdentifier(index));
 		}
 		
 		return shapes[index];

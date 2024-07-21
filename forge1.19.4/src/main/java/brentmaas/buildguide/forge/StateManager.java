@@ -4,6 +4,10 @@ import brentmaas.buildguide.common.AbstractStateManager;
 import net.minecraft.client.Minecraft;
 
 public class StateManager extends AbstractStateManager {
+	public StateManager() {
+		super(Minecraft.getInstance().gameDirectory);
+	}
+	
 	protected String getWorldName() {
 		if(Minecraft.getInstance().getSingleplayerServer() != null) return Minecraft.getInstance().getSingleplayerServer().getWorldData().getLevelName();
 		return null;

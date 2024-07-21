@@ -17,8 +17,8 @@ public class Config {
 	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", true, "Enable asynchronous (multithreaded) shape generation.");
 	public ConfigElement<Boolean> shapeListRandomColorsDefaultEnabled = new BooleanConfigElement("shapeListRandomColorsDefaultEnabled", false, "Enable random colors for new shapes added to the shape list by default.");
 	
-	public Config(String configFolder) {
-		configFile = new File(configFolder + "buildguide.cfg");
+	public Config(File configFolder) {
+		configFile = new File(configFolder, "buildguide.cfg");
 		
 		configElements.add(debugGenerationTimingsEnabled);
 		configElements.add(asyncEnabled);

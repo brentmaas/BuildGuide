@@ -25,11 +25,13 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		super(title);
 	}
 	
+	@Override
 	public void init() {
 		super.init();
 		attachedScreen.init();
 	}
 	
+	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		guiGraphicsInstance = guiGraphics;
@@ -41,6 +43,7 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		// Disable dark background
 	}
 	
+	@Override
 	public boolean isPauseScreen() {
 		return attachedScreen.isPauseScreen();
 	}

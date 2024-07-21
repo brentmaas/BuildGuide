@@ -1,6 +1,5 @@
 package brentmaas.buildguide.common;
 
-import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public abstract class AbstractInputHandler {
@@ -38,9 +37,7 @@ public abstract class AbstractInputHandler {
 			int dx = pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
 			int dy = pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
 			int dz = pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
-			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) {
-				s.shiftOrigin(dx, dy, dz);
-			}
+			BuildGuide.stateManager.getState().shiftOrigins(dx, dy, dz);
 		}
 	}
 	
