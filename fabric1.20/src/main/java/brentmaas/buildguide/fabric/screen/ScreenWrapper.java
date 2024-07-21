@@ -43,6 +43,12 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 		return attachedScreen.isPauseScreen();
 	}
 	
+	@Override
+	public void close() {
+		super.close();
+		attachedScreen.onScreenClosed();
+	}
+	
 	public void attachScreen(BaseScreen screen) {
 		attachedScreen = screen;
 		screen.setWrapper(this);

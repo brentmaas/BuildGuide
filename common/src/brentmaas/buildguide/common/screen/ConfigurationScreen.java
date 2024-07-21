@@ -5,8 +5,8 @@ import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 
 public class ConfigurationScreen extends BaseScreen {
-	private ICheckboxRunnableButton buttonAsyncEnabled, buttonAdvancedRandomColorsDefaultEnabled, buttonDebugGenerationTiminigsEnabled;
-	private IButton buttonAsyncEnabledDefault, buttonAdvancedRandomColorsDefaultEnabledDefault, buttonDebugGenerationTimingsEnabledDefault;
+	private ICheckboxRunnableButton buttonAsyncEnabled, buttonAdvancedRandomColorsDefaultEnabled, buttonPersistenceEnabled, buttonDebugGenerationTiminigsEnabled;
+	private IButton buttonAsyncEnabledDefault, buttonAdvancedRandomColorsDefaultEnabledDefault, buttonPersistenceEnabledDefault, buttonDebugGenerationTimingsEnabledDefault;
 	
 	public void init() {
 		super.init();
@@ -29,11 +29,20 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		
-		buttonDebugGenerationTiminigsEnabled = BuildGuide.widgetHandler.createCheckbox(255, 160, 20, 20, "", BuildGuide.config.debugGenerationTimingsEnabled.value, false, () -> {
+		buttonPersistenceEnabled = BuildGuide.widgetHandler.createCheckbox(255, 160, 20, 20, "", BuildGuide.config.persistenceEnabled.value, false, () -> {
+			BuildGuide.config.persistenceEnabled.setValue(buttonPersistenceEnabled.isCheckboxSelected());
+			BuildGuide.config.write();
+		});
+		buttonPersistenceEnabledDefault = BuildGuide.widgetHandler.createButton(280, 160, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
+			buttonPersistenceEnabled.setChecked(BuildGuide.config.persistenceEnabled.getDefault());
+			BuildGuide.config.write();
+		});
+		
+		buttonDebugGenerationTiminigsEnabled = BuildGuide.widgetHandler.createCheckbox(255, 210, 20, 20, "", BuildGuide.config.debugGenerationTimingsEnabled.value, false, () -> {
 			BuildGuide.config.debugGenerationTimingsEnabled.setValue(buttonDebugGenerationTiminigsEnabled.isCheckboxSelected());
 			BuildGuide.config.write();
 		});
-		buttonDebugGenerationTimingsEnabledDefault = BuildGuide.widgetHandler.createButton(280, 160, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
+		buttonDebugGenerationTimingsEnabledDefault = BuildGuide.widgetHandler.createButton(280, 210, 50, 20, BuildGuide.screenHandler.translate("screen.buildguide.default"), () -> {
 			buttonDebugGenerationTiminigsEnabled.setChecked(BuildGuide.config.debugGenerationTimingsEnabled.getDefault());
 			BuildGuide.config.write();
 		});
@@ -42,6 +51,8 @@ public class ConfigurationScreen extends BaseScreen {
 		addWidget(buttonAsyncEnabledDefault);
 		addWidget(buttonAdvancedRandomColorsDefaultEnabled);
 		addWidget(buttonAdvancedRandomColorsDefaultEnabledDefault);
+		addWidget(buttonPersistenceEnabled);
+		addWidget(buttonPersistenceEnabledDefault);
 		addWidget(buttonDebugGenerationTiminigsEnabled);
 		addWidget(buttonDebugGenerationTimingsEnabledDefault);
 	}
@@ -55,7 +66,10 @@ public class ConfigurationScreen extends BaseScreen {
 		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.shapeListRandomColorsDefaultEnabled.key, 10, 115, 0xFFFFFF);
 		drawShadowLeft(BuildGuide.config.shapeListRandomColorsDefaultEnabled.comment, 10, 135, 0xFFFFFF);
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 165, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 185, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.persistenceEnabled.key, 10, 165, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.persistenceEnabled.comment, 10, 185, 0xFFFFFF);
+		
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 215, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 235, 0xFFFFFF);
 	}
 }

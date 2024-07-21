@@ -15,4 +15,12 @@ public class PropertyRunnable extends Property<Runnable> {
 	public void render(BaseScreen screen) {
 		
 	}
+	
+	public String getStringValue() {
+		return "Runnable";
+	}
+	
+	public boolean setValueFromString(String value) {
+		return true;
+	}
 }

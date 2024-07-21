@@ -28,7 +28,7 @@ public class ShapelistScreen extends BaseScreen {
 	private ICheckboxRunnableButton buttonVisible = BuildGuide.widgetHandler.createCheckbox(5, 135, 20, 20, "", true, false, () -> setShapeVisibility());
 	private IButton buttonDelete = BuildGuide.widgetHandler.createButton(5, 155, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.delete"), () -> {
 		if(shapeList.getSelected() != null){
-			BuildGuide.stateManager.getState().shapeSets.remove(shapeList.getSelected().getShapeSetId());
+			BuildGuide.stateManager.getState().removeShapeSet(shapeList.getSelected().getShapeSetId());
 			shapeList.removeEntry(shapeList.getSelected());
 		}
 		
@@ -122,6 +122,7 @@ public class ShapelistScreen extends BaseScreen {
 			textFieldY.setTextColour(0xFFFFFF);
 			textFieldZ.setTextColour(0xFFFFFF);
 			if(BuildGuide.stateManager.getState().isShapeAvailable()) buttonVisible.setChecked(BuildGuide.stateManager.getState().getCurrentShapeSet().visible);
+			BaseScreen.shouldUpdatePersistence = true;
 		});
 		
 		addWidget(shapeList);
@@ -146,6 +147,7 @@ public class ShapelistScreen extends BaseScreen {
 	
 	private void updateNewShape(int di) {
 		BuildGuide.stateManager.getState().iShapeNew = Math.floorMod(BuildGuide.stateManager.getState().iShapeNew + di, ShapeRegistry.getNumberOfShapes());
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	private void shiftGlobalOrigin(int dx, int dy, int dz) {

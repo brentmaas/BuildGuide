@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.Property;
+import brentmaas.buildguide.common.screen.BaseScreen;
 
 public abstract class Shape {
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
@@ -31,6 +32,7 @@ public abstract class Shape {
 	public abstract String getTranslationKey();
 	
 	public void update() {
+		BaseScreen.shouldUpdatePersistence = true;
 		if(BuildGuide.config.asyncEnabled.value) {
 			ready = false;
 			vertexBufferUnpacked = false;
@@ -162,5 +164,26 @@ public abstract class Shape {
 	
 	public long getHowLongAgoCompletedMillis() {
 		return System.currentTimeMillis() - completedAt;
+	}
+	
+	public String toPersistence() {
+		String persistenceData = "";
+		for(Property<?> property: properties) {
+			persistenceData += property.getStringValue() + ",";
+		}
+		return persistenceData.substring(0, persistenceData.length() - 1);
+	}
+	
+	public void restorePersistence(String persistenceData) {
+		String splitData[] = persistenceData.split(",");
+		if(splitData.length == properties.size()) {
+			boolean success = true;
+			for(int i = 0;i < properties.size();++i) {
+				success = success & properties.get(i).setValueFromString(splitData[i]);
+			}
+			error = !success;
+		}else {
+			error = true;
+		}
 	}
 }

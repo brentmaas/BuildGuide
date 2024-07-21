@@ -1,8 +1,15 @@
 package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.screen.BaseScreen;
 
 public class ShapeSet {
+	private static final String PERSISTENCE_INDEX = "index";
+	private static final String PERSISTENCE_ORIGIN = "origin";
+	private static final String PERSISTENCE_VISIBLE = "visible";
+	private static final String PERSISTENCE_SHAPECOLOUR = "shapeColour";
+	private static final String PERSISTENCE_ORIGINCOLOUR = "originColour";
+	
 	public Shape[] shapes;
 	private int index;
 	
@@ -53,26 +60,31 @@ public class ShapeSet {
 	
 	public void setOriginX(int x) {
 		origin.x = x;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void setOriginY(int y) {
 		origin.y = y;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void setOriginZ(int z) {
 		origin.z = z;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void setOrigin(int x, int y, int z) {
 		origin.x = x;
 		origin.y = y;
 		origin.z = z;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void shiftOrigin(int dx, int dy, int dz) {
 		origin.x += dx;
 		origin.y += dy;
 		origin.z += dz;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public boolean isShapeAvailable() {
@@ -97,6 +109,66 @@ public class ShapeSet {
 	
 	public void setIndex(int index) {
 		this.index = index;
+	}
+	
+	public String toPersistence() {
+		String persistenceData = "";
+		persistenceData += PERSISTENCE_INDEX + "=" + index + ";";
+		persistenceData += PERSISTENCE_ORIGIN + "=" + origin.x + "," + origin.y + "," + origin.z + ";";
+		persistenceData += PERSISTENCE_VISIBLE + "=" + visible + ";";
+		persistenceData += PERSISTENCE_SHAPECOLOUR + "=" + colourShapeR + "," + colourShapeG + "," + colourShapeB + "," + colourShapeA + ";";
+		persistenceData += PERSISTENCE_ORIGINCOLOUR + "=" + colourOriginR + "," + colourOriginG + "," + colourOriginB + "," + colourOriginA + ";";
+		for(Shape s: shapes) {
+			if(s != null) {
+				persistenceData += s.getClass().getName() + "=" + s.toPersistence() + ";";
+			}
+		}
+		return persistenceData;
+	}
+	
+	public void restorePersistence(String persistenceData) {
+		String[] splitData = persistenceData.split(";");
+		for(String entry: splitData) {
+			int separatorIndex = entry.indexOf("=");
+			if(separatorIndex > 0) {
+				String key = entry.substring(0, separatorIndex);
+				String value = entry.substring(separatorIndex + 1);
+				if(key.equals(PERSISTENCE_INDEX)) {
+					index = Integer.parseInt(value);
+				}else if(key.equals(PERSISTENCE_ORIGIN)) {
+					String[] splitEntry = value.split(",");
+					if(splitEntry.length == 3) {
+						origin.x = Integer.parseInt(splitEntry[0]);
+						origin.y = Integer.parseInt(splitEntry[1]);
+						origin.z = Integer.parseInt(splitEntry[2]);
+					}
+				}else if (key.equals(PERSISTENCE_VISIBLE)) {
+					visible = Boolean.parseBoolean(value);
+				}else if(key.equals(PERSISTENCE_SHAPECOLOUR)) {
+					String[] splitEntry = value.split(",");
+					if(splitEntry.length == 4) {
+						colourShapeR = Float.parseFloat(splitEntry[0]);
+						colourShapeG = Float.parseFloat(splitEntry[1]);
+						colourShapeB = Float.parseFloat(splitEntry[2]);
+						colourShapeA = Float.parseFloat(splitEntry[3]);
+					}
+				}else if(key.equals(PERSISTENCE_ORIGINCOLOUR)) {
+					String[] splitEntry = value.split(",");
+					if(splitEntry.length == 4) {
+						colourOriginR = Float.parseFloat(splitEntry[0]);
+						colourOriginG = Float.parseFloat(splitEntry[1]);
+						colourOriginB = Float.parseFloat(splitEntry[2]);
+						colourOriginA = Float.parseFloat(splitEntry[3]);
+					}
+				}else {
+					int index = ShapeRegistry.getShapeId(key);
+					shapes[index] = initialiseShape(key);
+					shapes[index].restorePersistence(value);
+				}
+			}
+		}
+		index = Math.max(0, Math.min(shapes.length - 1, index));
+		
 	}
 	
 	public static class Origin {

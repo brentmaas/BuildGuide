@@ -1,6 +1,13 @@
 package brentmaas.buildguide.common;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.ConfigurationScreen;
@@ -13,6 +20,12 @@ import brentmaas.buildguide.common.shape.ShapeRegistry;
 import brentmaas.buildguide.common.shape.ShapeSet;
 
 public class State {
+	private static final String PERSISTENCE_ENABLED = "enabled";
+	private static final String PERSISTENCE_DEPTHTEST = "depthTest";
+	private static final String PERSISTENCE_SHAPESET = "shapeSet";
+	private static final String PERSISTENCE_ISHAPESET = "iShapeSet";
+	private static final String PERSISTENCE_ISHAPENEW = "iShapeNew";
+	
 	private boolean initialised = false;
 	public ArrayList<ShapeSet> shapeSets = new ArrayList<ShapeSet>();
 	public int iShapeSet = 0;
@@ -50,6 +63,11 @@ public class State {
 	
 	public ShapeSet getCurrentShapeSet() {
 		return getShapeSet(iShapeSet);
+	}
+	
+	public void removeShapeSet(int index) {
+		shapeSets.remove(index);
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void pushNewShapeSet() {
@@ -168,6 +186,55 @@ public class State {
 			if(s.visible) num += s.getShape().getNumberOfBlocks();
 		}
 		return num;
+	}
+	
+	public void loadPersistence(File persistenceFile) throws IOException {
+		Scanner scanner = new Scanner(persistenceFile);
+		while(scanner.hasNext()) {
+			String line = scanner.nextLine();
+			int separatorIndex = line.indexOf("=");
+			if(separatorIndex > 0) {
+				String key = line.substring(0, separatorIndex);
+				String value = line.substring(separatorIndex + 1);
+				if(key.equals(PERSISTENCE_ENABLED)) {
+					enabled = Boolean.parseBoolean(value);
+				}else if(key.equals(PERSISTENCE_DEPTHTEST)) {
+					depthTest = Boolean.parseBoolean(value);
+				}else if(key.equals(PERSISTENCE_SHAPESET)) {
+					pushNewShapeSet();
+					shapeSets.getLast().restorePersistence(value);
+				}else if(key.equals(PERSISTENCE_ISHAPESET)) {
+					iShapeSet = Integer.parseInt(value);
+				}else if(key.equals(PERSISTENCE_ISHAPENEW)) {
+					iShapeNew = Integer.parseInt(value);
+				}
+			}
+		}
+		scanner.close();
+		iShapeSet = Math.max(0, Math.min(shapeSets.size() - 1, iShapeSet));
+		iShapeNew = Math.max(0, Math.min(ShapeRegistry.getNumberOfShapes() - 1, iShapeNew));
+		
+		initialised = true;
+	}
+	
+	public void savePersistence(File persistenceFile) throws IOException {
+		String persistenceData = "";
+		persistenceData += PERSISTENCE_ENABLED + "=" + enabled + "\n";
+		persistenceData += PERSISTENCE_DEPTHTEST + "=" + depthTest + "\n";
+		for(ShapeSet s: shapeSets) {
+			persistenceData += PERSISTENCE_SHAPESET + "=" + s.toPersistence() + "\n";
+		}
+		persistenceData += PERSISTENCE_ISHAPESET + "=" + iShapeSet + "\n";
+		persistenceData += PERSISTENCE_ISHAPENEW + "=" + iShapeNew + "\n";
+		
+		persistenceFile.createNewFile();
+		FileOutputStream fileStream = new FileOutputStream(persistenceFile);
+		OutputStreamWriter fileWriter = new OutputStreamWriter(fileStream);
+		BufferedWriter writer = new BufferedWriter(fileWriter);
+		writer.write(persistenceData);
+		writer.close();
+		fileWriter.close();
+		fileStream.close();
 	}
 	
 	public static enum ActiveScreen {

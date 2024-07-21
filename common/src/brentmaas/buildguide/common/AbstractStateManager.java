@@ -1,12 +1,21 @@
 package brentmaas.buildguide.common;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public abstract class AbstractStateManager {
-	private HashMap<String,State> stateStore;
+	private static final String PERSISTENCE_EXTENSION = ".dat";
 	
-	public AbstractStateManager() {
+	private HashMap<String,State> stateStore;
+	private File persistenceFolder;
+	
+	public AbstractStateManager(File gameDirectory) {
 		stateStore = new HashMap<String,State>();
+		persistenceFolder = new File(gameDirectory, "buildguide");
+		if(!persistenceFolder.exists() || !persistenceFolder.isDirectory()) {
+			persistenceFolder.mkdir();
+		}
 	}
 	
 	private String getKey() {
@@ -20,9 +29,39 @@ public abstract class AbstractStateManager {
 	public State getState() {
 		String key = getKey();
 		
-		if(!stateStore.containsKey(key)) stateStore.put(key, new State());
+		if(!stateStore.containsKey(key)) {
+			stateStore.put(key, new State());
+			File persistenceFile = getPersistenceFile(key);
+			if(BuildGuide.config.persistenceEnabled.value && persistenceFile.exists()) {
+				try {
+					stateStore.get(key).loadPersistence(persistenceFile);						
+				}catch(IOException e) {
+					BuildGuide.logHandler.sendChatMessage("Build Guide persistence failed to load: " + e.getMessage());
+					BuildGuide.logHandler.error(e.getMessage() + "\n" + e.getStackTrace());
+				}
+			}
+		}
 		
 		return stateStore.get(key);
+	}
+	
+	private File getPersistenceFile(String key) {
+		// https://stackoverflow.com/a/31976060/3874664
+		String safeKey = key.replace("/", ".")
+							.replace("<", ".")
+							.replace(">", ".")
+							.replace(":", ".")
+							.replace("\"", ".")
+							.replace("\\", ".")
+							.replace("|", ".")
+							.replace("?", ".")
+							.replace("*", ".");
+		return new File(persistenceFolder, safeKey + PERSISTENCE_EXTENSION);
+	}
+	
+	public void savePersistence() throws IOException {
+		String key = getKey();
+		stateStore.get(key).savePersistence(getPersistenceFile(key));
 	}
 	
 	protected abstract String getWorldName();

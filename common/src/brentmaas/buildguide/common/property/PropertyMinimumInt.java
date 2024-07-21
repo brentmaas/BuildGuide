@@ -51,4 +51,19 @@ public class PropertyMinimumInt extends Property<Integer> {
 			valueTextField.setTextColour(0xFFFFFF);
 		}
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		try {
+			int parsedValue = Integer.parseInt(value);
+			if(parsedValue > minValue) {
+				setValue(parsedValue);
+				return true;
+			}
+		}catch(NumberFormatException e) {}
+		return false;
+	}
 }

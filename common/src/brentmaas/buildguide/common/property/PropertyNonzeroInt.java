@@ -47,4 +47,19 @@ public class PropertyNonzeroInt extends Property<Integer> {
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		try {
+			int parsedValue = Integer.parseInt(value);
+			if(parsedValue != 0) {
+				setValue(parsedValue);
+				return true;
+			}
+		}catch(NumberFormatException e) {}
+		return false;
+	}
 }

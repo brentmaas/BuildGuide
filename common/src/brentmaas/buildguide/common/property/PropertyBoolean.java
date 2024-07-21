@@ -19,4 +19,17 @@ public class PropertyBoolean extends Property<Boolean> {
 		super.setValue(value);
 		button.setChecked(value);
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		// No function for checking if a String is a valid boolean is provided by Java, this will have to do
+		if(!(value.equalsIgnoreCase(Boolean.TRUE.toString()) || value.equalsIgnoreCase(Boolean.FALSE.toString()))) {
+			return false;
+		}
+		setValue(Boolean.parseBoolean(value));
+		return true;
+	}
 }

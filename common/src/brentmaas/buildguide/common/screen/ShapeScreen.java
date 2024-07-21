@@ -136,6 +136,7 @@ public class ShapeScreen extends BaseScreen{
 	
 	private void setOrigin() {
 		BuildGuide.stateManager.getState().resetOrigin();
+		BaseScreen.shouldUpdatePersistence = true;
 		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
 		textFieldX.setTextColour(0xFFFFFF);
 		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);

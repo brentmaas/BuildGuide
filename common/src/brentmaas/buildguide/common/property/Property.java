@@ -48,6 +48,10 @@ public abstract class Property<T> {
 		this.value = value;
 	}
 	
+	public abstract String getStringValue();
+	
+	public abstract boolean setValueFromString(String value);
+	
 	public void setName(String name) {
 		this.name = name;
 	}

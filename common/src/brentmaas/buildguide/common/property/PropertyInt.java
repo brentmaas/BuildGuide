@@ -41,4 +41,16 @@ public class PropertyInt extends Property<Integer> {
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		try {
+			setValue(Integer.parseInt(value));
+			return true;
+		}catch(NumberFormatException e) {}
+		return false;
+	}
 }

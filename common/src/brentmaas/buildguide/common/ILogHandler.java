@@ -10,4 +10,6 @@ public interface ILogHandler {
 	public void debugOrHigher(String message);
 	
 	public void debugThrowable(String message, Throwable throwable);
+	
+	public void sendChatMessage(String message);
 }

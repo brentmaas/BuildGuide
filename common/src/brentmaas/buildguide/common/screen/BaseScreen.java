@@ -13,6 +13,8 @@ import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public abstract class BaseScreen {
+	public static boolean shouldUpdatePersistence = false;
+	
 	protected String title = BuildGuide.screenHandler.translate("screen.buildguide.title");
 	protected String titleNumberOfBlocksShape = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocksshape");
 	protected String titleNumberOfBlocksTotal = BuildGuide.screenHandler.translate("screen.buildguide.numberofblockstotal");
@@ -95,6 +97,18 @@ public abstract class BaseScreen {
 	protected void addProperty(Property<?> p) {
 		properties.add(p);
 		p.addToScreen(this);
+	}
+	
+	public void onScreenClosed() {
+		if(BuildGuide.config.persistenceEnabled.value && shouldUpdatePersistence) {
+			try {
+				BuildGuide.stateManager.savePersistence();
+				shouldUpdatePersistence = false;
+			}catch(Exception e) {
+				BuildGuide.logHandler.sendChatMessage("Build Guide persistence failed to save: " + e.getMessage());
+				BuildGuide.logHandler.error(e.getMessage() + "\n" + e.getStackTrace());
+			}
+		}
 	}
 	
 	public boolean isPauseScreen() {

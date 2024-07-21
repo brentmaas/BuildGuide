@@ -41,4 +41,16 @@ public class PropertyFloat extends Property<Float> {
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		try {
+			setValue(Float.parseFloat(value));
+			return true;
+		}catch(NumberFormatException e) {}
+		return false;
+	}
 }

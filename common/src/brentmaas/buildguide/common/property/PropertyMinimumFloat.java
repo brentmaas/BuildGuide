@@ -53,4 +53,19 @@ public class PropertyMinimumFloat extends Property<Float> {
 			valueTextField.setTextColour(0xFFFFFF);
 		}
 	}
+	
+	public String getStringValue() {
+		return value.toString();
+	}
+	
+	public boolean setValueFromString(String value) {
+		try {
+			float parsedValue = Float.parseFloat(value);
+			if(parsedValue > minValue) {
+				setValue(parsedValue);
+				return true;
+			}
+		}catch(NumberFormatException e) {}
+		return false;
+	}
 }
