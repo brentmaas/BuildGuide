@@ -15,7 +15,7 @@ public class Config {
 	
 	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", true, "Enable asynchronous (multithreaded) shape generation.");
 	public ConfigElement<Boolean> shapeListRandomColorsDefaultEnabled = new BooleanConfigElement("shapeListRandomColorsDefaultEnabled", false, "Enable random colors for new shapes added to the shape list by default.");
-	public ConfigElement<Boolean> persistenceEnabled = new BooleanConfigElement("persistenceEnabled", true, "Allow shapes to be saved so they can be restored after restarting the client.");
+	public ConfigElement<Boolean> persistenceEnabled = new BooleanConfigElement("persistenceEnabled", false, "Allow shapes to be saved so they can be restored after restarting the client.");
 	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", false, "Enable debug output telling you how long it took for a shape to generate.");
 	
 	public Config(File configFolder) {
