@@ -202,7 +202,7 @@ public class State {
 					depthTest = Boolean.parseBoolean(value);
 				}else if(key.equals(PERSISTENCE_SHAPESET)) {
 					pushNewShapeSet();
-					shapeSets.getLast().restorePersistence(value);
+					shapeSets.get(shapeSets.size() - 1).restorePersistence(value);
 				}else if(key.equals(PERSISTENCE_ISHAPESET)) {
 					iShapeSet = Integer.parseInt(value);
 				}else if(key.equals(PERSISTENCE_ISHAPENEW)) {
