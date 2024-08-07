@@ -96,6 +96,7 @@ public class ShapeScreen extends BaseScreen{
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			for(Shape shape: BuildGuide.stateManager.getState().getCurrentShapeSet().shapes) {
 				if(shape != null) {
+					shape.onDeselectedInGUI();
 					addShapeProperties(shape);
 				}
 			}

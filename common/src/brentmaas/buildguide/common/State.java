@@ -213,8 +213,6 @@ public class State {
 		scanner.close();
 		iShapeSet = Math.max(0, Math.min(shapeSets.size() - 1, iShapeSet));
 		iShapeNew = Math.max(0, Math.min(ShapeRegistry.getNumberOfShapes() - 1, iShapeNew));
-		
-		initialised = true;
 	}
 	
 	public void savePersistence(File persistenceFile) throws IOException {
