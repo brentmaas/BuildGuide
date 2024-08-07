@@ -23,7 +23,6 @@ public class ShapeCuboid extends Shape {
 	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(3, "Z", () -> update());
 	private PropertyEnum<walls> propertyWalls = new PropertyEnum<walls>(walls.ALL, BuildGuide.screenHandler.translate("property.buildguide.walls"), () -> update(), wallsNames);
 	
-	
 	public ShapeCuboid() {
 		super();
 		

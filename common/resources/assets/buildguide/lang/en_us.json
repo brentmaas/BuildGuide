@@ -69,6 +69,7 @@
 	"shape.buildguide.cuboid": "Cuboid",
 	"shape.buildguide.ellipse": "Ellipse",
 	"shape.buildguide.ellipsoid": "Ellipsoid",
+	"shape.buildguide.grid": "Grid",
 	"shape.buildguide.line": "Line",
 	"shape.buildguide.none": "None",
 	"shape.buildguide.parabola": "Parabola",

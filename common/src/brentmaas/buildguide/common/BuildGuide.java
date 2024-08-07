@@ -11,6 +11,7 @@ import brentmaas.buildguide.common.shape.ShapeCone;
 import brentmaas.buildguide.common.shape.ShapeCuboid;
 import brentmaas.buildguide.common.shape.ShapeEllipse;
 import brentmaas.buildguide.common.shape.ShapeEllipsoid;
+import brentmaas.buildguide.common.shape.ShapeGrid;
 import brentmaas.buildguide.common.shape.ShapeLine;
 import brentmaas.buildguide.common.shape.ShapeParabola;
 import brentmaas.buildguide.common.shape.ShapeParaboloid;
@@ -47,6 +48,7 @@ public class BuildGuide {
 		ShapeRegistry.registerShape(ShapeCuboid.class);
 		ShapeRegistry.registerShape(ShapeEllipse.class);
 		ShapeRegistry.registerShape(ShapeEllipsoid.class);
+		ShapeRegistry.registerShape(ShapeGrid.class);
 		ShapeRegistry.registerShape(ShapeLine.class);
 		ShapeRegistry.registerShape(ShapeParabola.class);
 		ShapeRegistry.registerShape(ShapeParaboloid.class);
