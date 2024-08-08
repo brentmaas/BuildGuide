@@ -1,15 +1,16 @@
 package brentmaas.buildguide.common.shape;
 
+import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveInt;
 
 public class ShapeGrid extends Shape {
-	private PropertyPositiveInt propertyStepsX = new PropertyPositiveInt(3, "Steps X", () -> update());
-	private PropertyPositiveInt propertyStepsY = new PropertyPositiveInt(1, "Steps Y", () -> update());
-	private PropertyPositiveInt propertyStepsZ = new PropertyPositiveInt(3, "Steps Z", () -> update());
-	private PropertyNonzeroInt propertyOffsetX = new PropertyNonzeroInt(3, "Offset X", () -> update());
-	private PropertyNonzeroInt propertyOffsetY = new PropertyNonzeroInt(3, "Offset Y", () -> update());
-	private PropertyNonzeroInt propertyOffsetZ = new PropertyNonzeroInt(3, "Offset Z", () -> update());
+	private PropertyPositiveInt propertyStepsX = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.steps", "X"), () -> update());
+	private PropertyPositiveInt propertyStepsY = new PropertyPositiveInt(1, BuildGuide.screenHandler.translate("property.buildguide.steps", "Y"), () -> update());
+	private PropertyPositiveInt propertyStepsZ = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.steps", "Z"), () -> update());
+	private PropertyNonzeroInt propertyOffsetX = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "X"), () -> update());
+	private PropertyNonzeroInt propertyOffsetY = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "Y"), () -> update());
+	private PropertyNonzeroInt propertyOffsetZ = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "Z"), () -> update());
 	
 	public ShapeGrid() {
 		super();
