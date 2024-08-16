@@ -162,13 +162,18 @@ public class ShapeSet {
 					}
 				}else {
 					int index = ShapeRegistry.getShapeId(key);
-					shapes[index] = initialiseShape(key);
-					shapes[index].restorePersistence(value);
+					if(index >= 0) {
+						shapes[index] = initialiseShape(key);
+						// Lock wizardry due to classloading issues on Forge
+						shapes[index].cancelFuture();
+						shapes[index].lock.lock();
+						shapes[index].restorePersistence(value);
+						shapes[index].lock.unlock();
+					}
 				}
 			}
 		}
 		index = Math.max(0, Math.min(shapes.length - 1, index));
-		
 	}
 	
 	public static class Origin {

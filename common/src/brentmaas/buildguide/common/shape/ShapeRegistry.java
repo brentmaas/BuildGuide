@@ -62,7 +62,7 @@ public class ShapeRegistry {
 	}
 	
 	public static int getShapeId(String classIdentifier) {
-		return classIdentifiers.contains(classIdentifier) ? classIdentifiers.indexOf(classIdentifier) : 0;
+		return classIdentifiers.contains(classIdentifier) ? classIdentifiers.indexOf(classIdentifier) : -1;
 	}
 	
 	public static boolean isClassIdentifierValid(String classIdentifier) {

@@ -70,6 +70,6 @@ public class ConfigurationScreen extends BaseScreen {
 		drawShadowLeft(BuildGuide.config.persistenceEnabled.comment, 10, 185, 0xFFFFFF);
 		
 		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 215, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 235, 0xFFFFFF);
+		drawShadowLeft("(Experimental) " + BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 235, 0xFFFFFF); // TODO: Remove "Experimental" when stable
 	}
 }

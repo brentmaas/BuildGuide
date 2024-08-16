@@ -33,6 +33,7 @@ public abstract class BaseScreen {
 		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, 20, 20, "X", () -> BuildGuide.screenHandler.showScreen(null));
 		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, 20, 20, "", BuildGuide.stateManager.getState().enabled, false, () -> {
 			BuildGuide.stateManager.getState().enabled = buttonEnabled.isCheckboxSelected();
+			BaseScreen.shouldUpdatePersistence = true;
 		});
 		
 		addWidget(buttonEnabled);

@@ -99,6 +99,7 @@ public class VisualisationScreen extends BaseScreen {
 		
 		buttonDepthTest = BuildGuide.widgetHandler.createCheckbox(5, 235, 20, 20, "", BuildGuide.stateManager.getState().depthTest, false, () -> {
 			BuildGuide.stateManager.getState().depthTest = buttonDepthTest.isCheckboxSelected();
+			BaseScreen.shouldUpdatePersistence = true;
 		});
 		
 		addWidget(sliderShapeR);

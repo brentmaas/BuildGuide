@@ -33,15 +33,16 @@ public abstract class Shape {
 	
 	public void update() {
 		BaseScreen.shouldUpdatePersistence = true;
+		
+		ready = false;
+		vertexBufferUnpacked = false;
 		if(BuildGuide.config.asyncEnabled.value) {
-			ready = false;
-			vertexBufferUnpacked = false;
-			if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
-			if(buffer != null) buffer.close(); //Can only be done in render thread
+			cancelFuture();
+			if(buffer != null) buffer.close(); // Can only be done in render thread
 			future = executor.submit(() -> {
 				try {
 					lock.lock();
-					ready = false; //Again in case of a second thread started before a first thread ended
+					ready = false; // Again in case of a second thread started before a first thread ended
 					vertexBufferUnpacked = false;
 					error = false;
 					doUpdate();
@@ -57,8 +58,6 @@ public abstract class Shape {
 				}
 			});
 		}else {
-			ready = false;
-			vertexBufferUnpacked = false;
 			error = false;
 			if(buffer != null) buffer.close();
 			try {
@@ -164,6 +163,10 @@ public abstract class Shape {
 	
 	public long getHowLongAgoCompletedMillis() {
 		return System.currentTimeMillis() - completedAt;
+	}
+	
+	void cancelFuture() {
+		if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
 	}
 	
 	public String toPersistence() {

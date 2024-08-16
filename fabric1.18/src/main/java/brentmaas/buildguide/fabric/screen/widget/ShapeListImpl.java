@@ -33,7 +33,7 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		
 		for(int shapeSetId = 0;shapeSetId < BuildGuide.stateManager.getState().getNumberOfShapeSets();++shapeSetId) {
 			addEntry(new Entry(shapeSetId));
-			if(shapeSetId == BuildGuide.stateManager.getState().iShapeSet) setSelected(children().get(children().size() - 1));
+			if(shapeSetId == BuildGuide.stateManager.getState().getShapeSetIndex()) setSelected(children().get(children().size() - 1));
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 	
 	public void setSelected(@Nullable Entry entry) {
 		super.setSelected(entry);
-		if(entry != null) BuildGuide.stateManager.getState().iShapeSet = entry.getShapeSetId();
+		if(entry != null) BuildGuide.stateManager.getState().setShapeSetIndex(entry.getShapeSetId());
 		update.run();
 	}
 	

@@ -28,7 +28,7 @@ public class State {
 	
 	private boolean initialised = false;
 	public ArrayList<ShapeSet> shapeSets = new ArrayList<ShapeSet>();
-	public int iShapeSet = 0;
+	protected int iShapeSet = 0;
 	public int iShapeNew = ShapeRegistry.getShapeId(ShapeCircle.class);
 	public boolean enabled = false;
 	public boolean depthTest = true;
@@ -102,6 +102,15 @@ public class State {
 	
 	public void shiftShape(int di) {
 		shapeSets.get(iShapeSet).setIndex(Math.floorMod(shapeSets.get(iShapeSet).getIndex() + di, ShapeRegistry.getNumberOfShapes()));
+	}
+	
+	public int getShapeSetIndex() {
+		return iShapeSet;
+	}
+	
+	public void setShapeSetIndex(int iShapeSet) {
+		this.iShapeSet = iShapeSet;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public boolean isShapeAvailable() {
