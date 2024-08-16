@@ -1,5 +1,7 @@
 package brentmaas.buildguide.fabric.screen;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.IScreenWrapper;
 import brentmaas.buildguide.common.screen.widget.IButton;
@@ -12,16 +14,15 @@ import brentmaas.buildguide.fabric.screen.widget.CheckboxRunnableButtonImpl;
 import brentmaas.buildguide.fabric.screen.widget.ShapeListImpl;
 import brentmaas.buildguide.fabric.screen.widget.SliderImpl;
 import brentmaas.buildguide.fabric.screen.widget.TextFieldImpl;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class ScreenWrapper extends Screen implements IScreenWrapper {
 	private BaseScreen attachedScreen;
-	private MatrixStack matrixStackInstance;
+	private PoseStack poseStackInstance;
 	
-	public ScreenWrapper(Text title) {
+	public ScreenWrapper(Component title) {
 		super(title);
 	}
 	
@@ -32,20 +33,20 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	@Override
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
-		super.render(stack, mouseX, mouseY, partialTicks);
-		matrixStackInstance = stack;
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		super.render(poseStack, mouseX, mouseY, partialTicks);
+		poseStackInstance = poseStack;
 		attachedScreen.render();
 	}
 	
 	@Override
-	public boolean shouldPause() {
+	public boolean isPauseScreen() {
 		return attachedScreen.isPauseScreen();
 	}
 	
 	@Override
-	public void close() {
-		super.close();
+	public void onClose() {
+		super.onClose();
 		attachedScreen.onScreenClosed();
 	}
 	
@@ -55,35 +56,35 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	public void show() {
-		MinecraftClient.getInstance().setScreen(this);
+		Minecraft.getInstance().setScreen(this);
 	}
 	
 	public void addButton(IButton button) {
-		addDrawableChild((ButtonImpl) button);
+		addRenderableWidget((ButtonImpl) button);
 	}
 	
 	public void addTextField(ITextField textField) {
-		addDrawableChild((TextFieldImpl) textField);
+		addRenderableWidget((TextFieldImpl) textField);
 	}
 	
 	public void addCheckbox(ICheckboxRunnableButton checkbox) {
-		addDrawableChild((CheckboxRunnableButtonImpl) checkbox);
+		addRenderableWidget((CheckboxRunnableButtonImpl) checkbox);
 	}
 	
 	public void addSlider(ISlider slider) {
-		addDrawableChild((SliderImpl) slider);
+		addRenderableWidget((SliderImpl) slider);
 	}
 	
 	public void addShapeList(IShapeList shapeList) {
-		addDrawableChild((ShapeListImpl) shapeList);
+		addRenderableWidget((ShapeListImpl) shapeList);
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {
-		textRenderer.drawWithShadow(matrixStackInstance, text, x, y, colour);
+		font.drawShadow(poseStackInstance, text, x, y, colour);
 	}
 	
 	public int getTextWidth(String text) {
-		return textRenderer.getWidth(text);
+		return font.width(text);
 	}
 	
 	public int getWidth() {

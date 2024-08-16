@@ -12,16 +12,16 @@ import brentmaas.buildguide.fabric.screen.widget.CheckboxRunnableButtonImpl;
 import brentmaas.buildguide.fabric.screen.widget.ShapeListImpl;
 import brentmaas.buildguide.fabric.screen.widget.SliderImpl;
 import brentmaas.buildguide.fabric.screen.widget.TextFieldImpl;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class ScreenWrapper extends Screen implements IScreenWrapper {
 	private BaseScreen attachedScreen;
-	private DrawContext drawContextInstance;
+	private GuiGraphics guiGraphicsInstance;
 	
-	public ScreenWrapper(Text title) {
+	public ScreenWrapper(Component title) {
 		super(title);
 	}
 	
@@ -32,25 +32,25 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	@Override
-	public void render(DrawContext drawContext, int mouseX, int mouseY, float partialTicks) {
-		super.render(drawContext, mouseX, mouseY, partialTicks);
-		drawContextInstance = drawContext;
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		guiGraphicsInstance = guiGraphics;
 		attachedScreen.render();
 	}
 	
 	@Override
-	public void renderInGameBackground(DrawContext drawContext) {
+	public void renderTransparentBackground(GuiGraphics guiGraphics) {
 		// Disable dark background
 	}
 	
 	@Override
-	public boolean shouldPause() {
+	public boolean isPauseScreen() {
 		return attachedScreen.isPauseScreen();
 	}
 	
 	@Override
-	public void close() {
-		super.close();
+	public void onClose() {
+		super.onClose();
 		attachedScreen.onScreenClosed();
 	}
 	
@@ -60,35 +60,35 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	public void show() {
-		MinecraftClient.getInstance().setScreen(this);
+		Minecraft.getInstance().setScreen(this);
 	}
 	
 	public void addButton(IButton button) {
-		addDrawableChild((ButtonImpl) button);
+		addRenderableWidget((ButtonImpl) button);
 	}
 	
 	public void addTextField(ITextField textField) {
-		addDrawableChild((TextFieldImpl) textField);
+		addRenderableWidget((TextFieldImpl) textField);
 	}
 	
 	public void addCheckbox(ICheckboxRunnableButton checkbox) {
-		addDrawableChild((CheckboxRunnableButtonImpl) checkbox);
+		addRenderableWidget((CheckboxRunnableButtonImpl) checkbox);
 	}
 	
 	public void addSlider(ISlider slider) {
-		addDrawableChild((SliderImpl) slider);
+		addRenderableWidget((SliderImpl) slider);
 	}
 	
 	public void addShapeList(IShapeList shapeList) {
-		addDrawableChild((ShapeListImpl) shapeList);
+		addRenderableWidget((ShapeListImpl) shapeList);
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {
-		drawContextInstance.drawText(textRenderer, text, x, y, colour, true);
+		guiGraphicsInstance.drawString(font, text, x, y, colour, true);
 	}
 	
 	public int getTextWidth(String text) {
-		return textRenderer.getWidth(text);
+		return font.width(text);
 	}
 	
 	public int getWidth() {

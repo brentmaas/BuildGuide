@@ -2,24 +2,24 @@ package brentmaas.buildguide.fabric.screen;
 
 import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.IScreenWrapper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ScreenHandler extends AbstractScreenHandler {
 	public void showNone() {
-		MinecraftClient.getInstance().openScreen(null);
+		Minecraft.getInstance().setScreen(null);
 	}
 	
 	public IScreenWrapper createWrapper(String title) {
-		return new ScreenWrapper(new LiteralText(title));
+		return new ScreenWrapper(new TextComponent(title));
 	}
 	
 	public String translate(String translationKey) {
-		return new TranslatableText(translationKey).getString();
+		return new TranslatableComponent(translationKey).getString();
 	}
 	
 	public String translate(String translationKey, Object... values) {
-		return new TranslatableText(translationKey, values).getString();
+		return new TranslatableComponent(translationKey, values).getString();
 	}
 }

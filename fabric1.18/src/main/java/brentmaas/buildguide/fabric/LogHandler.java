@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.spi.StandardLevel;
 
 import brentmaas.buildguide.common.ILogHandler;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class LogHandler implements ILogHandler {
 	private Logger logger;
@@ -35,6 +35,6 @@ public class LogHandler implements ILogHandler {
 	}
 	
 	public void sendChatMessage(String message) {
-		MinecraftClient.getInstance().player.sendChatMessage(message);;
+		Minecraft.getInstance().player.chat(message);
 	}
 }

@@ -1,16 +1,16 @@
 package brentmaas.buildguide.fabric.screen.widget;
 
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.CheckboxWidget;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.network.chat.Component;
 
 public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	protected final ICheckboxRunnableButton.IPressable onPress;
 	private int x, y;
 	private String title;
 	private boolean checked;
-	public CheckboxWidget checkbox;
+	public Checkbox checkbox;
 	
 	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, String title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
 		this.x = x;
@@ -22,7 +22,7 @@ public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	
 	public void initCheckboxIfNull() {
 		if(checkbox == null) {
-			checkbox = CheckboxWidget.builder(Text.literal(title), MinecraftClient.getInstance().textRenderer).pos(x, y).callback((CheckboxWidget checkbox, boolean selected) -> onPress()).checked(checked).build();
+			checkbox = Checkbox.builder(Component.literal(title), Minecraft.getInstance().font).pos(x, y).onValueChange((Checkbox checkbox, boolean selected) -> onPress()).selected(checked).build();
 			//checkbox.setWidth(width);
 			//checkbox.setHeight(height);
 		}
@@ -34,12 +34,12 @@ public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	
 	public void setChecked(boolean checked) {
 		initCheckboxIfNull();
-		if(checkbox.isChecked() != checked) checkbox.onPress();
+		if(checkbox.selected() != checked) checkbox.onPress();
 	}
 	
 	public boolean isCheckboxSelected() {
 		initCheckboxIfNull();
-		return checkbox.isChecked();
+		return checkbox.selected();
 	}
 	
 	public void setActive(boolean active) {

@@ -12,6 +12,7 @@ public class CheckboxRunnableButtonImpl extends CheckboxButton implements ICheck
 		this.onPress = onPress;
 	}
 	
+	@Override
 	public void onPress() {
 		super.onPress();
 		onPress.onPress();

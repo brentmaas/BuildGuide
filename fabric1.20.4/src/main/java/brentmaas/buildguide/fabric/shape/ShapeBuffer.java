@@ -3,13 +3,13 @@ package brentmaas.buildguide.fabric.shape;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 
 import brentmaas.buildguide.common.shape.IShapeBuffer;
-import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.renderer.GameRenderer;
 
 public class ShapeBuffer implements IShapeBuffer {
 	private BufferBuilder builder;
@@ -17,15 +17,15 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public ShapeBuffer() {
 		builder = new BufferBuilder(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
-		builder.begin(DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+		builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 	}
 	
 	public void setColour(int r, int g, int b, int a) {
-		builder.fixedColor(r, g, b, a);
+		builder.defaultColor(r, g, b, a);
 	}
 	
 	public void pushVertex(double x, double y, double z) {
-		builder.vertex(x, y, z).next();
+		builder.vertex(x, y, z).endVertex();
 	}
 	
 	public void end() {
@@ -41,7 +41,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public void render(Matrix4f model, Matrix4f projection) {
 		buffer.bind();
-		buffer.draw(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorProgram());
+		buffer.drawWithShader(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
 		VertexBuffer.unbind();
 	}
 }

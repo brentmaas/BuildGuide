@@ -17,7 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RenderHandler extends AbstractRenderHandler {
-	private MatrixStack matrixStackInstance;
+	private MatrixStack poseStackInstance;
 	
 	public void register() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -25,29 +25,29 @@ public class RenderHandler extends AbstractRenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderWorldLastEvent event) {
-		matrixStackInstance = event.getMatrixStack();
+		poseStackInstance = event.getMatrixStack();
 		
 		render();
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(matrixStackInstance.last().pose());
+		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose());
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		matrixStackInstance.pushPose();
+		poseStackInstance.pushPose();
 		Vector3d projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-		matrixStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
+		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
 		
 		//TODO Shader?
 		RenderSystem.pushMatrix();
-		RenderSystem.multMatrix(matrixStackInstance.last().pose());
+		RenderSystem.multMatrix(poseStackInstance.last().pose());
 	}
 	
 	protected void endRenderingShape() {
 		RenderSystem.popMatrix();
 		
-		matrixStackInstance.popPose();
+		poseStackInstance.popPose();
 	}
 	
 	protected boolean isCompatibilityProfile() {

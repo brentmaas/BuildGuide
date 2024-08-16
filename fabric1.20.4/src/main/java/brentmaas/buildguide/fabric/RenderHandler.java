@@ -3,9 +3,9 @@ package brentmaas.buildguide.fabric;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL32;
 
-import com.mojang.blaze3d.platform.GlStateManager.DstFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SrcFactor;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
 import brentmaas.buildguide.common.shape.Shape;
@@ -13,12 +13,11 @@ import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.fabric.shape.ShapeBuffer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.phys.Vec3;
 
 public class RenderHandler extends AbstractRenderHandler {
-	private MatrixStack matrixStackInstance;
+	private PoseStack poseStackInstance;
 	private Matrix4f projectionMatrixInstance;
 	
 	public void register() {
@@ -26,24 +25,24 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	public void onRenderBlock(WorldRenderContext context) {
-		matrixStackInstance = context.matrixStack();
+		poseStackInstance = context.matrixStack();
 		projectionMatrixInstance = context.projectionMatrix();
 		
 		render();
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(matrixStackInstance.peek().getPositionMatrix(), projectionMatrixInstance);
+		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		matrixStackInstance.push();
-		Vec3d projectedView = MinecraftClient.getInstance().gameRenderer.getCamera().getPos();
-		matrixStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
+		poseStackInstance.pushPose();
+		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
 	}
 	
 	protected void endRenderingShape() {
-		matrixStackInstance.pop();
+		poseStackInstance.popPose();
 	}
 	
 	protected boolean isCompatibilityProfile() {
@@ -89,14 +88,14 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	protected void setupBlendFunc() {
-		RenderSystem.blendFunc(SrcFactor.SRC_ALPHA, DstFactor.ONE_MINUS_SRC_ALPHA);
+		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 	}
 	
 	protected void pushProfiler(String key) {
-		MinecraftClient.getInstance().getProfiler().push(key);
+		Minecraft.getInstance().getProfiler().push(key);
 	}
 	
 	protected void popProfiler() {
-		MinecraftClient.getInstance().getProfiler().pop();
+		Minecraft.getInstance().getProfiler().pop();
 	}
 }

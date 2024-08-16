@@ -1,11 +1,12 @@
 package brentmaas.buildguide.fabric;
 
+import com.mojang.blaze3d.platform.InputConstants;
+
 import brentmaas.buildguide.common.AbstractInputHandler;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 
 public class InputHandler extends AbstractInputHandler {
 	public IKeyBind registerKeyBind(String name, int keyCode) {
@@ -16,19 +17,19 @@ public class InputHandler extends AbstractInputHandler {
 		ClientTickEvents.END_CLIENT_TICK.register(this::onKeyInputProxy);
 	}
 	
-	public void onKeyInputProxy(MinecraftClient client) {
+	public void onKeyInputProxy(Minecraft minecraft) {
 		onKeyInput();
 	}
 	
 	public class KeyBindImpl implements IKeyBind {
-		private KeyBinding bind;
+		private KeyMapping bind;
 		
 		public KeyBindImpl(String name, int keyCode) {
-			bind = KeyBindingHelper.registerKeyBinding(new KeyBinding(name, InputUtil.Type.KEYSYM, keyCode, category));
+			bind = KeyBindingHelper.registerKeyBinding(new KeyMapping(name, InputConstants.Type.KEYSYM, keyCode, category));
 		}
 		
 		public boolean isDown() {
-			return bind.wasPressed();
+			return bind.isDown();
 		}
 	}
 }

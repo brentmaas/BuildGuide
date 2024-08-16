@@ -2,7 +2,7 @@ package brentmaas.buildguide.fabric;
 
 import brentmaas.buildguide.common.AbstractStateManager;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class StateManager extends AbstractStateManager {
 	public StateManager() {
@@ -10,16 +10,16 @@ public class StateManager extends AbstractStateManager {
 	}
 	
 	protected String getWorldName() {
-		if(MinecraftClient.getInstance().getServer() != null) return MinecraftClient.getInstance().getServer().getSaveProperties().getLevelName();
+		if(Minecraft.getInstance().getSingleplayerServer() != null) return Minecraft.getInstance().getSingleplayerServer().getWorldData().getLevelName();
 		return null;
 	}
 	
 	protected String getServerAddress() {
-		if(MinecraftClient.getInstance().getCurrentServerEntry() != null) return MinecraftClient.getInstance().getCurrentServerEntry().address;
+		if(Minecraft.getInstance().getCurrentServer() != null) return Minecraft.getInstance().getCurrentServer().ip;
 		return null;
 	}
 	
 	protected String getDimensionKey() {
-		return MinecraftClient.getInstance().world.getRegistryKey().getValue().toString();
+		return Minecraft.getInstance().level.dimension().location().toString();
 	}
 }

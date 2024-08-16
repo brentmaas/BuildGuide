@@ -49,7 +49,8 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		addEntry(new Entry(shapeSetId));
 		setSelected(children().get(shapeSetId));
 	}
-	
+
+	@Override
 	public boolean removeEntry(Entry entry) {
 		for(Entry e: children()) {
 			if(e.getShapeSetId() > entry.getShapeSetId()) {
@@ -64,13 +65,15 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 	public boolean removeEntry(IEntry entry) {
 		return removeEntry((Entry) entry);
 	}
-	
+
+	@Override
 	public void setSelected(@Nullable Entry entry) {
 		super.setSelected(entry);
 		if(entry != null) BuildGuide.stateManager.getState().setShapeSetIndex(entry.getShapeSetId());
 		update.run();
 	}
-	
+
+	@Override
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) { 
 		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND); 
 		if(!hasBlend) RenderSystem.enableBlend();
@@ -89,8 +92,9 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		if(!hasBlend) RenderSystem.disableBlend(); 
 		 
 		super.render(poseStack, mouseX, mouseY, partialTicks); 
-	} 
-	 
+	}
+	
+	@Override
 	protected void renderList(PoseStack poseStack, int x, int y, int mouseX, int mouseY, float partialTicks) { 
 		boolean hasDepthTest = GL32.glIsEnabled(GL32.GL_DEPTH_TEST); 
 		boolean hasDepthMask = GL32.glGetBoolean(GL32.GL_DEPTH_WRITEMASK); 
@@ -141,7 +145,8 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 			Minecraft.getInstance().font.drawShadow(poseStack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape()));
 		}
-		
+
+		@Override
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
 			ShapeListImpl.this.setSelected(this);
 			return false;

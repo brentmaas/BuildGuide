@@ -22,7 +22,7 @@ import net.minecraft.util.text.TextComponent;
 
 public class ScreenWrapper extends Screen implements IScreenWrapper {
 	private BaseScreen attachedScreen;
-	private MatrixStack poseStackInstance;
+	private MatrixStack matrixStackInstance;
 	
 	private ArrayList<ShapeListImpl> shapeLists = new ArrayList<ShapeListImpl>();
 	
@@ -37,12 +37,12 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	@Override
-	public void render(MatrixStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		super.render(poseStack, mouseX, mouseY, partialTicks);
-		poseStackInstance = poseStack;
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		matrixStackInstance = matrixStack;
 		attachedScreen.render();
 		for(ShapeListImpl shapeList: shapeLists) {
-			shapeList.render(poseStack, mouseX, mouseY, partialTicks);
+			shapeList.render(matrixStack, mouseX, mouseY, partialTicks);
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {
-		font.drawShadow(poseStackInstance, text, x, y, colour);
+		font.drawShadow(matrixStackInstance, text, x, y, colour);
 	}
 	
 	public int getTextWidth(String text) {

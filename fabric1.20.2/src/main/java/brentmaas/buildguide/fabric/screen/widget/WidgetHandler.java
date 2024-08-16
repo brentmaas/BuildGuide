@@ -6,7 +6,7 @@ import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class WidgetHandler extends AbstractWidgetHandler {
 	public IButton createButton(int x, int y, int width, int height, String text, IButton.IPressable onPress) {
@@ -26,6 +26,6 @@ public class WidgetHandler extends AbstractWidgetHandler {
 	}
 	
 	public IShapeList createShapelist(int left, int right, int top, int bottom, int slotHeight, Runnable update) {
-		return new ShapeListImpl(MinecraftClient.getInstance(), left, right, top, bottom, slotHeight, update);
+		return new ShapeListImpl(Minecraft.getInstance(), left, right, top, bottom, slotHeight, update);
 	}
 }

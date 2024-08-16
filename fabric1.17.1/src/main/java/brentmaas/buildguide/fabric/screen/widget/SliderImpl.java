@@ -1,15 +1,15 @@
 package brentmaas.buildguide.fabric.screen.widget;
 
 import brentmaas.buildguide.common.screen.widget.ISlider;
-import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.text.LiteralText;
+import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.network.chat.TextComponent;
 
-public class SliderImpl extends SliderWidget implements ISlider {
+public class SliderImpl extends AbstractSliderButton implements ISlider {
 	private double min, max;
 	private String prefix;
 	
 	public SliderImpl(int x, int y, int width, int height, String name, double min, double max, double value) {
-		super(x, y, width, height, new LiteralText(name + ": " + Math.round(10.0 * value) / 10.0), (value - min) / (max - min));
+		super(x, y, width, height, new TextComponent(name + ": " + Math.round(10.0 * value) / 10.0), (value - min) / (max - min));
 		this.min = min;
 		this.max = max;
 		prefix = name + ": ";
@@ -24,7 +24,7 @@ public class SliderImpl extends SliderWidget implements ISlider {
 	}
 	
 	public void updateText() {
-		setMessage(new LiteralText(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
+		setMessage(new TextComponent(prefix + Math.round(10.0 *  getSliderValue()) / 10.0));
 	}
 	
 	protected void applyValue() {

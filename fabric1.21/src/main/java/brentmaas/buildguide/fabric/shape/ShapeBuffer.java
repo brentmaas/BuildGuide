@@ -3,24 +3,24 @@ package brentmaas.buildguide.fabric.shape;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexBuffer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 
 import brentmaas.buildguide.common.shape.IShapeBuffer;
-import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.BufferAllocator;
+import net.minecraft.client.renderer.GameRenderer;
 
 public class ShapeBuffer implements IShapeBuffer {
-	private BufferAllocator byteBuilder;
+	private ByteBufferBuilder byteBuilder;
 	private BufferBuilder builder;
 	private VertexBuffer buffer;
 	private int defaultR = 255, defaultG = 255, defaultB = 255, defaultA = 255;
 	
 	public ShapeBuffer() {
-		byteBuilder = new BufferAllocator(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
-		builder = new BufferBuilder(byteBuilder, DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+		byteBuilder = new ByteBufferBuilder(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
+		builder = new BufferBuilder(byteBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 	}
 	
 	public void setColour(int r, int g, int b, int a) {
@@ -31,13 +31,13 @@ public class ShapeBuffer implements IShapeBuffer {
 	}
 	
 	public void pushVertex(double x, double y, double z) {
-		builder.vertex((float) x, (float) y, (float) z).color(defaultR, defaultG, defaultB, defaultA);
+		builder.addVertex((float) x, (float) y, (float) z).setColor(defaultR, defaultG, defaultB, defaultA);
 	}
 	
 	public void end() {
 		buffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		buffer.bind();
-		buffer.upload(builder.endNullable());
+		buffer.upload(builder.build());
 		VertexBuffer.unbind();
 	}
 	
@@ -47,7 +47,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public void render(Matrix4f model, Matrix4f projection) {
 		buffer.bind();
-		buffer.draw(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorProgram());
+		buffer.drawWithShader(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
 		VertexBuffer.unbind();
 	}
 }

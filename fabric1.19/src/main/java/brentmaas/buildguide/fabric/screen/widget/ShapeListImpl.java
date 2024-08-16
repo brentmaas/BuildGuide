@@ -4,29 +4,29 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.IShapeList.IEntry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormat.DrawMode;
-import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 
-public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.Entry> implements IShapeList {
+public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> implements IShapeList {
 	private Runnable update;
 	
-	public ShapeListImpl(MinecraftClient client, int left, int right, int top, int bottom, int slotHeight, Runnable update) {
-		super(client, right - left, bottom - top, top, bottom, slotHeight);
-		this.left = left;
-		this.right = right;
+	public ShapeListImpl(Minecraft minecraft, int left, int right, int top, int bottom, int slotHeight, Runnable update) {
+		super(minecraft, right - left, bottom - top, top, bottom, slotHeight);
+		x0 = left;
+		x1 = right;
 		setRenderBackground(false);
-		setRenderHorizontalShadows(false);
+		setRenderTopAndBottom(false);
 		
 		this.update = update;
 		
@@ -49,6 +49,7 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		setSelected(children().get(shapeSetId));
 	}
 	
+	@Override
 	public boolean removeEntry(Entry entry) {
 		for(Entry e: children()) {
 			if(e.getShapeSetId() > entry.getShapeSetId()) {
@@ -64,37 +65,36 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		return removeEntry((Entry) entry);
 	}
 	
+	@Override
 	public void setSelected(@Nullable Entry entry) {
 		super.setSelected(entry);
 		if(entry != null) BuildGuide.stateManager.getState().setShapeSetIndex(entry.getShapeSetId());
 		update.run();
 	}
 	
-	public IEntry getSelected() {
-		return getSelectedOrNull();
-	}
-	
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	@Override
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		boolean hasBlend = GL32.glIsEnabled(GL32.GL_BLEND); 
 		if(!hasBlend) RenderSystem.enableBlend(); 
 		 
-		Tessellator tessellator = Tessellator.getInstance(); 
-		BufferBuilder bufferBuilder = tessellator.getBuffer(); 
+		Tesselator tessellator = Tesselator.getInstance(); 
+		BufferBuilder bufferBuilder = tessellator.getBuilder(); 
 		RenderSystem.setShader(GameRenderer::getPositionShader); 
 		RenderSystem.setShaderColor(0, 0, 0, 0.2f); 
-		bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION); 
-		bufferBuilder.vertex(left, top, 0).next(); 
-		bufferBuilder.vertex(left, bottom, 0).next(); 
-		bufferBuilder.vertex(right, bottom, 0).next(); 
-		bufferBuilder.vertex(right, top, 0).next(); 
-		tessellator.draw(); 
+		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION); 
+		bufferBuilder.vertex(x0, x0, 0).endVertex(); 
+		bufferBuilder.vertex(x0, y1, 0).endVertex(); 
+		bufferBuilder.vertex(x1, y1, 0).endVertex(); 
+		bufferBuilder.vertex(x1, y0, 0).endVertex(); 
+		tessellator.end();
 		 
 		if(!hasBlend) RenderSystem.disableBlend(); 
 		 
-		super.render(matrixStack, mouseX, mouseY, partialTicks); 
-	} 
-	 
-	protected void renderList(MatrixStack matrixStack, int x, int y, int mouseX, int mouseY, float partialTicks) { 
+		super.render(poseStack, mouseX, mouseY, partialTicks); 
+	}
+	
+	@Override
+	protected void renderList(PoseStack poseStack, int x, int y, int mouseX, int mouseY, float partialTicks) { 
 		boolean hasDepthTest = GL32.glIsEnabled(GL32.GL_DEPTH_TEST); 
 		boolean hasDepthMask = GL32.glGetBoolean(GL32.GL_DEPTH_WRITEMASK); 
 		int depthFunc = GL32.glGetInteger(GL32.GL_DEPTH_FUNC); 
@@ -105,18 +105,18 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(GL32.GL_LEQUAL); 
 		if(!hasBlend) RenderSystem.enableBlend(); 
 		 
-		Tessellator tessellator = Tessellator.getInstance(); 
-		BufferBuilder bufferBuilder = tessellator.getBuffer(); 
+		Tesselator tessellator = Tesselator.getInstance(); 
+		BufferBuilder bufferBuilder = tessellator.getBuilder(); 
 		RenderSystem.setShader(GameRenderer::getPositionShader); 
 		RenderSystem.setShaderColor(0, 0, 0, 0); 
-		bufferBuilder.begin(DrawMode.QUADS, VertexFormats.POSITION); 
-		bufferBuilder.vertex(left, top - itemHeight - 4, 0.1).next(); 
-		bufferBuilder.vertex(left, top, 0.1).next(); 
-		bufferBuilder.vertex(right, top, 0.1).next(); 
-		bufferBuilder.vertex(right, top - itemHeight - 4, 0.1).next(); 
-		tessellator.draw(); 
+		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION); 
+		bufferBuilder.vertex(x0, y0 - itemHeight - 4, 0.1).endVertex(); 
+		bufferBuilder.vertex(x0, y0, 0.1).endVertex(); 
+		bufferBuilder.vertex(x1, y0, 0.1).endVertex(); 
+		bufferBuilder.vertex(x1, y0 - itemHeight - 4, 0.1).endVertex(); 
+		tessellator.end();
 		 
-		super.renderList(matrixStack, x, y, mouseX, mouseY, partialTicks); 
+		super.renderList(poseStack, x, y, mouseX, mouseY, partialTicks); 
 		 
 		if(!hasBlend) RenderSystem.disableBlend(); 
 		if(depthFunc != GL32.GL_LEQUAL) RenderSystem.depthFunc(depthFunc); 
@@ -130,21 +130,22 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 	}
 
 	@Override
-	protected int getScrollbarPositionX() {
-		return right - 6;
+	protected int getScrollbarPosition() {
+		return x1 - 6;
 	}
 	
-	public final class Entry extends AlwaysSelectedEntryListWidget.Entry<ShapeListImpl.Entry> implements IEntry {
+	public final class Entry extends ObjectSelectionList.Entry<ShapeListImpl.Entry> implements IEntry {
 		private int shapeSetId;
 		
 		public Entry(int shapeSetId) {
 			this.shapeSetId = shapeSetId;
 		}
 		
-		public void render(MatrixStack stack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			MinecraftClient.getInstance().textRenderer.drawWithShadow(stack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape()));
+		public void render(PoseStack stack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+			Minecraft.getInstance().font.drawShadow(stack, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape()));
 		}
 		
+		@Override
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
 			ShapeListImpl.this.setSelected(this);
 			return false;
@@ -158,8 +159,8 @@ public class ShapeListImpl extends AlwaysSelectedEntryListWidget<ShapeListImpl.E
 			return shapeSetId;
 		}
 		
-		public Text getNarration() {
-			return Text.literal("");
+		public Component getNarration() {
+			return Component.literal("");
 		}
 	}
 }

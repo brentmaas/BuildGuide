@@ -1,21 +1,21 @@
 package brentmaas.buildguide.fabric.screen.widget;
 
 import brentmaas.buildguide.common.screen.widget.ITextField;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.Component;
 
-public class TextFieldImpl extends TextFieldWidget implements ITextField {
+public class TextFieldImpl extends EditBox implements ITextField {
 	public TextFieldImpl(int x, int y, int width, int height, String value) {
-		super(MinecraftClient.getInstance().textRenderer, x, y, width, height, Text.literal(value));
+		super(Minecraft.getInstance().font, x, y, width, height, Component.literal(value));
 	}
 	
 	public void setTextValue(String text) {
-		setText(text);
+		setValue(text);
 	}
 	
 	public void setTextColour(int colour) {
-		setEditableColor(colour);
+		setTextColor(colour);
 	}
 	
 	public void setVisibility(boolean visible) {
@@ -27,6 +27,6 @@ public class TextFieldImpl extends TextFieldWidget implements ITextField {
 	}
 	
 	public String getTextValue() {
-		return getText();
+		return getValue();
 	}
 }
