@@ -8,7 +8,7 @@ version = gradle.ext.modversion
 group = gradle.ext.neoforgegroup
 
 base {
-    archivesName = gradle.ext.modid
+    archivesName = gradle.ext.neoforgename
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)

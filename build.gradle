@@ -17,6 +17,10 @@ task cleantmp {
             if(forgetmp.exists()) {
                 delete forgetmp
             }
+            def neoforgetmp = file('./build/tmp/neoforge' + it)
+            if(neoforgetmp.exists()) {
+                delete neoforgetmp
+            }
         }
     }
 }
@@ -100,6 +104,36 @@ task unpackjars {
                     copy {
                         from source
                         into targetParent
+                    }
+                }
+            }
+            
+            if(mcversion >= '1.21') {
+                def neoforgetmp = file('./build/tmp/neoforge' + mcversion)
+                copy {
+                    from zipTree('./neoforge' + mcversion + '/build/libs/' + gradle.ext.neoforgename + '-' + gradle.ext.modversion + '.jar')
+                    into neoforgetmp
+                }
+                fileTree(neoforgetmp).each {
+                    def relpath = it.absolutePath.substring(neoforgetmp.absolutePath.length())
+                    def target = file(folder.absolutePath + relpath)
+                    //if(relpath == '\\META-INF\\MANIFEST.MF') {
+                    //    it.text.eachLine {
+                    //        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
+                    //            manifest.text += ('\n' + it)
+                    //        }
+                    //    }
+                    //}else
+                    if(relpath == '\\META-INF\\neoforge.mods.toml'){
+                        target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
+                    }else if(!target.exists()){
+                        def source = it
+                        def targetParent = target.getParentFile()
+                        targetParent.mkdirs()
+                        copy {
+                            from source
+                            into targetParent
+                        }
                     }
                 }
             }
