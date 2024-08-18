@@ -26,10 +26,18 @@ public abstract class AbstractStateManager {
 		return host + "@" + getDimensionKey();
 	}
 	
+	public boolean isStatePresent(String key) {
+		return stateStore.containsKey(key);
+	}
+	
+	public boolean isStatePresent() {
+		return isStatePresent(getKey());
+	}
+	
 	public State getState() {
 		String key = getKey();
 		
-		if(!stateStore.containsKey(key)) {
+		if(!isStatePresent(key)) {
 			stateStore.put(key, new State());
 			File persistenceFile = getPersistenceFile(key);
 			if(BuildGuide.config.persistenceEnabled.value && persistenceFile.exists()) {
