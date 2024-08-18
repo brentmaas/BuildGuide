@@ -27,6 +27,9 @@ task unpackjars {
     gradle.ext.mcversions.each {
         dependsOn ':fabric' + it + ':build'
         dependsOn ':forge' + it + ':build'
+        if(it >= '1.21') {
+            dependsOn ':neoforge' + it + ':build'
+        }
     }
     
     def commonfolder = file('./build/tmp/common')

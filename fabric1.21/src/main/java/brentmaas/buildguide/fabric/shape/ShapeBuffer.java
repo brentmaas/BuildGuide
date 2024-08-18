@@ -13,14 +13,14 @@ import brentmaas.buildguide.common.shape.IShapeBuffer;
 import net.minecraft.client.renderer.GameRenderer;
 
 public class ShapeBuffer implements IShapeBuffer {
-	private ByteBufferBuilder byteBuilder;
-	private BufferBuilder builder;
+	private ByteBufferBuilder byteBufferBuilder;
+	private BufferBuilder bufferBuilder;
 	private VertexBuffer buffer;
 	private int defaultR = 255, defaultG = 255, defaultB = 255, defaultA = 255;
 	
 	public ShapeBuffer() {
-		byteBuilder = new ByteBufferBuilder(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
-		builder = new BufferBuilder(byteBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+		byteBufferBuilder = new ByteBufferBuilder(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
+		bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 	}
 	
 	public void setColour(int r, int g, int b, int a) {
@@ -31,13 +31,13 @@ public class ShapeBuffer implements IShapeBuffer {
 	}
 	
 	public void pushVertex(double x, double y, double z) {
-		builder.addVertex((float) x, (float) y, (float) z).setColor(defaultR, defaultG, defaultB, defaultA);
+		bufferBuilder.addVertex((float) x, (float) y, (float) z).setColor(defaultR, defaultG, defaultB, defaultA);
 	}
 	
 	public void end() {
 		buffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		buffer.bind();
-		buffer.upload(builder.build());
+		buffer.upload(bufferBuilder.build());
 		VertexBuffer.unbind();
 	}
 	
