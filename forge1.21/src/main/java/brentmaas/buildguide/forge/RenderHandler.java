@@ -32,12 +32,11 @@ public class RenderHandler extends AbstractRenderHandler {
 	@SubscribeEvent
 	public void onRenderBlock(RenderLevelStageEvent event) {
 		if(event.getStage() == Stage.AFTER_WEATHER) {
-			poseStackInstance = new PoseStack();
-			poseStackInstance.mulPose(event.getPoseStack());
 			Matrix4f rotationMatrix = new Matrix4f();
 			cameraInstance = Minecraft.getInstance().gameRenderer.getMainCamera();
 			rotationMatrix.rotate((float) (cameraInstance.getXRot() * Math.PI / 180), new Vector3f(1, 0, 0));
 			rotationMatrix.rotate((float) ((cameraInstance.getYRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
+			poseStackInstance = new PoseStack();
 			poseStackInstance.mulPose(rotationMatrix);
 			projectionMatrixInstance = event.getProjectionMatrix();
 			
