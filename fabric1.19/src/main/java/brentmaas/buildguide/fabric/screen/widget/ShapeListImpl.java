@@ -82,7 +82,7 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		RenderSystem.setShader(GameRenderer::getPositionShader); 
 		RenderSystem.setShaderColor(0, 0, 0, 0.2f); 
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION); 
-		bufferBuilder.vertex(x0, x0, 0).endVertex(); 
+		bufferBuilder.vertex(x0, y0, 0).endVertex(); 
 		bufferBuilder.vertex(x0, y1, 0).endVertex(); 
 		bufferBuilder.vertex(x1, y1, 0).endVertex(); 
 		bufferBuilder.vertex(x1, y0, 0).endVertex(); 
