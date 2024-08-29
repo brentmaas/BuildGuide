@@ -41,7 +41,7 @@ public abstract class AbstractRenderHandler {
 	public void render() {
 		pushProfiler(BuildGuide.modid);
 		
-		if(BuildGuide.stateManager.isStatePresent() && BuildGuide.stateManager.getState().enabled && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShapeSet().origin != null) { // isStatePresent: quickfix for weird ClassNotFoundException when opening the GUI
+		if(BuildGuide.stateManager.getState().enabled && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShapeSet().origin != null) {
 			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) renderShapeSet(s); 
 		}
 		

@@ -184,7 +184,6 @@ public abstract class Shape {
 			for(int i = 0;i < properties.size();++i) {
 				success = success & properties.get(i).setValueFromString(splitData[i]);
 			}
-			update();
 			error = !success;
 		}else {
 			error = true;

@@ -36,7 +36,6 @@ public class ShapeSet {
 	private Shape initialiseShape(String shapeId) {
 		Shape newShape = ShapeRegistry.getNewInstance(shapeId);
 		newShape.shapeSet = this;
-		newShape.update();
 		return newShape;
 	}
 	
@@ -98,6 +97,7 @@ public class ShapeSet {
 	public Shape getShape() {
 		if(shapes[index] == null) {
 			shapes[index] = initialiseShape(ShapeRegistry.getClassIdentifier(index));
+			shapes[index].update();
 		}
 		
 		return shapes[index];
@@ -164,11 +164,7 @@ public class ShapeSet {
 					int index = ShapeRegistry.getShapeId(key);
 					if(index >= 0) {
 						shapes[index] = initialiseShape(key);
-						// Lock wizardry due to classloading issues on Forge
-						shapes[index].cancelFuture();
-						shapes[index].lock.lock();
 						shapes[index].restorePersistence(value);
-						shapes[index].lock.unlock();
 					}
 				}
 			}

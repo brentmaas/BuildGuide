@@ -42,6 +42,8 @@ public abstract class BaseScreen {
 		addWidget(buttonVisualisation);
 		addWidget(buttonShapeList);
 		addWidget(buttonConfiguration);
+		
+		BuildGuide.stateManager.getState().initCheck();
 	}
 	
 	public void render() {

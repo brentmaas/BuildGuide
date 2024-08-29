@@ -53,8 +53,6 @@ public class ShapeScreen extends BaseScreen{
 	public void init() {
 		super.init();
 		
-		BuildGuide.stateManager.getState().initCheck();
-		
 		if(!BuildGuide.stateManager.getState().isShapeAvailable()) {
 			buttonShapePrevious.setActive(false);
 			buttonShapeNext.setActive(false);

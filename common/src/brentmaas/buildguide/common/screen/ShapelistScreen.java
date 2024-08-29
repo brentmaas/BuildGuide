@@ -21,6 +21,7 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, "->", () -> updateNewShape(1));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
 		BuildGuide.stateManager.getState().pushNewShapeSet();
+		BuildGuide.stateManager.getState().getShapeSet(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1).updateAllShapes();
 		shapeList.addEntry(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1);
 		
 		checkActive();
