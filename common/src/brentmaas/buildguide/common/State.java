@@ -141,7 +141,7 @@ public class State {
 		setOriginX(iShapeSet, x);
 	}
 	
-	public void setOriginY(int y, int index) {
+	public void setOriginY(int index, int y) {
 		shapeSets.get(index).origin.y = y;
 	}
 	
