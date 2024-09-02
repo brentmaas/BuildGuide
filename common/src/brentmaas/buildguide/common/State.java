@@ -141,12 +141,12 @@ public class State {
 		setOriginX(iShapeSet, x);
 	}
 	
-	public void setOriginY(int y, int index) {
+	public void setOriginY(int index, int y) {
 		shapeSets.get(index).origin.y = y;
 	}
 	
 	public void setOriginY(int y) {
-		setOriginX(iShapeSet, y);
+		setOriginY(iShapeSet, y);
 	}
 	
 	public void setOriginZ(int index, int z) {
@@ -154,7 +154,7 @@ public class State {
 	}
 	
 	public void setOriginZ(int z) {
-		setOriginX(iShapeSet, z);
+		setOriginZ(iShapeSet, z);
 	}
 	
 	public void setOrigin(int index, int x, int y, int z) {
