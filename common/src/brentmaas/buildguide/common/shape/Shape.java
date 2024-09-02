@@ -179,14 +179,10 @@ public abstract class Shape {
 	
 	public void restorePersistence(String persistenceData) {
 		String splitData[] = persistenceData.split(",");
-		if(splitData.length == properties.size()) {
-			boolean success = true;
-			for(int i = 0;i < properties.size();++i) {
-				success = success & properties.get(i).setValueFromString(splitData[i]);
-			}
-			error = !success;
-		}else {
-			error = true;
+		boolean success = true;
+		for(int i = 0;i < Math.min(properties.size(), splitData.length);++i) {
+			success = success & properties.get(i).setValueFromString(splitData[i]);
 		}
+		error = !success;
 	}
 }

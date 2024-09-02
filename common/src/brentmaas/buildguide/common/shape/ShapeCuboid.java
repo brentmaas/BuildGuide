@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 
@@ -22,6 +23,7 @@ public class ShapeCuboid extends Shape {
 	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(3, "Y", () -> update());
 	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(3, "Z", () -> update());
 	private PropertyEnum<walls> propertyWalls = new PropertyEnum<walls>(walls.ALL, BuildGuide.screenHandler.translate("property.buildguide.walls"), () -> update(), wallsNames);
+	private PropertyBoolean propertyCentredOrigin = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.centredorigin"), () -> update());
 	
 	public ShapeCuboid() {
 		super();
@@ -30,6 +32,7 @@ public class ShapeCuboid extends Shape {
 		properties.add(propertyY);
 		properties.add(propertyZ);
 		properties.add(propertyWalls);
+		properties.add(propertyCentredOrigin);
 	}
 	
 	protected void updateShape(IShapeBuffer buffer) throws InterruptedException {
@@ -37,52 +40,70 @@ public class ShapeCuboid extends Shape {
 		int dy = propertyY.value;
 		int dz = propertyZ.value;
 		walls w = propertyWalls.value;
+		boolean centredOrigin = propertyCentredOrigin.value;
+		
+		int lowerX, lowerY, lowerZ, upperX, upperY, upperZ;
+		if(centredOrigin) {
+			lowerX = -Math.abs(dx) + 1;
+			lowerY = -Math.abs(dy) + 1;
+			lowerZ = -Math.abs(dz) + 1;
+			upperX = Math.abs(dx);
+			upperY = Math.abs(dy);
+			upperZ = Math.abs(dz);
+		}else {
+			lowerX = dx > 0 ? 0 : dx + 1;
+			lowerY = dy > 0 ? 0 : dy + 1;
+			lowerZ = dz > 0 ? 0 : dz + 1;
+			upperX = dx > 0 ? dx : 1;
+			upperY = dy > 0 ? dy : 1;
+			upperZ = dz > 0 ? dz : 1;
+		}
 		
 		//Wireframe
-		for(int x = (dx > 0 ? 0 : dx + 1);x < (dx > 0 ? dx : 1);++x) {
-			addShapeCube(buffer, x, 0, 0);
-			if(!(dy == 1 || dy == -1)) {
-				addShapeCube(buffer, x, (dy > 0 ? dy - 1 : dy + 1), 0);
+		for(int x = lowerX;x < upperX;++x) {
+			addShapeCube(buffer, x, lowerY, lowerZ);
+			if(upperY - lowerY > 1) {
+				addShapeCube(buffer, x, upperY - 1, lowerZ);
 			}
-			if(!(dz == 1 || dz == -1)) {
-				addShapeCube(buffer, x, 0, (dz > 0 ? dz - 1 : dz + 1));
+			if(upperZ - lowerZ > 1) {
+				addShapeCube(buffer, x, lowerY, upperZ - 1);
 			}
-			if(!(dy == 1 || dy == -1 || dz == 1 || dz == -1)) {
-				addShapeCube(buffer, x, (dy > 0 ? dy - 1 : dy + 1), (dz > 0 ? dz - 1 : dz + 1));
-			}
-		}
-		for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
-			addShapeCube(buffer, 0, y, 0);
-			if(!(dx == 1 || dx == -1)) {
-				addShapeCube(buffer, (dx > 0 ? dx - 1 : dx + 1), y, 0);
-			}
-			if(!(dz == 1 || dz == -1)) {
-				addShapeCube(buffer, 0, y, (dz > 0 ? dz - 1 : dz + 1));
-			}
-			if(!(dx == 1 || dx == -1 || dz == 1 || dz == -1)) {
-				addShapeCube(buffer, (dx > 0 ? dx - 1 : dx + 1), y, (dz > 0 ? dz - 1 : dz + 1));
+			if(upperY - lowerY > 1 && upperZ - lowerZ > 1) {
+				addShapeCube(buffer, x, upperY - 1, upperZ - 1);
 			}
 		}
-		for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-			addShapeCube(buffer, 0, 0, z);
-			if(!(dx == 1 || dx == -1)) {
-				addShapeCube(buffer, (dx > 0 ? dx - 1 : dx + 1), 0, z);
+		for(int y = lowerY + 1;y < upperY - 1;++y) {
+			addShapeCube(buffer, lowerX, y, lowerZ);
+			if(upperX - lowerX > 1) {
+				addShapeCube(buffer, upperX - 1, y, lowerZ);
 			}
-			if(!(dy == 1 || dy == -1)) {
-				addShapeCube(buffer, 0, (dy > 0 ? dy - 1 : dy + 1), z);
+			if(upperZ - lowerZ > 1) {
+				addShapeCube(buffer, lowerX, y, upperZ - 1);
 			}
-			if(!(dx == 1 || dx == -1 || dy == 1 || dy == -1)) {
-				addShapeCube(buffer, (dx > 0 ? dx - 1 : dx + 1), (dy > 0 ? dy - 1 : dy + 1), z);
+			if(upperX - lowerX > 1 && upperZ - lowerZ > 1) {
+				addShapeCube(buffer, upperX - 1, y, upperZ - 1);
+			}
+		}
+		for(int z = lowerZ + 1;z < upperZ - 1;++z) {
+			addShapeCube(buffer, lowerX, lowerY, z);
+			if(upperX - lowerX > 1) {
+				addShapeCube(buffer, upperX - 1, lowerY, z);
+			}
+			if(upperY - lowerY > 1) {
+				addShapeCube(buffer, lowerX, upperY - 1, z);
+			}
+			if(upperX - lowerX > 1 && upperY - lowerY > 1) {
+				addShapeCube(buffer, upperX - 1, upperY - 1, z);
 			}
 		}
 		
 		//X wall
 		if(w == walls.ALL || w == walls.X || w == walls.XY || w == walls.XZ) {
-			for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
-				for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-					addShapeCube(buffer, 0, y, z);
-					if(!(dx == 1 || dx == -1)) {
-						addShapeCube(buffer, (dx > 0 ? dx - 1 : dx + 1), y, z);
+			for(int y = lowerY + 1;y < upperY - 1;++y) {
+				for(int z = lowerZ + 1;z < upperZ - 1;++z) {
+					addShapeCube(buffer, lowerX, y, z);
+					if(upperX - lowerX > 1) {
+						addShapeCube(buffer, upperX - 1, y, z);
 					}
 				}
 			}
@@ -90,11 +111,11 @@ public class ShapeCuboid extends Shape {
 		
 		//Y wall
 		if(w == walls.ALL || w == walls.Y || w == walls.XY || w == walls.YZ) {
-			for(int x = (dx > 0 ? 1 : dx + 2);x < (dx > 0 ? dx - 1 : 0);++x) {
-				for(int z = (dz > 0 ? 1 : dz + 2);z < (dz > 0 ? dz - 1 : 0);++z) {
-					addShapeCube(buffer, x, 0, z);
-					if(!(dy == 1 || dy == -1)) {
-						addShapeCube(buffer, x, (dy > 0 ? dy - 1 : dy + 1), z);
+			for(int x = lowerX + 1;x < upperX - 1;++x) {
+				for(int z = lowerZ + 1;z < upperZ - 1;++z) {
+					addShapeCube(buffer, x, lowerY, z);
+					if(upperY - lowerY > 1) {
+						addShapeCube(buffer, x, upperY - 1, z);
 					}
 				}
 			}
@@ -102,11 +123,11 @@ public class ShapeCuboid extends Shape {
 		
 		//Z wall
 		if(w == walls.ALL || w == walls.Z || w == walls.XZ || w == walls.YZ) {
-			for(int x = (dx > 0 ? 1 : dx + 2);x < (dx > 0 ? dx - 1 : 0);++x) {
-				for(int y = (dy > 0 ? 1 : dy + 2);y < (dy > 0 ? dy - 1 : 0);++y) {
-					addShapeCube(buffer, x, y, 0);
-					if(!(dz == 1 || dz == -1)) {
-						addShapeCube(buffer, x, y, (dz > 0 ? dz - 1 : dz + 1));
+			for(int x = lowerX + 1;x < upperX - 1;++x) {
+				for(int y = lowerY + 1;y < upperY - 1;++y) {
+					addShapeCube(buffer, x, y, lowerZ);
+					if(upperZ - lowerZ > 1) {
+						addShapeCube(buffer, x, y, upperZ - 1);
 					}
 				}
 			}
