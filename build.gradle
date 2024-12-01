@@ -1,3 +1,7 @@
+plugins {
+    id 'eclipse'
+}
+
 task cleantmp {
     doFirst {
         def commonfolder = file('./build/tmp/common')
@@ -197,6 +201,9 @@ configure(subprojects.findAll {it.name != 'common'}) {
             file {
                 whenMerged { classpath ->
                     classpath.entries.findAll{ it.kind == 'src' && it.hasProperty("dir") && (it.dir.toString().endsWith("\\common\\src") || it.dir.toString().endsWith("\\common\\resources")) }.each {
+                        classpath.entries.remove(it)
+                    }
+                    classpath.entries.findAll{ it.kind == 'src' && it.hasProperty("path") && (it.path.toString().equals("common-resources") || it.path.toString().equals("src"))}.each {
                         classpath.entries.remove(it)
                     }
                 }
