@@ -1,10 +1,10 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeParaboloid extends Shape {
 	private enum direction{
@@ -15,11 +15,11 @@ public class ShapeParaboloid extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveFloat propertyHalfwidth1 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"), () -> update());
-	private PropertyPositiveFloat propertyHalfwidth2 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"), () -> update());
-	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.height"), () -> update());
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, new Translatable("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveFloat propertyHalfwidth1 = new PropertyPositiveFloat(3, new Translatable("property.buildguide.halfwidthdir", "Y"), () -> update());
+	private PropertyPositiveFloat propertyHalfwidth2 = new PropertyPositiveFloat(3, new Translatable("property.buildguide.halfwidthdir", "Z"), () -> update());
+	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(3, new Translatable("property.buildguide.height"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeParaboloid() {
 		super();
@@ -71,16 +71,16 @@ public class ShapeParaboloid extends Shape {
 		
 		switch(propertyDir.value) {
 		case X:
-			propertyHalfwidth1.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"));
-			propertyHalfwidth2.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"));
+			propertyHalfwidth1.setName(new Translatable("property.buildguide.halfwidthdir", "Y"));
+			propertyHalfwidth2.setName(new Translatable("property.buildguide.halfwidthdir", "Z"));
 			break;
 		case Y:
-			propertyHalfwidth1.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "X"));
-			propertyHalfwidth2.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Z"));
+			propertyHalfwidth1.setName(new Translatable("property.buildguide.halfwidthdir", "X"));
+			propertyHalfwidth2.setName(new Translatable("property.buildguide.halfwidthdir", "Z"));
 			break;
 		case Z:
-			propertyHalfwidth1.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "X"));
-			propertyHalfwidth2.setName(BuildGuide.screenHandler.translate("property.buildguide.halfwidthdir", "Y"));
+			propertyHalfwidth1.setName(new Translatable("property.buildguide.halfwidthdir", "X"));
+			propertyHalfwidth2.setName(new Translatable("property.buildguide.halfwidthdir", "Y"));
 			break;
 		}
 	}

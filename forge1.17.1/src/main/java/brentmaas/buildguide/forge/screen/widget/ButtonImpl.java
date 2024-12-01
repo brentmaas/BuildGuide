@@ -1,8 +1,9 @@
 package brentmaas.buildguide.forge.screen.widget;
 
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ButtonImpl extends Button implements IButton {
 	public void setVisibility(boolean visible) {
@@ -17,7 +18,7 @@ public class ButtonImpl extends Button implements IButton {
 		this.y = y;
 	}
 	
-	public ButtonImpl(int x, int y, int width, int height, String text, IButton.IPressable onPress) {
-		super(x, y, width, height, new TextComponent(text), button -> onPress.onPress());
+	public ButtonImpl(int x, int y, int width, int height, Translatable text, IButton.IPressable onPress) {
+		super(x, y, width, height, new TranslatableComponent(text.getTranslationKey(), text.getValues()), button -> onPress.onPress());
 	}
 }

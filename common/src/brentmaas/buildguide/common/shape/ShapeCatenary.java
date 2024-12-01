@@ -5,23 +5,24 @@ import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyInt;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 import brentmaas.buildguide.common.property.PropertyRunnable;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public class ShapeCatenary extends Shape {
 	private static final double eps = 0.001;
 	
-	private PropertyInt propertyDx = new PropertyInt(3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
-	private PropertyInt propertyDy = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
-	private PropertyInt propertyDz = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
+	private PropertyInt propertyDx = new PropertyInt(3, new Translatable("property.buildguide.delta", "X"), () -> update());
+	private PropertyInt propertyDy = new PropertyInt(0, new Translatable("property.buildguide.delta", "Y"), () -> update());
+	private PropertyInt propertyDz = new PropertyInt(0, new Translatable("property.buildguide.delta", "Z"), () -> update());
 	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(() -> {
 		Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
 		propertyDx.setValue(pos.x - shapeSet.origin.x);
 		propertyDy.setValue(pos.y - shapeSet.origin.y);
 		propertyDz.setValue(pos.z - shapeSet.origin.z);
 		update();
-	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
-	private PropertyPositiveFloat propertyAddLength = new PropertyPositiveFloat(1, BuildGuide.screenHandler.translate("property.buildguide.addlength"), () -> update());
-	private PropertyBoolean propertyInvert = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.invert"), () -> update());
+	}, new Translatable("property.buildguide.setendpoint"));
+	private PropertyPositiveFloat propertyAddLength = new PropertyPositiveFloat(1, new Translatable("property.buildguide.addlength"), () -> update());
+	private PropertyBoolean propertyInvert = new PropertyBoolean(false, new Translatable("property.buildguide.invert"), () -> update());
 	
 	public ShapeCatenary() {
 		super();

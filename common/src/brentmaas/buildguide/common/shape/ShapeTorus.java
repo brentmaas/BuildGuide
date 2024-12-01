@@ -1,9 +1,9 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeTorus extends Shape {
 	private enum direction{
@@ -14,11 +14,11 @@ public class ShapeTorus extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveFloat propertyOuterRadius = new PropertyPositiveFloat(5, BuildGuide.screenHandler.translate("property.buildguide.outerradius"), () -> updateOuter());
-	private PropertyPositiveFloat propertyInnerRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.innerradius"), () -> updateInner());
-	private PropertyBoolean propertyOuterEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.outerevenmode"), () -> update());
-	private PropertyBoolean propertyInnerEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.innerevenmode"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, new Translatable("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveFloat propertyOuterRadius = new PropertyPositiveFloat(5, new Translatable("property.buildguide.outerradius"), () -> updateOuter());
+	private PropertyPositiveFloat propertyInnerRadius = new PropertyPositiveFloat(3, new Translatable("property.buildguide.innerradius"), () -> updateInner());
+	private PropertyBoolean propertyOuterEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.outerevenmode"), () -> update());
+	private PropertyBoolean propertyInnerEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.innerevenmode"), () -> update());
 	
 	public ShapeTorus() {
 		super();

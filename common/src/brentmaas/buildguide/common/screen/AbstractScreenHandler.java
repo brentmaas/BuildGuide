@@ -31,7 +31,7 @@ public abstract class AbstractScreenHandler {
 			long time = System.currentTimeMillis();
 			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
 		}
-		return (shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + (shapeSet != null && shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslatedName() : BuildGuide.screenHandler.translate("shape.buildguide.none")) + progressIndicatorPart;
+		return (shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + new Translatable(shapeSet != null && shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslationKey() : "shape.buildguide.none") + progressIndicatorPart;
 	}
 	
 	public int getShapeProgressColour(Shape shape) {
@@ -39,11 +39,34 @@ public abstract class AbstractScreenHandler {
 		return shape != null && shape.error ? 0xFF0000 : (0x00FF00 + colourFraction * 0x010001);
 	}
 	
-	public abstract IScreenWrapper createWrapper(String title);
+	public abstract IScreenWrapper createWrapper(Translatable title);
 	
 	public abstract void showNone();
 	
 	public abstract String translate(String translationKey);
 	
 	public abstract String translate(String translationKey, Object... values);
+	
+	public static class Translatable {
+		private String translationKey;
+		private Object[] values;
+		
+		public Translatable(String translationKey, Object... values) {
+			this.translationKey = translationKey;
+			this.values = values;
+		}
+		
+		public String getTranslationKey() {
+			return translationKey;
+		}
+		
+		public Object[] getValues() {
+			return values;
+		}
+		
+		@Override
+		public String toString() {
+			return BuildGuide.screenHandler.translate(translationKey, values);
+		}
+	}
 }

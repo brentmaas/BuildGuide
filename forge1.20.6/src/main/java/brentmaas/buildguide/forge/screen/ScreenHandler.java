@@ -10,8 +10,8 @@ public class ScreenHandler extends AbstractScreenHandler {
 		Minecraft.getInstance().setScreen(null);
 	}
 	
-	public IScreenWrapper createWrapper(String title) {
-		return new ScreenWrapper(Component.literal(title));
+	public IScreenWrapper createWrapper(Translatable title) {
+		return new ScreenWrapper(Component.translatable(title.getTranslationKey(), title.getValues()));
 	}
 	
 	public String translate(String translationKey) {

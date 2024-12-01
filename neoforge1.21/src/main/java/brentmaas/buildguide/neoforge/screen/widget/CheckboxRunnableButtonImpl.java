@@ -1,5 +1,6 @@
 package brentmaas.buildguide.neoforge.screen.widget;
 
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Checkbox;
@@ -8,11 +9,11 @@ import net.minecraft.network.chat.Component;
 public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	protected final ICheckboxRunnableButton.IPressable onPress;
 	private int x, y;
-	private String title;
+	private Translatable title;
 	private boolean checked;
 	public Checkbox checkbox;
 	
-	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, String title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
+	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, Translatable title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
 		this.x = x;
 		this.y = y;
 		this.title = title;
@@ -22,7 +23,7 @@ public class CheckboxRunnableButtonImpl implements ICheckboxRunnableButton {
 	
 	public void initCheckboxIfNull() {
 		if(checkbox == null) {
-			checkbox = Checkbox.builder(Component.literal(title), Minecraft.getInstance().font).pos(x, y).onValueChange((Checkbox cb, boolean selected) -> onPress()).selected(checked).build();
+			checkbox = Checkbox.builder(Component.translatable(title.getTranslationKey(), title.getValues()), Minecraft.getInstance().font).pos(x, y).onValueChange((Checkbox cb, boolean selected) -> onPress()).selected(checked).build();
 			//checkbox.setWidth(width);
 			//checkbox.setHeight(height);
 		}

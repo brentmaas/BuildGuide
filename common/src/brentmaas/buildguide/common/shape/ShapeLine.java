@@ -3,19 +3,20 @@ package brentmaas.buildguide.common.shape;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyInt;
 import brentmaas.buildguide.common.property.PropertyRunnable;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public class ShapeLine extends Shape {
-	private PropertyInt propertyDx = new PropertyInt(3, BuildGuide.screenHandler.translate("property.buildguide.delta", "X"), () -> update());
-	private PropertyInt propertyDy = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Y"), () -> update());
-	private PropertyInt propertyDz = new PropertyInt(0, BuildGuide.screenHandler.translate("property.buildguide.delta", "Z"), () -> update());
+	private PropertyInt propertyDx = new PropertyInt(3, new Translatable("property.buildguide.delta", "X"), () -> update());
+	private PropertyInt propertyDy = new PropertyInt(0, new Translatable("property.buildguide.delta", "Y"), () -> update());
+	private PropertyInt propertyDz = new PropertyInt(0, new Translatable("property.buildguide.delta", "Z"), () -> update());
 	private PropertyRunnable propertySetEndpoint = new PropertyRunnable(() -> {
 		Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
 		propertyDx.setValue(pos.x - shapeSet.origin.x);
 		propertyDy.setValue(pos.y - shapeSet.origin.y);
 		propertyDz.setValue(pos.z - shapeSet.origin.z);
 		update();
-	}, BuildGuide.screenHandler.translate("property.buildguide.setendpoint"));
+	}, new Translatable("property.buildguide.setendpoint"));
 	
 	public ShapeLine() {
 		super();

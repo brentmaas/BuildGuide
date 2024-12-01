@@ -1,9 +1,9 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeEllipsoid extends Shape {
 	private enum dome {
@@ -18,11 +18,11 @@ public class ShapeEllipsoid extends Shape {
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveFloat propertySemiX = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"), () -> update());
-	private PropertyPositiveFloat propertySemiY = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveFloat propertySemiZ = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyPositiveFloat propertySemiX = new PropertyPositiveFloat(3, new Translatable("property.buildguide.semiaxis", "X"), () -> update());
+	private PropertyPositiveFloat propertySemiY = new PropertyPositiveFloat(3, new Translatable("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveFloat propertySemiZ = new PropertyPositiveFloat(3, new Translatable("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, new Translatable("property.buildguide.dome"), () -> update(), domeNames);
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeEllipsoid() {
 		super();

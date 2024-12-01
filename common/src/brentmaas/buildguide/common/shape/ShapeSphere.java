@@ -1,9 +1,9 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeSphere extends Shape {
 	private enum dome {
@@ -18,9 +18,9 @@ public class ShapeSphere extends Shape {
 	
 	private String[] domeNames = {"-", "+X", "+Y", "+Z", "-X", "-Y", "-Z"};
 	
-	private PropertyPositiveFloat propertyRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
-	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, BuildGuide.screenHandler.translate("property.buildguide.dome"), () -> update(), domeNames);
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyPositiveFloat propertyRadius = new PropertyPositiveFloat(3, new Translatable("property.buildguide.radius"), () -> update());
+	private PropertyEnum<dome> propertyDome = new PropertyEnum<dome>(dome.NO, new Translatable("property.buildguide.dome"), () -> update(), domeNames);
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeSphere() {
 		super();

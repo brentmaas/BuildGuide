@@ -1,11 +1,11 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyMinimumInt;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapePolygon extends Shape {
 	private enum direction{
@@ -28,12 +28,12 @@ public class ShapePolygon extends Shape {
 	private static final int[] rotXY = {0, -1, 0, 1};
 	private static final int[] rotYX = {0, 1, 0, -1};
 	
-	private PropertyMinimumInt propertySides = new PropertyMinimumInt(3, BuildGuide.screenHandler.translate("property.buildguide.sides"), () -> update(), 3);
-	private PropertyPositiveFloat propertyRadius = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.radius"), () -> update());
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, BuildGuide.screenHandler.translate("property.buildguide.rotation"), () -> update(), rotationNames);
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyMinimumInt propertySides = new PropertyMinimumInt(3, new Translatable("property.buildguide.sides"), () -> update(), 3);
+	private PropertyPositiveFloat propertyRadius = new PropertyPositiveFloat(3, new Translatable("property.buildguide.radius"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, new Translatable("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyEnum<rotation> propertyRot = new PropertyEnum<rotation>(rotation.ROT0, new Translatable("property.buildguide.rotation"), () -> update(), rotationNames);
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, new Translatable("property.buildguide.depth"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 	
 	public ShapePolygon() {
 		super();

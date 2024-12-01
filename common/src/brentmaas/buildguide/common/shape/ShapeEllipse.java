@@ -1,10 +1,10 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeEllipse extends Shape {
 	private enum direction{
@@ -15,11 +15,11 @@ public class ShapeEllipse extends Shape {
 	
 	private String[] directionNames = {"X", "Y", "Z"};
 	
-	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, BuildGuide.screenHandler.translate("property.buildguide.direction"), () -> update(), directionNames);
-	private PropertyPositiveFloat propertySemi1 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"), () -> update());
-	private PropertyPositiveFloat propertySemi2 = new PropertyPositiveFloat(3, BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"), () -> update());
-	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, BuildGuide.screenHandler.translate("property.buildguide.depth"), () -> update());
-	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.evenmode"), () -> update());
+	private PropertyEnum<direction> propertyDir = new PropertyEnum<direction>(direction.X, new Translatable("property.buildguide.direction"), () -> update(), directionNames);
+	private PropertyPositiveFloat propertySemi1 = new PropertyPositiveFloat(3, new Translatable("property.buildguide.semiaxis", "Y"), () -> update());
+	private PropertyPositiveFloat propertySemi2 = new PropertyPositiveFloat(3, new Translatable("property.buildguide.semiaxis", "Z"), () -> update());
+	private PropertyNonzeroInt propertyDepth = new PropertyNonzeroInt(1, new Translatable("property.buildguide.depth"), () -> update());
+	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 	
 	public ShapeEllipse() {
 		super();
@@ -94,16 +94,16 @@ public class ShapeEllipse extends Shape {
 		
 		switch(propertyDir.value) {
 		case X:
-			propertySemi1.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"));
-			propertySemi2.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"));
+			propertySemi1.setName(new Translatable("property.buildguide.semiaxis", "Y"));
+			propertySemi2.setName(new Translatable("property.buildguide.semiaxis", "Z"));
 			break;
 		case Y:
-			propertySemi1.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"));
-			propertySemi2.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Z"));
+			propertySemi1.setName(new Translatable("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new Translatable("property.buildguide.semiaxis", "Z"));
 			break;
 		case Z:
-			propertySemi1.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "X"));
-			propertySemi2.setName(BuildGuide.screenHandler.translate("property.buildguide.semiaxis", "Y"));
+			propertySemi1.setName(new Translatable("property.buildguide.semiaxis", "X"));
+			propertySemi2.setName(new Translatable("property.buildguide.semiaxis", "Y"));
 			break;
 		}
 	}

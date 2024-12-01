@@ -2,30 +2,31 @@ package brentmaas.buildguide.common.screen;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.Property;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.shape.Shape;
 
 public class ShapeScreen extends BaseScreen{
-	private String titleShapeProperties = BuildGuide.screenHandler.translate("screen.buildguide.shapeproperties");
-	private String titleOrigin = BuildGuide.screenHandler.translate("screen.buildguide.origin");
-	private String titleShape = BuildGuide.screenHandler.translate("screen.buildguide.shape");
+	private Translatable titleShapeProperties = new Translatable("screen.buildguide.shapeproperties");
+	private Translatable titleOrigin = new Translatable("screen.buildguide.origin");
+	private Translatable titleShape = new Translatable("screen.buildguide.shape");
 	
 	//It's better off as custom buttons instead of PropertyEnum
-	private IButton buttonShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, "<-", () -> updateShape(-1));
-	private IButton buttonShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, "->", () -> updateShape(1));
-	private IButton buttonOrigin = BuildGuide.widgetHandler.createButton(5, 115, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.setorigin"), () -> setOrigin());
+	private IButton buttonShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, new Translatable("<-"), () -> updateShape(-1));
+	private IButton buttonShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, new Translatable("->"), () -> updateShape(1));
+	private IButton buttonOrigin = BuildGuide.widgetHandler.createButton(5, 115, 160, 20, new Translatable("screen.buildguide.setorigin"), () -> setOrigin());
 	//It's better off as custom buttons instead of PropertyInt
-	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 135, 20, 20, "-", () -> shiftOrigin(-1, 0, 0));
-	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(145, 135, 20, 20, "+", () -> shiftOrigin(1, 0, 0));
-	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(25, 155, 20, 20, "-", () -> shiftOrigin(0, -1, 0));
-	private IButton buttonOriginYIncrease = BuildGuide.widgetHandler.createButton(145, 155, 20, 20, "+", () -> shiftOrigin(0, 1, 0));
-	private IButton buttonOriginZDecrease = BuildGuide.widgetHandler.createButton(25, 175, 20, 20, "-", () -> shiftOrigin(0, 0, -1));
-	private IButton buttonOriginZIncrease = BuildGuide.widgetHandler.createButton(145, 175, 20, 20, "+", () -> shiftOrigin(0, 0, 1));
+	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 135, 20, 20, new Translatable("-"), () -> shiftOrigin(-1, 0, 0));
+	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(145, 135, 20, 20, new Translatable("+"), () -> shiftOrigin(1, 0, 0));
+	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(25, 155, 20, 20, new Translatable("-"), () -> shiftOrigin(0, -1, 0));
+	private IButton buttonOriginYIncrease = BuildGuide.widgetHandler.createButton(145, 155, 20, 20, new Translatable("+"), () -> shiftOrigin(0, 1, 0));
+	private IButton buttonOriginZDecrease = BuildGuide.widgetHandler.createButton(25, 175, 20, 20, new Translatable("-"), () -> shiftOrigin(0, 0, -1));
+	private IButton buttonOriginZIncrease = BuildGuide.widgetHandler.createButton(145, 175, 20, 20, new Translatable("+"), () -> shiftOrigin(0, 0, 1));
 	private ITextField textFieldX = BuildGuide.widgetHandler.createTextField(45, 135, 70, 20, "");
 	private ITextField textFieldY = BuildGuide.widgetHandler.createTextField(45, 155, 70, 20, "");
 	private ITextField textFieldZ = BuildGuide.widgetHandler.createTextField(45, 175, 70, 20, "");
-	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(115, 135, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(115, 135, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getTextValue());
 			BuildGuide.stateManager.getState().setOriginX(newval);
@@ -33,7 +34,7 @@ public class ShapeScreen extends BaseScreen{
 			textFieldX.setTextColour(0xFF0000);
 		}
 	});
-	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(115, 155, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(115, 155, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getTextValue());
 			BuildGuide.stateManager.getState().setOriginY(newval);
@@ -41,7 +42,7 @@ public class ShapeScreen extends BaseScreen{
 			textFieldY.setTextColour(0xFF0000);
 		}
 	});
-	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(115, 175, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(115, 175, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getTextValue());
 			BuildGuide.stateManager.getState().setOriginZ(newval);

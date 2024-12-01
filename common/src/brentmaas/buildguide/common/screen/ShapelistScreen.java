@@ -1,6 +1,7 @@
 package brentmaas.buildguide.common.screen;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
@@ -9,25 +10,25 @@ import brentmaas.buildguide.common.shape.ShapeRegistry;
 import brentmaas.buildguide.common.shape.ShapeSet.Origin;
 
 public class ShapelistScreen extends BaseScreen {
-	private String titleNewShape = BuildGuide.screenHandler.translate("screen.buildguide.newshape");
-	private String titleSelectedShape = BuildGuide.screenHandler.translate("screen.buildguide.selectedshape");
-	private String textVisible = BuildGuide.screenHandler.translate("screen.buildguide.visible");
-	private String titleGlobalOrigin = BuildGuide.screenHandler.translate("screen.buildguide.globalorigin");
-	private String titleShapes = BuildGuide.screenHandler.translate("screen.buildguide.shapes");
+	private Translatable titleNewShape = new Translatable("screen.buildguide.newshape");
+	private Translatable titleSelectedShape = new Translatable("screen.buildguide.selectedshape");
+	private Translatable textVisible = new Translatable("screen.buildguide.visible");
+	private Translatable titleGlobalOrigin = new Translatable("screen.buildguide.globalorigin");
+	private Translatable titleShapes = new Translatable("screen.buildguide.shapes");
 	
 	private IShapeList shapeList;
 	
-	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, "<-", () -> updateNewShape(-1));
-	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, "->", () -> updateNewShape(1));
-	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.add"), () -> {
+	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, new Translatable("<-"), () -> updateNewShape(-1));
+	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, new Translatable("->"), () -> updateNewShape(1));
+	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, new Translatable("screen.buildguide.add"), () -> {
 		BuildGuide.stateManager.getState().pushNewShapeSet();
 		BuildGuide.stateManager.getState().getShapeSet(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1).updateAllShapes();
 		shapeList.addEntry(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1);
 		
 		checkActive();
 	});
-	private ICheckboxRunnableButton buttonVisible = BuildGuide.widgetHandler.createCheckbox(5, 135, 20, 20, "", true, false, () -> setShapeVisibility());
-	private IButton buttonDelete = BuildGuide.widgetHandler.createButton(5, 155, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.delete"), () -> {
+	private ICheckboxRunnableButton buttonVisible = BuildGuide.widgetHandler.createCheckbox(5, 135, 20, 20, new Translatable(""), true, false, () -> setShapeVisibility());
+	private IButton buttonDelete = BuildGuide.widgetHandler.createButton(5, 155, 160, 20, new Translatable("screen.buildguide.delete"), () -> {
 		if(shapeList.getSelected() != null){
 			BuildGuide.stateManager.getState().removeShapeSet(shapeList.getSelected().getShapeSetId());
 			shapeList.removeEntry(shapeList.getSelected());
@@ -35,19 +36,19 @@ public class ShapelistScreen extends BaseScreen {
 		
 		checkActive();
 	});
-	private IButton buttonGlobalOrigin = BuildGuide.widgetHandler.createButton(5, 200, 160, 20, BuildGuide.screenHandler.translate("screen.buildguide.setglobalorigin"), () -> {
+	private IButton buttonGlobalOrigin = BuildGuide.widgetHandler.createButton(5, 200, 160, 20, new Translatable("screen.buildguide.setglobalorigin"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) setGlobalOrigin();
 	});
-	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 220, 20, 20, "-", () -> shiftGlobalOrigin(-1, 0, 0));
-	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(145, 220, 20, 20, "+", () -> shiftGlobalOrigin(1, 0, 0));
-	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(25, 240, 20, 20, "-", () -> shiftGlobalOrigin(0, -1, 0));
-	private IButton buttonOriginYIncrease = BuildGuide.widgetHandler.createButton(145, 240, 20, 20, "+", () -> shiftGlobalOrigin(0, 1, 0));
-	private IButton buttonOriginZDecrease = BuildGuide.widgetHandler.createButton(25, 260, 20, 20, "-", () -> shiftGlobalOrigin(0, 0, -1));
-	private IButton buttonOriginZIncrease = BuildGuide.widgetHandler.createButton(145, 260, 20, 20, "+", () -> shiftGlobalOrigin(0, 0, 1));
+	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 220, 20, 20, new Translatable("-"), () -> shiftGlobalOrigin(-1, 0, 0));
+	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(145, 220, 20, 20, new Translatable("+"), () -> shiftGlobalOrigin(1, 0, 0));
+	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(25, 240, 20, 20, new Translatable("-"), () -> shiftGlobalOrigin(0, -1, 0));
+	private IButton buttonOriginYIncrease = BuildGuide.widgetHandler.createButton(145, 240, 20, 20, new Translatable("+"), () -> shiftGlobalOrigin(0, 1, 0));
+	private IButton buttonOriginZDecrease = BuildGuide.widgetHandler.createButton(25, 260, 20, 20, new Translatable("-"), () -> shiftGlobalOrigin(0, 0, -1));
+	private IButton buttonOriginZIncrease = BuildGuide.widgetHandler.createButton(145, 260, 20, 20, new Translatable("+"), () -> shiftGlobalOrigin(0, 0, 1));
 	private ITextField textFieldX = BuildGuide.widgetHandler.createTextField(45, 220, 70, 20, "");
 	private ITextField textFieldY = BuildGuide.widgetHandler.createTextField(45, 240, 70, 20, "");
 	private ITextField textFieldZ = BuildGuide.widgetHandler.createTextField(45, 260, 70, 20, "");
-	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(115, 220, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(115, 220, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
@@ -57,7 +58,7 @@ public class ShapelistScreen extends BaseScreen {
 			textFieldX.setTextColour(0xFF0000);
 		}
 	});
-	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(115, 240, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(115, 240, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
@@ -67,7 +68,7 @@ public class ShapelistScreen extends BaseScreen {
 			textFieldY.setTextColour(0xFF0000);
 		}
 	});
-	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(115, 260, 30, 20, BuildGuide.screenHandler.translate("screen.buildguide.set"), () -> {
+	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(115, 260, 30, 20, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getTextValue());
 			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
@@ -133,10 +134,10 @@ public class ShapelistScreen extends BaseScreen {
 		super.render();
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleNewShape, 85, 55, 0xFFFFFF);
-		drawShadowCentred(BuildGuide.screenHandler.translate(ShapeRegistry.getTranslationKey(BuildGuide.stateManager.getState().iShapeNew)), 85, 75, 0xFFFFFF);
+		drawShadowCentred(new Translatable(ShapeRegistry.getTranslationKey(BuildGuide.stateManager.getState().iShapeNew)).toString(), 85, 75, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleSelectedShape, 85, 120, 0xFFFFFF);
-		drawShadowLeft(textVisible, 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
+		drawShadowLeft(textVisible.toString(), 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleGlobalOrigin, 85, 185, 0xFFFFFF);
 		drawShadowLeft("X", 10, 225, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);

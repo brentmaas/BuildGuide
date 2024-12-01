@@ -1,16 +1,16 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveInt;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeGrid extends Shape {
-	private PropertyPositiveInt propertyStepsX = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.steps", "X"), () -> update());
-	private PropertyPositiveInt propertyStepsY = new PropertyPositiveInt(1, BuildGuide.screenHandler.translate("property.buildguide.steps", "Y"), () -> update());
-	private PropertyPositiveInt propertyStepsZ = new PropertyPositiveInt(3, BuildGuide.screenHandler.translate("property.buildguide.steps", "Z"), () -> update());
-	private PropertyNonzeroInt propertyOffsetX = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "X"), () -> update());
-	private PropertyNonzeroInt propertyOffsetY = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "Y"), () -> update());
-	private PropertyNonzeroInt propertyOffsetZ = new PropertyNonzeroInt(3, BuildGuide.screenHandler.translate("property.buildguide.offset", "Z"), () -> update());
+	private PropertyPositiveInt propertyStepsX = new PropertyPositiveInt(3, new Translatable("property.buildguide.steps", "X"), () -> update());
+	private PropertyPositiveInt propertyStepsY = new PropertyPositiveInt(1, new Translatable("property.buildguide.steps", "Y"), () -> update());
+	private PropertyPositiveInt propertyStepsZ = new PropertyPositiveInt(3, new Translatable("property.buildguide.steps", "Z"), () -> update());
+	private PropertyNonzeroInt propertyOffsetX = new PropertyNonzeroInt(3, new Translatable("property.buildguide.offset", "X"), () -> update());
+	private PropertyNonzeroInt propertyOffsetY = new PropertyNonzeroInt(3, new Translatable("property.buildguide.offset", "Y"), () -> update());
+	private PropertyNonzeroInt propertyOffsetZ = new PropertyNonzeroInt(3, new Translatable("property.buildguide.offset", "Z"), () -> update());
 	
 	public ShapeGrid() {
 		super();

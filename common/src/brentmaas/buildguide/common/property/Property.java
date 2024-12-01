@@ -2,6 +2,7 @@ package brentmaas.buildguide.common.property;
 
 import java.util.ArrayList;
 
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.widget.IWidget;
 
@@ -13,11 +14,11 @@ public abstract class Property<T> {
 	protected int x;
 	protected int y;
 	public T value;
-	protected String name;
+	protected Translatable name;
 	public ArrayList<IWidget> widgetList = new ArrayList<IWidget>();
 	protected boolean visible = true;
 	
-	public Property(T value, String name) {
+	public Property(T value, Translatable name) {
 		x = baseX;
 		y = baseY;
 		this.value = value;
@@ -52,7 +53,7 @@ public abstract class Property<T> {
 	
 	public abstract boolean setValueFromString(String value);
 	
-	public void setName(String name) {
+	public void setName(Translatable name) {
 		this.name = name;
 	}
 	
@@ -65,7 +66,7 @@ public abstract class Property<T> {
 	}
 	
 	public void render(BaseScreen screen) {
-		drawString(screen, name, x + 5, y + 5, 0xFFFFFF);
+		drawString(screen, name.toString(), x + 5, y + 5, 0xFFFFFF);
 	}
 	
 	public void drawString(BaseScreen screen, String text, int x, int y, int colour) {

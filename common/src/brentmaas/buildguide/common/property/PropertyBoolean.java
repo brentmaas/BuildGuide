@@ -1,14 +1,15 @@
 package brentmaas.buildguide.common.property;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 
 public class PropertyBoolean extends Property<Boolean> {
 	private ICheckboxRunnableButton button;
 	
-	public PropertyBoolean(Boolean value, String name, Runnable onPress) {
+	public PropertyBoolean(Boolean value, Translatable name, Runnable onPress) {
 		super(value, name);
-		button = BuildGuide.widgetHandler.createCheckbox(x + 140, y, 20, height, "", value, false, () -> {
+		button = BuildGuide.widgetHandler.createCheckbox(x + 140, y, 20, height, new Translatable(""), value, false, () -> {
 			this.value = button.isCheckboxSelected();
 			if(onPress != null) onPress.run();
 		});

@@ -72,6 +72,7 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	public void addSlider(ISlider slider) {
+		slider.updateText();
 		addRenderableWidget((SliderImpl) slider);
 	}
 	

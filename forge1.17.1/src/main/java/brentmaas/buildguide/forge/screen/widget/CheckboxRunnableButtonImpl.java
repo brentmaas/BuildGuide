@@ -1,14 +1,15 @@
 package brentmaas.buildguide.forge.screen.widget;
 
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import net.minecraft.client.gui.components.Checkbox;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class CheckboxRunnableButtonImpl extends Checkbox implements ICheckboxRunnableButton {
 	protected final ICheckboxRunnableButton.IPressable onPress;
 	
-	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, String title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
-		super(x, y, width, height, new TextComponent(title), checked, drawTitle);
+	public CheckboxRunnableButtonImpl(int x, int y, int width, int height, Translatable title, boolean checked, boolean drawTitle, ICheckboxRunnableButton.IPressable onPress) {
+		super(x, y, width, height, new TranslatableComponent(title.getTranslationKey(), title.getValues()), checked, drawTitle);
 		this.onPress = onPress;
 	}
 	

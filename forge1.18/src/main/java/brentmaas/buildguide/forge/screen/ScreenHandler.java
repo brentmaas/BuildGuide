@@ -3,7 +3,6 @@ package brentmaas.buildguide.forge.screen;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler;
 import brentmaas.buildguide.common.screen.IScreenWrapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 public class ScreenHandler extends AbstractScreenHandler {
@@ -11,8 +10,8 @@ public class ScreenHandler extends AbstractScreenHandler {
 		Minecraft.getInstance().setScreen(null);
 	}
 	
-	public IScreenWrapper createWrapper(String title) {
-		return new ScreenWrapper(new TextComponent(title));
+	public IScreenWrapper createWrapper(Translatable title) {
+		return new ScreenWrapper(new TranslatableComponent(title.getTranslationKey(), title.getValues()));
 	}
 	
 	public String translate(String translationKey) {

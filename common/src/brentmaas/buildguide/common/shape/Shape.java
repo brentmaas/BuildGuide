@@ -83,7 +83,7 @@ public abstract class Shape {
 		buffer.setColour((int) (255 * shapeSet.colourOriginR), (int) (255 * shapeSet.colourOriginG), (int) (255 * shapeSet.colourOriginB), (int) (255 * shapeSet.colourOriginA));
 		addCube(buffer, 0.4 + originOffsetX, 0.4 + originOffsetY, 0.4 + originOffsetZ, 0.2);
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
-			BuildGuide.logHandler.debugOrHigher("Shape " + getTranslatedName() + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
+			BuildGuide.logHandler.debugOrHigher("Shape " + BuildGuide.screenHandler.translate(getTranslationKey()) + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
 	}
 	
@@ -150,10 +150,6 @@ public abstract class Shape {
 		for(Property<?> p: properties) {
 			p.onDeselectedInGUI();
 		}
-	}
-	
-	public String getTranslatedName() {
-		return BuildGuide.screenHandler.translate(getTranslationKey());
 	}
 	
 	public int getNumberOfBlocks() {

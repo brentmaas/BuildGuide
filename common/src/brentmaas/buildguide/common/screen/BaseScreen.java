@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.State.ActiveScreen;
 import brentmaas.buildguide.common.property.Property;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
@@ -15,23 +16,23 @@ import brentmaas.buildguide.common.screen.widget.IWidget;
 public abstract class BaseScreen {
 	public static boolean shouldUpdatePersistence = false;
 	
-	protected String title = BuildGuide.screenHandler.translate("screen.buildguide.title");
-	protected String titleNumberOfBlocksShape = BuildGuide.screenHandler.translate("screen.buildguide.numberofblocksshape");
-	protected String titleNumberOfBlocksTotal = BuildGuide.screenHandler.translate("screen.buildguide.numberofblockstotal");
-	protected String textEnabled = BuildGuide.screenHandler.translate("screen.buildguide.enable");
+	protected Translatable title = new Translatable("screen.buildguide.title");
+	protected Translatable titleNumberOfBlocksShape = new Translatable("screen.buildguide.numberofblocksshape");
+	protected Translatable titleNumberOfBlocksTotal = new Translatable("screen.buildguide.numberofblockstotal");
+	protected Translatable textEnabled = new Translatable("screen.buildguide.enable");
 	protected IScreenWrapper wrapper;
 	protected ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
 	
 	private IButton buttonClose;
 	private ICheckboxRunnableButton buttonEnabled;
-	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shape)), !(this instanceof ShapeScreen));
-	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(130, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Visualisation)), !(this instanceof VisualisationScreen));
-	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(255, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.shapelist"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shapelist)), !(this instanceof ShapelistScreen));
-	private IButton buttonConfiguration = BuildGuide.widgetHandler.createButton(380, 30, 120, 20, BuildGuide.screenHandler.translate("screen.buildguide.configuration"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Settings)), !(this instanceof ConfigurationScreen));
+	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, 20, new Translatable("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shape)), !(this instanceof ShapeScreen));
+	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(130, 30, 120, 20, new Translatable("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Visualisation)), !(this instanceof VisualisationScreen));
+	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(255, 30, 120, 20, new Translatable("screen.buildguide.shapelist"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shapelist)), !(this instanceof ShapelistScreen));
+	private IButton buttonConfiguration = BuildGuide.widgetHandler.createButton(380, 30, 120, 20, new Translatable("screen.buildguide.configuration"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Settings)), !(this instanceof ConfigurationScreen));
 	
 	public void init() {
-		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, 20, 20, "X", () -> BuildGuide.screenHandler.showScreen(null));
-		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, 20, 20, "", BuildGuide.stateManager.getState().enabled, false, () -> {
+		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, 20, 20, new Translatable("X"), () -> BuildGuide.screenHandler.showScreen(null));
+		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, 20, 20, new Translatable(""), BuildGuide.stateManager.getState().enabled, false, () -> {
 			BuildGuide.stateManager.getState().enabled = buttonEnabled.isCheckboxSelected();
 			BaseScreen.shouldUpdatePersistence = true;
 		});
@@ -47,18 +48,18 @@ public abstract class BaseScreen {
 	}
 	
 	public void render() {
-		drawShadowCentred(title, wrapper.getWidth() / 2, 10, 0xFFFFFF);
-		drawShadowLeft(textEnabled, 30, 10, 0xFFFFFF);
+		drawShadowCentred(title.toString(), wrapper.getWidth() / 2, 10, 0xFFFFFF);
+		drawShadowLeft(textEnabled.toString(), 30, 10, 0xFFFFFF);
 		
-		int titlesMax = Math.max(wrapper.getTextWidth(titleNumberOfBlocksShape), wrapper.getTextWidth(titleNumberOfBlocksTotal));
+		int titlesMax = Math.max(wrapper.getTextWidth(titleNumberOfBlocksShape.toString()), wrapper.getTextWidth(titleNumberOfBlocksTotal.toString()));
 		
-		drawShadowCentred(titleNumberOfBlocksShape, wrapper.getWidth() / 2 - wrapper.getTextWidth(title) / 2 - titlesMax / 2 - 20, 5, 0xFFFFFF);
+		drawShadowCentred(titleNumberOfBlocksShape.toString(), wrapper.getWidth() / 2 - wrapper.getTextWidth(title.toString()) / 2 - titlesMax / 2 - 20, 5, 0xFFFFFF);
 		int n = BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShape().getNumberOfBlocks() : 0;
-		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 2 - wrapper.getTextWidth(title) / 2 - titlesMax / 2 - 20, 20, 0xFFFFFF);
+		drawShadowCentred(n + " (" + (n / 64) + " x 64 + " + (n % 64) + ")", wrapper.getWidth() / 2 - wrapper.getTextWidth(title.toString()) / 2 - titlesMax / 2 - 20, 20, 0xFFFFFF);
 		
-		drawShadowCentred(titleNumberOfBlocksTotal, wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 5, 0xFFFFFF);
+		drawShadowCentred(titleNumberOfBlocksTotal.toString(), wrapper.getWidth() / 2 + wrapper.getTextWidth(title.toString()) / 2 + titlesMax / 2 + 20, 5, 0xFFFFFF);
 		int nTotal = BuildGuide.stateManager.getState().getNumberOfBlocks();
-		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() / 2 + wrapper.getTextWidth(title) / 2 + titlesMax / 2 + 20, 20, 0xFFFFFF);
+		drawShadowCentred(nTotal + " (" + (nTotal / 64) + " x 64 + " + (nTotal % 64) + ")", wrapper.getWidth() / 2 + wrapper.getTextWidth(title.toString()) / 2 + titlesMax / 2 + 20, 20, 0xFFFFFF);
 		
 		for(Property<?> p: properties) {
 			p.render(this);

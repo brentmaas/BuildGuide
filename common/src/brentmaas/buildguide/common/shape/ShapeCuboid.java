@@ -1,9 +1,9 @@
 package brentmaas.buildguide.common.shape;
 
-import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeCuboid extends Shape {
 	private enum walls{
@@ -19,11 +19,11 @@ public class ShapeCuboid extends Shape {
 	
 	private String[] wallsNames = {"XYZ", "X", "Y", "Z", "XY", "XZ", "YZ", "-"};
 	
-	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(3, "X", () -> update());
-	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(3, "Y", () -> update());
-	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(3, "Z", () -> update());
-	private PropertyEnum<walls> propertyWalls = new PropertyEnum<walls>(walls.ALL, BuildGuide.screenHandler.translate("property.buildguide.walls"), () -> update(), wallsNames);
-	private PropertyBoolean propertyCentredOrigin = new PropertyBoolean(false, BuildGuide.screenHandler.translate("property.buildguide.centredorigin"), () -> update());
+	private PropertyNonzeroInt propertyX = new PropertyNonzeroInt(3, new Translatable("X"), () -> update());
+	private PropertyNonzeroInt propertyY = new PropertyNonzeroInt(3, new Translatable("Y"), () -> update());
+	private PropertyNonzeroInt propertyZ = new PropertyNonzeroInt(3, new Translatable("Z"), () -> update());
+	private PropertyEnum<walls> propertyWalls = new PropertyEnum<walls>(walls.ALL, new Translatable("property.buildguide.walls"), () -> update(), wallsNames);
+	private PropertyBoolean propertyCentredOrigin = new PropertyBoolean(false, new Translatable("property.buildguide.centredorigin"), () -> update());
 	
 	public ShapeCuboid() {
 		super();
