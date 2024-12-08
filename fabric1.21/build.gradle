@@ -1,11 +1,15 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.9-SNAPSHOT'
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
 
-archivesBaseName = gradle.ext.fabricname
+base {
+    archivesName = gradle.ext.fabricname
+}
 version = gradle.ext.modversion
 group = gradle.ext.fabricgroup
 

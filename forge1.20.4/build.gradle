@@ -5,7 +5,9 @@ plugins {
 
 version = gradle.ext.modversion
 group = gradle.ext.forgegroup
-archivesBaseName = gradle.ext.forgename
+base {
+    archivesName = gradle.ext.forgename
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
 
