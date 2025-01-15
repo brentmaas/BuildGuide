@@ -34,7 +34,9 @@ task unpackjars {
     dependsOn ':common:build'
     gradle.ext.mcversions.each {
         dependsOn ':fabric' + it + ':build'
-        dependsOn ':forge' + it + ':build'
+        if(it <= '1.21') {
+            dependsOn ':forge' + it + ':build'
+        }
         if(it >= '1.21') {
             dependsOn ':neoforge' + it + ':build'
         }
@@ -85,29 +87,31 @@ task unpackjars {
                 }
             }
             
-            def forgetmp = file('./build/tmp/forge' + mcversion)
-            copy {
-                from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
-                into forgetmp
-            }
-            fileTree(forgetmp).each {
-                def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
-                def target = file(folder.absolutePath + relpath)
-                if(relpath == '\\META-INF\\MANIFEST.MF') {
-                    it.text.eachLine {
-                        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
-                            manifest.text += ('\n' + it)
+            if(mcversion <= '1.21') {
+                def forgetmp = file('./build/tmp/forge' + mcversion)
+                copy {
+                    from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
+                    into forgetmp
+                }
+                fileTree(forgetmp).each {
+                    def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
+                    def target = file(folder.absolutePath + relpath)
+                    if(relpath == '\\META-INF\\MANIFEST.MF') {
+                        it.text.eachLine {
+                            if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
+                                manifest.text += ('\n' + it)
+                            }
                         }
-                    }
-                }else if(relpath == '\\META-INF\\mods.toml'){
-                    target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
-                }else if(!target.exists()){
-                    def source = it
-                    def targetParent = target.getParentFile()
-                    targetParent.mkdirs()
-                    copy {
-                        from source
-                        into targetParent
+                    }else if(relpath == '\\META-INF\\mods.toml'){
+                        target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
+                    }else if(!target.exists()){
+                        def source = it
+                        def targetParent = target.getParentFile()
+                        targetParent.mkdirs()
+                        copy {
+                            from source
+                            into targetParent
+                        }
                     }
                 }
             }

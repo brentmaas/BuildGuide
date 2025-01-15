@@ -32,7 +32,7 @@ gradle.ext.modlicense = 'Creative Commons Attribution-NonCommercial 3.0 Unported
 
 gradle.ext.fabricgroup = gradle.ext.modid + '.fabric'
 gradle.ext.fabricname = rootProject.name + '-Fabric'
-gradle.ext.fabricloader = '0.16.2'
+gradle.ext.fabricloader = '0.16.9'
 
 gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
@@ -41,13 +41,15 @@ gradle.ext.forgemapping = 'official'
 gradle.ext.neoforgegroup = gradle.ext.modid + ".neoforge"
 gradle.ext.neoforgename = rootProject.name + "-NeoForge"
 
-gradle.ext.mcversions = ['1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6', '1.21']
+gradle.ext.mcversions = ['1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6', '1.21', '1.21.3']
 
 include 'common'
 
 gradle.ext.mcversions.each {
     include 'fabric' + it
-    include 'forge' + it
+    if(it <= '1.21') {
+        include 'forge' + it
+    }
     if(it >= '1.21') {
         include 'neoforge' + it
     }
