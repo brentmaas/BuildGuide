@@ -81,7 +81,7 @@ public abstract class Shape {
 		buffer.setColour((int) (255 * shapeSet.colourShapeR), (int) (255 * shapeSet.colourShapeG), (int) (255 * shapeSet.colourShapeB), (int) (255 * shapeSet.colourShapeA));
 		updateShape(buffer);
 		buffer.setColour((int) (255 * shapeSet.colourOriginR), (int) (255 * shapeSet.colourOriginG), (int) (255 * shapeSet.colourOriginB), (int) (255 * shapeSet.colourOriginA));
-		addCube(buffer, 0.4 + originOffsetX, 0.4 + originOffsetY, 0.4 + originOffsetZ, 0.2);
+		addCube(buffer, 0.5 - shapeSet.originCubeSize / 2 + originOffsetX, 0.5 - shapeSet.originCubeSize / 2 + originOffsetY, 0.5 - shapeSet.originCubeSize / 2 + originOffsetZ, shapeSet.originCubeSize);
 		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
 			BuildGuide.logHandler.debugOrHigher("Shape " + BuildGuide.screenHandler.translate(getTranslationKey()) + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
 		}
@@ -128,7 +128,7 @@ public abstract class Shape {
 	}
 	
 	protected void addShapeCube(IShapeBuffer buffer, int x, int y, int z) throws InterruptedException {
-		addCube(buffer, x + 0.2, y + 0.2, z + 0.2, 0.6);
+		addCube(buffer, x + 0.5 - shapeSet.shapeCubeSize / 2, y + 0.5 - shapeSet.shapeCubeSize / 2, z + 0.5 - shapeSet.shapeCubeSize / 2, shapeSet.shapeCubeSize);
 		
 		++nBlocks;
 	}

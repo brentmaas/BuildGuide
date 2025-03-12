@@ -197,6 +197,12 @@ public class State {
 		shapeSets.get(iShapeSet).updateAllShapes();
 	}
 	
+	public void setCubeSize(double shapeCubeSize, double originCubeSize) {
+		shapeSets.get(iShapeSet).shapeCubeSize = shapeCubeSize;
+		shapeSets.get(iShapeSet).originCubeSize = originCubeSize;
+		shapeSets.get(iShapeSet).updateAllShapes();
+	}
+	
 	public int getNumberOfBlocks() {
 		int num = 0;
 		for(ShapeSet s: shapeSets) {

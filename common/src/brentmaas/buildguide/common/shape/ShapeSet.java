@@ -9,6 +9,8 @@ public class ShapeSet {
 	private static final String PERSISTENCE_VISIBLE = "visible";
 	private static final String PERSISTENCE_SHAPECOLOUR = "shapeColour";
 	private static final String PERSISTENCE_ORIGINCOLOUR = "originColour";
+	private static final String PERSISTENCE_SHAPECUBESIZE = "shapeCubeSize";
+	private static final String PERSISTENCE_ORIGINCUBESIZE = "originCubeSize";
 	
 	public Shape[] shapes;
 	private int index;
@@ -26,6 +28,9 @@ public class ShapeSet {
 	public float colourOriginG = 0.0f;
 	public float colourOriginB = 0.0f;
 	public float colourOriginA = 0.5f;
+
+	public double shapeCubeSize = 0.6;
+	public double originCubeSize = 0.2;
 	
 	public ShapeSet(int startIndex) {
 		shapes = new Shape[ShapeRegistry.getNumberOfShapes()];
@@ -118,6 +123,8 @@ public class ShapeSet {
 		persistenceData += PERSISTENCE_VISIBLE + "=" + visible + ";";
 		persistenceData += PERSISTENCE_SHAPECOLOUR + "=" + colourShapeR + "," + colourShapeG + "," + colourShapeB + "," + colourShapeA + ";";
 		persistenceData += PERSISTENCE_ORIGINCOLOUR + "=" + colourOriginR + "," + colourOriginG + "," + colourOriginB + "," + colourOriginA + ";";
+		persistenceData += PERSISTENCE_SHAPECUBESIZE + "=" + shapeCubeSize + ";";
+		persistenceData += PERSISTENCE_ORIGINCUBESIZE + "=" + originCubeSize + ";";
 		for(Shape s: shapes) {
 			if(s != null) {
 				persistenceData += s.getClass().getName() + "=" + s.toPersistence() + ";";
@@ -160,6 +167,10 @@ public class ShapeSet {
 						colourOriginB = Float.parseFloat(splitEntry[2]);
 						colourOriginA = Float.parseFloat(splitEntry[3]);
 					}
+				}else if(key.equals(PERSISTENCE_SHAPECUBESIZE)){
+					shapeCubeSize = Double.parseDouble(value);
+				}else if(key.equals(PERSISTENCE_ORIGINCUBESIZE)){
+					originCubeSize = Double.parseDouble(value);
 				}else {
 					int index = ShapeRegistry.getShapeId(key);
 					if(index >= 0) {
