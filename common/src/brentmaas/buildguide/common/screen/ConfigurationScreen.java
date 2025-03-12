@@ -61,16 +61,16 @@ public class ConfigurationScreen extends BaseScreen {
 	public void render() {
 		super.render();
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.asyncEnabled.key, 10, 65, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.asyncEnabled.comment, 10, 84, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.asyncEnabled.translationKey), 10, 65, 0xFFFFFF);
+		drawShadowLeft(new Translatable(BuildGuide.config.asyncEnabled.commentTranslationKey).toString(), 10, 84, 0xFFFFFF);
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.shapeListRandomColorsDefaultEnabled.key, 10, 115, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.shapeListRandomColorsDefaultEnabled.comment, 10, 135, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.shapeListRandomColorsDefaultEnabled.translationKey), 10, 115, 0xFFFFFF);
+		drawShadowLeft(new Translatable(BuildGuide.config.shapeListRandomColorsDefaultEnabled.commentTranslationKey).toString(), 10, 135, 0xFFFFFF);
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.persistenceEnabled.key, 10, 165, 0xFFFFFF);
-		drawShadowLeft(BuildGuide.config.persistenceEnabled.comment, 10, 185, 0xFFFFFF);
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.persistenceEnabled.translationKey), 10, 165, 0xFFFFFF);
+		drawShadowLeft(new Translatable(BuildGuide.config.persistenceEnabled.commentTranslationKey).toString(), 10, 185, 0xFFFFFF);
 		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + BuildGuide.config.debugGenerationTimingsEnabled.key, 10, 215, 0xFFFFFF);
-		drawShadowLeft("(Experimental) " + BuildGuide.config.debugGenerationTimingsEnabled.comment, 10, 235, 0xFFFFFF); // TODO: Remove "Experimental" when stable
+		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.debugGenerationTimingsEnabled.translationKey), 10, 215, 0xFFFFFF);
+		drawShadowLeft(new Translatable(BuildGuide.config.debugGenerationTimingsEnabled.commentTranslationKey).toString(), 10, 235, 0xFFFFFF);
 	}
 }

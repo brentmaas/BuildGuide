@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+
 public class Config {
 	private File configFile;
 	public ArrayList<ConfigElement<?>> configElements = new ArrayList<ConfigElement<?>>();
 	
-	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", true, "Enable asynchronous (multithreaded) shape generation.");
-	public ConfigElement<Boolean> shapeListRandomColorsDefaultEnabled = new BooleanConfigElement("shapeListRandomColorsDefaultEnabled", false, "Enable random colors for new shapes added to the shape list by default.");
-	public ConfigElement<Boolean> persistenceEnabled = new BooleanConfigElement("persistenceEnabled", false, "Allow shapes to be saved to a file so they can be restored after restarting the client.");
-	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", false, "Enable debug output telling you how long it took for a shape to generate.");
+	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", "config.buildguide.asyncEnabled", true, "config.buildguide.asyncEnabledComment");
+	public ConfigElement<Boolean> shapeListRandomColorsDefaultEnabled = new BooleanConfigElement("shapeListRandomColorsDefaultEnabled", "config.buildguide.shapeListRandomColorsDefaultEnabled", false, "config.buildguide.shapeListRandomColorsDefaultEnabledComment");
+	public ConfigElement<Boolean> persistenceEnabled = new BooleanConfigElement("persistenceEnabled", "config.buildguide.persistenceEnabled", false, "config.buildguide.persistenceEnabledComment");
+	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", "config.buildguide.debugGenerationTimingsEnabled", false, "config.buildguide.debugGenerationTimingsEnabledComment");
 	
 	public Config(File configFolder) {
 		configFile = new File(configFolder, "buildguide.cfg");
@@ -37,8 +39,8 @@ public class Config {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(configFile));
 			for(ConfigElement<?> element: configElements) {
-				if(element.comment != null) {
-					writer.write("# " + element.comment + "\n");
+				if(element.commentTranslationKey != null) {
+					writer.write("# " + new Translatable(element.commentTranslationKey) + "\n");
 				}
 				writer.write(element.key + " = " + element.value + "\n");
 			}
@@ -92,19 +94,21 @@ public class Config {
 	
 	public abstract class ConfigElement<T> {
 		public String key;
+		public String translationKey;
 		public T value;
 		private T defaultValue;
-		public String comment;
+		public String commentTranslationKey;
 		
-		public ConfigElement(String key, T defaultValue){
-			this(key, defaultValue, null);
+		public ConfigElement(String key, String translationKey, T defaultValue){
+			this(key, translationKey, defaultValue, null);
 		}
 		
-		public ConfigElement(String key, T defaultValue, String comment) {
+		public ConfigElement(String key, String translationKey, T defaultValue, String commentTranslationKey) {
 			this.key = key;
+			this.translationKey = translationKey;
 			value = defaultValue;
 			this.defaultValue = defaultValue;
-			this.comment = comment;
+			this.commentTranslationKey = commentTranslationKey;
 		}
 		
 		public T getDefault() {
@@ -121,12 +125,12 @@ public class Config {
 	public class BooleanConfigElement extends ConfigElement<Boolean> {
 		
 		
-		public BooleanConfigElement(String key, Boolean defaultValue) {
-			super(key, defaultValue);
+		public BooleanConfigElement(String key, String translationKey, Boolean defaultValue) {
+			super(key, translationKey, defaultValue);
 		}
 		
-		public BooleanConfigElement(String key, Boolean defaultValue, String comment) {
-			super(key, defaultValue, comment);
+		public BooleanConfigElement(String key, String translationKey, Boolean defaultValue, String commentTranslationKey) {
+			super(key, translationKey, defaultValue, commentTranslationKey);
 		}
 		
 		public void setValue(String value) {

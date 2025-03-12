@@ -1,4 +1,14 @@
 {
+	"_comment": "Config",
+	"config.buildguide.asyncEnabled": "Asynchronous shape generation",
+	"config.buildguide.asyncEnabledComment": "Enable asynchronous (multithreaded) shape generation.",
+	"config.buildguide.debugGenerationTimingsEnabled": "Debug generation timings",
+	"config.buildguide.debugGenerationTimingsEnabledComment": "Enable debug output telling you how long it took for a shape to generate.",
+	"config.buildguide.persistenceEnabled": "Shape persistence",
+	"config.buildguide.persistenceEnabledComment": "Allow shapes to be saved to a file so they can be restored after restarting the client.",
+	"config.buildguide.shapeListRandomColorsDefaultEnabled": "Shape list random colors",
+	"config.buildguide.shapeListRandomColorsDefaultEnabledComment": "Enable random colors for new shapes added to the shape list by default.",
+	
 	"_comment": "Errors",
 	"error.buildguide.invalidvalue": "Shape generation encountered an invalid value. Try less extreme values.",
 	
@@ -39,6 +49,7 @@
 	"_comment": "Screens",
 	"screen.buildguide.add": "Add",
 	"screen.buildguide.configuration": "Configuration",
+	"screen.buildguide.cubesize": "Cube size",
 	"screen.buildguide.delete": "Delete",
 	"screen.buildguide.default": "Default",
 	"screen.buildguide.depthtest": "Depth test",

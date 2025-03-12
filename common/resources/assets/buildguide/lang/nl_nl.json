@@ -1,4 +1,14 @@
 {
+	"_comment": "Configuratie",
+	"config.buildguide.asyncEnabled": "Asynchrone vormgeneratie",
+	"config.buildguide.asyncEnabledComment": "Zet asynchrone (gemultithreade) vormgeneratie aan.",
+	"config.buildguide.debugGenerationTimingsEnabled": "Debug generatietijd",
+	"config.buildguide.debugGenerationTimingsEnabledComment": "Zet debuguitvoer aan die je vertelt hoe lang het duurde voor een vorm om te worden gegenereerd.",
+	"config.buildguide.persistenceEnabled": "Vormbehoud",
+	"config.buildguide.persistenceEnabledComment": "Sta toe dat vormen in een bestand worden opgeslagen zodat ze kunnen worden hersteld nadat de client is herstart.",
+	"config.buildguide.shapeListRandomColorsDefaultEnabled": "Vormenlijst willekeurige kleuren",
+	"config.buildguide.shapeListRandomColorsDefaultEnabledComment": "Zet aan dat vormen die worden toegevoegd aan de vormenlijst standaard willekeurige kleuren hebben.",
+	
 	"_comment": "Fouten",
 	"error.buildguide.invalidvalue": "Vormgeneratie liep tegen een onverwachte waarde aan. Probeer minder extreme waarden.",
 	
@@ -39,6 +49,7 @@
 	"_comment": "Schermen",
 	"screen.buildguide.add": "Voeg toe",
 	"screen.buildguide.configuration": "Configuratie",
+	"screen.buildguide.cubesize": "Kubusgrootte",
 	"screen.buildguide.delete": "Verwijder",
 	"screen.buildguide.default": "Standaard",
 	"screen.buildguide.depthtest": "Dieptetest",
