@@ -1,0 +1,80 @@
+package brentmaas.buildguide.forge.screen.widget;
+
+import java.util.List;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.ISelectorList;
+import brentmaas.buildguide.common.screen.widget.ISelectorList.IEntry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+
+public class SelectorListImpl extends ObjectSelectionList<SelectorListImpl.Entry> implements ISelectorList {
+	protected ISelectorListCallback callback;
+	
+	public SelectorListImpl(Minecraft minecraft, int left, int right, int top, int bottom, int slotHeight, List<Translatable> titles, int current, ISelectorListCallback callback) {
+		super(minecraft, right - left, bottom - top, top, bottom, slotHeight);
+		x0 = left;
+		x1 = right;
+		setRenderBackground(false);
+		setRenderTopAndBottom(false);
+		
+		this.callback = callback;
+		
+		for(int i = 0;i < titles.size();++i) {
+			addEntry(new Entry(i, titles.get(i)));
+		}
+		setSelected(children().get(current));
+	}
+	
+	public void setYPosition(int y) {
+		//Selector lists don't do y position
+	}
+	
+	public void setVisibility(boolean visible) {
+		//Selector lists don't do visibility
+	}
+	
+	@Override
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		fill(poseStack, x0, y0, x1, y1, (int) 0x33000000);
+		super.render(poseStack, mouseX, mouseY, partialTicks);
+	}
+	
+	@Override
+	public int getRowWidth() {
+		return width - 12;
+	}
+	
+	@Override
+	protected int getScrollbarPosition() {
+		return x1 - 6;
+	}
+	
+	public final class Entry extends ObjectSelectionList.Entry<SelectorListImpl.Entry> implements IEntry {
+		private int index;
+		private Translatable title;
+		
+		public Entry(int index, Translatable title) {
+			this.index = index;
+			this.title = title;
+		}
+		
+		public void render(PoseStack poseStack, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+			Minecraft.getInstance().font.drawShadow(poseStack, title.toString(), x + 5, y + 4, 0xFFFFFF, true);
+		}
+		
+		@Override
+		public boolean mouseClicked(double mouseX, double mouseY, int button) {
+			SelectorListImpl.this.callback.run(index);
+			return false;
+		}
+		
+		public Component getNarration() {
+			return new TextComponent("");
+		}
+	}
+}

@@ -3,9 +3,11 @@ package brentmaas.buildguide.common.shape;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import brentmaas.buildguide.common.BuildGuide;
+import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 
 public class ShapeRegistry {
 	private static Map<String,Class<? extends Shape>> shapeRegistry = new HashMap<String,Class<? extends Shape>>();
@@ -53,6 +55,14 @@ public class ShapeRegistry {
 			return translationKeys.get(index);
 		}
 		return null;
+	}
+	
+	public static List<Translatable> getTranslatables(){
+		List<Translatable> result = new ArrayList<Translatable>();
+		for(int i = 0;i < getNumberOfShapes();++i) {
+			result.add(new Translatable(getTranslationKey(i)));
+		}
+		return result;
 	}
 	
 	public static int getShapeId(Class<? extends Shape> shapeClass) {

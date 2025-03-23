@@ -1,12 +1,16 @@
 package brentmaas.buildguide.forge.screen.widget;
 
+import java.util.List;
+
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
+import brentmaas.buildguide.common.screen.widget.ISelectorList;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
+import brentmaas.buildguide.common.screen.widget.ISelectorList.ISelectorListCallback;
 import net.minecraft.client.Minecraft;
 
 public class WidgetHandler extends AbstractWidgetHandler{
@@ -28,5 +32,9 @@ public class WidgetHandler extends AbstractWidgetHandler{
 	
 	public IShapeList createShapelist(int left, int right, int top, int bottom, int slotHeight, Runnable update) {
 		return new ShapeListImpl(Minecraft.getInstance(), left, right, top, bottom, slotHeight, update);
+	}
+	
+	public ISelectorList createSelectorList(int left, int right, int top, int bottom, int slotHeight, List<Translatable> titles, int current, ISelectorListCallback callback) {
+		return new SelectorListImpl(Minecraft.getInstance(), left, right, top, bottom, slotHeight, titles, current, callback);
 	}
 }

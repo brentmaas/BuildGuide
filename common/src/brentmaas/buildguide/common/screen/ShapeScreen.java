@@ -6,15 +6,14 @@ import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.common.shape.Shape;
+import brentmaas.buildguide.common.shape.ShapeRegistry;
 
 public class ShapeScreen extends BaseScreen{
 	private Translatable titleShapeProperties = new Translatable("screen.buildguide.shapeproperties");
 	private Translatable titleOrigin = new Translatable("screen.buildguide.origin");
 	private Translatable titleShape = new Translatable("screen.buildguide.shape");
 	
-	//It's better off as custom buttons instead of PropertyEnum
-	private IButton buttonShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, new Translatable("<-"), () -> updateShape(-1));
-	private IButton buttonShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, new Translatable("->"), () -> updateShape(1));
+	private DropdownOverlayScreen dropdownOverlayShapeSelect = new DropdownOverlayScreen(this, 5, 70, 160, 20, ShapeRegistry.getTranslatables(), BuildGuide.stateManager.getState().getCurrentShapeIndex(), (int selected) -> setShape(selected));
 	private IButton buttonOrigin = BuildGuide.widgetHandler.createButton(5, 115, 160, 20, new Translatable("screen.buildguide.setorigin"), () -> setOrigin());
 	//It's better off as custom buttons instead of PropertyInt
 	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 135, 20, 20, new Translatable("-"), () -> shiftOrigin(-1, 0, 0));
@@ -55,8 +54,7 @@ public class ShapeScreen extends BaseScreen{
 		super.init();
 		
 		if(!BuildGuide.stateManager.getState().isShapeAvailable()) {
-			buttonShapePrevious.setActive(false);
-			buttonShapeNext.setActive(false);
+			dropdownOverlayShapeSelect.setActive(false);
 			buttonOrigin.setActive(false);
 			buttonOriginXDecrease.setActive(false);
 			buttonOriginXIncrease.setActive(false);
@@ -76,8 +74,7 @@ public class ShapeScreen extends BaseScreen{
 		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
-		addWidget(buttonShapePrevious);
-		addWidget(buttonShapeNext);
+		addDropdownOverlayScreen(dropdownOverlayShapeSelect);
 		addWidget(buttonOrigin);
 		addWidget(buttonOriginXDecrease);
 		addWidget(textFieldX);
@@ -123,10 +120,10 @@ public class ShapeScreen extends BaseScreen{
 		}
 	}
 	
-	private void updateShape(int di) {
+	private void setShape(int i) {
 		BuildGuide.stateManager.getState().getCurrentShape().onDeselectedInGUI();
 		
-		BuildGuide.stateManager.getState().shiftShape(di);
+		BuildGuide.stateManager.getState().setShape(i);
 		if(!BuildGuide.stateManager.getState().getCurrentShapeSet().isShapeAvailable()) {
 			addShapeProperties(BuildGuide.stateManager.getState().getCurrentShape());
 		}

@@ -6,11 +6,13 @@ import brentmaas.buildguide.common.screen.BaseScreen;
 import brentmaas.buildguide.common.screen.IScreenWrapper;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
+import brentmaas.buildguide.common.screen.widget.ISelectorList;
 import brentmaas.buildguide.common.screen.widget.IShapeList;
 import brentmaas.buildguide.common.screen.widget.ISlider;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 import brentmaas.buildguide.forge.screen.widget.ButtonImpl;
 import brentmaas.buildguide.forge.screen.widget.CheckboxRunnableButtonImpl;
+import brentmaas.buildguide.forge.screen.widget.SelectorListImpl;
 import brentmaas.buildguide.forge.screen.widget.ShapeListImpl;
 import brentmaas.buildguide.forge.screen.widget.SliderImpl;
 import brentmaas.buildguide.forge.screen.widget.TextFieldImpl;
@@ -78,6 +80,10 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	
 	public void addShapeList(IShapeList shapeList) {
 		addRenderableWidget((ShapeListImpl) shapeList);
+	}
+	
+	public void addSelectorList(ISelectorList selectorList) {
+		addRenderableWidget((SelectorListImpl) selectorList);
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {

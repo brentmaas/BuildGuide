@@ -18,8 +18,7 @@ public class ShapelistScreen extends BaseScreen {
 	
 	private IShapeList shapeList;
 	
-	private IButton buttonNewShapePrevious = BuildGuide.widgetHandler.createButton(5, 70, 20, 20, new Translatable("<-"), () -> updateNewShape(-1));
-	private IButton buttonNewShapeNext = BuildGuide.widgetHandler.createButton(145, 70, 20, 20, new Translatable("->"), () -> updateNewShape(1));
+	private DropdownOverlayScreen dropdownOverlayScreenNewShapeSelect = new DropdownOverlayScreen(this, 5, 70, 160, 20, ShapeRegistry.getTranslatables(), BuildGuide.stateManager.getState().iShapeNew, (int selected) -> setNewShape(selected));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, 20, new Translatable("screen.buildguide.add"), () -> {
 		BuildGuide.stateManager.getState().pushNewShapeSet();
 		BuildGuide.stateManager.getState().getShapeSet(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1).updateAllShapes();
@@ -91,8 +90,7 @@ public class ShapelistScreen extends BaseScreen {
 		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
-		addWidget(buttonNewShapePrevious);
-		addWidget(buttonNewShapeNext);
+		addDropdownOverlayScreen(dropdownOverlayScreenNewShapeSelect);
 		addWidget(buttonAdd);
 		addWidget(buttonVisible);
 		addWidget(buttonDelete);
@@ -147,8 +145,8 @@ public class ShapelistScreen extends BaseScreen {
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapes, 250, 55, 0xFFFFFF);
 	}
 	
-	private void updateNewShape(int di) {
-		BuildGuide.stateManager.getState().iShapeNew = Math.floorMod(BuildGuide.stateManager.getState().iShapeNew + di, ShapeRegistry.getNumberOfShapes());
+	private void setNewShape(int i) {
+		BuildGuide.stateManager.getState().iShapeNew = i;
 		BaseScreen.shouldUpdatePersistence = true;
 	}
 	

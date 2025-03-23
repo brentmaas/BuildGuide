@@ -58,6 +58,10 @@ public class State {
 		return shapeSets.size() > 0 ? shapeSets.get(iShapeSet).getShape() : null;
 	}
 	
+	public int getCurrentShapeIndex() {
+		return shapeSets.size() > 0 ? shapeSets.get(iShapeSet).getIndex() : 0;
+	}
+	
 	public ShapeSet getShapeSet(int index) {
 		return shapeSets.size() > 0 ? shapeSets.get(index) : null;
 	}
@@ -108,8 +112,8 @@ public class State {
 		}
 	}
 	
-	public void shiftShape(int di) {
-		shapeSets.get(iShapeSet).setIndex(Math.floorMod(shapeSets.get(iShapeSet).getIndex() + di, ShapeRegistry.getNumberOfShapes()));
+	public void setShape(int i) {
+		shapeSets.get(iShapeSet).setIndex(i);
 	}
 	
 	public int getShapeSetIndex() {

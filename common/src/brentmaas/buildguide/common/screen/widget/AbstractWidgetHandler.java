@@ -1,6 +1,9 @@
 package brentmaas.buildguide.common.screen.widget;
 
+import java.util.List;
+
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.ISelectorList.ISelectorListCallback;
 
 public abstract class AbstractWidgetHandler {
 	public abstract IButton createButton(int x, int y, int width, int height, Translatable text, IButton.IPressable onPress);
@@ -18,4 +21,6 @@ public abstract class AbstractWidgetHandler {
 	public abstract ISlider createSlider(int x, int y, int width, int height, Translatable name, double min, double max, double value);
 	
 	public abstract IShapeList createShapelist(int left, int right, int top, int bottom, int slotHeight, Runnable update);
+	
+	public abstract ISelectorList createSelectorList(int left, int right, int top, int bottom, int slotHeight, List<Translatable> titles, int current, ISelectorListCallback callback);
 }
