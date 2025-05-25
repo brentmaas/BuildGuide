@@ -1,0 +1,95 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'net.neoforged.moddev' version '2.0.74'
+}
+
+version = gradle.ext.modversion
+group = gradle.ext.neoforgegroup
+
+base {
+    archivesName = gradle.ext.neoforgename
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+
+neoForge {
+    version = project.neoforge_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+    
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+        
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', gradle.ext.modid, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+        
+        configureEach {
+            gameDirectory = project.file('../run')
+            systemProperty 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${gradle.ext.modid}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    inputs.property "modid", gradle.ext.modid
+    inputs.property "version", project.version
+    inputs.property "modname", gradle.ext.modname
+    inputs.property "moddesc", gradle.ext.moddesc
+    inputs.property "modauthor", gradle.ext.modauthor
+    inputs.property "modsources", gradle.ext.modsources
+    inputs.property "modissues", gradle.ext.modissues
+    inputs.property "modlicense", gradle.ext.modlicense
+    inputs.property "neoforge_version_range", project.neoforge_version_range
+    inputs.property "loader_version_range", project.loader_version_range
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "minecraft_version_range", project.minecraft_version_range
+    inputs.property "pack_format", project.pack_format
+    expand inputs.properties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
