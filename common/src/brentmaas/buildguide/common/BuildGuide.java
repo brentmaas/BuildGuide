@@ -16,6 +16,7 @@ import brentmaas.buildguide.common.shape.ShapeLine;
 import brentmaas.buildguide.common.shape.ShapeParabola;
 import brentmaas.buildguide.common.shape.ShapeParaboloid;
 import brentmaas.buildguide.common.shape.ShapePolygon;
+import brentmaas.buildguide.common.shape.ShapePolygonalPyramid;
 import brentmaas.buildguide.common.shape.ShapeRegistry;
 import brentmaas.buildguide.common.shape.ShapeSphere;
 import brentmaas.buildguide.common.shape.ShapeTorus;
@@ -53,6 +54,7 @@ public class BuildGuide {
 		ShapeRegistry.registerShape(ShapeParabola.class);
 		ShapeRegistry.registerShape(ShapeParaboloid.class);
 		ShapeRegistry.registerShape(ShapePolygon.class);
+		ShapeRegistry.registerShape(ShapePolygonalPyramid.class);
 		ShapeRegistry.registerShape(ShapeSphere.class);
 		ShapeRegistry.registerShape(ShapeTorus.class);
 		

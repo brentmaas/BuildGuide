@@ -89,6 +89,7 @@
 	"shape.buildguide.parabola": "Parabola",
 	"shape.buildguide.paraboloid": "Paraboloid",
 	"shape.buildguide.polygon": "Polygon",
+	"shape.buildguide.polygonalpyramid": "Polygonal pyramid",
 	"shape.buildguide.sphere": "Sphere",
 	"shape.buildguide.torus": "Torus"
 }
