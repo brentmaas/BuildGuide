@@ -42,6 +42,9 @@ public class VisualisationScreen extends BaseScreen {
 			sliderShapeR.setSliderValue(random.nextDouble());
 			sliderShapeG.setSliderValue(random.nextDouble());
 			sliderShapeB.setSliderValue(random.nextDouble());
+			sliderShapeR.updateText();
+			sliderShapeG.updateText();
+			sliderShapeB.updateText();
 			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
 		}
 	});
@@ -51,6 +54,9 @@ public class VisualisationScreen extends BaseScreen {
 			sliderOriginR.setSliderValue(random.nextDouble());
 			sliderOriginG.setSliderValue(random.nextDouble());
 			sliderOriginB.setSliderValue(random.nextDouble());
+			sliderOriginR.updateText();
+			sliderOriginG.updateText();
+			sliderOriginB.updateText();
 			BuildGuide.stateManager.getState().setOriginColour((float) sliderOriginR.getSliderValue(), (float) sliderOriginG.getSliderValue(), (float) sliderOriginB.getSliderValue(), (float) sliderOriginA.getSliderValue());
 		}
 	});
