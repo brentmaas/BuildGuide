@@ -33,7 +33,7 @@ public class RenderHandler extends AbstractRenderHandler {
 	private static final RenderPipeline.Snippet BUILD_GUIDE_SNIPPET = RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
 			.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
 			.withBlend(new BlendFunction(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA))
-			.withCull(false)
+			.withCull(true)
 			.withDepthWrite(false)
 			.buildSnippet();
 	private static final RenderPipeline BUILD_GUIDE = RenderPipeline.builder(BUILD_GUIDE_SNIPPET)
