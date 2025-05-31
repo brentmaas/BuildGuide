@@ -21,8 +21,8 @@ pluginManagement {
 rootProject.name = 'BuildGuide'
 
 gradle.ext.modid = 'buildguide'
-gradle.ext.modversion = '0.4.4'
-gradle.ext.modspecversion = '16'
+gradle.ext.modversion = '0.4.5'
+gradle.ext.modspecversion = '17'
 gradle.ext.modname = 'Build Guide'
 gradle.ext.moddesc = 'A client-side only mod to project shapes like circles and spheres into the world. It works both in singleplayer and multiplayer, even if the server doesn\'t have the mod installed.'
 gradle.ext.modauthor = 'brentmaas'
