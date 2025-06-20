@@ -8,7 +8,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import brentmaas.buildguide.common.AbstractRenderHandler;
+import brentmaas.buildguide.common.AbstractLegacyRenderHandler;
 import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.fabric.shape.ShapeBuffer;
@@ -19,7 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.phys.Vec3;
 
-public class RenderHandler extends AbstractRenderHandler {
+public class RenderHandler extends AbstractLegacyRenderHandler {
 	private Camera cameraInstance;
 	private PoseStack poseStackInstance;
 	private Matrix4f projectionMatrixInstance;
@@ -53,7 +53,7 @@ public class RenderHandler extends AbstractRenderHandler {
 		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
 	}
 	
-	protected void endRenderingShape() {
+	protected void endRenderingShapeSet() {
 		poseStackInstance.popPose();
 	}
 	

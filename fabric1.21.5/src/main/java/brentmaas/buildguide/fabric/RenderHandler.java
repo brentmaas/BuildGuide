@@ -79,7 +79,7 @@ public class RenderHandler extends AbstractRenderHandler {
 		poseStackInstance.mulPose(rotationMatrixInstance);
 	}
 	
-	protected void endRenderingShape() {
+	protected void endRenderingShapeSet() {
 		poseStackInstance.popPose();
 	}
 	
@@ -94,17 +94,4 @@ public class RenderHandler extends AbstractRenderHandler {
 	public static RenderPipeline getRenderPipeline() {
 		return BuildGuide.stateManager.getState().depthTest ? BUILD_GUIDE_DEPTH_TEST : BUILD_GUIDE;
 	}
-	
-	// Legacy functions to be removed
-	protected boolean isCompatibilityProfile() {return false;}
-	protected boolean textureEnabled() {return false;}
-	protected boolean depthTestEnabled() {return false;}
-	protected boolean depthMaskEnabled() {return false;}
-	protected boolean blendEnabled() {return true;}
-	protected void setTexture(boolean enabled) {}
-	protected void setDepthTest(boolean enabled) {}
-	protected void setDepthMask(boolean enabled) {}
-	protected void setBlend(boolean enabled) {}
-	protected void setupNotCulling() {}
-	protected void setupBlendFunc() {}
 }
