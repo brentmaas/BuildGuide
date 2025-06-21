@@ -192,7 +192,7 @@ configure(subprojects.findAll {it.name != 'common'}) {
     dependencies {
         implementation project(":common")
     }
-    if(it.name != 'forge1.20.4' && it.name != 'forge1.20.6' && it.name != 'forge1.21') { //TODO: Make this work universally again
+    if(it.name < 'forge1.20.4' || !it.name.startsWith('forge')) {
         sourceSets.main.java {
             srcDir '../common/src'
         }
