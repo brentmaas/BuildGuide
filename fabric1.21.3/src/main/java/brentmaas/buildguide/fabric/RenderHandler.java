@@ -25,7 +25,7 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 	private Matrix4f projectionMatrixInstance;
 	
 	public void register() {
-		WorldRenderEvents.LAST.register(this::onRenderBlock);
+		WorldRenderEvents.END.register(this::onRenderBlock);
 	}
 	
 	public void onRenderBlock(WorldRenderContext context) {

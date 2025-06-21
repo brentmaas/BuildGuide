@@ -32,7 +32,7 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderLevelStageEvent event) {
-		if(event.getStage() == Stage.AFTER_WEATHER) {
+		if(event.getStage() == Stage.AFTER_LEVEL) {
 			poseStackInstance = new PoseStack();
 			poseStackInstance.mulPose(event.getPoseStack().last().pose());
 			Matrix4f rotationMatrix = new Matrix4f();

@@ -29,9 +29,8 @@ import net.neoforged.neoforge.common.NeoForge;
 public class RenderHandler extends AbstractRenderHandler {
 	private Camera cameraInstance;
 	private PoseStack poseStackInstance;
-	private Matrix4f projectionMatrixInstance, rotationMatrixInstance;
+	private Matrix4f projectionMatrixInstance;
 	private static final RenderPipeline.Snippet BUILD_GUIDE_SNIPPET = RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
-			.withDepthTestFunction(DepthTestFunction.NO_DEPTH_TEST)
 			.withBlend(new BlendFunction(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA))
 			.withCull(true)
 			.withDepthWrite(false)
@@ -51,17 +50,14 @@ public class RenderHandler extends AbstractRenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderLevelStageEvent event) {
-		if(event.getStage() == Stage.AFTER_WEATHER) {
+		if(event.getStage() == Stage.AFTER_LEVEL) {
 			poseStackInstance = event.getPoseStack();
 			poseStackInstance.pushPose();
-			Matrix4f inverseRotationMatrix = new Matrix4f();
-			rotationMatrixInstance = new Matrix4f();
+			Matrix4f rotationMatrix = new Matrix4f();
 			cameraInstance = Minecraft.getInstance().gameRenderer.getMainCamera();
-			rotationMatrixInstance.rotate((float) -((cameraInstance.getYRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
-			rotationMatrixInstance.rotate((float) -(cameraInstance.getXRot() * Math.PI / 180), new Vector3f(1, 0, 0));
-			inverseRotationMatrix.rotate((float) (cameraInstance.getXRot() * Math.PI / 180), new Vector3f(1, 0, 0));
-			inverseRotationMatrix.rotate((float) ((cameraInstance.getYRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
-			poseStackInstance.mulPose(inverseRotationMatrix);
+			rotationMatrix.rotate((float) (cameraInstance.getXRot() * Math.PI / 180), new Vector3f(1, 0, 0));
+			rotationMatrix.rotate((float) ((cameraInstance.getYRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
+			poseStackInstance.mulPose(rotationMatrix);
 			projectionMatrixInstance = event.getProjectionMatrix();
 			
 			render();
@@ -78,7 +74,6 @@ public class RenderHandler extends AbstractRenderHandler {
 		poseStackInstance.pushPose();
 		Vec3 projectedView = cameraInstance.getPosition();
 		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
-		poseStackInstance.mulPose(rotationMatrixInstance);
 	}
 	
 	protected void endRenderingShapeSet() {
