@@ -66,32 +66,24 @@ public class ShapePolygonalPyramid extends Shape {
 		for(int h = (int) Math.floor(height > 0 ? 0 : height + 1);h < Math.ceil(height > 0 ? height : 1);++h) {
 			float r = (radius + 1) * Math.max(Math.abs(height) - Math.abs(h), 0) / Math.abs(height) - 1;
 			float rNext = (radius + 1) * Math.max(Math.abs(height) - Math.abs(h) - 1, 0) / Math.abs(height) - 1;
-			for(int i = 0;i < n;++i) {
-				int minB = (int) Math.floor(Math.min(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
-				int minBNext = (int) Math.floor(Math.min(rNext * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), rNext * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
-				int maxA = (int) Math.ceil(Math.max(r * (Math.sin(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n)), r * (Math.sin(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.cos(2 * Math.PI * i / n))) + offset);
-				int maxB = (int) Math.ceil(Math.max(r * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), r * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
-				int maxBNext = (int) Math.ceil(Math.max(rNext * (-Math.cos(2 * Math.PI * i / n) - Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n)), rNext * (-Math.cos(2 * Math.PI * i / n) + Math.tan(Math.PI / n) * Math.sin(2 * Math.PI * i / n))) + offset);
-				for(int a = 0;a <= maxA;++a) {
-					for(int b = Math.min(minB, minBNext);b <= Math.max(maxB, maxBNext);++b) {
-						double theta = Math.atan2(b - offset, a - offset) + Math.PI / 2;
-						double ri = (a - offset) * Math.sin(2 * Math.PI * i / n) - (b - offset) * Math.cos(2 * Math.PI * i / n);
-						if(theta < 0 && i > 0) theta += 2 * Math.PI;
-						if((((ri - rNext) >= 0.5 && Math.abs(height) <= radius + 1) || (ri - r) >= -0.5 && Math.abs(height) >= radius + 1) && (ri - r) < 0.5 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
-							switch(propertyDir.value) {
-							case X:
-								addShapeCube(buffer, h, b * rotXX[rot] + a * rotYX[rot], a * rotXX[rot] + b * rotXY[rot]);
-								if(a != 0) addShapeCube(buffer, h, b * rotXX[rot] - a * rotYX[rot], -a * rotXX[rot] + b * rotXY[rot]);
-								break;
-							case Y:
-								addShapeCube(buffer, b * rotXX[rot] + a * rotYX[rot], h, a * rotXX[rot] + b * rotXY[rot]);
-								if(a != 0) addShapeCube(buffer, b * rotXX[rot] - a * rotYX[rot], h, -a * rotXX[rot] + b * rotXY[rot]);
-								break;
-							case Z:
-								addShapeCube(buffer, a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] + a * rotYX[rot], h);
-								if(a != 0) addShapeCube(buffer, -a * rotXX[rot] + b * rotXY[rot], b * rotXX[rot] - a * rotYX[rot], h);
-								break;
-							}
+			int maxR = (int) Math.ceil(((r + offset) / Math.cos(Math.PI / n)));
+			for(int a = -maxR;a <= maxR;++a) {
+				for(int b = -maxR;b <= maxR;++b) {
+					double theta = Math.atan2(b - offset, a - offset) + Math.PI;
+					if(theta < 0) theta += 2 * Math.PI;
+					int i = (int) (n * theta / 2 / Math.PI + 0.5);
+					double ri = (a - offset) * Math.cos(2 * i * Math.PI / n - Math.PI) + (b - offset) * Math.sin(2 * i * Math.PI / n - Math.PI) + 1e-10; // Epsilon to fix floating point errors for whole and half numbers
+					if((((ri - rNext) >= 0.5 && Math.abs(height) <= radius + 1) || (ri - r) >= -0.5 && Math.abs(height) >= radius + 1) && (ri - r) < 0.5 && theta >= (2 * i - 1) * Math.PI / n && theta < (2 * i + 1) * Math.PI / n) {
+						switch(propertyDir.value) {
+						case X:
+							addShapeCube(buffer, h, a * rotXX[rot] + b * rotYX[rot], b * rotXX[rot] + a * rotXY[rot]);
+							break;
+						case Y:
+							addShapeCube(buffer, a * rotXX[rot] + b * rotYX[rot], h, b * rotXX[rot] + a * rotXY[rot]);
+							break;
+						case Z:
+							addShapeCube(buffer, b * rotXX[rot] + a * rotXY[rot], a * rotXX[rot] + b * rotYX[rot], h);
+							break;
 						}
 					}
 				}
