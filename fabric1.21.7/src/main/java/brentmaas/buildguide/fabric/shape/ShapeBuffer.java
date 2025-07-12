@@ -5,13 +5,11 @@ import java.util.OptionalInt;
 
 import org.joml.Matrix4f;
 
-import com.mojang.blaze3d.buffers.BufferType;
-import com.mojang.blaze3d.buffers.BufferUsage;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -47,7 +45,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public void end() {
 		MeshData meshData = bufferBuilder.build();
-		vertexBuffer = RenderSystem.getDevice().createBuffer(() -> "Build Guide vertices", BufferType.VERTICES, BufferUsage.STATIC_WRITE, meshData.vertexBuffer());
+		vertexBuffer = RenderSystem.getDevice().createBuffer(() -> "Build Guide vertices", 28, meshData.vertexBuffer());
 		indexCount = meshData.drawState().indexCount();
 		indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
 	}
@@ -59,16 +57,17 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public void render(Matrix4f model, Matrix4f projection) {
 		RenderTarget renderTarget = Minecraft.getInstance().getMainRenderTarget();
-		GpuTexture colourTexture = renderTarget.getColorTexture();
-		GpuTexture depthTexture = renderTarget.getDepthTexture();
-
+		GpuTextureView colourTexture = renderTarget.getColorTextureView();
+		GpuTextureView depthTexture = renderTarget.getDepthTextureView();
+		
 		RenderSystem.backupProjectionMatrix();
-		RenderSystem.setProjectionMatrix(new Matrix4f(projection).mul(model), RenderSystem.getProjectionType());
-		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
+		RenderSystem.setProjectionMatrix(RenderHandler.projectionMatrixBuffer.getBuffer(new Matrix4f(projection).mul(model)), RenderSystem.getProjectionType());
+		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Build Guide", colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
+			RenderSystem.bindDefaultUniforms(renderPass);
 			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).type());
 			renderPass.setVertexBuffer(0, vertexBuffer);
-			renderPass.drawIndexed(0, indexCount);
+			renderPass.drawIndexed(0, 0, indexCount, 1);
 		}
 		RenderSystem.restoreProjectionMatrix();
 	}

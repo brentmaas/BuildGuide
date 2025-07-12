@@ -41,7 +41,7 @@ gradle.ext.forgemapping = 'official'
 gradle.ext.neoforgegroup = gradle.ext.modid + ".neoforge"
 gradle.ext.neoforgename = rootProject.name + "-NeoForge"
 
-gradle.ext.mcversions = ['1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6', '1.21', '1.21.3', '1.21.5']
+gradle.ext.mcversions = ['1.17.1', '1.18', '1.19', '1.19.3', '1.19.4', '1.20', '1.20.2', '1.20.4', '1.20.6', '1.21', '1.21.3', '1.21.5', '1.21.7']
 
 include 'common'
 
