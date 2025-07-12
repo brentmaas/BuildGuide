@@ -47,9 +47,7 @@ include 'common'
 
 gradle.ext.mcversions.each {
     include 'fabric' + it
-    if(it <= '1.21') {
-        include 'forge' + it
-    }
+    include 'forge' + it
     if(it >= '1.21') {
         include 'neoforge' + it
     }

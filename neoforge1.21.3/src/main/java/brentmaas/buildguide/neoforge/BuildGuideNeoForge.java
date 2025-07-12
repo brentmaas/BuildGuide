@@ -10,17 +10,19 @@ import brentmaas.buildguide.neoforge.screen.ScreenHandler;
 import brentmaas.buildguide.neoforge.screen.widget.WidgetHandler;
 import brentmaas.buildguide.neoforge.shape.ShapeHandler;
 import net.minecraft.client.Minecraft;
-import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod(BuildGuide.modid)
 public class BuildGuideNeoForge {
 	private static final Logger logger = LogManager.getLogger();
 	
-	public BuildGuideNeoForge() {
-		if(FMLLoader.getDist() == Dist.CLIENT) {
-			BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), new File(Minecraft.getInstance().gameDirectory, "config"));
-		}
+	public BuildGuideNeoForge(IEventBus modEventBus) {
+		modEventBus.addListener(this::onClientSetup);
+	}
+	
+	private void onClientSetup(final FMLClientSetupEvent event) {
+		BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), new File(Minecraft.getInstance().gameDirectory, "config"));
 	}
 }

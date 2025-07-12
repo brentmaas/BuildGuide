@@ -1,0 +1,10 @@
+{
+    "package": "brentmaas.buildguide.forge.mixin",
+    "mixins": [],
+    "client": [
+        "MixinLevelRenderer"
+    ],
+    "server": [],
+    "refmap": "mixins.buildguide.forge.refmap.json",
+    "required": true
+}
