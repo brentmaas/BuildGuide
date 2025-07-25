@@ -102,7 +102,7 @@ public class ShapeListImpl extends ObjectSelectionList<ShapeListImpl.Entry> impl
 		
 		public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 			int colour = BuildGuide.screenHandler.getShapeProgressColour(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId).getShape());
-			guiGraphics.drawString(Minecraft.getInstance().font, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, ARGB.color(colour & 0xFF, (colour >> 8) & 0xFF, (colour >> 16) & 0xFF), true);
+			guiGraphics.drawString(Minecraft.getInstance().font, BuildGuide.screenHandler.getFormattedShapeName(BuildGuide.stateManager.getState().shapeSets.get(shapeSetId)), x + 5, y + 4, ARGB.color((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF), true);
 		}
 
 		@Override

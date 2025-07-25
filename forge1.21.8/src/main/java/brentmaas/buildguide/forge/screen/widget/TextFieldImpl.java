@@ -16,7 +16,7 @@ public class TextFieldImpl extends EditBox implements ITextField {
 	}
 	
 	public void setTextColour(int colour) {
-		setTextColor(ARGB.color(colour & 0xFF, (colour >> 8) & 0xFF, (colour >> 16) & 0xFF));
+		setTextColor(ARGB.color((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF));
 	}
 	
 	public void setVisibility(boolean visible) {

@@ -93,7 +93,7 @@ public class ScreenWrapper extends Screen implements IScreenWrapper {
 	}
 	
 	public void drawShadow(String text, int x, int y, int colour) {
-		guiGraphicsInstance.drawString(font, text, x, y, ARGB.color(colour & 0xFF, (colour >> 8) & 0xFF, (colour >> 16) & 0xFF), true);
+		guiGraphicsInstance.drawString(font, text, x, y, ARGB.color((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF), true);
 	}
 	
 	public int getTextWidth(String text) {
