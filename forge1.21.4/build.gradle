@@ -1,0 +1,117 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = gradle.ext.modversion
+group = gradle.ext.forgegroup
+base {
+    archivesName = gradle.ext.forgename
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+minecraft {
+    mappings channel: gradle.ext.forgemapping, version: project.minecraft_version
+    
+    reobf = false
+    
+    copyIdeResources = true
+    
+    runs {
+        client {
+            workingDirectory project.file('../run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+        
+        server {
+            workingDirectory project.file('../run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+        
+        gameTestServer {
+            workingDirectory project.file('../run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+        
+        data {
+            workingDirectory project.file('../run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', gradle.ext.modid, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') {
+        version { strictly '5.0.4' }
+    }
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+}
+
+mixin {
+    add sourceSets.main, 'mixins.buildguide.forge.refmap.json'
+    config 'mixins.buildguide.json'
+    
+    debug.verbose = true
+    debug.export = true
+    overwriteErrorLevel = 'error'
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.property "modid", gradle.ext.modid
+    inputs.property "version", project.version
+    inputs.property "modname", gradle.ext.modname
+    inputs.property "moddesc", gradle.ext.moddesc
+    inputs.property "modauthor", gradle.ext.modauthor
+    inputs.property "modsources", gradle.ext.modsources
+    inputs.property "modissues", gradle.ext.modissues
+    inputs.property "modlicense", gradle.ext.modlicense
+    inputs.property "forge_version_range", project.forge_version_range
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "minecraft_version_range", project.minecraft_version_range
+    inputs.property "pack_format", project.pack_format
+    
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand inputs.properties
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+            "Specification-Title": gradle.ext.modid,
+            "Specification-Vendor": gradle.ext.modid,
+            "Specification-Version": gradle.ext.modspecversion,
+            "Implementation-Title": rootProject.name,
+            "Implementation-Version": project.jar.archiveVersion,
+            "Implementation-Vendor": gradle.ext.modid,
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "mixins.buildguide.json"
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}
