@@ -34,9 +34,7 @@ task unpackjars {
     dependsOn ':common:build'
     gradle.ext.mcversions.each {
         dependsOn ':fabric' + it + ':build'
-        if(it <= '1.21') {
-            dependsOn ':forge' + it + ':build'
-        }
+        dependsOn ':forge' + it + ':build'
         if(it >= '1.21') {
             dependsOn ':neoforge' + it + ':build'
         }
@@ -70,7 +68,7 @@ task unpackjars {
             fileTree(fabrictmp).each {
                 def relpath = it.absolutePath.substring(fabrictmp.absolutePath.length())
                 def target = file(folder.absolutePath + relpath)
-                if(relpath == '\\META-INF\\MANIFEST.MF') {
+                if(relpath == '/META-INF/MANIFEST.MF') {
                     it.text.eachLine {
                         if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
                             manifest.text += ('\n' + it)
@@ -87,31 +85,35 @@ task unpackjars {
                 }
             }
             
-            if(mcversion <= '1.21') {
-                def forgetmp = file('./build/tmp/forge' + mcversion)
+            def forgetmp = file('./build/tmp/forge' + mcversion)
+            copy {
+                from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
+                into forgetmp
+            }
+            // Temporary manual copy until I can get rid of Mixin
+            if(mcversion >= '1.21.3') {
                 copy {
-                    from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
+                    from file('./forge' + mcversion + '/build/tmp/compileJava')
+                    include 'mixins.buildguide.forge.refmap.json'
                     into forgetmp
                 }
-                fileTree(forgetmp).each {
-                    def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
-                    def target = file(folder.absolutePath + relpath)
-                    if(relpath == '\\META-INF\\MANIFEST.MF') {
-                        it.text.eachLine {
-                            if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
-                                manifest.text += ('\n' + it)
-                            }
+            }
+            fileTree(forgetmp).each {
+                def relpath = it.absolutePath.substring(forgetmp.absolutePath.length())
+                def target = file(folder.absolutePath + relpath)
+                if(relpath == '/META-INF/MANIFEST.MF') {
+                    it.text.eachLine {
+                        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
+                            manifest.text += ('\n' + it)
                         }
-                    }else if(relpath == '\\META-INF\\mods.toml'){
-                        target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
-                    }else if(!target.exists()){
-                        def source = it
-                        def targetParent = target.getParentFile()
-                        targetParent.mkdirs()
-                        copy {
-                            from source
-                            into targetParent
-                        }
+                    }
+                }else if(!target.exists()){
+                    def source = it
+                    def targetParent = target.getParentFile()
+                    targetParent.mkdirs()
+                    copy {
+                        from source
+                        into targetParent
                     }
                 }
             }
@@ -125,16 +127,14 @@ task unpackjars {
                 fileTree(neoforgetmp).each {
                     def relpath = it.absolutePath.substring(neoforgetmp.absolutePath.length())
                     def target = file(folder.absolutePath + relpath)
-                    //if(relpath == '\\META-INF\\MANIFEST.MF') {
+                    //if(relpath == '/META-INF/MANIFEST.MF') {
                     //    it.text.eachLine {
                     //        if(it.size() > 0 && !it.startsWith('Manifest-Version:')) {
                     //            manifest.text += ('\n' + it)
                     //        }
                     //    }
                     //}else
-                    if(relpath == '\\META-INF\\neoforge.mods.toml'){
-                        target.text = it.text.replaceAll('"\\$\\{file.jarVersion\\}"', '"' + gradle.ext.modversion + '"')
-                    }else if(!target.exists()){
+                    if(!target.exists()){
                         def source = it
                         def targetParent = target.getParentFile()
                         targetParent.mkdirs()
@@ -145,6 +145,8 @@ task unpackjars {
                     }
                 }
             }
+            
+            manifest.text += '\n\n'
         }
     }
     

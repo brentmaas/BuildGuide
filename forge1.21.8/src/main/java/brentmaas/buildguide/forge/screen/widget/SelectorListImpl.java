@@ -60,7 +60,7 @@ public class SelectorListImpl extends ObjectSelectionList<SelectorListImpl.Entry
 		}
 		
 		public void render(GuiGraphics guiGraphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-			guiGraphics.drawString(Minecraft.getInstance().font, title.toString(), x + 5, y + 4, 0xFFFFFF, true);
+			guiGraphics.drawString(Minecraft.getInstance().font, title.toString(), x + 5, y + 4, 0xFFFFFFFF, true);
 		}
 		
 		@Override

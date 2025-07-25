@@ -100,7 +100,8 @@ tasks.named('jar', Jar).configure {
             "Implementation-Title": rootProject.name,
             "Implementation-Version": project.jar.archiveVersion,
             "Implementation-Vendor": gradle.ext.modid,
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "mixins.buildguide.json"
         ])
     }
 }

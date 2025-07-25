@@ -18,8 +18,11 @@ import net.minecraft.client.renderer.LevelRenderer;
 
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer {
-	@Inject(method = "renderLevel", at = @At(value = "RETURN", shift = At.Shift.BEFORE))
+	@Inject(method = "renderLevel", at = @At(value = "RETURN", shift = At.Shift.BEFORE), remap = false)
 	private void renderLevelEnd(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, Matrix4f frustrumMatrix, Matrix4f projectionMatrix, GpuBufferSlice fogBuffer, Vector4f fogColor, boolean renderSky, CallbackInfo callbackInfo) {
-		((RenderHandler) BuildGuide.renderHandler).onRenderBlock(projectionMatrix);
+		// Temporary try-catch because NeoForge also finds this mixin
+		try {
+			((RenderHandler) BuildGuide.renderHandler).onRenderBlock(projectionMatrix);
+		}catch(ClassCastException e) {}
 	}
 }
