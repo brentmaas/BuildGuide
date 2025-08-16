@@ -230,6 +230,7 @@ public class State {
 				}else if(key.equals(PERSISTENCE_SHAPESET)) {
 					pushNewShapeSet();
 					shapeSets.get(shapeSets.size() - 1).restorePersistence(value);
+					shapeSets.get(shapeSets.size() - 1).updateShape();
 				}else if(key.equals(PERSISTENCE_ISHAPESET)) {
 					iShapeSet = Integer.parseInt(value);
 				}else if(key.equals(PERSISTENCE_ISHAPENEW)) {

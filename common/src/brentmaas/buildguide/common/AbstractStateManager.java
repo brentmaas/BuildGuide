@@ -42,7 +42,7 @@ public abstract class AbstractStateManager {
 			File persistenceFile = getPersistenceFile(key);
 			if(BuildGuide.config.persistenceEnabled.value && persistenceFile.exists()) {
 				try {
-					stateStore.get(key).loadPersistence(persistenceFile);						
+					stateStore.get(key).loadPersistence(persistenceFile);
 				}catch(IOException e) {
 					BuildGuide.logHandler.sendChatMessage("Build Guide persistence failed to load: " + e.getMessage());
 					BuildGuide.logHandler.error(e.getMessage() + "\n" + e.getStackTrace());
