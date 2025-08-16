@@ -4,13 +4,10 @@ import java.util.ArrayList;
 
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.BaseScreen;
+import brentmaas.buildguide.common.screen.ShapeScreen;
 import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public abstract class Property<T> {
-	protected final static int baseX = 180;
-	protected final static int baseY = 70;
-	protected final static int height = 20;
-	
 	protected int x;
 	protected int y;
 	public T value;
@@ -19,24 +16,10 @@ public abstract class Property<T> {
 	protected boolean visible = true;
 	
 	public Property(T value, Translatable name) {
-		x = baseX;
-		y = baseY;
+		x = ShapeScreen.basePropertiesX;
+		y = ShapeScreen.basePropertiesY;
 		this.value = value;
 		this.name = name;
-	}
-	
-	public void onSelectedInGUI() {
-		for(IWidget widget: widgetList) {
-			widget.setVisibility(true);
-		}
-		visible = true;
-	}
-	
-	public void onDeselectedInGUI() {
-		for(IWidget widget: widgetList) {
-			widget.setVisibility(false);
-		}
-		visible = false;
 	}
 	
 	public void addToScreen(BaseScreen screen) {
@@ -57,12 +40,22 @@ public abstract class Property<T> {
 		this.name = name;
 	}
 	
-	public void setSlot(int slot) {
-		x = baseX;
-		y = baseY + slot * height;
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 		for(IWidget widget: widgetList) {
 			widget.setYPosition(y);
 		}
+	}
+	
+	public void setVisibility(boolean visible) {
+		for(IWidget widget: widgetList) {
+			widget.setVisibility(visible);
+		}
+		this.visible = visible;
 	}
 	
 	public void render(BaseScreen screen) {

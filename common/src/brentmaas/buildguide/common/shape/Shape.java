@@ -9,6 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.property.Property;
 import brentmaas.buildguide.common.screen.BaseScreen;
+import brentmaas.buildguide.common.screen.ShapeScreen;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 
 public abstract class Shape {
 	public ArrayList<Property<?>> properties = new ArrayList<Property<?>>();
@@ -74,6 +76,10 @@ public abstract class Shape {
 		}
 	}
 	
+	private void cancelFuture() {
+		if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
+	}
+	
 	private void doUpdate() throws Exception {
 		nBlocks = 0;
 		long t = System.currentTimeMillis();
@@ -87,7 +93,7 @@ public abstract class Shape {
 		}
 	}
 	
-	protected void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {
+	private void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {
 		if(Thread.currentThread().isInterrupted()) throw new InterruptedException(); //Interrupt check for concurrent shape generation
 		
 		//-X
@@ -141,14 +147,15 @@ public abstract class Shape {
 	
 	public void onSelectedInGUI() {
 		for(int i = 0;i < properties.size();++i) {
-			properties.get(i).setSlot(i);
-			properties.get(i).onSelectedInGUI();
+			properties.get(i).setX(ShapeScreen.basePropertiesX);
+			properties.get(i).setY(ShapeScreen.basePropertiesY + i * AbstractWidgetHandler.defaultSize);
+			properties.get(i).setVisibility(true);
 		}
 	}
 	
 	public void onDeselectedInGUI() {
 		for(Property<?> p: properties) {
-			p.onDeselectedInGUI();
+			p.setVisibility(false);
 		}
 	}
 	
@@ -159,10 +166,6 @@ public abstract class Shape {
 	
 	public long getHowLongAgoCompletedMillis() {
 		return System.currentTimeMillis() - completedAt;
-	}
-	
-	void cancelFuture() {
-		if(future != null && !(future.isDone() || future.isCancelled())) future.cancel(true);
 	}
 	
 	public String toPersistence() {

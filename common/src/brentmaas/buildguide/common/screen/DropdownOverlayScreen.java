@@ -40,7 +40,7 @@ public class DropdownOverlayScreen extends BaseScreen implements IButton {
 			BuildGuide.screenHandler.showScreen(parent);
 			openButton.setVisibility(true);
 		});
-		shapeSelectorList = BuildGuide.widgetHandler.createSelectorList(x, x + width, y + height, wrapper.getHeight(), 20, titles, current, (int selected) -> {
+		shapeSelectorList = BuildGuide.widgetHandler.createSelectorList(x, x + width, y + height, wrapper.getHeight(), titles, current, (int selected) -> {
 			callback.run(selected);
 			BuildGuide.screenHandler.showScreen(parent);
 			current = selected;

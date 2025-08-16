@@ -2,6 +2,7 @@ package brentmaas.buildguide.common.property;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 
 public class PropertyNonzeroInt extends Property<Integer> {
@@ -9,18 +10,18 @@ public class PropertyNonzeroInt extends Property<Integer> {
 	
 	public PropertyNonzeroInt(int value, Translatable name, Runnable onPress) {
 		super(value, name);
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, new Translatable("-"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, new Translatable("-"), () -> {
 			--this.value;
 			if(this.value == 0) this.value = -1;
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);
 			if(onPress != null) onPress.run();
 		}));
-		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, height, "");
+		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, AbstractWidgetHandler.defaultSize, "");
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 		widgetList.add(valueTextField);
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, height, new Translatable("screen.buildguide.set"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 			try {
 				int newval = Integer.parseInt(valueTextField.getTextValue());
 				this.value = newval;
@@ -34,7 +35,7 @@ public class PropertyNonzeroInt extends Property<Integer> {
 				valueTextField.setTextColour(0xFF0000);
 			}
 		}));
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, new Translatable("+"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, new Translatable("+"), () -> {
 			++this.value;
 			if(this.value == 0) this.value = 1;
 			valueTextField.setTextValue("" + this.value);

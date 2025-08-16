@@ -2,6 +2,7 @@ package brentmaas.buildguide.common.property;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.ITextField;
 
 public class PropertyMinimumFloat extends Property<Float> {
@@ -13,7 +14,7 @@ public class PropertyMinimumFloat extends Property<Float> {
 		super(value, name);
 		this.minValue = minValue;
 		this.inclusive = inclusive;
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, 20, height, new Translatable("-"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, new Translatable("-"), () -> {
 			if(this.value - 1 > this.minValue || (this.inclusive && this.value - 1 == this.minValue)) {
 				--this.value;
 				valueTextField.setTextValue("" + this.value);
@@ -21,11 +22,11 @@ public class PropertyMinimumFloat extends Property<Float> {
 				if(onPress != null) onPress.run();
 			}
 		}));
-		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, height, "");
+		valueTextField = BuildGuide.widgetHandler.createTextField(x + 110, y, 50, AbstractWidgetHandler.defaultSize, "");
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 		widgetList.add(valueTextField);
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, height, new Translatable("screen.buildguide.set"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 160, y, 30, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 			try {
 				float newVal = Float.parseFloat(valueTextField.getTextValue());
 				if(newVal > this.minValue || (this.inclusive && newVal == this.minValue)) {
@@ -39,7 +40,7 @@ public class PropertyMinimumFloat extends Property<Float> {
 				valueTextField.setTextColour(0xFF0000);
 			}
 		}));
-		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, 20, height, new Translatable("+"), () -> {
+		widgetList.add(BuildGuide.widgetHandler.createButton(x + 190, y, new Translatable("+"), () -> {
 			++this.value;
 			valueTextField.setTextValue("" + this.value);
 			valueTextField.setTextColour(0xFFFFFF);

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.ISlider;
@@ -15,28 +16,28 @@ public class VisualisationScreen extends BaseScreen {
 	private Translatable textDepthTest = new Translatable("screen.buildguide.depthtest");
 	private Translatable titleCubeSize = new Translatable("screen.buildguide.cubesize");
 	
-	private ISlider sliderShapeR = BuildGuide.widgetHandler.createSlider(5, 70, 120, 20, new Translatable("R"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeR : 1.0);
-	private ISlider sliderShapeG = BuildGuide.widgetHandler.createSlider(5, 90, 120, 20, new Translatable("G"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeG : 1.0);
-	private ISlider sliderShapeB = BuildGuide.widgetHandler.createSlider(5, 110, 120, 20, new Translatable("B"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeB : 1.0);
-	private ISlider sliderShapeA = BuildGuide.widgetHandler.createSlider(5, 130, 120, 20, new Translatable("A"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeA : 0.5);
-	private ISlider sliderOriginR = BuildGuide.widgetHandler.createSlider(140, 70, 120, 20, new Translatable("R"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginR : 1.0);
-	private ISlider sliderOriginG = BuildGuide.widgetHandler.createSlider(140, 90, 120, 20, new Translatable("G"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginG : 1.0);
-	private ISlider sliderOriginB = BuildGuide.widgetHandler.createSlider(140, 110, 120, 20, new Translatable("B"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginB : 1.0);
-	private ISlider sliderOriginA = BuildGuide.widgetHandler.createSlider(140, 130, 120, 20, new Translatable("A"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginA : 0.5);
-	private ISlider sliderShapeCubeSize = BuildGuide.widgetHandler.createSlider(140, 235, 120, 20, new Translatable("screen.buildguide.shape"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().shapeCubeSize : 0.6);
-	private ISlider sliderOriginCubeSize = BuildGuide.widgetHandler.createSlider(140, 255, 120, 20, new Translatable("screen.buildguide.origin"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().originCubeSize : 0.2);
+	private ISlider sliderShapeR = BuildGuide.widgetHandler.createSlider(5, 70, new Translatable("R"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeR : 1.0);
+	private ISlider sliderShapeG = BuildGuide.widgetHandler.createSlider(5, 90, new Translatable("G"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeG : 1.0);
+	private ISlider sliderShapeB = BuildGuide.widgetHandler.createSlider(5, 110, new Translatable("B"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeB : 1.0);
+	private ISlider sliderShapeA = BuildGuide.widgetHandler.createSlider(5, 130, new Translatable("A"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourShapeA : 0.5);
+	private ISlider sliderOriginR = BuildGuide.widgetHandler.createSlider(140, 70, new Translatable("R"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginR : 1.0);
+	private ISlider sliderOriginG = BuildGuide.widgetHandler.createSlider(140, 90, new Translatable("G"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginG : 1.0);
+	private ISlider sliderOriginB = BuildGuide.widgetHandler.createSlider(140, 110, new Translatable("B"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginB : 1.0);
+	private ISlider sliderOriginA = BuildGuide.widgetHandler.createSlider(140, 130, new Translatable("A"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().colourOriginA : 0.5);
+	private ISlider sliderShapeCubeSize = BuildGuide.widgetHandler.createSlider(140, 235, new Translatable("screen.buildguide.shape"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().shapeCubeSize : 0.6);
+	private ISlider sliderOriginCubeSize = BuildGuide.widgetHandler.createSlider(140, 255, new Translatable("screen.buildguide.origin"), 0.0, 1.0, BuildGuide.stateManager.getState().isShapeAvailable() ? BuildGuide.stateManager.getState().getCurrentShapeSet().originCubeSize : 0.2);
 	
-	private IButton buttonSetShape = BuildGuide.widgetHandler.createButton(5, 150, 120, 20, new Translatable("screen.buildguide.set"), () -> {
+	private IButton buttonSetShape = BuildGuide.widgetHandler.createButton(5, 150, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
 		}
 	});
-	private IButton buttonSetOrigin = BuildGuide.widgetHandler.createButton(140, 150, 120, 20, new Translatable("screen.buildguide.set"), () -> {
+	private IButton buttonSetOrigin = BuildGuide.widgetHandler.createButton(140, 150, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setOriginColour((float) sliderOriginR.getSliderValue(), (float) sliderOriginG.getSliderValue(), (float) sliderOriginB.getSliderValue(), (float) sliderOriginA.getSliderValue());
 		}
 	});
-	private IButton buttonSetShapeRandom = BuildGuide.widgetHandler.createButton(5, 170, 120, 20, new Translatable("screen.buildguide.setrandom"), () -> {
+	private IButton buttonSetShapeRandom = BuildGuide.widgetHandler.createButton(5, 170, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.setrandom"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			Random random = new Random();
 			sliderShapeR.setSliderValue(random.nextDouble());
@@ -48,7 +49,7 @@ public class VisualisationScreen extends BaseScreen {
 			BuildGuide.stateManager.getState().setShapeColour((float) sliderShapeR.getSliderValue(), (float) sliderShapeG.getSliderValue(), (float) sliderShapeB.getSliderValue(), (float) sliderShapeA.getSliderValue());
 		}
 	});
-	private IButton buttonSetOriginRandom = BuildGuide.widgetHandler.createButton(140, 170, 120, 20, new Translatable("screen.buildguide.setrandom"), () -> {
+	private IButton buttonSetOriginRandom = BuildGuide.widgetHandler.createButton(140, 170, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.setrandom"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			Random random = new Random();
 			sliderOriginR.setSliderValue(random.nextDouble());
@@ -60,7 +61,7 @@ public class VisualisationScreen extends BaseScreen {
 			BuildGuide.stateManager.getState().setOriginColour((float) sliderOriginR.getSliderValue(), (float) sliderOriginG.getSliderValue(), (float) sliderOriginB.getSliderValue(), (float) sliderOriginA.getSliderValue());
 		}
 	});
-	private IButton buttonDefaultShape = BuildGuide.widgetHandler.createButton(5, 190, 120, 20, new Translatable("screen.buildguide.default"), () -> {
+	private IButton buttonDefaultShape = BuildGuide.widgetHandler.createButton(5, 190, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.default"), () -> {
 		sliderShapeR.setSliderValue(1.0);
 		sliderShapeG.setSliderValue(1.0);
 		sliderShapeB.setSliderValue(1.0);
@@ -73,7 +74,7 @@ public class VisualisationScreen extends BaseScreen {
 			BuildGuide.stateManager.getState().setShapeColour(1.0f, 1.0f, 1.0f, 0.5f);
 		}
 	});
-	private IButton buttonDefaultOrigin = BuildGuide.widgetHandler.createButton(140, 190, 120, 20, new Translatable("screen.buildguide.default"), () -> {
+	private IButton buttonDefaultOrigin = BuildGuide.widgetHandler.createButton(140, 190, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.default"), () -> {
 		sliderOriginR.setSliderValue(1.0);
 		sliderOriginG.setSliderValue(0.0);
 		sliderOriginB.setSliderValue(0.0);
@@ -87,12 +88,12 @@ public class VisualisationScreen extends BaseScreen {
 		}
 	});
 	private ICheckboxRunnableButton buttonDepthTest;
-	private IButton buttonSetCubeSize = BuildGuide.widgetHandler.createButton(140, 275, 120, 20, new Translatable("screen.buildguide.set"), () -> {
+	private IButton buttonSetCubeSize = BuildGuide.widgetHandler.createButton(140, 275, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			BuildGuide.stateManager.getState().setCubeSize(sliderShapeCubeSize.getSliderValue(), sliderOriginCubeSize.getSliderValue());
 		}
 	});
-	private IButton buttonDefaultCubeSize = BuildGuide.widgetHandler.createButton(140, 295, 120, 20, new Translatable("screen.buildguide.default"), () -> {
+	private IButton buttonDefaultCubeSize = BuildGuide.widgetHandler.createButton(140, 295, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.default"), () -> {
 		sliderShapeCubeSize.setSliderValue(0.6);
 		sliderOriginCubeSize.setSliderValue(0.2);
 		sliderShapeCubeSize.updateText();
@@ -122,7 +123,7 @@ public class VisualisationScreen extends BaseScreen {
 			buttonDefaultOrigin.setActive(false);
 		}
 		
-		buttonDepthTest = BuildGuide.widgetHandler.createCheckbox(5, 235, 20, 20, new Translatable(""), BuildGuide.stateManager.getState().depthTest, false, () -> {
+		buttonDepthTest = BuildGuide.widgetHandler.createCheckbox(5, 235, new Translatable(""), BuildGuide.stateManager.getState().depthTest, false, () -> {
 			BuildGuide.stateManager.getState().depthTest = buttonDepthTest.isCheckboxSelected();
 			BaseScreen.shouldUpdatePersistence = true;
 		});

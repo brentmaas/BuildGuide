@@ -6,6 +6,7 @@ import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.State.ActiveScreen;
 import brentmaas.buildguide.common.property.Property;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
+import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.IButton;
 import brentmaas.buildguide.common.screen.widget.ICheckboxRunnableButton;
 import brentmaas.buildguide.common.screen.widget.ISelectorList;
@@ -26,14 +27,14 @@ public abstract class BaseScreen {
 	
 	private IButton buttonClose;
 	private ICheckboxRunnableButton buttonEnabled;
-	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, 20, new Translatable("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shape)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Shape);
-	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(130, 30, 120, 20, new Translatable("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Visualisation)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Visualisation);
-	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(255, 30, 120, 20, new Translatable("screen.buildguide.shapelist"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shapelist)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Shapelist);
-	private IButton buttonConfiguration = BuildGuide.widgetHandler.createButton(380, 30, 120, 20, new Translatable("screen.buildguide.configuration"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Settings)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Settings);
+	private IButton buttonBuildGuide = BuildGuide.widgetHandler.createButton(5, 30, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.shape"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shape)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Shape);
+	private IButton buttonVisualisation = BuildGuide.widgetHandler.createButton(130, 30, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.visualisation"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Visualisation)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Visualisation);
+	private IButton buttonShapeList = BuildGuide.widgetHandler.createButton(255, 30, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.shapelist"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Shapelist)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Shapelist);
+	private IButton buttonConfiguration = BuildGuide.widgetHandler.createButton(380, 30, 120, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.configuration"), () -> BuildGuide.screenHandler.showScreen(BuildGuide.stateManager.getState().createNewScreen(ActiveScreen.Settings)), BuildGuide.stateManager.getState().currentScreen != ActiveScreen.Settings);
 	
 	public void init() {
-		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, 20, 20, new Translatable("X"), () -> BuildGuide.screenHandler.showScreen(null));
-		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, 20, 20, new Translatable(""), BuildGuide.stateManager.getState().enabled, false, () -> {
+		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, new Translatable("X"), () -> BuildGuide.screenHandler.showScreen(null));
+		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, new Translatable(""), BuildGuide.stateManager.getState().enabled, false, () -> {
 			BuildGuide.stateManager.getState().enabled = buttonEnabled.isCheckboxSelected();
 			BaseScreen.shouldUpdatePersistence = true;
 		});
