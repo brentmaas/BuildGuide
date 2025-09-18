@@ -43,20 +43,20 @@ public class BuildGuide {
 		BuildGuide.logHandler = logHandler;
 		BuildGuide.config = new Config(configFolder);
 		
-		ShapeRegistry.registerShape(ShapeCatenary.class);
-		ShapeRegistry.registerShape(ShapeCircle.class);
-		ShapeRegistry.registerShape(ShapeCone.class);
-		ShapeRegistry.registerShape(ShapeCuboid.class);
-		ShapeRegistry.registerShape(ShapeEllipse.class);
-		ShapeRegistry.registerShape(ShapeEllipsoid.class);
-		ShapeRegistry.registerShape(ShapeGrid.class);
-		ShapeRegistry.registerShape(ShapeLine.class);
-		ShapeRegistry.registerShape(ShapeParabola.class);
-		ShapeRegistry.registerShape(ShapeParaboloid.class);
-		ShapeRegistry.registerShape(ShapePolygon.class);
-		ShapeRegistry.registerShape(ShapePolygonalPyramid.class);
-		ShapeRegistry.registerShape(ShapeSphere.class);
-		ShapeRegistry.registerShape(ShapeTorus.class);
+		ShapeRegistry.registerShape(ShapeCatenary.class, "shape.buildguide.catenary");
+		ShapeRegistry.registerShape(ShapeCircle.class, "shape.buildguide.circle");
+		ShapeRegistry.registerShape(ShapeCone.class, "shape.buildguide.cone");
+		ShapeRegistry.registerShape(ShapeCuboid.class, "shape.buildguide.cuboid");
+		ShapeRegistry.registerShape(ShapeEllipse.class, "shape.buildguide.ellipse");
+		ShapeRegistry.registerShape(ShapeEllipsoid.class, "shape.buildguide.ellipsoid");
+		ShapeRegistry.registerShape(ShapeGrid.class, "shape.buildguide.grid");
+		ShapeRegistry.registerShape(ShapeLine.class, "shape.buildguide.line");
+		ShapeRegistry.registerShape(ShapeParabola.class, "shape.buildguide.parabola");
+		ShapeRegistry.registerShape(ShapeParaboloid.class, "shape.buildguide.paraboloid");
+		ShapeRegistry.registerShape(ShapePolygon.class, "shape.buildguide.polygon");
+		ShapeRegistry.registerShape(ShapePolygonalPyramid.class, "shape.buildguide.polygonalpyramid");
+		ShapeRegistry.registerShape(ShapeSphere.class, "shape.buildguide.sphere");
+		ShapeRegistry.registerShape(ShapeTorus.class, "shape.buildguide.torus");
 		
 		keyBindHandler.register();
 		keyBindHandler.registerOnKeyInput();

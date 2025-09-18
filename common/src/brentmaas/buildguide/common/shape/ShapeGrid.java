@@ -39,8 +39,4 @@ public class ShapeGrid extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.grid";
-	}
 }

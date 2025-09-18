@@ -84,8 +84,4 @@ public class ShapeParaboloid extends Shape {
 			break;
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.paraboloid";
-	}
 }

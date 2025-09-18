@@ -46,8 +46,4 @@ public class ShapeSphere extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.sphere";
-	}
 }

@@ -66,8 +66,4 @@ public class ShapeCone extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.cone";
-	}
 }

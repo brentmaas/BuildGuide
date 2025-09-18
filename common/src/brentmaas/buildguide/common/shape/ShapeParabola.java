@@ -83,8 +83,4 @@ public class ShapeParabola extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.parabola";
-	}
 }

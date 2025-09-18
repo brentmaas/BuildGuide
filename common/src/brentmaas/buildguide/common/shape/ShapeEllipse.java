@@ -107,8 +107,4 @@ public class ShapeEllipse extends Shape {
 			break;
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.ellipse";
-	}
 }

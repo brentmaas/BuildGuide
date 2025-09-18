@@ -14,10 +14,10 @@ public class ShapeRegistry {
 	private static ArrayList<String> classIdentifiers = new ArrayList<String>();
 	private static ArrayList<String> translationKeys = new ArrayList<String>();
 	
-	public static void registerShape(Class<? extends Shape> shapeClass) {
+	public static void registerShape(Class<? extends Shape> shapeClass, String translationKey) {
 		shapeRegistry.put(shapeClass.getName(), shapeClass);
 		classIdentifiers.add(shapeClass.getName());
-		translationKeys.add(getNewInstance(shapeClass.getName()).getTranslationKey());
+		translationKeys.add(translationKey);
 	}
 	
 	public static Shape getNewInstance(String classIdentifier) {
@@ -55,6 +55,18 @@ public class ShapeRegistry {
 			return translationKeys.get(index);
 		}
 		return null;
+	}
+	
+	public static String getTranslationKey(Class<? extends Shape> shapeClass) {
+		int shapeId = getShapeId(shapeClass);
+		if(shapeId >= 0) {
+			return getTranslationKey(shapeId);
+		}
+		return null;
+	}
+	
+	public static String getTranslationKey(Shape shape) {
+		return getTranslationKey(shape.getClass());
 	}
 	
 	public static List<Translatable> getTranslatables(){

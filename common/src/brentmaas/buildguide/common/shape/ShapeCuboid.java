@@ -133,8 +133,4 @@ public class ShapeCuboid extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.cuboid";
-	}
 }

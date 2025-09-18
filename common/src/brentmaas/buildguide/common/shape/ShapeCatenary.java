@@ -83,8 +83,4 @@ public class ShapeCatenary extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.catenary";
-	}
 }

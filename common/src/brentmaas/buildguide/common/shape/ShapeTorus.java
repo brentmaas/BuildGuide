@@ -81,8 +81,4 @@ public class ShapeTorus extends Shape {
 		
 		update();
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.torus";
-	}
 }

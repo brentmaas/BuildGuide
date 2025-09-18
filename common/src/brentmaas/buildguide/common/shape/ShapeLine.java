@@ -36,8 +36,4 @@ public class ShapeLine extends Shape {
 			addShapeCube(buffer, (int) (dx * i + 0.5 * Math.signum(propertyDx.value)), (int) (dy * i + 0.5 * Math.signum(propertyDy.value)), (int) (dz * i + 0.5 * Math.signum(propertyDz.value)));
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.line";
-	}
 }

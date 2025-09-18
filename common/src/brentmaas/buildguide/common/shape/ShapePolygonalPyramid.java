@@ -90,8 +90,4 @@ public class ShapePolygonalPyramid extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.polygonalpyramid";
-	}
 }

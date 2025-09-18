@@ -31,7 +31,6 @@ public abstract class Shape {
 	public boolean error = false;
 	
 	protected abstract void updateShape(IShapeBuffer builder) throws Exception;
-	public abstract String getTranslationKey();
 	
 	public void update() {
 		BaseScreen.shouldUpdatePersistence = true;
@@ -162,6 +161,10 @@ public abstract class Shape {
 	
 	public long getHowLongAgoCompletedMillis() {
 		return System.currentTimeMillis() - completedAt;
+	}
+	
+	public final String getTranslationKey() {
+		return ShapeRegistry.getTranslationKey(this);
 	}
 	
 	public String toPersistence() {

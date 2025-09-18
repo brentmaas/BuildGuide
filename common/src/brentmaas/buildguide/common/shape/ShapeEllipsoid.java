@@ -57,8 +57,4 @@ public class ShapeEllipsoid extends Shape {
 			}
 		}
 	}
-	
-	public String getTranslationKey() {
-		return "shape.buildguide.ellipsoid";
-	}
 }
