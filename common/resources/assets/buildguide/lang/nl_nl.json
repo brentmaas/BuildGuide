@@ -2,8 +2,6 @@
 	"_comment": "Configuratie",
 	"config.buildguide.asyncEnabled": "Asynchrone vormgeneratie",
 	"config.buildguide.asyncEnabledComment": "Zet asynchrone (gemultithreade) vormgeneratie aan.",
-	"config.buildguide.debugGenerationTimingsEnabled": "Debug generatietijd",
-	"config.buildguide.debugGenerationTimingsEnabledComment": "Zet debuguitvoer aan die je vertelt hoe lang het duurde voor een vorm om te worden gegenereerd.",
 	"config.buildguide.persistenceEnabled": "Vormbehoud",
 	"config.buildguide.persistenceEnabledComment": "Sta toe dat vormen in een bestand worden opgeslagen zodat ze kunnen worden hersteld nadat de client is herstart.",
 	"config.buildguide.shapeListRandomColorsDefaultEnabled": "Vormenlijst willekeurige kleuren",

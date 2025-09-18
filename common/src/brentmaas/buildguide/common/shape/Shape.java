@@ -82,15 +82,11 @@ public abstract class Shape {
 	
 	private void doUpdate() throws Exception {
 		nBlocks = 0;
-		long t = System.currentTimeMillis();
 		buffer = BuildGuide.shapeHandler.newBuffer();
 		buffer.setColour((int) (255 * shapeSet.colourShapeR), (int) (255 * shapeSet.colourShapeG), (int) (255 * shapeSet.colourShapeB), (int) (255 * shapeSet.colourShapeA));
 		updateShape(buffer);
 		buffer.setColour((int) (255 * shapeSet.colourOriginR), (int) (255 * shapeSet.colourOriginG), (int) (255 * shapeSet.colourOriginB), (int) (255 * shapeSet.colourOriginA));
 		addCube(buffer, 0.5 - shapeSet.originCubeSize / 2 + originOffsetX, 0.5 - shapeSet.originCubeSize / 2 + originOffsetY, 0.5 - shapeSet.originCubeSize / 2 + originOffsetZ, shapeSet.originCubeSize);
-		if(BuildGuide.config.debugGenerationTimingsEnabled.value) {
-			BuildGuide.logHandler.debugOrHigher("Shape " + BuildGuide.screenHandler.translate(getTranslationKey()) + " has been generated in " + (System.currentTimeMillis() - t) + " ms");
-		}
 	}
 	
 	private void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {

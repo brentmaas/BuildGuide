@@ -40,15 +40,6 @@ public class ConfigurationScreen extends BaseScreen {
 			BuildGuide.config.write();
 		});
 		
-		buttonDebugGenerationTiminigsEnabled = BuildGuide.widgetHandler.createCheckbox(255, 210, new Translatable(""), BuildGuide.config.debugGenerationTimingsEnabled.value, false, () -> {
-			BuildGuide.config.debugGenerationTimingsEnabled.setValue(buttonDebugGenerationTiminigsEnabled.isCheckboxSelected());
-			BuildGuide.config.write();
-		});
-		buttonDebugGenerationTimingsEnabledDefault = BuildGuide.widgetHandler.createButton(280, 210, 50, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.default"), () -> {
-			buttonDebugGenerationTiminigsEnabled.setChecked(BuildGuide.config.debugGenerationTimingsEnabled.getDefault());
-			BuildGuide.config.write();
-		});
-		
 		addWidget(buttonAsyncEnabled);
 		addWidget(buttonAsyncEnabledDefault);
 		addWidget(buttonAdvancedRandomColorsDefaultEnabled);
@@ -70,8 +61,5 @@ public class ConfigurationScreen extends BaseScreen {
 		
 		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.persistenceEnabled.translationKey), 10, 165, 0xFFFFFF);
 		drawShadowLeft(new Translatable(BuildGuide.config.persistenceEnabled.commentTranslationKey).toString(), 10, 185, 0xFFFFFF);
-		
-		drawShadowLeft(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + new Translatable(BuildGuide.config.debugGenerationTimingsEnabled.translationKey), 10, 215, 0xFFFFFF);
-		drawShadowLeft(new Translatable(BuildGuide.config.debugGenerationTimingsEnabled.commentTranslationKey).toString(), 10, 235, 0xFFFFFF);
 	}
 }

@@ -2,8 +2,6 @@
 	"_comment": "Config",
 	"config.buildguide.asyncEnabled": "Asenkron şekil oluşturma",
 	"config.buildguide.asyncEnabledComment": "Asenkron (çoklu iş parçacıklı) şekil oluşturmayı etkinleştir.",
-	"config.buildguide.debugGenerationTimingsEnabled": "Hata ayıklama oluşturma zamanlamaları",
-	"config.buildguide.debugGenerationTimingsEnabledComment": "Bir şeklin oluşmasının ne kadar sürdüğünü söyleyen hata ayıklama çıktısını etkinleştir.",
 	"config.buildguide.persistenceEnabled": "Şekil kalıcılığı",
 	"config.buildguide.persistenceEnabledComment": "Şekillerin bir dosyaya kaydedilmesine izin ver, böylece istemciyi yeniden başlattıktan sonra geri yüklenebilirler.",
 	"config.buildguide.shapeListRandomColorsDefaultEnabled": "Şekil listesi rastgele renkler",

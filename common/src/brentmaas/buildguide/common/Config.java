@@ -18,7 +18,6 @@ public class Config {
 	public ConfigElement<Boolean> asyncEnabled = new BooleanConfigElement("asyncEnabled", "config.buildguide.asyncEnabled", true, "config.buildguide.asyncEnabledComment");
 	public ConfigElement<Boolean> shapeListRandomColorsDefaultEnabled = new BooleanConfigElement("shapeListRandomColorsDefaultEnabled", "config.buildguide.shapeListRandomColorsDefaultEnabled", false, "config.buildguide.shapeListRandomColorsDefaultEnabledComment");
 	public ConfigElement<Boolean> persistenceEnabled = new BooleanConfigElement("persistenceEnabled", "config.buildguide.persistenceEnabled", false, "config.buildguide.persistenceEnabledComment");
-	public ConfigElement<Boolean> debugGenerationTimingsEnabled = new BooleanConfigElement("debugGenerationTimingsEnabled", "config.buildguide.debugGenerationTimingsEnabled", false, "config.buildguide.debugGenerationTimingsEnabledComment");
 	
 	public Config(File configFolder) {
 		configFile = new File(configFolder, "buildguide.cfg");
@@ -26,7 +25,6 @@ public class Config {
 		configElements.add(asyncEnabled);
 		configElements.add(shapeListRandomColorsDefaultEnabled);
 		configElements.add(persistenceEnabled);
-		configElements.add(debugGenerationTimingsEnabled);
 		
 		if(!configFile.exists()) {
 			write();
