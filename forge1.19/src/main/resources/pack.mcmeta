@@ -1,8 +1,0 @@
-{
-    "pack": {
-        "description": "${modid} resources",
-        "pack_format": ${pack_format},
-        "forge:resource_pack_format": ${pack_format},
-        "forge:data_pack_format": ${pack_format}
-    }
-}

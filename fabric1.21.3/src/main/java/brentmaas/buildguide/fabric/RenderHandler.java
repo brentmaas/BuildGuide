@@ -57,14 +57,6 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 		poseStackInstance.popPose();
 	}
 	
-	protected boolean isCompatibilityProfile() {
-		return GL32.glGetInteger(GL32.GL_CONTEXT_PROFILE_MASK) == GL32.GL_CONTEXT_COMPATIBILITY_PROFILE_BIT;
-	}
-	
-	protected boolean textureEnabled() {
-		return GL32.glIsEnabled(GL32.GL_TEXTURE_2D);
-	}
-	
 	protected boolean depthTestEnabled() {
 		return GL32.glIsEnabled(GL32.GL_DEPTH_TEST);
 	}
@@ -75,10 +67,6 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 	
 	protected boolean blendEnabled() {
 		return GL32.glIsEnabled(GL32.GL_BLEND);
-	}
-	
-	protected void setTexture(boolean enabled) {
-		//Appears to not be needed/available in 1.19.4
 	}
 	
 	protected void setDepthTest(boolean enabled) {

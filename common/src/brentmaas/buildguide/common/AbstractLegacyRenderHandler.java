@@ -3,17 +3,11 @@ package brentmaas.buildguide.common;
 import brentmaas.buildguide.common.shape.ShapeSet;
 
 public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler {
-	protected abstract boolean isCompatibilityProfile();
-	
-	protected abstract boolean textureEnabled();
-	
 	protected abstract boolean depthTestEnabled();
 	
 	protected abstract boolean depthMaskEnabled();
 	
 	protected abstract boolean blendEnabled();
-	
-	protected abstract void setTexture(boolean enabled);
 	
 	protected abstract void setDepthTest(boolean enabled);
 	
@@ -37,8 +31,6 @@ public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler 
 					
 					setupRenderingShapeSet(shapeSet);
 					
-					boolean toggleTexture = isCompatibilityProfile() && textureEnabled();
-					
 					boolean hasDepthTest = depthTestEnabled();
 					boolean toggleDepthTest = BuildGuide.stateManager.getState().depthTest ^ hasDepthTest;
 					
@@ -46,7 +38,6 @@ public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler 
 					
 					boolean toggleBlend = !blendEnabled();
 					
-					if(toggleTexture) setTexture(false);
 					if(toggleDepthTest && hasDepthTest) setDepthTest(false);
 					else if(toggleDepthTest) setDepthTest(true);
 					if(toggleDepthMask) setDepthMask(false);
@@ -60,7 +51,6 @@ public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler 
 					if(toggleDepthTest && hasDepthTest) setDepthTest(true);
 					else if(toggleDepthTest) setDepthTest(false);
 					if(toggleDepthMask) setDepthMask(true);
-					if(toggleTexture) setTexture(true);
 					
 					endRenderingShapeSet();
 				}
