@@ -1,15 +1,23 @@
 package brentmaas.buildguide.common.property;
 
+import java.util.ArrayList;
+
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.BaseScreen;
+import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public class PropertyEnum<T extends Enum<T>> extends Property<T> {
 	private String[] names;
+	private Runnable onPress;
 	
 	public PropertyEnum(T value, Translatable name, Runnable onPress, String[] names) {
 		super(value, name);
 		this.names = names;
+		this.onPress = onPress;
+	}
+	
+	protected void initWidgets(ArrayList<IWidget> widgetList) {
 		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, new Translatable("<-"), () -> {
 			this.value = this.value.getDeclaringClass().getEnumConstants()[Math.floorMod(this.value.ordinal() - 1, this.value.getDeclaringClass().getEnumConstants().length)];
 			if(onPress != null) onPress.run();

@@ -12,7 +12,7 @@ public abstract class Property<T> {
 	protected int y;
 	public T value;
 	protected Translatable name;
-	public ArrayList<IWidget> widgetList = new ArrayList<IWidget>();
+	private ArrayList<IWidget> widgetList = null;
 	protected boolean visible = true;
 	
 	public Property(T value, Translatable name) {
@@ -22,8 +22,18 @@ public abstract class Property<T> {
 		this.name = name;
 	}
 	
+	protected abstract void initWidgets(ArrayList<IWidget> widgetList);
+	
+	public ArrayList<IWidget> getWidgetList() {
+		if(widgetList == null) {
+			widgetList = new ArrayList<IWidget>();
+			initWidgets(widgetList);
+		}
+		return widgetList;
+	}
+	
 	public void addToScreen(BaseScreen screen) {
-		for(IWidget widget: widgetList) {
+		for(IWidget widget: getWidgetList()) {
 			screen.addWidget(widget);
 		}
 	}
@@ -46,13 +56,13 @@ public abstract class Property<T> {
 	
 	public void setY(int y) {
 		this.y = y;
-		for(IWidget widget: widgetList) {
+		for(IWidget widget: getWidgetList()) {
 			widget.setYPosition(y);
 		}
 	}
 	
 	public void setVisibility(boolean visible) {
-		for(IWidget widget: widgetList) {
+		for(IWidget widget: getWidgetList()) {
 			widget.setVisibility(visible);
 		}
 		this.visible = visible;

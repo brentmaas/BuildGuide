@@ -1,17 +1,25 @@
 package brentmaas.buildguide.common.property;
 
+import java.util.ArrayList;
+
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.ITextField;
+import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public class PropertyMinimumInt extends Property<Integer> {
 	private ITextField valueTextField;
+	private Runnable onPress;
 	private int minValue;
 	
 	public PropertyMinimumInt(int value, Translatable name, Runnable onPress, int minValue) {
 		super(value, name);
+		this.onPress = onPress;
 		this.minValue = minValue;
+	}
+	
+	protected void initWidgets(ArrayList<IWidget> widgetList) {
 		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, new Translatable("-"), () -> {
 			if(this.value > this.minValue) {
 				--this.value;
@@ -49,6 +57,7 @@ public class PropertyMinimumInt extends Property<Integer> {
 	public void setValue(Integer value) {
 		if(value >= minValue) {
 			super.setValue(value);
+			getWidgetList(); // Initialise `valueTextField` if still null
 			valueTextField.setTextValue("" + value);
 			valueTextField.setTextColour(0xFFFFFF);
 		}

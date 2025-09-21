@@ -1,15 +1,23 @@
 package brentmaas.buildguide.common.property;
 
+import java.util.ArrayList;
+
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
 import brentmaas.buildguide.common.screen.widget.AbstractWidgetHandler;
 import brentmaas.buildguide.common.screen.widget.ITextField;
+import brentmaas.buildguide.common.screen.widget.IWidget;
 
 public class PropertyNonzeroFloat extends Property<Float> {
 	private ITextField valueTextField;
+	private Runnable onPress;
 	
 	public PropertyNonzeroFloat(float value, Translatable name, Runnable onPress) {
 		super(value, name);
+		this.onPress = onPress;
+	}
+	
+	protected void initWidgets(ArrayList<IWidget> widgetList) {
 		widgetList.add(BuildGuide.widgetHandler.createButton(x + 90, y, new Translatable("-"), () -> {
 			--this.value;
 			if(this.value == 0) this.value = -1.0f;
@@ -46,6 +54,7 @@ public class PropertyNonzeroFloat extends Property<Float> {
 	
 	public void setValue(Float value) {
 		super.setValue(value);
+		getWidgetList(); // Initialise `valueTextField` if still null
 		valueTextField.setTextValue("" + value);
 		valueTextField.setTextColour(0xFFFFFF);
 	}
