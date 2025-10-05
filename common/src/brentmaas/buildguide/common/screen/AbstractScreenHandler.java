@@ -31,7 +31,7 @@ public abstract class AbstractScreenHandler {
 			long time = System.currentTimeMillis();
 			progressIndicatorPart = " " + progressIndicator[(int) ((time / 100) % progressIndicator.length)];
 		}
-		return (shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.visible ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + new Translatable(shapeSet != null && shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslationKey() : "shape.buildguide.none") + progressIndicatorPart;
+		return (shapeSet != null && shapeSet.isShapeAvailable() && !shapeSet.isVisible() ? BuildGuide.screenHandler.TEXT_MODIFIER_STRIKETHROUGH : "") + new Translatable(shapeSet != null && shapeSet.isShapeAvailable() ? shapeSet.getShape().getTranslationKey() : "shape.buildguide.none") + progressIndicatorPart;
 	}
 	
 	public int getShapeProgressColour(Shape shape) {

@@ -15,22 +15,32 @@ public class ShapeSet {
 	public Shape[] shapes;
 	private int index;
 	
-	public Origin origin;
+	private Origin origin;
 	
-	public boolean visible = true;
-	
-	public float colourShapeR = 1.0f;
-	public float colourShapeG = 1.0f;
-	public float colourShapeB = 1.0f;
-	public float colourShapeA = 0.5f;
-	
-	public float colourOriginR = 1.0f;
-	public float colourOriginG = 0.0f;
-	public float colourOriginB = 0.0f;
-	public float colourOriginA = 0.5f;
+	private boolean visible = true;
 
-	public double shapeCubeSize = 0.6;
-	public double originCubeSize = 0.2;
+	public static final float defaultColourShapeR = 1.0f;
+	public static final float defaultColourShapeG = 1.0f;
+	public static final float defaultColourShapeB = 1.0f;
+	public static final float defaultColourShapeA = 0.5f;
+	private float colourShapeR = defaultColourShapeR;
+	private float colourShapeG = defaultColourShapeG;
+	private float colourShapeB = defaultColourShapeB;
+	private float colourShapeA = defaultColourShapeA;
+
+	public static final float defaultColourOriginR = 1.0f;
+	public static final float defaultColourOriginG = 0.0f;
+	public static final float defaultColourOriginB = 0.0f;
+	public static final float defaultColourOriginA = 0.5f;
+	private float colourOriginR = defaultColourOriginR;
+	private float colourOriginG = defaultColourOriginG;
+	private float colourOriginB = defaultColourOriginB;
+	private float colourOriginA = defaultColourOriginA;
+
+	public static final double defaultShapeCubeSize = 0.6;
+	public static final double defaultOriginCubeSize = 0.2;
+	private double shapeCubeSize = defaultShapeCubeSize;
+	private double originCubeSize = defaultOriginCubeSize;
 	
 	public ShapeSet(int startIndex) {
 		shapes = new Shape[ShapeRegistry.getNumberOfShapes()];
@@ -41,11 +51,13 @@ public class ShapeSet {
 	private Shape initialiseShape(String shapeId) {
 		Shape newShape = ShapeRegistry.getNewInstance(shapeId);
 		newShape.shapeSet = this;
+		BaseScreen.shouldUpdatePersistence = true;
 		return newShape;
 	}
 	
 	public void resetOrigin() {
 		origin = BuildGuide.shapeHandler.getPlayerPosition();
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void updateShape() {
@@ -91,6 +103,68 @@ public class ShapeSet {
 		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
+	public float getShapeColourR() {
+		return colourShapeR;
+	}
+	
+	public float getShapeColourG() {
+		return colourShapeG;
+	}
+	
+	public float getShapeColourB() {
+		return colourShapeB;
+	}
+	
+	public float getShapeColourA() {
+		return colourShapeA;
+	}
+	
+	public void setShapeColour(float r, float g, float b, float a) {
+		colourShapeR = r;
+		colourShapeG = g;
+		colourShapeB = b;
+		colourShapeA = a;
+		updateAllShapes();
+	}
+	
+	public float getOriginColourR() {
+		return colourOriginR;
+	}
+	
+	public float getOriginColourG() {
+		return colourOriginG;
+	}
+	
+	public float getOriginColourB() {
+		return colourOriginB;
+	}
+	
+	public float getOriginColourA() {
+		return colourOriginA;
+	}
+	
+	public void setOriginColour(float r, float g, float b, float a) {
+		colourOriginR = r;
+		colourOriginG = g;
+		colourOriginB = b;
+		colourOriginA = a;
+		updateAllShapes();
+	}
+	
+	public void setCubeSize(double shapeCubeSize, double originCubeSize) {
+		this.shapeCubeSize = shapeCubeSize;
+		this.originCubeSize = originCubeSize;
+		updateAllShapes();
+	}
+	
+	public double getShapeCubeSize() {
+		return shapeCubeSize;
+	}
+	
+	public double getOriginCubeSize() {
+		return originCubeSize;
+	}
+	
 	public boolean isShapeAvailable() {
 		return isShapeAvailable(index);
 	}
@@ -114,6 +188,32 @@ public class ShapeSet {
 	
 	public void setIndex(int index) {
 		this.index = index;
+		BaseScreen.shouldUpdatePersistence = true;
+	}
+	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+		BaseScreen.shouldUpdatePersistence = true;
+	}
+	
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	public boolean hasOrigin() {
+		return origin != null;
+	}
+	
+	public int getOriginX() {
+		return origin.x;
+	}
+	
+	public int getOriginY() {
+		return origin.y;
+	}
+	
+	public int getOriginZ() {
+		return origin.z;
 	}
 	
 	public String toPersistence() {

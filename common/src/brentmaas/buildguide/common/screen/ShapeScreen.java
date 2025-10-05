@@ -19,7 +19,6 @@ public class ShapeScreen extends BaseScreen{
 	
 	private DropdownOverlayScreen dropdownOverlayShapeSelect = new DropdownOverlayScreen(this, 5, 70, 160, AbstractWidgetHandler.defaultSize, ShapeRegistry.getTranslatables(), BuildGuide.stateManager.getState().getCurrentShapeIndex(), (int selected) -> setShape(selected));
 	private IButton buttonOrigin = BuildGuide.widgetHandler.createButton(5, 115, 160, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.setorigin"), () -> setOrigin());
-	//It's better off as custom buttons instead of PropertyInt
 	private IButton buttonOriginXDecrease = BuildGuide.widgetHandler.createButton(25, 135, new Translatable("-"), () -> shiftOrigin(-1, 0, 0));
 	private IButton buttonOriginXIncrease = BuildGuide.widgetHandler.createButton(145, 135, new Translatable("+"), () -> shiftOrigin(1, 0, 0));
 	private IButton buttonOriginYDecrease = BuildGuide.widgetHandler.createButton(25, 155, new Translatable("-"), () -> shiftOrigin(0, -1, 0));
@@ -71,11 +70,11 @@ public class ShapeScreen extends BaseScreen{
 			buttonSetZ.setActive(false);
 		}
 		
-		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x : "-");
+		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX() : "-");
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y : "-");
+		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY() : "-");
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
+		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ() : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
 		addDropdownOverlayScreen(dropdownOverlayShapeSelect);
@@ -138,26 +137,26 @@ public class ShapeScreen extends BaseScreen{
 	private void setOrigin() {
 		BuildGuide.stateManager.getState().resetOrigin();
 		BaseScreen.shouldUpdatePersistence = true;
-		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
+		textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX());
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);
+		textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY());
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z);
+		textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ());
 		textFieldZ.setTextColour(0xFFFFFF);
 	}
 	
 	private void shiftOrigin(int dx, int dy, int dz) {
 		BuildGuide.stateManager.getState().shiftOrigin(dx, dy, dz);
 		if(dx != 0) {
-			textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
+			textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX());
 			textFieldX.setTextColour(0xFFFFFF);
 		}
 		if(dy != 0) {
-			textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);
+			textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY());
 			textFieldY.setTextColour(0xFFFFFF);
 		}
 		if(dz != 0) {
-			textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z);
+			textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ());
 			textFieldZ.setTextColour(0xFFFFFF);
 		}
 	}

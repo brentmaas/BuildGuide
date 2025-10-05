@@ -82,10 +82,10 @@ public abstract class Shape {
 	private void doUpdate() throws Exception {
 		nBlocks = 0;
 		buffer = BuildGuide.shapeHandler.newBuffer();
-		buffer.setColour((int) (255 * shapeSet.colourShapeR), (int) (255 * shapeSet.colourShapeG), (int) (255 * shapeSet.colourShapeB), (int) (255 * shapeSet.colourShapeA));
+		buffer.setColour((int) (255 * shapeSet.getShapeColourR()), (int) (255 * shapeSet.getShapeColourG()), (int) (255 * shapeSet.getShapeColourB()), (int) (255 * shapeSet.getShapeColourA()));
 		updateShape(buffer);
-		buffer.setColour((int) (255 * shapeSet.colourOriginR), (int) (255 * shapeSet.colourOriginG), (int) (255 * shapeSet.colourOriginB), (int) (255 * shapeSet.colourOriginA));
-		addCube(buffer, 0.5 - shapeSet.originCubeSize / 2 + originOffsetX, 0.5 - shapeSet.originCubeSize / 2 + originOffsetY, 0.5 - shapeSet.originCubeSize / 2 + originOffsetZ, shapeSet.originCubeSize);
+		buffer.setColour((int) (255 * shapeSet.getOriginColourR()), (int) (255 * shapeSet.getOriginColourG()), (int) (255 * shapeSet.getOriginColourB()), (int) (255 * shapeSet.getOriginColourA()));
+		addOriginCube(buffer);
 	}
 	
 	private void addCube(IShapeBuffer buffer, double x, double y, double z, double s) throws InterruptedException {
@@ -129,9 +129,13 @@ public abstract class Shape {
 	}
 	
 	protected void addShapeCube(IShapeBuffer buffer, int x, int y, int z) throws InterruptedException {
-		addCube(buffer, x + 0.5 - shapeSet.shapeCubeSize / 2, y + 0.5 - shapeSet.shapeCubeSize / 2, z + 0.5 - shapeSet.shapeCubeSize / 2, shapeSet.shapeCubeSize);
+		addCube(buffer, x + 0.5 - shapeSet.getShapeCubeSize() / 2, y + 0.5 - shapeSet.getShapeCubeSize() / 2, z + 0.5 - shapeSet.getShapeCubeSize() / 2, shapeSet.getShapeCubeSize());
 		
 		++nBlocks;
+	}
+	
+	protected void addOriginCube(IShapeBuffer buffer) throws InterruptedException {
+		addCube(buffer, 0.5 - shapeSet.getOriginCubeSize() / 2 + originOffsetX, 0.5 - shapeSet.getOriginCubeSize() / 2 + originOffsetY, 0.5 - shapeSet.getOriginCubeSize() / 2 + originOffsetZ, shapeSet.getOriginCubeSize());
 	}
 	
 	protected void setOriginOffset(double dx, double dy, double dz) {

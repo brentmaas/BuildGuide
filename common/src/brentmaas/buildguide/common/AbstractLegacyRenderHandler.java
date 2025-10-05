@@ -23,7 +23,7 @@ public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler 
 	protected void renderShapeSet(ShapeSet shapeSet) {
 		if(shapeSet.getShape().lock.tryLock()) {
 			try {
-				if(shapeSet.visible && shapeSet.getShape().ready && !shapeSet.getShape().error && shapeSet.getShape().buffer != null) { // TODO: Nullcheck on buffer should not be necessary because we check `ready`
+				if(shapeSet.isVisible() && shapeSet.getShape().ready && !shapeSet.getShape().error && shapeSet.getShape().buffer != null) { // TODO: Nullcheck on buffer should not be necessary because we check `ready`
 					if(!shapeSet.getShape().vertexBufferUnpacked) {
 						shapeSet.getShape().buffer.end();
 						shapeSet.getShape().vertexBufferUnpacked = true;
@@ -32,7 +32,7 @@ public abstract class AbstractLegacyRenderHandler extends AbstractRenderHandler 
 					setupRenderingShapeSet(shapeSet);
 					
 					boolean hasDepthTest = depthTestEnabled();
-					boolean toggleDepthTest = BuildGuide.stateManager.getState().depthTest ^ hasDepthTest;
+					boolean toggleDepthTest = BuildGuide.stateManager.getState().isDepthTest() ^ hasDepthTest;
 					
 					boolean toggleDepthMask = depthMaskEnabled();
 					

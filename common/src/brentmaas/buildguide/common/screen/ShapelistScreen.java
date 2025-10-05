@@ -19,7 +19,7 @@ public class ShapelistScreen extends BaseScreen {
 	
 	private IShapeList shapeList;
 	
-	private DropdownOverlayScreen dropdownOverlayScreenNewShapeSelect = new DropdownOverlayScreen(this, 5, 70, 160, AbstractWidgetHandler.defaultSize, ShapeRegistry.getTranslatables(), BuildGuide.stateManager.getState().iShapeNew, (int selected) -> setNewShape(selected));
+	private DropdownOverlayScreen dropdownOverlayScreenNewShapeSelect = new DropdownOverlayScreen(this, 5, 70, 160, AbstractWidgetHandler.defaultSize, ShapeRegistry.getTranslatables(), BuildGuide.stateManager.getState().getIShapeNew(), (int selected) -> BuildGuide.stateManager.getState().setIShapeNew(selected));
 	private IButton buttonAdd = BuildGuide.widgetHandler.createButton(5, 90, 160, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.add"), () -> {
 		BuildGuide.stateManager.getState().pushNewShapeSet();
 		BuildGuide.stateManager.getState().getShapeSet(BuildGuide.stateManager.getState().getNumberOfShapeSets() - 1).updateAllShapes();
@@ -51,7 +51,7 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonSetX = BuildGuide.widgetHandler.createButton(115, 220, 30, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldX.getTextValue());
-			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
+			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX();
 			BuildGuide.stateManager.getState().shiftOrigins(delta, 0, 0);
 			textFieldX.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -61,7 +61,7 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonSetY = BuildGuide.widgetHandler.createButton(115, 240, 30, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldY.getTextValue());
-			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
+			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY();
 			BuildGuide.stateManager.getState().shiftOrigins(0, delta, 0);
 			textFieldY.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -71,7 +71,7 @@ public class ShapelistScreen extends BaseScreen {
 	private IButton buttonSetZ = BuildGuide.widgetHandler.createButton(115, 260, 30, AbstractWidgetHandler.defaultSize, new Translatable("screen.buildguide.set"), () -> {
 		try {
 			int newval = Integer.parseInt(textFieldZ.getTextValue());
-			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
+			int delta = newval - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ();
 			BuildGuide.stateManager.getState().shiftOrigins(0, 0, delta);
 			textFieldZ.setTextColour(0xFFFFFF);
 		}catch(NumberFormatException e) {
@@ -84,11 +84,11 @@ public class ShapelistScreen extends BaseScreen {
 		
 		checkActive();
 		
-		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x : "-");
+		textFieldX.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX() : "-");
 		textFieldX.setTextColour(0xFFFFFF);
-		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y : "-");
+		textFieldY.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY() : "-");
 		textFieldY.setTextColour(0xFFFFFF);
-		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z : "-");
+		textFieldZ.setTextValue(BuildGuide.stateManager.getState().isShapeAvailable() ? "" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ() : "-");
 		textFieldZ.setTextColour(0xFFFFFF);
 		
 		addDropdownOverlayScreen(dropdownOverlayScreenNewShapeSelect);
@@ -111,9 +111,9 @@ public class ShapelistScreen extends BaseScreen {
 		
 		shapeList = BuildGuide.widgetHandler.createShapelist(180, 325, 70, wrapper.getHeight(), () -> {
 			if(BuildGuide.stateManager.getState().isShapeAvailable()) {
-				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
-				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);
-				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z);
+				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX());
+				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY());
+				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ());
 			}else {
 				textFieldX.setTextValue("-");
 				textFieldY.setTextValue("-");
@@ -122,7 +122,7 @@ public class ShapelistScreen extends BaseScreen {
 			textFieldX.setTextColour(0xFFFFFF);
 			textFieldY.setTextColour(0xFFFFFF);
 			textFieldZ.setTextColour(0xFFFFFF);
-			if(BuildGuide.stateManager.getState().isShapeAvailable()) buttonVisible.setChecked(BuildGuide.stateManager.getState().getCurrentShapeSet().visible);
+			if(BuildGuide.stateManager.getState().isShapeAvailable()) buttonVisible.setChecked(BuildGuide.stateManager.getState().getCurrentShapeSet().isVisible());
 			BaseScreen.shouldUpdatePersistence = true;
 		});
 		
@@ -133,7 +133,7 @@ public class ShapelistScreen extends BaseScreen {
 		super.render();
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleNewShape, 85, 55, 0xFFFFFF);
-		drawShadowCentred(new Translatable(ShapeRegistry.getTranslationKey(BuildGuide.stateManager.getState().iShapeNew)).toString(), 85, 75, 0xFFFFFF);
+		drawShadowCentred(new Translatable(ShapeRegistry.getTranslationKey(BuildGuide.stateManager.getState().getIShapeNew())).toString(), 85, 75, 0xFFFFFF);
 		
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleSelectedShape, 85, 120, 0xFFFFFF);
 		drawShadowLeft(textVisible.toString(), 30, 140, BuildGuide.stateManager.getState().isShapeAvailable() ? 0xFFFFFF : 0x444444);
@@ -146,24 +146,19 @@ public class ShapelistScreen extends BaseScreen {
 		drawShadowCentred(BuildGuide.screenHandler.TEXT_MODIFIER_UNDERLINE + titleShapes, 250, 55, 0xFFFFFF);
 	}
 	
-	private void setNewShape(int i) {
-		BuildGuide.stateManager.getState().iShapeNew = i;
-		BaseScreen.shouldUpdatePersistence = true;
-	}
-	
 	private void shiftGlobalOrigin(int dx, int dy, int dz) {
 		BuildGuide.stateManager.getState().shiftOrigins(dx, dy, dz);
 		if(BuildGuide.stateManager.getState().isShapeAvailable()) {
 			if(dx != 0) {
-				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x);
+				textFieldX.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX());
 				textFieldX.setTextColour(0xFFFFFF);
 			}
 			if(dy != 0) {
-				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y);
+				textFieldY.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY());
 				textFieldY.setTextColour(0xFFFFFF);
 			}
 			if(dz != 0) {
-				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z);
+				textFieldZ.setTextValue("" + BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ());
 				textFieldZ.setTextColour(0xFFFFFF);
 			}
 		} else {
@@ -184,14 +179,14 @@ public class ShapelistScreen extends BaseScreen {
 	
 	private void setGlobalOrigin() {
 		Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
-		int deltaX = pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
-		int deltaY = pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
-		int deltaZ = pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
+		int deltaX = pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX();
+		int deltaY = pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY();
+		int deltaZ = pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ();
 		shiftGlobalOrigin(deltaX, deltaY, deltaZ);
 	}
 	
 	private void setShapeVisibility() {
-		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShapeSet().visible = buttonVisible.isCheckboxSelected();
+		if(BuildGuide.stateManager.getState().isShapeAvailable()) BuildGuide.stateManager.getState().getCurrentShapeSet().setVisible(buttonVisible.isCheckboxSelected());
 	}
 	
 	private void checkActive() {

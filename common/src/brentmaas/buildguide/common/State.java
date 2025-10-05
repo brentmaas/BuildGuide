@@ -29,10 +29,10 @@ public class State {
 	private boolean initialised = false;
 	private boolean fromPersistence = false;
 	public ArrayList<ShapeSet> shapeSets = new ArrayList<ShapeSet>();
-	protected int iShapeSet = 0;
-	public int iShapeNew = ShapeRegistry.getShapeId(ShapeCircle.class);
-	public boolean enabled = false;
-	public boolean depthTest = true;
+	private int iShapeSet = 0;
+	private int iShapeNew = ShapeRegistry.getShapeId(ShapeCircle.class);
+	private boolean enabled = false;
+	private boolean depthTest = true;
 	public ActiveScreen currentScreen = ActiveScreen.Shape;
 	
 	public BaseScreen createNewScreen(ActiveScreen newActiveScreen) {
@@ -80,14 +80,11 @@ public class State {
 		newShapeSet.resetOrigin();
 		if(BuildGuide.config.shapeListRandomColorsDefaultEnabled.value) {
 			Random random = new Random();
-			newShapeSet.colourShapeR = random.nextFloat();
-			newShapeSet.colourShapeG = random.nextFloat();
-			newShapeSet.colourShapeB = random.nextFloat();
-			newShapeSet.colourOriginR = random.nextFloat();
-			newShapeSet.colourOriginG = random.nextFloat();
-			newShapeSet.colourOriginB = random.nextFloat();
+			newShapeSet.setShapeColour(random.nextFloat(), random.nextFloat(), random.nextFloat(), newShapeSet.getShapeColourA());
+			newShapeSet.setOriginColour(random.nextFloat(), random.nextFloat(), random.nextFloat(), newShapeSet.getOriginColourA());
 		}
 		shapeSets.add(newShapeSet);
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void initCheck() {
@@ -103,7 +100,7 @@ public class State {
 				shapeSets.get(0).updateAllShapes();
 			}
 			for(ShapeSet s: shapeSets) {
-				if(s.origin == null) {
+				if(!s.hasOrigin()) {
 					s.resetOrigin();
 				}
 			}
@@ -138,7 +135,7 @@ public class State {
 	}
 	
 	public void setOriginX(int index, int x) {
-		shapeSets.get(index).origin.x = x;
+		shapeSets.get(index).setOriginX(x);
 	}
 	
 	public void setOriginX(int x) {
@@ -146,7 +143,7 @@ public class State {
 	}
 	
 	public void setOriginY(int index, int y) {
-		shapeSets.get(index).origin.y = y;
+		shapeSets.get(index).setOriginY(y);
 	}
 	
 	public void setOriginY(int y) {
@@ -154,7 +151,7 @@ public class State {
 	}
 	
 	public void setOriginZ(int index, int z) {
-		shapeSets.get(index).origin.z = z;
+		shapeSets.get(index).setOriginZ(z);
 	}
 	
 	public void setOriginZ(int z) {
@@ -162,9 +159,7 @@ public class State {
 	}
 	
 	public void setOrigin(int index, int x, int y, int z) {
-		shapeSets.get(index).origin.x = x;
-		shapeSets.get(index).origin.y = y;
-		shapeSets.get(index).origin.z = z;
+		shapeSets.get(index).setOrigin(x, y, z);
 	}
 	
 	public void setOrigin(int x, int y, int z) {
@@ -185,34 +180,39 @@ public class State {
 		}
 	}
 	
-	public void setShapeColour(float r, float g, float b, float a) {
-		shapeSets.get(iShapeSet).colourShapeR = r;
-		shapeSets.get(iShapeSet).colourShapeG = g;
-		shapeSets.get(iShapeSet).colourShapeB = b;
-		shapeSets.get(iShapeSet).colourShapeA = a;
-		shapeSets.get(iShapeSet).updateAllShapes();
-	}
-	
-	public void setOriginColour(float r, float g, float b, float a) {
-		shapeSets.get(iShapeSet).colourOriginR = r;
-		shapeSets.get(iShapeSet).colourOriginG = g;
-		shapeSets.get(iShapeSet).colourOriginB = b;
-		shapeSets.get(iShapeSet).colourOriginA = a;
-		shapeSets.get(iShapeSet).updateAllShapes();
-	}
-	
-	public void setCubeSize(double shapeCubeSize, double originCubeSize) {
-		shapeSets.get(iShapeSet).shapeCubeSize = shapeCubeSize;
-		shapeSets.get(iShapeSet).originCubeSize = originCubeSize;
-		shapeSets.get(iShapeSet).updateAllShapes();
-	}
-	
 	public int getNumberOfBlocks() {
 		int num = 0;
 		for(ShapeSet s: shapeSets) {
-			if(s.visible) num += s.getShape().getNumberOfBlocks();
+			if(s.isVisible()) num += s.getShape().getNumberOfBlocks();
 		}
 		return num;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	public boolean isDepthTest() {
+		return depthTest;
+	}
+	
+	public int getIShapeNew() {
+		return iShapeNew;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		BaseScreen.shouldUpdatePersistence = true;
+	}
+	
+	public void setDepthTest(boolean depthTest) {
+		this.depthTest = depthTest;
+		BaseScreen.shouldUpdatePersistence = true;
+	}
+	
+	public void setIShapeNew(int iShapeNew) {
+		this.iShapeNew = iShapeNew;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public void loadPersistence(File persistenceFile) throws IOException {

@@ -25,7 +25,7 @@ public abstract class AbstractInputHandler {
 		
 		if(toggleEnable.isDown()) {
 			BuildGuide.stateManager.getState().initCheck();
-			BuildGuide.stateManager.getState().enabled = !BuildGuide.stateManager.getState().enabled; 
+			BuildGuide.stateManager.getState().setEnabled(!BuildGuide.stateManager.getState().isEnabled()); 
 		}
 		
 		if(setOrigin.isDown() && BuildGuide.stateManager.getState().isShapeAvailable()) { 
@@ -34,9 +34,9 @@ public abstract class AbstractInputHandler {
 		
 		if(setGlobalOrigin.isDown() && BuildGuide.stateManager.getState().isShapeAvailable()) {
 			Origin pos = BuildGuide.shapeHandler.getPlayerPosition();
-			int dx = pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.x;
-			int dy = pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.y;
-			int dz = pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().origin.z;
+			int dx = pos.x - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginX();
+			int dy = pos.y - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginY();
+			int dz = pos.z - BuildGuide.stateManager.getState().getCurrentShapeSet().getOriginZ();
 			BuildGuide.stateManager.getState().shiftOrigins(dx, dy, dz);
 		}
 	}

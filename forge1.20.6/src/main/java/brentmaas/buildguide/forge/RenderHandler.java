@@ -52,7 +52,7 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
 		poseStackInstance.pushPose();
 		Vec3 projectedView = cameraInstance.getPosition();
-		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
+		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
 	}
 	
 	protected void endRenderingShapeSet() {

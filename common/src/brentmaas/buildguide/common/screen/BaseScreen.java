@@ -34,8 +34,8 @@ public abstract class BaseScreen {
 	
 	public void init() {
 		buttonClose = BuildGuide.widgetHandler.createButton(wrapper.getWidth() - 25, 5, new Translatable("X"), () -> BuildGuide.screenHandler.showScreen(null));
-		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, new Translatable(""), BuildGuide.stateManager.getState().enabled, false, () -> {
-			BuildGuide.stateManager.getState().enabled = buttonEnabled.isCheckboxSelected();
+		buttonEnabled = BuildGuide.widgetHandler.createCheckbox(5, 5, new Translatable(""), BuildGuide.stateManager.getState().isEnabled(), false, () -> {
+			BuildGuide.stateManager.getState().setEnabled(buttonEnabled.isCheckboxSelected());
 			BaseScreen.shouldUpdatePersistence = true;
 		});
 		

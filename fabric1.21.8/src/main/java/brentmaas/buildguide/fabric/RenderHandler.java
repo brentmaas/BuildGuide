@@ -74,7 +74,7 @@ public class RenderHandler extends AbstractRenderHandler {
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
 		poseStackInstance.pushPose();
 		Vec3 projectedView = cameraInstance.getPosition();
-		poseStackInstance.translate(-projectedView.x + shapeSet.origin.x, -projectedView.y + shapeSet.origin.y, -projectedView.z + shapeSet.origin.z);
+		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
 		poseStackInstance.mulPose(rotationMatrixInstance);
 	}
 	
@@ -91,6 +91,6 @@ public class RenderHandler extends AbstractRenderHandler {
 	}
 	
 	public static RenderPipeline getRenderPipeline() {
-		return BuildGuide.stateManager.getState().depthTest ? BUILD_GUIDE_DEPTH_TEST : BUILD_GUIDE;
+		return BuildGuide.stateManager.getState().isDepthTest() ? BUILD_GUIDE_DEPTH_TEST : BUILD_GUIDE;
 	}
 }

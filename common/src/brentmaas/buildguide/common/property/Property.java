@@ -40,6 +40,7 @@ public abstract class Property<T> {
 	
 	public void setValue(T value) {
 		this.value = value;
+		BaseScreen.shouldUpdatePersistence = true;
 	}
 	
 	public abstract String getStringValue();

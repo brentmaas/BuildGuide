@@ -19,7 +19,7 @@ public abstract class AbstractRenderHandler {
 	public void render() {
 		pushProfiler(BuildGuide.modid);
 		
-		if(BuildGuide.stateManager.getState().enabled && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShapeSet().origin != null) {
+		if(BuildGuide.stateManager.getState().isEnabled() && BuildGuide.stateManager.getState().isShapeAvailable() && BuildGuide.stateManager.getState().getCurrentShapeSet().hasOrigin()) {
 			for(ShapeSet s: BuildGuide.stateManager.getState().shapeSets) renderShapeSet(s); 
 		}
 		
@@ -29,7 +29,7 @@ public abstract class AbstractRenderHandler {
 	protected void renderShapeSet(ShapeSet shapeSet) {
 		if(shapeSet.getShape().lock.tryLock()) {
 			try {
-				if(shapeSet.visible && shapeSet.getShape().ready && !shapeSet.getShape().error && shapeSet.getShape().buffer != null) { // TODO: Nullcheck on buffer should not be necessary because we check `ready`
+				if(shapeSet.isVisible() && shapeSet.getShape().ready && !shapeSet.getShape().error && shapeSet.getShape().buffer != null) { // TODO: Nullcheck on buffer should not be necessary because we check `ready`
 					if(!shapeSet.getShape().vertexBufferUnpacked) {
 						shapeSet.getShape().buffer.end();
 						shapeSet.getShape().vertexBufferUnpacked = true;
