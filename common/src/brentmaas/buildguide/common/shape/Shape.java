@@ -39,38 +39,34 @@ public abstract class Shape {
 		vertexBufferUnpacked = false;
 		if(BuildGuide.config.asyncEnabled.value) {
 			cancelFuture();
-			if(buffer != null) buffer.close(); // Can only be done in render thread
-			future = executor.submit(() -> {
-				try {
-					lock.lock();
-					ready = false; // Again in case of a second thread started before a first thread ended
-					vertexBufferUnpacked = false;
-					error = false;
-					doUpdate();
-				}catch(InterruptedException e) {
-					error = true;
-				}catch(Exception e) {
-					error = true;
-					BuildGuide.logHandler.debugThrowable("An exception occurred while rendering a shape.", e);
-				}finally {
-					completedAt = System.currentTimeMillis();
-					ready = true;
-					lock.unlock();
-				}
-			});
-		}else {
-			error = false;
-			if(buffer != null) buffer.close();
+		}
+		if(buffer != null) {
+			buffer.close(); // Can only be done in render thread
+		}
+		future = executor.submit(() -> {
 			try {
+				lock.lock();
+				ready = false; // Again in case of a second thread started before a first thread ended
+				vertexBufferUnpacked = false;
+				error = false;
 				doUpdate();
 			}catch(InterruptedException e) {
 				error = true;
 			}catch(Exception e) {
 				error = true;
-				BuildGuide.logHandler.debugThrowable("An exception occurred while rendering a shape.", e);
+				BuildGuide.logHandler.debugThrowable("An exception occurred while generating a shape.", e);
 			}finally {
 				completedAt = System.currentTimeMillis();
 				ready = true;
+				lock.unlock();
+			}
+		});
+		if(!BuildGuide.config.asyncEnabled.value) {
+			try {
+				future.get();
+			}catch(Exception e) {
+				error = true;
+				e.printStackTrace();
 			}
 		}
 	}
