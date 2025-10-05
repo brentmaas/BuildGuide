@@ -20,6 +20,7 @@ import brentmaas.buildguide.common.shape.ShapePolygonalPyramid;
 import brentmaas.buildguide.common.shape.ShapeRegistry;
 import brentmaas.buildguide.common.shape.ShapeSphere;
 import brentmaas.buildguide.common.shape.ShapeTorus;
+import brentmaas.buildguide.common.shape.ShapeHelicoid;
 
 public class BuildGuide {
 	public static final String modid = "buildguide";
@@ -57,6 +58,7 @@ public class BuildGuide {
 		ShapeRegistry.registerShape(ShapePolygonalPyramid.class, "shape.buildguide.polygonalpyramid");
 		ShapeRegistry.registerShape(ShapeSphere.class, "shape.buildguide.sphere");
 		ShapeRegistry.registerShape(ShapeTorus.class, "shape.buildguide.torus");
+		ShapeRegistry.registerShape(ShapeHelicoid.class, "shape.buildguide.helicoid");
 		
 		keyBindHandler.register();
 		keyBindHandler.registerOnKeyInput();

@@ -43,6 +43,9 @@
 	"property.buildguide.sides": "Sides",
 	"property.buildguide.walls": "Walls",
 	"property.buildguide.width": "Width",
+	"property.buildguide.thickness": "Thickness",
+	"property.buildguide.turns": "Turns",
+	"property.buildguide.spin": "Spin",
 	
 	"_comment": "Screens",
 	"screen.buildguide.add": "Add",
@@ -89,5 +92,6 @@
 	"shape.buildguide.polygon": "Polygon",
 	"shape.buildguide.polygonalpyramid": "Polygonal pyramid",
 	"shape.buildguide.sphere": "Sphere",
-	"shape.buildguide.torus": "Torus"
+	"shape.buildguide.torus": "Torus",
+	"shape.buildguide.helicoid": "Helicoid"
 }
