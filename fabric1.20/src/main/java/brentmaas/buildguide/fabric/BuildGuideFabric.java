@@ -14,6 +14,7 @@ public class BuildGuideFabric implements ClientModInitializer {
 	private static final Logger logger = LogManager.getLogger();	
 	
 	public void onInitializeClient() {
-		BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), FabricLoader.getInstance().getConfigDir().toFile());
+		BuildGuide.registerClient(new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), FabricLoader.getInstance().getConfigDir().toFile());
+		BuildGuide.registerInputHandler(new InputHandler());
 	}
 }

@@ -24,7 +24,7 @@ import brentmaas.buildguide.common.shape.ShapeTorus;
 public class BuildGuide {
 	public static final String modid = "buildguide";
 	
-	public static AbstractInputHandler keyBindHandler;
+	public static AbstractInputHandler inputHandler;
 	public static AbstractScreenHandler screenHandler;
 	public static AbstractWidgetHandler widgetHandler;
 	public static AbstractStateManager stateManager;
@@ -33,8 +33,7 @@ public class BuildGuide {
 	public static ILogHandler logHandler;
 	public static Config config;
 	
-	public static void register(AbstractInputHandler keyBindHandler, AbstractScreenHandler screenHandler, AbstractWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, File configFolder) {
-		BuildGuide.keyBindHandler = keyBindHandler;
+	public static void registerClient(AbstractScreenHandler screenHandler, AbstractWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, File configFolder) {
 		BuildGuide.screenHandler = screenHandler;
 		BuildGuide.widgetHandler = widgetHandler;
 		BuildGuide.stateManager = stateManager;
@@ -58,9 +57,13 @@ public class BuildGuide {
 		ShapeRegistry.registerShape(ShapeSphere.class, "shape.buildguide.sphere");
 		ShapeRegistry.registerShape(ShapeTorus.class, "shape.buildguide.torus");
 		
-		keyBindHandler.register();
-		keyBindHandler.registerOnKeyInput();
-		
 		renderHandler.register();
+	}
+	
+	public static void registerInputHandler(AbstractInputHandler inputHandler) {
+		BuildGuide.inputHandler = inputHandler;
+		
+		inputHandler.register();
+		inputHandler.registerOnKeyInput();
 	}
 }

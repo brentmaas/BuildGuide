@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 
 @Mod(BuildGuide.modid)
 public class BuildGuideNeoForge {
@@ -20,9 +21,14 @@ public class BuildGuideNeoForge {
 	
 	public BuildGuideNeoForge(IEventBus modEventBus) {
 		modEventBus.addListener(this::onClientSetup);
+		modEventBus.addListener(this::onRegisterKeyMappings);
 	}
 	
 	private void onClientSetup(final FMLClientSetupEvent event) {
-		BuildGuide.register(new InputHandler(), new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), new File(Minecraft.getInstance().gameDirectory, "config"));
+		BuildGuide.registerClient(new ScreenHandler(), new WidgetHandler(), new StateManager(), new ShapeHandler(), new RenderHandler(), new LogHandler(logger), new File(Minecraft.getInstance().gameDirectory, "config"));
+	}
+	
+	private void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+		BuildGuide.registerInputHandler(new InputHandler(event));
 	}
 }
