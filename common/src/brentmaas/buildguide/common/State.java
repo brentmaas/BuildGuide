@@ -27,7 +27,6 @@ public class State {
 	private static final String PERSISTENCE_ISHAPENEW = "iShapeNew";
 	
 	private boolean initialised = false;
-	private boolean fromPersistence = false;
 	public ArrayList<ShapeSet> shapeSets = new ArrayList<ShapeSet>();
 	private int iShapeSet = 0;
 	private int iShapeNew = ShapeRegistry.getShapeId(ShapeCircle.class);
@@ -89,12 +88,6 @@ public class State {
 	
 	public void initCheck() {
 		if(!initialised) {
-			if(fromPersistence) {
-				for(ShapeSet shapeSet: shapeSets) {
-					shapeSet.updateAllShapes();
-				}
-			}
-			
 			if(shapeSets.size() == 0) {
 				pushNewShapeSet();
 				shapeSets.get(0).updateAllShapes();
@@ -241,8 +234,6 @@ public class State {
 		scanner.close();
 		iShapeSet = Math.max(0, Math.min(shapeSets.size() - 1, iShapeSet));
 		iShapeNew = Math.max(0, Math.min(ShapeRegistry.getNumberOfShapes() - 1, iShapeNew));
-		
-		fromPersistence = true;
 	}
 	
 	public void savePersistence(File persistenceFile) throws IOException {
