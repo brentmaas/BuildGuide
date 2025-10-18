@@ -212,6 +212,9 @@ configure(subprojects.findAll {it.name != 'common'}) {
                     classpath.entries.findAll{ it.kind == 'src' && it.hasProperty("path") && (it.path.toString().equals("common-resources") || it.path.toString().equals("src"))}.each {
                         classpath.entries.remove(it)
                     }
+                    classpath.entries.findAll{ it.kind == 'src' && it.hasProperty("path") && it.path.toString().endsWith("modMetadata") }.each {
+                        classpath.entries.remove(it)
+                    }
                 }
             }
         }
