@@ -32,7 +32,7 @@ gradle.ext.modlicense = 'Creative Commons Attribution-NonCommercial 3.0 Unported
 
 gradle.ext.fabricgroup = gradle.ext.modid + '.fabric'
 gradle.ext.fabricname = rootProject.name + '-Fabric'
-gradle.ext.fabricloader = '0.16.14'
+gradle.ext.fabricloader = '0.17.3'
 
 gradle.ext.forgegroup = gradle.ext.modid + '.forge'
 gradle.ext.forgename = rootProject.name + '-Forge'
