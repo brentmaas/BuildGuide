@@ -42,7 +42,7 @@ public abstract class AbstractInputHandler {
 	}
 	
 	public interface IKeyBind {
-		public static final String category = "key.buildguide.category";
+		public static final String category = "key.category.buildguide.buildguide";
 		
 		public boolean isDown();
 	}

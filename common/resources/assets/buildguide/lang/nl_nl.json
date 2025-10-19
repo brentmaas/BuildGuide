@@ -11,7 +11,7 @@
 	"error.buildguide.invalidvalue": "Vormgeneratie liep tegen een onverwachte waarde aan. Probeer minder extreme waarden.",
 	
 	"_comment": "Toetsen",
-	"key.buildguide.category": "Build Guide",
+	"key.category.buildguide.buildguide": "Build Guide",
 	"key.buildguide.openbuildguide": "Open Build Guide",
 	"key.buildguide.setorigin": "Oorsprong instellen",
 	"key.buildguide.setglobalorigin": "Globale oorsprong instellen",

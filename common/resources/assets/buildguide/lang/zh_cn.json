@@ -3,7 +3,7 @@
 	"error.buildguide.invalidvalue": "形状生成遇到了无效的值。请尝试使用较小的数值。",
 	
 	"_comment": "按键绑定",
-	"key.buildguide.category": "建筑指南",
+	"key.category.buildguide.buildguide": "建筑指南",
 	"key.buildguide.openbuildguide": "打开建筑指南",
 	"key.buildguide.setorigin": "设置原点",
 	"key.buildguide.setglobalorigin": "设置全局原点",

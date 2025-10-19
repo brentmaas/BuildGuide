@@ -11,7 +11,7 @@
 	"error.buildguide.invalidvalue": "Şekil oluşturma geçersiz bir değerle karşılaştı. Daha az aşırı değerler deneyin.",
 	
 	"_comment": "Keybindings",
-	"key.buildguide.category": "Yapı Rehberi",
+	"key.category.buildguide.buildguide": "Yapı Rehberi",
 	"key.buildguide.openbuildguide": "Yapı Rehberini Aç",
 	"key.buildguide.setorigin": "Başlangıç noktasını ayarla",
 	"key.buildguide.setglobalorigin": "Genel başlangıç noktasını ayarla",

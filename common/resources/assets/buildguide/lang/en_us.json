@@ -11,7 +11,7 @@
 	"error.buildguide.invalidvalue": "Shape generation encountered an invalid value. Try less extreme values.",
 	
 	"_comment": "Keybindings",
-	"key.buildguide.category": "Build Guide",
+	"key.category.buildguide.buildguide": "Build Guide",
 	"key.buildguide.openbuildguide": "Open Build Guide",
 	"key.buildguide.setorigin": "Set origin",
 	"key.buildguide.setglobalorigin": "Set global origin",
