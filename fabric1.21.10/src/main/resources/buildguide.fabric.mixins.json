@@ -1,0 +1,13 @@
+{
+    "package": "brentmaas.buildguide.fabric.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [],
+    "client": [
+        "MixinLevelRenderer"
+    ],
+    "server": [],
+    "refmap": "mixins.buildguide.fabric.refmap.json",
+    "required": true,
+    "minVersion": "0.8",
+    "requiredFeatures": []
+}
