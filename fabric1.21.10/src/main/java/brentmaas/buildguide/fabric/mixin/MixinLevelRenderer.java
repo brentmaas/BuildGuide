@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.LevelRenderer;
 public class MixinLevelRenderer {
 	@Inject(method = "renderLevel", at = @At(value = "RETURN", shift = At.Shift.BEFORE), remap = false)
 	private void renderLevelEnd(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, Matrix4f frustrumMatrix, Matrix4f projectionMatrix, Matrix4f frustrumMatrix2, GpuBufferSlice fogBuffer, Vector4f fogColor, boolean renderSky, CallbackInfo callbackInfo) {
-		System.out.println("asdf");
 		((RenderHandler) BuildGuide.renderHandler).onRenderBlock(projectionMatrix);
 	}
 }
