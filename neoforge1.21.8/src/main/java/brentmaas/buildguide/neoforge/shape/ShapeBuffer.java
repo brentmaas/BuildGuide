@@ -70,6 +70,9 @@ public class ShapeBuffer implements IShapeBuffer {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
 			RenderSystem.bindDefaultUniforms(renderPass);
 			renderPass.setUniform("DynamicTransforms", dynamicTransforms);
+			if(indexBuffer.isClosed()) {
+				indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
+			}
 			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).type());
 			renderPass.setVertexBuffer(0, vertexBuffer);
 			renderPass.drawIndexed(0, 0, indexCount, 1);

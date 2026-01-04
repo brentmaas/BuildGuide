@@ -66,6 +66,9 @@ public class ShapeBuffer implements IShapeBuffer{
 		RenderSystem.setProjectionMatrix(new Matrix4f(projection).mul(model), RenderSystem.getProjectionType());
 		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
+			if(indexBuffer.isClosed()) {
+				indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
+			}
 			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).type());
 			renderPass.setVertexBuffer(0, vertexBuffer);
 			renderPass.drawIndexed(0, indexCount);
