@@ -1,7 +1,5 @@
 package brentmaas.buildguide.neoforge.shape;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.buffers.BufferUsage;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -47,9 +45,9 @@ public class ShapeBuffer implements IShapeBuffer {
 		if(buffer != null) buffer.close();
 	}
 	
-	public void render(Matrix4f model, Matrix4f projection) {
+	public void render() {
 		buffer.bind();
-		buffer.drawWithShader(model, RenderSystem.getProjectionMatrix(), Minecraft.getInstance().getShaderManager().getProgram(CoreShaders.POSITION_COLOR));
+		buffer.drawWithShader(RenderSystem.getModelViewMatrix(), RenderSystem.getProjectionMatrix(), Minecraft.getInstance().getShaderManager().getProgram(CoreShaders.POSITION_COLOR));
 		VertexBuffer.unbind();
 	}
 }

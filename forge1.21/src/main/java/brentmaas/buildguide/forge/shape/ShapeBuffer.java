@@ -1,7 +1,5 @@
 package brentmaas.buildguide.forge.shape;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
@@ -45,9 +43,9 @@ public class ShapeBuffer implements IShapeBuffer{
 		if(buffer != null) buffer.close();
 	}
 	
-	public void render(Matrix4f model, Matrix4f projection) {
+	public void render() {
 		buffer.bind();
-		buffer.drawWithShader(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
+		buffer.drawWithShader(RenderSystem.getModelViewStack(), RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
 		VertexBuffer.unbind();
 	}
 }

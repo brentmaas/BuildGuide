@@ -1,11 +1,9 @@
 package brentmaas.buildguide.forge;
 
-import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import brentmaas.buildguide.common.AbstractLegacyRenderHandler;
 import brentmaas.buildguide.common.shape.Shape;
@@ -19,9 +17,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RenderHandler extends AbstractLegacyRenderHandler {
-	private PoseStack poseStackInstance;
-	private Matrix4f projectionMatrixInstance;
-	
 	public void register() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -29,25 +24,23 @@ public class RenderHandler extends AbstractLegacyRenderHandler {
 	@SubscribeEvent
 	public void onRenderBlock(RenderLevelStageEvent event) {
 		if(event.getStage() == Stage.AFTER_WEATHER) {
-			poseStackInstance = event.getPoseStack();
-			projectionMatrixInstance = event.getProjectionMatrix();
-			
 			render();
 		}
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
+		((ShapeBuffer) shape.buffer).render();
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		poseStackInstance.pushPose();
+		RenderSystem.getModelViewStack().pushPose();
 		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
+		RenderSystem.getModelViewStack().translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
+		RenderSystem.applyModelViewMatrix();
 	}
 	
 	protected void endRenderingShapeSet() {
-		poseStackInstance.popPose();
+		RenderSystem.getModelViewStack().popPose();
 	}
 	
 	protected boolean depthTestEnabled() {

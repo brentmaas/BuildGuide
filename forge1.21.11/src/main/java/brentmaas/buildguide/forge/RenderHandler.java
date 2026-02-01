@@ -1,33 +1,24 @@
 package brentmaas.buildguide.forge;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.DepthTestFunction;
 import com.mojang.blaze3d.platform.DestFactor;
 import com.mojang.blaze3d.platform.SourceFactor;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.forge.shape.ShapeBuffer;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.PerspectiveProjectionMatrixBuffer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.world.phys.Vec3;
 
 public class RenderHandler extends AbstractRenderHandler {
-	private Camera cameraInstance;
-	private PoseStack poseStackInstance;
-	private Matrix4f projectionMatrixInstance, rotationMatrixInstance;
-	public static PerspectiveProjectionMatrixBuffer projectionMatrixBuffer;
 	private static final RenderPipeline.Snippet BUILD_GUIDE_SNIPPET = RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
 			.withBlend(new BlendFunction(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA))
 			.withCull(true)
@@ -46,38 +37,18 @@ public class RenderHandler extends AbstractRenderHandler {
 		
 	}
 	
-	public void onRenderBlock(Matrix4f projectionMatrix) {
-		poseStackInstance = new PoseStack();
-		poseStackInstance.pushPose();
-		Matrix4f inverseRotationMatrix = new Matrix4f();
-		rotationMatrixInstance = new Matrix4f();
-		cameraInstance = Minecraft.getInstance().gameRenderer.getMainCamera();
-		rotationMatrixInstance.rotate((float) -((cameraInstance.yRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
-		rotationMatrixInstance.rotate((float) -(cameraInstance.xRot() * Math.PI / 180), new Vector3f(1, 0, 0));
-		inverseRotationMatrix.rotate((float) (cameraInstance.xRot() * Math.PI / 180), new Vector3f(1, 0, 0));
-		inverseRotationMatrix.rotate((float) ((cameraInstance.yRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
-		poseStackInstance.mulPose(inverseRotationMatrix);
-		projectionMatrixInstance = projectionMatrix;
-		if(projectionMatrixBuffer == null) projectionMatrixBuffer = new PerspectiveProjectionMatrixBuffer("buildguide");
-		
-		render();
-		
-		poseStackInstance.popPose();
-	}
-	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
+		((ShapeBuffer) shape.buffer).render();
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		poseStackInstance.pushPose();
-		Vec3 projectedView = cameraInstance.position();
-		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
-		poseStackInstance.mulPose(rotationMatrixInstance);
+		RenderSystem.getModelViewStack().pushMatrix();
+		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().position();
+		RenderSystem.getModelViewStack().translate((float) (-projectedView.x + shapeSet.getOriginX()), (float) (-projectedView.y + shapeSet.getOriginY()), (float) (-projectedView.z + shapeSet.getOriginZ()));
 	}
 	
 	protected void endRenderingShapeSet() {
-		poseStackInstance.popPose();
+		RenderSystem.getModelViewStack().popMatrix();
 	}
 	
 	protected void pushProfiler(String key) {

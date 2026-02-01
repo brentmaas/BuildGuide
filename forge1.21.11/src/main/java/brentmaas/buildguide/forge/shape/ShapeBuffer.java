@@ -4,8 +4,11 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -55,23 +58,22 @@ public class ShapeBuffer implements IShapeBuffer{
 		// Don't also close indexBuffer, it is a reference to a global buffer used everywhere
 	}
 	
-	public void render(Matrix4f model, Matrix4f projection) {
+	public void render() {
 		RenderTarget renderTarget = Minecraft.getInstance().getMainRenderTarget();
 		GpuTextureView colourTexture = renderTarget.getColorTextureView();
 		GpuTextureView depthTexture = renderTarget.getDepthTextureView();
 
-		RenderSystem.backupProjectionMatrix();
-		RenderSystem.setProjectionMatrix(RenderHandler.projectionMatrixBuffer.getBuffer(new Matrix4f(projection).mul(model)), RenderSystem.getProjectionType());
+		GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(RenderSystem.getModelViewMatrix(), new Vector4f(1.0f), new Vector3f(), new Matrix4f());
 		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Build Guide", colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
 			RenderSystem.bindDefaultUniforms(renderPass);
 			if(indexBuffer.isClosed()) {
 				indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
 			}
+			renderPass.setUniform("DynamicTransforms", dynamicTransforms);
 			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).type());
 			renderPass.setVertexBuffer(0, vertexBuffer);
 			renderPass.drawIndexed(0, 0, indexCount, 1);
 		}
-		RenderSystem.restoreProjectionMatrix();
 	}
 }

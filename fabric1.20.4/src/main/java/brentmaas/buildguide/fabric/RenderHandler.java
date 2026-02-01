@@ -1,6 +1,5 @@
 package brentmaas.buildguide.fabric;
 
-import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL32;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -17,32 +16,30 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 
 public class RenderHandler extends AbstractLegacyRenderHandler {
-	private PoseStack poseStackInstance;
-	private Matrix4f projectionMatrixInstance;
+	private PoseStack modelViewMatrixStack;
 	
 	public void register() {
 		WorldRenderEvents.LAST.register(this::onRenderBlock);
 	}
 	
 	public void onRenderBlock(WorldRenderContext context) {
-		poseStackInstance = context.matrixStack();
-		projectionMatrixInstance = context.projectionMatrix();
+		modelViewMatrixStack = context.matrixStack();
 		
 		render();
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
+		((ShapeBuffer) shape.buffer).render(modelViewMatrixStack.last().pose());
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		poseStackInstance.pushPose();
+		modelViewMatrixStack.pushPose();
 		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
+		modelViewMatrixStack.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
 	}
 	
 	protected void endRenderingShapeSet() {
-		poseStackInstance.popPose();
+		modelViewMatrixStack.popPose();
 	}
 	
 	protected boolean depthTestEnabled() {

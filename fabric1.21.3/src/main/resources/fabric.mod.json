@@ -23,6 +23,10 @@
       "brentmaas.buildguide.fabric.BuildGuideFabric"
     ]
   },
+  
+  "mixins": [
+  	"buildguide.fabric.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=${fabricloader}",

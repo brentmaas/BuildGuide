@@ -1,4 +1,4 @@
-package brentmaas.buildguide.forge.mixin;
+package brentmaas.buildguide.fabric.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,15 +21,12 @@ public class MixinLevelRenderer {
 	private LevelTargetBundle targets;
 	
 	@Inject(method = "addWeatherPass", at = @At(value = "RETURN", shift = At.Shift.BEFORE), remap = false)
-	private void renderLevelEnd(FrameGraphBuilder frameGraphBuilder, Vec3 vec3, float f, GpuBufferSlice gpuBufferSlice, CallbackInfo callbackInfo) {
-		// Temporary try-catch because NeoForge also finds this mixin
-		try {
-			FramePass framePass = frameGraphBuilder.addPass(BuildGuide.modid);
-			this.targets.main = framePass.readsAndWrites(this.targets.main);
-			
-			framePass.executes(() -> {
-				BuildGuide.renderHandler.render();
-			});
-		}catch(ClassCastException e) {}
+	private void addWeatherPassEnd(FrameGraphBuilder frameGraphBuilder, Vec3 vec3, float f, GpuBufferSlice gpuBufferSlice, CallbackInfo callbackInfo) {
+		FramePass framePass = frameGraphBuilder.addPass(BuildGuide.modid);
+		this.targets.main = framePass.readsAndWrites(this.targets.main);
+		
+		framePass.executes(() -> {
+			BuildGuide.renderHandler.render();
+		});
 	}
 }

@@ -1,21 +1,17 @@
 package brentmaas.buildguide.neoforge;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.DepthTestFunction;
 import com.mojang.blaze3d.platform.DestFactor;
 import com.mojang.blaze3d.platform.SourceFactor;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import brentmaas.buildguide.common.AbstractRenderHandler;
 import brentmaas.buildguide.common.BuildGuide;
 import brentmaas.buildguide.common.shape.Shape;
 import brentmaas.buildguide.common.shape.ShapeSet;
 import brentmaas.buildguide.neoforge.shape.ShapeBuffer;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +23,6 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent.Stage;
 import net.neoforged.neoforge.common.NeoForge;
 
 public class RenderHandler extends AbstractRenderHandler {
-	private Camera cameraInstance;
-	private PoseStack poseStackInstance;
-	private Matrix4f projectionMatrixInstance;
 	private static final RenderPipeline.Snippet BUILD_GUIDE_SNIPPET = RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
 			.withBlend(new BlendFunction(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA))
 			.withCull(true)
@@ -50,34 +43,23 @@ public class RenderHandler extends AbstractRenderHandler {
 	
 	@SubscribeEvent
 	public void onRenderBlock(RenderLevelStageEvent event) {
-		if(event.getStage() == Stage.AFTER_LEVEL) {
-			poseStackInstance = event.getPoseStack();
-			poseStackInstance.pushPose();
-			Matrix4f rotationMatrix = new Matrix4f();
-			cameraInstance = Minecraft.getInstance().gameRenderer.getMainCamera();
-			rotationMatrix.rotate((float) (cameraInstance.getXRot() * Math.PI / 180), new Vector3f(1, 0, 0));
-			rotationMatrix.rotate((float) ((cameraInstance.getYRot() - 180) * Math.PI / 180), new Vector3f(0, 1, 0));
-			poseStackInstance.mulPose(rotationMatrix);
-			projectionMatrixInstance = event.getProjectionMatrix();
-			
+		if(event.getStage() == Stage.AFTER_WEATHER) {
 			render();
-			
-			poseStackInstance.popPose();
 		}
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
-		((ShapeBuffer) shape.buffer).render(poseStackInstance.last().pose(), projectionMatrixInstance);
+		((ShapeBuffer) shape.buffer).render();
 	}
 	
 	protected void setupRenderingShapeSet(ShapeSet shapeSet) {
-		poseStackInstance.pushPose();
-		Vec3 projectedView = cameraInstance.getPosition();
-		poseStackInstance.translate(-projectedView.x + shapeSet.getOriginX(), -projectedView.y + shapeSet.getOriginY(), -projectedView.z + shapeSet.getOriginZ());
+		RenderSystem.getModelViewStack().pushMatrix();
+		Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+		RenderSystem.getModelViewStack().translate((float) (-projectedView.x + shapeSet.getOriginX()), (float) (-projectedView.y + shapeSet.getOriginY()), (float) (-projectedView.z + shapeSet.getOriginZ()));
 	}
 	
 	protected void endRenderingShapeSet() {
-		poseStackInstance.popPose();
+		RenderSystem.getModelViewStack().popMatrix();
 	}
 	
 	protected void pushProfiler(String key) {

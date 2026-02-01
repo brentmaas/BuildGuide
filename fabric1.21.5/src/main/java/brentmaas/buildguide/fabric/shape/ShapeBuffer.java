@@ -3,8 +3,6 @@ package brentmaas.buildguide.fabric.shape;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.buffers.BufferType;
 import com.mojang.blaze3d.buffers.BufferUsage;
 import com.mojang.blaze3d.buffers.GpuBuffer;
@@ -57,13 +55,11 @@ public class ShapeBuffer implements IShapeBuffer {
 		// Don't also close indexBuffer, it is a reference to a global buffer used everywhere
 	}
 	
-	public void render(Matrix4f model, Matrix4f projection) {
+	public void render() {
 		RenderTarget renderTarget = Minecraft.getInstance().getMainRenderTarget();
 		GpuTexture colourTexture = renderTarget.getColorTexture();
 		GpuTexture depthTexture = renderTarget.getDepthTexture();
-
-		RenderSystem.backupProjectionMatrix();
-		RenderSystem.setProjectionMatrix(new Matrix4f(projection).mul(model), RenderSystem.getProjectionType());
+		
 		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
 			if(indexBuffer.isClosed()) {
@@ -73,6 +69,5 @@ public class ShapeBuffer implements IShapeBuffer {
 			renderPass.setVertexBuffer(0, vertexBuffer);
 			renderPass.drawIndexed(0, indexCount);
 		}
-		RenderSystem.restoreProjectionMatrix();
 	}
 }

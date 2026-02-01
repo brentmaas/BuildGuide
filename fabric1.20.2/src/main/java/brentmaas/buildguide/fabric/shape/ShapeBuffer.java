@@ -39,9 +39,9 @@ public class ShapeBuffer implements IShapeBuffer {
 		if(buffer != null) buffer.close();
 	}
 	
-	public void render(Matrix4f model, Matrix4f projection) {
+	public void render(Matrix4f modelViewMatrix) {
 		buffer.bind();
-		buffer.drawWithShader(model, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
+		buffer.drawWithShader(modelViewMatrix, RenderSystem.getProjectionMatrix(), GameRenderer.getPositionColorShader());
 		VertexBuffer.unbind();
 	}
 }
