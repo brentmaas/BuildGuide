@@ -1,5 +1,8 @@
 package brentmaas.buildguide.fabric;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import com.mojang.blaze3d.pipeline.BlendFunction;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.DepthTestFunction;
@@ -34,7 +37,25 @@ public class RenderHandler extends AbstractRenderHandler {
 			.build();
 	
 	public void register() {
-		
+		try {
+			Class<?> irisApiClass = Class.forName("net.irisshaders.iris.api.v0.IrisApi");
+			Class<?> irisProgramClass = Class.forName("net.irisshaders.iris.api.v0.IrisProgram");
+			
+			Method irisGetInstanceMethod = irisApiClass.getMethod("getInstance");
+			Method irisAssignPipelineMethod = irisApiClass.getMethod("assignPipeline", RenderPipeline.class, irisProgramClass);
+			Method irisProgramEnumValueOfMethod = irisProgramClass.getMethod("valueOf", String.class);
+			
+			Object irisApiInstance = irisGetInstanceMethod.invoke(irisApiClass);
+			Object irisProgramEnumBasic = irisProgramEnumValueOfMethod.invoke(irisProgramClass, "BASIC");
+			irisAssignPipelineMethod.invoke(irisApiInstance, BUILD_GUIDE, irisProgramEnumBasic);
+			irisAssignPipelineMethod.invoke(irisApiInstance, BUILD_GUIDE_DEPTH_TEST, irisProgramEnumBasic);
+			System.out.println("Iris compatibility applied");
+		} catch (ClassNotFoundException e) {
+			BuildGuide.logHandler.debugOrHigher("Iris not found");
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
+			BuildGuide.logHandler.error("Could not apply Iris compatibility");
+			e.printStackTrace();
+		}
 	}
 	
 	public void renderShapeBuffer(Shape shape) {
