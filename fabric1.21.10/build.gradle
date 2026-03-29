@@ -1,8 +1,10 @@
 plugins {
-	id 'fabric-loom' version '1.13-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom-remap' version '1.15-SNAPSHOT'
 }
 
 java {
+    withSourcesJar()
+    
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
@@ -25,7 +27,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${gradle.ext.fabricloader}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}${project.fabric_build_ext}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}+${project.minecraft_version}"
 }
 
 processResources {
@@ -49,10 +51,6 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = project.java_version as Integer
-}
-
-java {
-	withSourcesJar()
 }
 
 jar {

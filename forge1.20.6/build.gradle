@@ -1,6 +1,6 @@
 plugins {
     id 'eclipse'
-    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
+    id 'net.minecraftforge.gradle' version '[7.0.17,8)'
 }
 
 version = gradle.ext.modversion
@@ -11,43 +11,36 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
 
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
     mappings channel: gradle.ext.forgemapping, version: project.minecraft_version
     
-    reobf = false
-    
-    copyIdeResources = true
-    
     runs {
-        client {
-            workingDirectory project.file('../run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        configureEach {
+            workingDir = project.file('../run')
+            
+            systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
+            systemProperty 'forge.enabledGameTestNamespaces', gradle.ext.modid
         }
         
-        server {
-            workingDirectory project.file('../run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        register('client')
+        
+        register('server'){
+            args '--nogui'
         }
         
-        gameTestServer {
-            workingDirectory project.file('../run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', gradle.ext.modid
-        }
+        register('gameTestServer')
         
-        data {
-            workingDirectory project.file('../run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-            args '--mod', gradle.ext.modid, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        register('data'){
+            args '--mod', gradle.ext.modid, '--all', '--output', 'src/generated/resources', '--existing', 'src/main/resources'
         }
     }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
 }
 
 sourceSets.main.resources {
@@ -55,7 +48,7 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+    implementation minecraft.dependency("net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}")
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') {
         version { strictly '5.0.4' }
     }

@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'eclipse'
-    id 'net.neoforged.moddev' version '2.0.116'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
 
 version = gradle.ext.modversion
