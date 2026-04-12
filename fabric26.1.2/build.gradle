@@ -1,0 +1,59 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
+}
+
+base {
+    archivesName = gradle.ext.fabricname
+}
+version = gradle.ext.modversion
+group = gradle.ext.fabricgroup
+
+loom {
+    runs {
+        client {
+            runDir = "../run"
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${gradle.ext.fabricloader}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}+${project.minecraft_version}"
+}
+
+processResources {
+    inputs.property "modid", gradle.ext.modid
+    inputs.property "version", project.version
+    inputs.property "modname", gradle.ext.modname
+    inputs.property "moddesc", gradle.ext.moddesc
+    inputs.property "modauthor", gradle.ext.modauthor
+    inputs.property "modsources", gradle.ext.modsources
+    inputs.property "modissues", gradle.ext.modissues
+    inputs.property "modlicense", gradle.ext.modlicense
+    inputs.property "fabricloader", gradle.ext.fabricloader
+    inputs.property "fabric_version", project.fabric_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "java_version", project.java_version
+    
+    filesMatching("fabric.mod.json") {
+        expand inputs.properties
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = project.java_version as Integer
+}
+
+java {
+    withSourcesJar()
+    
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}"}
+	}
+}
