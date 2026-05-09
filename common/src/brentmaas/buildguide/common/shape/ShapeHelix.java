@@ -2,6 +2,7 @@ package brentmaas.buildguide.common.shape;
 
 import brentmaas.buildguide.common.property.PropertyBoolean;
 import brentmaas.buildguide.common.property.PropertyEnum;
+import brentmaas.buildguide.common.property.PropertyFloat;
 import brentmaas.buildguide.common.property.PropertyNonzeroInt;
 import brentmaas.buildguide.common.property.PropertyPositiveFloat;
 import brentmaas.buildguide.common.screen.AbstractScreenHandler.Translatable;
@@ -16,6 +17,7 @@ public class ShapeHelix extends Shape {
 	private PropertyPositiveFloat propertyDegrees = new PropertyPositiveFloat(360, new Translatable("property.buildguide.degrees"), () -> update());
 	private PropertyNonzeroInt propertyHeight = new PropertyNonzeroInt(10, new Translatable("property.buildguide.height"), () -> update());
 	private PropertyPositiveFloat propertyWidth = new PropertyPositiveFloat(1, new Translatable("property.buildguide.width"), () -> update());
+	private PropertyFloat propertyRotation = new PropertyFloat(0, new Translatable("property.buildguide.rotation"), () -> update());
 	private PropertyBoolean propertyEvenMode = new PropertyBoolean(false, new Translatable("property.buildguide.evenmode"), () -> update());
 
 	public ShapeHelix() {
@@ -26,6 +28,7 @@ public class ShapeHelix extends Shape {
 		properties.add(propertyDegrees);
 		properties.add(propertyHeight);
 		properties.add(propertyWidth);
+		properties.add(propertyRotation);
 		properties.add(propertyEvenMode);
 	}
 
@@ -46,12 +49,13 @@ public class ShapeHelix extends Shape {
 			angleStep = Math.min(0.1, 1.0 / (radius * 2));
 		}
 
+		double rotationRadians = Math.toRadians(propertyRotation.value);
 		for (double theta = 0; theta <= radiansMax; theta += angleStep) {
 			double h = (theta / radiansMax) * height;
 
 			for (double r = radius; r <= radius + width; r += 0.5) {
-				double xC = r * Math.cos(theta);
-				double zC = r * Math.sin(theta);
+				double xC = r * Math.cos(theta + rotationRadians);
+				double zC = r * Math.sin(theta + rotationRadians);
 
 				int ix = (int) Math.round(xC + offset);
 				int iz = (int) Math.round(zC + offset);
