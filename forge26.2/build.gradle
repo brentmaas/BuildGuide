@@ -1,0 +1,99 @@
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[7.0.17,8)'
+}
+
+version = gradle.ext.modversion
+group = gradle.ext.forgegroup
+base {
+    archivesName = gradle.ext.forgename
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+
+minecraft {
+    runs {
+        configureEach {
+            workingDir = project.file('../run')
+            args '--mixin.config=mixins.buildguide.json'
+            
+            systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
+            systemProperty 'forge.enabledGameTestNamespaces', gradle.ext.modid
+        }
+        
+        register('client')
+        
+        register('server'){
+            args '--nogui'
+        }
+        
+        register('gameTestServer')
+        
+        register('data'){
+            args '--mod', gradle.ext.modid, '--all', '--output', 'src/generated/resources', '--existing', 'src/main/resources'
+        }
+    }
+}
+
+repositories {
+    minecraft.mavenizer(it)
+    maven fg.forgeMaven
+    maven fg.minecraftLibsMaven
+    mavenCentral()
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
+dependencies {
+    implementation minecraft.dependency("net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}")
+    implementation('net.sf.jopt-simple:jopt-simple:5.0.4') {
+        version { strictly '5.0.4' }
+    }
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.property "modid", gradle.ext.modid
+    inputs.property "version", project.version
+    inputs.property "modname", gradle.ext.modname
+    inputs.property "moddesc", gradle.ext.moddesc
+    inputs.property "modauthor", gradle.ext.modauthor
+    inputs.property "modsources", gradle.ext.modsources
+    inputs.property "modissues", gradle.ext.modissues
+    inputs.property "modlicense", gradle.ext.modlicense
+    inputs.property "forge_version_range", project.forge_version_range
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "minecraft_version_range", project.minecraft_version_range
+    inputs.property "pack_format", project.pack_format
+    
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand inputs.properties
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+            "Specification-Title": gradle.ext.modid,
+            "Specification-Vendor": gradle.ext.modid,
+            "Specification-Version": gradle.ext.modspecversion,
+            "Implementation-Title": rootProject.name,
+            "Implementation-Version": project.jar.archiveVersion,
+            "Implementation-Vendor": gradle.ext.modid,
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConfigs": "mixins.buildguide.json"
+        ])
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}

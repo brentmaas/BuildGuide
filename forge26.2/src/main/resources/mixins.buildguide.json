@@ -1,0 +1,13 @@
+{
+    "package": "brentmaas.buildguide.forge.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [],
+    "client": [
+        "MixinLevelRenderer"
+    ],
+    "server": [],
+    "refmap": "mixins.buildguide.forge.refmap.json",
+    "required": true,
+    "minVersion": "0.8.7",
+    "requiredFeatures": []
+}

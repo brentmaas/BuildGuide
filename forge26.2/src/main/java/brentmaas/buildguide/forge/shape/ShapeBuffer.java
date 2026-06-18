@@ -1,12 +1,13 @@
-package brentmaas.buildguide.fabric.shape;
+package brentmaas.buildguide.forge.shape;
 
+import java.util.Optional;
 import java.util.OptionalDouble;
-import java.util.OptionalInt;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import com.mojang.blaze3d.PrimitiveTopology;
 import com.mojang.blaze3d.buffers.GpuBuffer;
 import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -17,13 +18,12 @@ import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
-import com.mojang.blaze3d.vertex.VertexFormat;
 
 import brentmaas.buildguide.common.shape.IShapeBuffer;
-import brentmaas.buildguide.fabric.RenderHandler;
+import brentmaas.buildguide.forge.RenderHandler;
 import net.minecraft.client.Minecraft;
 
-public class ShapeBuffer implements IShapeBuffer {
+public class ShapeBuffer implements IShapeBuffer{
 	private ByteBufferBuilder byteBufferBuilder;
 	private BufferBuilder bufferBuilder;
 	private GpuBuffer vertexBuffer, indexBuffer;
@@ -32,7 +32,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public ShapeBuffer() {
 		byteBufferBuilder = new ByteBufferBuilder(28); //28 is lowest working (4 bytes * XYZ+RGBA). Number of blocks isn't always known, so it'll have to grow on its own
-		bufferBuilder = new BufferBuilder(byteBufferBuilder, VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+		bufferBuilder = new BufferBuilder(byteBufferBuilder, PrimitiveTopology.QUADS, DefaultVertexFormat.POSITION_COLOR);
 	}
 	
 	public void setColour(int r, int g, int b, int a) {
@@ -50,7 +50,7 @@ public class ShapeBuffer implements IShapeBuffer {
 		MeshData meshData = bufferBuilder.build();
 		vertexBuffer = RenderSystem.getDevice().createBuffer(() -> "Build Guide vertices", GpuBuffer.USAGE_VERTEX, meshData.vertexBuffer());
 		indexCount = meshData.drawState().indexCount();
-		indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
+		indexBuffer = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS).getBuffer(indexCount);
 	}
 	
 	public void close() {
@@ -58,22 +58,22 @@ public class ShapeBuffer implements IShapeBuffer {
 		// Don't also close indexBuffer, it is a reference to a global buffer used everywhere
 	}
 	
-	public void render() {
-		RenderTarget renderTarget = Minecraft.getInstance().getMainRenderTarget();
+	public void render(Matrix4f modelView) {
+		RenderTarget renderTarget = Minecraft.getInstance().gameRenderer.mainRenderTarget();
 		GpuTextureView colourTexture = renderTarget.getColorTextureView();
 		GpuTextureView depthTexture = renderTarget.getDepthTextureView();
-		
-		GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(RenderSystem.getModelViewMatrix(), new Vector4f(1.0f), new Vector3f(), new Matrix4f());
-		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Build Guide", colourTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
+
+		GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms().writeTransform(modelView, new Vector4f(1.0f), new Vector3f(), new Matrix4f());
+		try (RenderPass renderPass = RenderSystem.getDevice().createCommandEncoder().createRenderPass(() -> "Build Guide", colourTexture, Optional.empty(), depthTexture, OptionalDouble.empty())) {
 			renderPass.setPipeline(RenderHandler.getRenderPipeline());
 			RenderSystem.bindDefaultUniforms(renderPass);
 			if(indexBuffer.isClosed()) {
-				indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
+				indexBuffer = RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS).getBuffer(indexCount);
 			}
 			renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).type());
-			renderPass.setVertexBuffer(0, vertexBuffer);
-			renderPass.drawIndexed(0, 0, indexCount, 1);
+			renderPass.setIndexBuffer(indexBuffer, RenderSystem.getSequentialBuffer(PrimitiveTopology.QUADS).type());
+			renderPass.setVertexBuffer(0, vertexBuffer.slice());
+			renderPass.drawIndexed(indexCount, 1, 0, 0, 0);
 		}
 	}
 }

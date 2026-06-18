@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="${forge_version_range}"
+license="${modlicense}"
+issueTrackerURL="${modissues}"
+clientSideOnly=true
+[[mods]]
+modId="${modid}"
+version="${version}"
+displayName="${modname}"
+displayURL="${modsources}"
+logoFile="logo.png"
+authors="${modauthor}"
+displayTest="IGNORE_ALL_VERSION"
+description='''${moddesc}'''
+[[dependencies.${modid}]]
+    modId="forge"
+    mandatory=true
+    versionRange="${forge_version_range}"
+    ordering="NONE"
+    side="CLIENT"
+[[dependencies.${modid}]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="CLIENT"

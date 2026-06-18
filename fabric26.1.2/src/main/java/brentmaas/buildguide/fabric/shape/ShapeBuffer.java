@@ -48,7 +48,7 @@ public class ShapeBuffer implements IShapeBuffer {
 	
 	public void end() {
 		MeshData meshData = bufferBuilder.build();
-		vertexBuffer = RenderSystem.getDevice().createBuffer(() -> "Build Guide vertices", 28, meshData.vertexBuffer());
+		vertexBuffer = RenderSystem.getDevice().createBuffer(() -> "Build Guide vertices", GpuBuffer.USAGE_VERTEX, meshData.vertexBuffer());
 		indexCount = meshData.drawState().indexCount();
 		indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS).getBuffer(indexCount);
 	}
