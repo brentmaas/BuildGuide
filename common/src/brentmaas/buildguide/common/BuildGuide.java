@@ -20,10 +20,11 @@ import brentmaas.buildguide.common.shape.ShapePolygonalPyramid;
 import brentmaas.buildguide.common.shape.ShapeRegistry;
 import brentmaas.buildguide.common.shape.ShapeSphere;
 import brentmaas.buildguide.common.shape.ShapeTorus;
+import brentmaas.buildguide.common.shape.ShapeHelix;
 
 public class BuildGuide {
 	public static final String modid = "buildguide";
-	
+
 	public static AbstractInputHandler inputHandler;
 	public static AbstractScreenHandler screenHandler;
 	public static AbstractWidgetHandler widgetHandler;
@@ -32,7 +33,7 @@ public class BuildGuide {
 	public static AbstractRenderHandler renderHandler;
 	public static ILogHandler logHandler;
 	public static Config config;
-	
+
 	public static void registerClient(AbstractScreenHandler screenHandler, AbstractWidgetHandler widgetHandler, AbstractStateManager stateManager, IShapeHandler shapeHandler, AbstractRenderHandler renderHandler, ILogHandler logHandler, File configFolder) {
 		BuildGuide.screenHandler = screenHandler;
 		BuildGuide.widgetHandler = widgetHandler;
@@ -41,7 +42,7 @@ public class BuildGuide {
 		BuildGuide.renderHandler = renderHandler;
 		BuildGuide.logHandler = logHandler;
 		BuildGuide.config = new Config(configFolder);
-		
+
 		ShapeRegistry.registerShape(ShapeCatenary.class, "shape.buildguide.catenary");
 		ShapeRegistry.registerShape(ShapeCircle.class, "shape.buildguide.circle");
 		ShapeRegistry.registerShape(ShapeCone.class, "shape.buildguide.cone");
@@ -56,13 +57,14 @@ public class BuildGuide {
 		ShapeRegistry.registerShape(ShapePolygonalPyramid.class, "shape.buildguide.polygonalpyramid");
 		ShapeRegistry.registerShape(ShapeSphere.class, "shape.buildguide.sphere");
 		ShapeRegistry.registerShape(ShapeTorus.class, "shape.buildguide.torus");
-		
+		ShapeRegistry.registerShape(ShapeHelix.class, "shape.buildguide.helix");
+
 		renderHandler.register();
 	}
-	
+
 	public static void registerInputHandler(AbstractInputHandler inputHandler) {
 		BuildGuide.inputHandler = inputHandler;
-		
+
 		inputHandler.register();
 		inputHandler.registerOnKeyInput();
 	}
