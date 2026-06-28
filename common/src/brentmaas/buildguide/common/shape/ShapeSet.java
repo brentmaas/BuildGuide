@@ -39,6 +39,7 @@ public class ShapeSet {
 
 	public static final double defaultShapeCubeSize = 0.6;
 	public static final double defaultOriginCubeSize = 0.2;
+	public static final double cubeSizeEpsilon = 1.0e-5;
 	private double shapeCubeSize = defaultShapeCubeSize;
 	private double originCubeSize = defaultOriginCubeSize;
 	
@@ -158,11 +159,11 @@ public class ShapeSet {
 	}
 	
 	public double getShapeCubeSize() {
-		return shapeCubeSize;
+		return shapeCubeSize + (shapeCubeSize == 1.0 ? cubeSizeEpsilon : 0.0);
 	}
 	
 	public double getOriginCubeSize() {
-		return originCubeSize;
+		return originCubeSize + (shapeCubeSize == 1.0 ? cubeSizeEpsilon : 0.0);
 	}
 	
 	public boolean isShapeAvailable() {
