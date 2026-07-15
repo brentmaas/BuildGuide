@@ -159,11 +159,11 @@ public class ShapeSet {
 	}
 	
 	public double getShapeCubeSize() {
-		return shapeCubeSize + (shapeCubeSize == 1.0 ? cubeSizeEpsilon : 0.0);
+		return Math.min(shapeCubeSize, 1.0 - cubeSizeEpsilon);
 	}
 	
 	public double getOriginCubeSize() {
-		return originCubeSize + (shapeCubeSize == 1.0 ? cubeSizeEpsilon : 0.0);
+		return Math.min(originCubeSize, 1.0 - cubeSizeEpsilon);
 	}
 	
 	public boolean isShapeAvailable() {
