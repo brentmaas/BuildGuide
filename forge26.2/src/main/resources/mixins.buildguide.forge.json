@@ -7,7 +7,7 @@
     ],
     "server": [],
     "refmap": "mixins.buildguide.forge.refmap.json",
-    "required": true,
+    "required": false,
     "minVersion": "0.8.7",
     "requiredFeatures": []
 }

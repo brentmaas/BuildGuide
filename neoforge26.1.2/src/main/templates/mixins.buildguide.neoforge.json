@@ -1,0 +1,11 @@
+{
+    "package": "brentmaas.buildguide.neoforge.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "mixins": [],
+    "client": [],
+    "server": [],
+    "refmap": "mixins.buildguide.neoforge.refmap.json",
+    "required": true,
+    "minVersion": "0.8.7",
+    "requiredFeatures": []
+}

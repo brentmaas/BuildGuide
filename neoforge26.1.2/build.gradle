@@ -40,6 +40,7 @@ neoForge {
         
         configureEach {
             gameDirectory = project.file('../run')
+            programArguments.addAll '--mixin.config=mixins.buildguide.neoforge.json'
             systemProperty 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             logLevel = org.slf4j.event.Level.DEBUG
         }
@@ -61,7 +62,7 @@ configurations {
 }
 
 dependencies {
-    
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

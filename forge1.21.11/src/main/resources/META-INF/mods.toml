@@ -12,6 +12,8 @@ logoFile="logo.png"
 authors="${modauthor}"
 displayTest="IGNORE_ALL_VERSION"
 description='''${moddesc}'''
+[[mixins]]
+config="mixins.${modid}.forge.json"
 [[dependencies.${modid}]]
     modId="forge"
     mandatory=true

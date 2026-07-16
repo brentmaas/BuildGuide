@@ -11,6 +11,8 @@ logoFile="logo.png"
 authors="${modauthor}"
 displayTest="NONE"
 description='''${moddesc}'''
+[[mixins]]
+config="mixins.${modid}.neoforge.json"
 [[dependencies.${modid}]]
     modId="neoforge"
     type="required"

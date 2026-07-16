@@ -25,7 +25,7 @@
   },
   
   "mixins": [
-  	"buildguide.fabric.mixins.json"
+  	"mixins.${modid}.fabric.json"
   ],
 
   "depends": {
