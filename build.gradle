@@ -100,7 +100,6 @@ task unpackjars {
                     into forgetmp
                 }
             }
-            // Temporary manual copy until I can get rid of Mixin
             if(mcversion >= '1.21.3') {
                 copy {
                     from file('./forge' + mcversion + '/build/tmp/compileJava')
