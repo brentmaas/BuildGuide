@@ -1,6 +1,7 @@
 plugins {
     id 'eclipse'
     id 'net.minecraftforge.gradle' version '[7.0.17,8)'
+    id 'net.minecraftforge.renamer' version '1.1.2'
 }
 
 version = gradle.ext.modversion
@@ -49,6 +50,17 @@ sourceSets.main.resources {
 
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}")
+}
+
+renamer.mappings.from minecraft.dependency.toSrgFile
+
+renamer.classes(tasks.named('jar', Jar)) {
+    map.from minecraft.dependency.toSrgFile
+    archiveClassifier = 'srg'
+}
+
+renamer.classes('renameJarToSrg', tasks.named('jar', Jar)) {
+    mappings(minecraft.dependency.toSrg.get())
 }
 
 tasks.named('processResources', ProcessResources).configure {

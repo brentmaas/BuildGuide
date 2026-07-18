@@ -86,9 +86,19 @@ task unpackjars {
             }
             
             def forgetmp = file('./build/tmp/forge' + mcversion)
-            copy {
-                from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
-                into forgetmp
+            if(mcversion >= '1.20.6') {
+                copy {
+                    from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '.jar')
+                    into forgetmp
+                }
+            }
+            else
+            {
+                // MinecraftForge 1.20.4 and earlier doesn't reobfuscate in the main jar anymore
+                copy {
+                    from zipTree('./forge' + mcversion + '/build/libs/' + gradle.ext.forgename + '-' + gradle.ext.modversion + '-renamed.jar')
+                    into forgetmp
+                }
             }
             // Temporary manual copy until I can get rid of Mixin
             if(mcversion >= '1.21.3') {
